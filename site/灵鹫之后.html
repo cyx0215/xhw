@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-toc="off"
+      style="--accent:#4a6670;--accent-lit:#72888f">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#4a6670">
+<meta name="description" content="婚后一年，好人被推上权位——灵鹫、逍遥与西夏之间，他要学会拒绝，也要学会并肩。">
+<meta property="og:title" content="灵鹫之后 · 虚竹二十章">
+<meta property="og:description" content="婚后一年，好人被推上权位——灵鹫、逍遥与西夏之间，他要学会拒绝，也要学会并肩。">
+<meta property="og:type" content="book">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiM0YTY2NzAiLz48L3N2Zz4=">
+<title>灵鹫之后 · 虚竹二十章</title>
+<script data-book="灵鹫之后">(function(){
+var r=document.documentElement, book=document.currentScript.dataset.book;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+try{
+  var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
+  if(st.scale) r.style.setProperty('--font-scale',st.scale);
+}catch(e){}
+if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
+})();</script>
+<style>
+:root{
+  --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
+  --ink-faint:#a89e94; --rule:#ddd5c8;
+  --accent:#8c6f4a; --accent-lit:#8c6f4a;
+  --shadow:0 1px 2px rgba(43,39,36,.04),0 8px 24px -12px rgba(43,39,36,.14);
+  --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
+  --font-scale:1;
+  --ease:cubic-bezier(.4,0,.2,1);
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
+         -apple-system,"Segoe UI",sans-serif;
+}
+html[data-theme=night]{
+  --bg:#16181a; --bg-elev:#1e2124; --ink:#cfc9c0; --ink-soft:#948d84;
+  --ink-faint:#645d55; --rule:#2e3236;
+  --accent:var(--accent-lit);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
+}
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* 通用入场：加 .rise 的元素初始下沉透明，进入视口时由 JS 挂 .in */
+.rise{opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+.tbtn{border:0;background:none;color:var(--ink-soft);font-family:var(--sans);font-size:13px;
+  cursor:pointer;padding:7px 10px;border-radius:6px;line-height:1;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+.tbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.tbtn:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .rise{opacity:1!important;transform:none!important}
+}
+
+/* 顶部进度条 */
+#bar{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 55%,transparent),var(--accent));
+  transition:width .12s linear}
+
+/* 工具条 */
+#tools{position:fixed;top:0;right:0;left:0;height:46px;z-index:50;display:flex;
+  align-items:center;gap:2px;padding:0 12px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid transparent;
+  transition:border-color .4s var(--ease),background .4s var(--ease)}
+#tools.lifted{border-bottom-color:var(--rule)}
+#tools .now{flex:1;min-width:0;font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transform:translateY(3px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#tools.lifted .now{opacity:1;transform:none}
+#back{font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);text-decoration:none;
+  padding:7px 10px;border-radius:6px;white-space:nowrap;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+#back:hover{color:var(--accent);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+
+/* 侧栏目录 */
+#toc{position:fixed;top:0;left:0;bottom:0;width:238px;z-index:55;padding:58px 0 24px;
+  background:var(--bg-elev);border-right:1px solid var(--rule);overflow-y:auto;
+  transform:translateX(-100%);transition:transform .38s var(--ease)}
+#toc.open{transform:none}
+#toc h3{margin:0 0 10px;padding:0 22px;font-family:var(--sans);font-size:11px;
+  letter-spacing:.22em;color:var(--ink-faint);font-weight:400}
+#toc a{display:block;padding:9px 22px;color:var(--ink-soft);text-decoration:none;
+  font-family:var(--sans);font-size:13.5px;letter-spacing:.03em;
+  border-left:2px solid transparent;
+  transition:color .25s var(--ease),border-color .25s var(--ease),
+             background .25s var(--ease),padding-left .25s var(--ease)}
+#toc a:hover{color:var(--ink);padding-left:26px}
+#toc a.on{color:var(--accent);border-left-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent)}
+#toc a i{font-style:normal;color:var(--ink-faint);font-size:11.5px;margin-right:8px;
+  font-variant-numeric:tabular-nums}
+#toc a.on i{color:var(--accent)}
+/* 带小标题的分节符生成的二级目录项：单章多分节（如出差）时给出导航 */
+#toc a.sub-toc{padding:6px 22px 6px 40px;font-size:12px;color:var(--ink-faint)}
+#toc a.sub-toc:hover{padding-left:44px}
+/* 分卷书的卷标题：只在 章节/卷X/ 结构下出现 */
+.toc-vol{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.75}
+.toc-vol:first-child{margin-top:0}
+/* 抽屉打开时条目阶梯淡入 */
+#toc.open a{animation:tocIn .42s var(--ease) both;animation-delay:var(--d)}
+@keyframes tocIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+#scrim{position:fixed;inset:0;z-index:54;background:rgba(0,0,0,.34);opacity:0;
+  pointer-events:none;transition:opacity .38s var(--ease);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#scrim.on{opacity:1;pointer-events:auto}
+
+/* 封面 */
+#cover{min-height:100svh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:60px 24px;
+  transition:padding-left .38s var(--ease)}
+#cover>*{will-change:transform,opacity}
+#cover .rule{width:1px;height:56px;
+  background:linear-gradient(var(--rule),color-mix(in srgb,var(--accent) 40%,transparent));
+  animation:dropIn .9s var(--ease) both}
+#cover h1{margin:26px 0 0;font-size:clamp(52px,15vw,86px);font-weight:400;
+  letter-spacing:.3em;text-indent:.3em;line-height:1.15;
+  animation:titleIn 1.1s var(--ease) .1s both}
+#cover .sub{margin-top:16px;font-family:var(--sans);font-size:12px;letter-spacing:.42em;
+  text-indent:.42em;color:var(--ink-faint);animation:fadeUp .9s var(--ease) .34s both}
+#cover .epi{margin-top:46px;font-size:15px;line-height:2.1;color:var(--ink-soft);
+  letter-spacing:.06em;animation:fadeUp .9s var(--ease) .5s both}
+#cover .meta{margin-top:52px;font-family:var(--sans);font-size:11.5px;letter-spacing:.16em;
+  color:var(--ink-faint);animation:fadeUp .9s var(--ease) .64s both}
+#cover .go{margin-top:34px;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.2em;color:var(--ink-soft);
+  text-decoration:none;padding:12px 28px;border:1px solid var(--rule);border-radius:2px;
+  animation:fadeUp .9s var(--ease) .78s both;
+  transition:color .3s var(--ease),border-color .3s var(--ease),gap .3s var(--ease)}
+#cover .go:hover{color:var(--accent);border-color:var(--accent);gap:14px}
+#cover .go span{transition:transform .3s var(--ease)}
+#cover .go:hover span{transform:translateX(2px)}
+@keyframes titleIn{from{opacity:0;transform:translateY(20px);letter-spacing:.52em}
+  to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dropIn{from{opacity:0;transform:scaleY(0);transform-origin:top}
+  to{opacity:1;transform:none}}
+
+/* 正文 */
+main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
+  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em;
+  /* 避头尾：不让逗号句号右括号落在行首。中文长文必需，浏览器默认的 auto 较宽松 */
+  line-break:strict;word-break:normal;overflow-wrap:break-word}
+.chapter{padding-top:14vh}
+.ch-head{margin-bottom:9vh;text-align:center}
+.ch-num{font-family:var(--sans);font-size:11.5px;letter-spacing:.34em;text-indent:.34em;
+  color:var(--accent);opacity:.85}
+.ch-title{margin:14px 0 0;font-size:1.5em;font-weight:400;letter-spacing:.12em;
+  text-indent:.12em}
+.ch-line{width:26px;height:1px;background:var(--rule);margin:26px auto 0;
+  transform:scaleX(0);transition:transform .8s var(--ease) .2s}
+.ch-head.in .ch-line{transform:none}
+/* hanging-punctuation 目前基本只有 Safari 生效，text-wrap:pretty 主要 Chromium 生效；
+   两者都是渐进增强，不支持的浏览器忽略即可，无副作用 */
+.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end;
+  text-wrap:pretty}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic;color:var(--ink-soft)}
+
+/* 分节符 */
+.sec-mark{display:flex;align-items:center;gap:18px;margin:3.2em 0 2.4em;color:var(--accent)}
+.sec-mark::before,.sec-mark::after{content:"";flex:1;height:1px;background:var(--rule);
+  transform:scaleX(0);transition:transform .9s var(--ease)}
+.sec-mark::before{transform-origin:right}
+.sec-mark::after{transform-origin:left}
+.sec-mark.in::before,.sec-mark.in::after{transform:none}
+.sec-mark b{font-weight:400;font-size:1em;line-height:1;letter-spacing:.2em;
+  text-indent:.2em;opacity:.9;white-space:nowrap}
+.sec-mark b em{font-style:normal;color:var(--ink-soft);font-size:.86em;
+  letter-spacing:.1em;margin-left:.7em}
+/* 章首第一个分节符紧贴标题，省掉横线（隐藏后需自行居中） */
+.ch-head + .sec-mark{margin-top:0;justify-content:center}
+.ch-head + .sec-mark::before,.ch-head + .sec-mark::after{display:none}
+
+/* 手机消息 */
+.msg{margin:1.9em 0;padding:14px 18px;border-radius:3px 12px 12px 12px;
+  background:var(--bg-elev);border:1px solid var(--rule);
+  border-left:2px solid color-mix(in srgb,var(--accent) 60%,transparent);
+  box-shadow:var(--shadow)}
+.msg p{margin:0 0 .5em;font-family:var(--sans);font-size:.88em;line-height:1.85;
+  color:var(--ink-soft);text-indent:0}
+.msg p:last-child{margin-bottom:0}
+
+.end-mark{margin:4em 0 0;text-align:center;font-family:var(--sans);font-size:.8em;
+  letter-spacing:.22em;color:var(--ink-faint);text-indent:0}
+.ch-end{width:34px;height:1px;background:var(--rule);margin:4.5em auto 0}
+
+.ch-nav{max-width:34em;margin:2.4em auto 0;padding:0 26px;display:flex;
+  justify-content:space-between;gap:16px;font-family:var(--sans);font-size:12.5px;
+  letter-spacing:.05em;color:var(--ink-faint)}
+.ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+.ch-nav a:hover{color:var(--accent)}
+.ch-nav a:last-child{text-align:right}
+
+footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--ink-faint);
+  line-height:2.4}
+footer a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+footer a:hover{color:var(--accent)}
+
+/* 回顶 */
+#top{position:fixed;right:20px;bottom:24px;z-index:40;width:38px;height:38px;
+  border-radius:50%;background:var(--bg-elev);color:var(--ink-soft);
+  border:1px solid var(--rule);cursor:pointer;font-size:14px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease),color .25s var(--ease)}
+#top.on{opacity:1;transform:none;pointer-events:auto}
+#top:hover{color:var(--accent);transform:translateY(-2px)}
+
+@media (min-width:1080px){
+  #toc{transform:none;background:transparent;border-right:0}
+  #toc.hidden{transform:translateX(-100%)}
+  #scrim{display:none}
+  /* 侧栏常驻时整页让开：用 body 内缩而非 main 的 padding，
+     因为 main 是 border-box，加内边距会压缩字栏宽度 */
+  html[data-toc=on] body{padding-left:238px}
+  html[data-toc=on] #tools{left:238px}
+}
+@media (max-width:600px){
+  main{font-size:calc(17px * var(--font-scale));line-height:1.98;padding:0 20px 30vh}
+  .chapter{padding-top:9vh}
+  .ch-head{margin-bottom:6.5vh}
+  #cover h1{letter-spacing:.22em;text-indent:.22em}
+  #toc{width:76vw;padding-top:66px}
+  #top{right:14px;bottom:18px}
+  .ch-nav{padding:0 20px;font-size:12px}
+}
+@media print{
+  #tools,#toc,#scrim,#bar,#top,#cover .go,#back,.ch-nav{display:none}
+  body{background:#fff;color:#000;padding-left:0!important}
+  /* 首章紧跟封面，不需要再分页——否则会多出一张空白页 */
+  .chapter{page-break-before:always;padding-top:0}
+  .chapter:first-of-type{page-break-before:avoid}
+  .rise{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body data-book="灵鹫之后">
+<div id="bar"></div>
+
+<nav id="tools">
+  <a id="back" href="index.html">← 书架</a>
+  <button class="tbtn" id="menu" aria-label="目录">目录</button>
+  <span class="now" id="now"></span>
+  <button class="tbtn" id="font" aria-label="调整字号">字号</button>
+  <button class="tbtn" id="theme" aria-label="切换日间夜间">夜间</button>
+</nav>
+
+<div id="scrim"></div>
+<aside id="toc" aria-label="章节目录">
+  <h3>目 录</h3>
+    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>雪后无事</a>
+    <a href="#ch2" data-ch="ch2" style="--d:26ms"><i>02</i>公主的账</a>
+    <a href="#ch3" data-ch="ch3" style="--d:52ms"><i>03</i>故人袈裟</a>
+    <a href="#ch4" data-ch="ch4" style="--d:78ms"><i>04</i>仁者先伤</a>
+    <a href="#ch5" data-ch="ch5" style="--d:104ms"><i>05</i>函谷旧灯</a>
+    <a href="#ch6" data-ch="ch6" style="--d:130ms"><i>06</i>九天疑主</a>
+    <a href="#ch7" data-ch="ch7" style="--d:156ms"><i>07</i>大理来信</a>
+    <a href="#ch8" data-ch="ch8" style="--d:182ms"><i>08</i>驸马棋子</a>
+    <a href="#ch9" data-ch="ch9" style="--d:208ms"><i>09</i>守势之局</a>
+    <a href="#ch10" data-ch="ch10" style="--d:234ms"><i>10</i>雪夜未成</a>
+    <a href="#ch11" data-ch="ch11" style="--d:260ms"><i>11</i>霜沾袍</a>
+    <a href="#ch12" data-ch="ch12" style="--d:286ms"><i>12</i>戒与刀</a>
+    <a href="#ch13" data-ch="ch13" style="--d:312ms"><i>13</i>揭皮一层</a>
+    <a href="#ch14" data-ch="ch14" style="--d:338ms"><i>14</i>旧部与新盟</a>
+    <a href="#ch15" data-ch="ch15" style="--d:364ms"><i>15</i>战前夜</a>
+    <a href="#ch16" data-ch="ch16" style="--d:390ms"><i>16</i>情义落点</a>
+    <a href="#ch17" data-ch="ch17" style="--d:416ms"><i>17</i>真空</a>
+    <a href="#ch18" data-ch="ch18" style="--d:442ms"><i>18</i>双影同灯</a>
+    <a href="#ch19" data-ch="ch19" style="--d:468ms"><i>19</i>三角平衡</a>
+    <a href="#ch20" data-ch="ch20" style="--d:494ms"><i>20</i>春风未尽</a>
+</aside>
+
+<header id="cover">
+  <div class="rule"></div>
+  <h1>灵鹫之后</h1>
+  <div class="sub">虚竹二十章</div>
+  <p class="epi">刀可以不还手。<br>权却总会找上门。<br>他从前不会拒绝，后来才懂：有些拒绝，是为了把该护的人护得更久。</p>
+  <div class="meta">全 20 章 · 约 8.4 万字</div>
+  <a class="go" href="#ch1">开始阅读 <span>→</span></a>
+</header>
+
+<main>
+<section class="chapter" id="ch1" data-num="1" data-title="雪后无事" data-anchor="ch1" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 1 章</div>
+    <h2 class="ch-title">雪后无事</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p">雪是夜里停的。</p>
+  <p class="p">虚竹推开窗，看见檐上积白薄了一层，瓦沟里滴水，一滴一滴，打在石阶上，像谁在慢条斯理地敲木鱼。兴庆府的冬天比少林冷，比天山暖。他在这两处都住过，如今却常常觉得自己哪里都没真正住下——少林的钟声远了，天山的云近不了，西夏的宫阙又总像借来的衣裳，穿得住，却不合身。</p>
+  <p class="p">院里有人扫雪。帚声沙沙，不急不缓。虚竹听了片刻，辨出是府里的西夏侍从——手法利落，却不像灵鹫宫那些姑娘，扫着扫着会停下来抬头看天，仿佛天山上的云也跟到了平原，要确认主尊是不是还在人间。</p>
+  <p class="p">他靠着窗沿，手心里还留着窗棂的凉。将近一年了，他仍会在清晨的某片刻失神：昨日还是寺里扫地的小和尚，今日冠上有西夏纹样，袖里藏着逍遥的内力，腰间又系着灵鹫宫主说不清的责任。责任不像戒尺，打一下就完；它像雪，落下来时轻，积起来才重。</p>
+  <p class="p">“主尊又早起了。”</p>
+  <p class="p rise">声音从身后传来，轻，却清楚。虚竹回头，见梦姑披着一件灰蓝外氅，发还散着，眼里却已经醒透。她手里端着两只杯，蒸汽在冷空气里拧成细线，像两条不肯交汇的河。</p>
+  <p class="p rise">“没吵到你吧？”虚竹有点抱歉。</p>
+  <p class="p rise">“你脚步轻，窗响重。”梦姑把一杯递给他，“奶茶。今日朝里无事，你不必去陪那些闲人磨牙。”</p>
+  <p class="p rise">虚竹接过，指尖被烫了一下，心里却稳了些。他娶她将近一年，仍常觉得这桩姻缘像一场被人轻轻推着走完的长梦——梦里有灵鹫的灯、西夏的诏、天山的雪，也有她在月光下看他时那种又倔又软的眼神。醒来之后，梦没有碎，只是变成了日子：要见的人、要回的信、要按下的火。日子比梦难，难在它不会在天亮时自动结束。</p>
+  <p class="p rise">“灵鹫宫又来信了。”梦姑说。她不绕弯，这一点像宫主，也像公主。</p>
+  <p class="p rise">虚竹“啊”了一声，杯沿停在唇边。</p>
+  <p class="p rise">“符敏写的。”梦姑看着他，目光里没有责备，却有账本翻到某一页的冷静，“字很恭敬，话不恭敬。她问主尊是不是打算在兴庆养老。”</p>
+  <p class="p rise">虚竹愣住，随即苦笑：“她……向来直。”</p>
+  <p class="p rise">“直很好。”梦姑走到窗边，望着院中残雪。残雪被扫帚推成一道道矮埂，埂外露出湿黑的砖缝，像一张被勉强擦净的脸。“假客气最费人。你若真要久居此处，便说久居；若要回山，便定日子。两边都吊着，吊的是人心。人心吊久了，会断，也会变。”</p>
+  <p class="p rise">虚竹沉默。他不是不懂。他只是一想到回山，便想到兴庆还有她；一想到留府，便想到天山那些被生死符系着、又不全靠生死符活着的姑娘。两边都是责任，两边都像欠着什么。欠字一落，整个人便沉。</p>
+  <p class="p rise">“我回信。”他说。</p>
+  <p class="p rise">“你回。”梦姑侧脸看他，忽然笑了一下，笑意浅，却把冷意化开半分，“别写‘我再想想’。你一写这句话，符敏能把信纸揉成球，顺手再写一封更难听的来。”</p>
+  <p class="p rise">虚竹耳根发热，低声道：“我知道。”</p>
+  <p class="p rise">梦姑又道：“还有，信里别只说‘对不起’。对不起解决不了巡防，也填不满药柜。你要说清：你何时回，回了做什么，不在的时候谁做主。人怕的不是主尊远，是主尊远得像雾，伸手什么都抓不住。”</p>
+  <p class="p rise">虚竹点头。他看着她被晨光勾出的侧影，忽然觉得：在这座西夏城里，真正能把他从“两头不到岸”里往回拽一寸的，往往不是诏书，是她这种不绕弯的话。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">午前，虚竹在书房回信。</p>
+  <p class="p rise">笔是西夏的，纸也是西夏的，墨却是他从灵鹫宫带来的一锭旧墨。磨墨时，墨香慢慢浮起来，带着一点山中潮气。他想起无崖子说过的话——逍遥派的人，心思不宜太沉。可他偏偏沉。少林教他戒，逍遥给他功，灵鹫塞他一座宫，西夏又给他一顶驸马的冠。冠不重，人会自己变重；变重之后，走路都小心，怕踩碎别人的指望。</p>
+  <p class="p rise">窗外有鸟叫，叫得短促。侍女在廊下走过，衣摆擦过门槛，轻得像怕惊动什么。虚竹执笔，先写日期，又停住，仿佛日期一落，便把“拖延”也写实了。</p>
+  <p class="p rise">他写道：山中诸事，仍依旧规。我近日将归，日期另告。兴庆非养老，是尽分内之责。你们若有急难，飞鸽即报，我绝不托大。</p>
+  <p class="p rise">写完，又觉得硬了些，补了一句：符敏姑娘劳心，虚竹在此谢过。宫中姐妹，各自珍重。雪大时少在崖边立，药室炭火勿断。</p>
+  <p class="p rise">他盯着自己的名字看了片刻。虚竹。僧名还在，人已经不像僧。名字像一件旧袈裟，洗得发白，却总叠在箱底，拿出来时仍有折痕。</p>
+  <p class="p rise">他把信封好，叫人安排飞鸽，又坐回原处，望着未干的墨迹出神。梦姑说得对：两边都吊着，吊的是人心。可他如何能在一封信里把两座山同时搬近？</p>
+  <p class="p rise">侍从在门外轻声禀报：“驸马爷，城里来了个说书的，在集市讲新段子。有人传……讲到您。”</p>
+  <p class="p rise">虚竹抬眼：“讲我什么？”</p>
+  <p class="p rise">侍从脸色有点为难，喉结动了动：“讲您是少林弃僧，借机夺了灵鹫宫，又骗了公主……话很难听。小的把人赶走了，可茶馆酒肆里，还是有人接茬。有人笑，有人信，也有人专门听了去朝里传。”</p>
+  <p class="p rise">虚竹放下笔。怒意来得很浅，浅得像水面被风刮了一下。他更先感到的是疲倦——这种话他听过不止一次，中原有，西夏也有。人总喜欢把复杂的事讲成坏人得志：夺宫、骗婚、伪僧，三个词一串，听众便能省下思考，换一口茶的痛快。</p>
+  <p class="p rise">“别为难说书的。”他道，“饭总要吃。你去茶馆，把真实的事说给掌柜听：我未夺宫，是宫里认主；我未骗婚，是公主……是清露姑娘自己选的。掌柜若肯听，便听；不肯，也不必吵。”</p>
+  <p class="p rise">说到“自己选的”，他耳朵有点热。梦姑若在，大概会睨他一眼：谁选谁，还不一定。</p>
+  <p class="p rise">侍从应了，退下。虚竹望着窗外，雪融的水痕把墙皮画出弯曲的纹，像一条不肯走直路的河。他忽然想起少林廊下扫落叶的日子——那时闲话也多，多是“这小和尚没出息”。没出息的闲话伤不深；有出息之后的闲话，才会专门往心口捅。</p>
+  <p class="p rise">他起身，把窗关严些。风仍从缝里进，细，却不断。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">午后，边市有急报进府。</p>
+  <p class="p rise">来人是灵鹫宫外围巡哨的女弟子，脸上带着风沙，袖口结了冰渣，马蹄声停在门外时，连府里的犬都吠了两声。她进门便跪，被虚竹扶起，话却像石子一样砸出来：</p>
+  <p class="p rise">“主尊，边市有人假传‘生死符可解’，聚了二十多个江湖散人，扬言要买灵鹫的命。有人已经摸到山脚探路。符敏姑娘按住了，没让九天部冲下去杀。她说……要问主尊的意思。”</p>
+  <p class="p rise">书房里一时极静。炭盆里的火轻轻崩了一声，火星跳起又灭，像一句没说完的警告。</p>
+  <p class="p rise">虚竹问：“伤了人吗？”</p>
+  <p class="p rise">“还没有。散人里有的只是听热闹，有的带着兵刃，嘴上硬，眼里飘。像是有人故意把水搅浑，好让我们先出手。”</p>
+  <p class="p rise">“问我？”虚竹喃喃，随即点头，“对。该问。”</p>
+  <p class="p rise">他心里却发沉。生死符是天山童姥留下来的东西，也是灵鹫宫镇得住的根之一。根可以被敬，也可以被恨，更可以被人拿去当买卖喊。有人敢在边市公开喊价，不是蠢，就是背后有人撑腰——蠢人会躲，撑腰的人才会把声势做大，逼你表态：杀，便是嗜血；不杀，便是可欺。</p>
+  <p class="p rise">梦姑不知何时站到了门边。她听完，只问一句：“你怎么做？”</p>
+  <p class="p rise">虚竹想了想，指节在桌沿轻轻叩了两下：“我先去边市看看。真假要亲眼辨。若只是口舌，驱散即可；若有人借此逼宫……再另说。符敏按住不杀，是对的。先杀了，谣言就写成‘灵鹫滥屠’，想洗也洗不干净。”</p>
+  <p class="p rise">“你又要自己去。”梦姑的眉峰微微一挑。</p>
+  <p class="p rise">“我武功够用，去了反而少流血。”虚竹老实道，“叫侍女们去，她们火气大。火气大时，刀比理快。”</p>
+  <p class="p rise">梦姑看着他，半晌道：“那我与你一道。到边关为止。再往山里，你自己走——灵鹫的事，主尊得露脸。朝里的事，公主也得露影。两边都露一点，闲话才不至于只朝一个方向长。”</p>
+  <p class="p rise">虚竹一怔，想推，话到嘴边又咽下。他知道她不是要凑热闹。她是西夏公主，出现在边关，等于把朝廷的影子也压过去一分；同时，也是在告诉他：你的乱，不全是你一个人的。</p>
+  <p class="p rise">“好。”他说，“路上冷，多加衣。”</p>
+  <p class="p rise">梦姑哼了一声：“你才像个不会照顾自己的。袖口脏了也不晓得换，信写完墨点溅在脸上也不擦——成了家还像寺里那副德行。”</p>
+  <p class="p rise">虚竹摸摸脸，果然有一点干墨。他有些窘，梦姑却已转身吩咐备车，步子稳，像去赴一场她算过的局。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">出城时，天又飘起细雪。</p>
+  <p class="p rise">官道上车马不多，车轮碾过冻土，发出细碎的咯吱声。虚竹骑一匹驯顺的青马，缰绳松着，却随时能收。梦姑的车帘半卷，露出一截沉静的侧脸；护卫在前后拉开距离，远得像礼貌，近得够用。风从原野上推过来，带着草根的干腥与远山的冷。</p>
+  <p class="p rise">虚竹看着远处发白的地平线，忽然想起乔峰。</p>
+  <p class="p rise">大哥若在，这样的谣言大概会一掌拍碎桌子，再把传话的人吓到说人话。段誉则会笑着圆场，圆着圆着把人都变成朋友，末了还要请人喝酒。唯有他，习惯先问：会不会冤枉了谁。问完，往往已经慢了半拍。慢不是错，可在江湖上，慢有时会被人当成软弱的邀请。</p>
+  <p class="p rise">“在想你那两位兄弟？”梦姑在车里问。</p>
+  <p class="p rise">虚竹失笑：“你怎么知道？”</p>
+  <p class="p rise">“你一想他们，肩膀会塌下去一点。”梦姑道，“好像全世界只剩你还活着，得替他们把没做完的事做完。虚竹，你替得了事情，替不了命。命是他们自己的，也是你自己的。”</p>
+  <p class="p rise">虚竹哑然。雪落在他睫毛上，化成极小的凉。他想起聚贤庄的火，想起雁门关外的风，想起那些把“义”字写到绝处的夜晚。绝处之后，活人还要继续走。继续走的人，最容易把自己走成纪念碑——碑立着好看，却不能回家。</p>
+  <p class="p rise">“我没有那么大本事。”他轻声说，“我只是……不想再看着好人一个个离开。离开之后，剩下的人会互相咬，也会互相忘。我怕忘。”</p>
+  <p class="p rise">梦姑没有立刻答。过了很久，车轮碾过冻土的声音里，她道：“那你先别离开自己。你若把自己活成只剩‘替’字，灵鹫宫得一个空主尊，我得一个空丈夫，西夏得一个空驸马——三头都空，比谣言还可怕。”</p>
+  <p class="p rise">虚竹转头，见她掀帘看他，眼里有火，也有雪。火是不肯让他沉下去的力，雪是提醒他别把自己烧干。</p>
+  <p class="p rise">“清露，”他忽然道，“若边市真有人拿生死符做局，我可能要硬一点。”</p>
+  <p class="p rise">“硬一点没关系。”梦姑道，“硬给该硬的人看。别硬给自己看，也别硬给闲人看。闲人最喜欢你一硬，他们就有故事写。”</p>
+  <p class="p rise">虚竹应了。青马喷出白气，像把未说完的话也喷进风里。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">边市在关城外三里，是个被商旅和江湖人共同养肥的镇子。酒旗湿了半角，羊膻味混着炭烟，雪落在泥里，很快变成脏灰色的浆。虚竹掩了些锋芒，只以寻常武者打扮入市；梦姑留在关城驿馆，由西夏亲兵守着。临别时她只看他一眼，那一眼的意思很明白：去辨，去止，别把自己赔进去。</p>
+  <p class="p rise">茶棚下果然有人高声：</p>
+  <p class="p rise">“——我说的可是真事！生死符解法在我手里，谁出得起价，灵鹫宫的命便可买！那姓虚的假和尚，不过仗着女人——仗着西夏的势——”</p>
+  <p class="p rise">话没说完，虚竹已经走到近前。</p>
+  <p class="p rise">棚下围了不少人：贩夫、走镖的、喝得半醉的边军，还有两个把帽子压得很低的江湖客。空气里有兴奋，有窥伺，也有看热闹不嫌事大的懒。虚竹站定，雪落在他肩上，片刻不化。</p>
+  <p class="p rise">他没有发作。他只是看着那人，问：“你见过生死符？”</p>
+  <p class="p rise">那人一愣，酒气上涌，反倒更横：“怎么，你也想买？买就掏银子，少在这儿装清高！”</p>
+  <p class="p rise">“我想看看。”虚竹道，“你若真有解法，当众解一个给我看。解得成，我给你黄金百两，并保你平安出西夏。解不成……”</p>
+  <p class="p rise">他停了停，声音仍旧温和，温和得让人发毛：“便请你把造谣的根子说清楚。说清楚，我也不杀你。”</p>
+  <p class="p rise">四下里渐渐静了。有人认出他眉目间那点说不清的温厚，窃窃私语起来：“像……像驸马……”“灵鹫宫主？”“嘘——”</p>
+  <p class="p rise">假传者脸上变色，手下摸刀的动作却出卖了他——不是卖解法的，是来试水深的。刀柄上的缠绳新，人却旧，旧在眼里那种“拿钱办事、办完就跑”的滑。</p>
+  <p class="p rise">虚竹叹了口气。</p>
+  <p class="p rise">“动手吧。”他说，像在对一个做错事的孩子说话，“别伤到摊上的人。碗别砸，茶别泼——泼了，人家一天的生意就没了。”</p>
+  <p class="p rise">刀光刚起，他指尖已点上对方腕脉。北冥神功不必大开大合，内力如潮，轻轻一收，对方兵刃落地，人跪下去，冷汗瞬间湿透脊背。左右两名同伙扑来，虚竹侧身让过，掌缘拍在一人肩井，又反手扣住另一人肘弯，三下两下，场中只剩粗喘。棚柱未晃，热茶未洒，连茶客手里的花生都只掉了两颗。</p>
+  <p class="p rise">没有血腥。连茶都没洒。</p>
+  <p class="p rise">虚竹蹲下，平视那带头的，目光不厉，却让人无处躲：“谁让你来的？”</p>
+  <p class="p rise">那人牙关打颤，先还想嘴硬，被内力余劲一压，终于泄了气：“……石、石破尘。他说……他说星宿老仙遗命未了，要让逍遥伪掌门好看。还说……西夏有人会罩着……银子在半路给，人在边市聚，口号他教的……”</p>
+  <p class="p rise">“西夏什么人？”</p>
+  <p class="p rise">“不、不知道！真不知道！我们只在边市接银子！接完就喊，喊完就走——谁知道你会自己来！”</p>
+  <p class="p rise">虚竹点点头，起身对巡哨女弟子道：“交给关城看管，勿虐。饭给热的，伤给药。我回灵鹫一趟，也回兴庆一趟。这谣言，要从根上掐。根不在嘴上，在喂嘴的人手里。”</p>
+  <p class="p rise">他抬眼望向关城方向。细雪还在下，像无数白色的、无声的话。茶棚外有人散了，有人还站着，站着的人眼里有畏，也有一种说不清的掂量——掂量这个温厚的驸马，究竟是好欺，还是深不可测。</p>
+  <p class="p rise">“先露头的是小乱。”他低声对自己说，“可小乱若有人喂，便会长成大乱。大乱一起，死人就不问你心软不心软。”</p>
+  <p class="p rise">夜色压过来时，他站在驿馆廊下，看见梦姑窗上的灯。灯很小，却稳。廊柱上结着薄冰，冰里映着那点光，像把一整个府的暖都缩成豆大。</p>
+  <p class="p rise">他忽然很想走进那灯光里，把今天听见的脏句子全部忘掉。可他知道忘不掉。权柄这东西，不像雪，雪停了会化；权柄停在那儿，会等人来碰。碰一下，便有回声；回声大了，便是局势。</p>
+  <p class="p rise">而他，已经被碰了一下。</p>
+  <p class="p rise">他推门进去时，梦姑抬眼：“如何？”</p>
+  <p class="p rise">“假的。”虚竹摘下被雪打湿的斗笠，“假得很用力。背后有个叫石破尘的，还说西夏有人罩着。”</p>
+  <p class="p rise">梦姑眸色一沉，随即又平：“那就查。你负责江湖那半截，我负责朝里这半截。别一个人把两半都扛到肩脱臼。”</p>
+  <p class="p rise">虚竹应是。灯焰轻轻跳了一下，像在替这一夜点头。</p>
+  <p class="p rise">雪后本该无事。无事的日子最金贵，也最短。短到只够他喝完一杯奶茶，听完一封家书，便要上马去辨真假。</p>
+  <p class="p rise">而真假辨清之后，真正的麻烦，才刚刚愿意露出一点边角。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><span></span><a href="#ch2">公主的账 →</a></nav>
+
+<section class="chapter" id="ch2" data-num="2" data-title="公主的账" data-anchor="ch2" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 2 章</div>
+    <h2 class="ch-title">公主的账</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">梦姑回兴庆的第一件事，不是歇息，是更衣入宫。</p>
+  <p class="p rise">西夏的宫墙在雪后显得更白，白得像一张不肯写字的纸。她踩着石阶往里走，步子稳，袖风不乱。宫人低头让路时，目光却会偷偷抬一下——看这位公主嫁了江湖人之后，还像不像从前那只栖在深宫里的凤凰。</p>
+  <p class="p rise">她像。</p>
+  <p class="p rise">她也更锋利了。</p>
+  <p class="p rise">锋利不是刀口外露，是知道哪里能切、哪里只能按。从前她在宫里，锋利多用于自保；嫁了虚竹之后，锋利常常要分一半去护一个不太会护自己的人。护着护着，便有人笑她护短，有人夸她识大体，更多人把两种话同时说，好让自己无论站哪边都不吃亏。</p>
+  <p class="p rise">后殿暖阁里炭火很足，香炉里燃着宫廷惯用的合香，甜里带涩。一位宗室女眷笑吟吟地迎她，双手捧茶，指甲修得圆润：“清露妹妹风尘仆仆，听说驸马爷又往边市去了？当真是……闲不住。边市那种脏地方，也值得驸马亲自跑？”</p>
+  <p class="p rise">梦姑接过茶，指尖稳，杯盖轻旋半圈，把热气压住：“边市有人拿灵鹫宫的名号骗人。他去，是怕死人。死人一出，闲话会从边市爬到宫墙里来——到那时，比他亲自跑更脏。”</p>
+  <p class="p rise">“怕死人是好事。”女眷叹道，叹得恰到好处，像排练过，“只是朝里有人说，驸马的心一半在山上，一半在中原佛门，剩给西夏的，怕只有名分。名分这东西，妹妹也懂，好看，不顶事。”</p>
+  <p class="p rise">梦姑抬眼。笑意还在，眼底却冷了一寸：“谁说的？”</p>
+  <p class="p rise">女眷一顿，摆手，戒指在光里闪了一下：“听风便是雨，妹妹别认真。对了，赫连枢密这两日在议事殿提‘安边’——说要借驸马的威名，整肃边境江湖人。你可得让驸马配合。配合了，才像自己人。自己人，才有自己人的日子过。”</p>
+  <p class="p rise">自己人。</p>
+  <p class="p rise">梦姑把这两个字在心里碾过一遍，轻轻放回杯盖上。她知道西夏需要力量，也知道力量一旦被写成“借”，借的人就会变成刀鞘外的刃。虚竹那个性子，最怕被人推去砍人，也最容易因为“为大家好”而点头。点头之后，刀在他手里，血却会记在他账上；记久了，好人也会被写成国器，国器坏了，扔起来比扔一个人更响。</p>
+  <p class="p rise">“我会告诉他。”她说，“怎么配合，却要他自己想清楚。想不清楚的配合，叫送命；想清楚的配合，才叫共事。”</p>
+  <p class="p rise">女眷意味深长地看她，笑意深了些：“妹妹越来越会护短了。护短护到枢密面前，可得小心别护出缺口。”</p>
+  <p class="p rise">梦姑起身，整理袖口，动作仍是公主的从容：“我护的不是短。我护的是——别把好人用废了。好人用废了，坏人才有空位。到那时，朝里再找‘自己人’，怕要贵得多。”</p>
+  <p class="p rise">女眷脸上的笑僵了半息，随即又圆回去。梦姑已经行礼退出。暖阁外的风一扑，她才觉得额角有一点薄汗——不是怕，是算。算人心，比算银钱更耗神。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">出宫时，天色阴着，宫道两侧的松枝还挂着残雪，像一排不肯低头的白帽。</p>
+  <p class="p rise">梦姑在廊下遇见赫连拓。此人五十上下，须剪得整齐，穿一身沉色官袍，腰间玉带温润，笑起来像春风，眼睛却像会记账的算盘——每一格都清，每一格都为他自己响。</p>
+  <p class="p rise">“公主安。”赫连拓一揖，分寸极好，连衣摆扬起的弧度都像量过，“听闻边市有骚，驸马出手如电，当真国之幸。江湖人最服强，驸马一立威，边境可少许多刀光。”</p>
+  <p class="p rise">梦姑回礼，声线平稳：“枢密大人过奖。一件小事。小事若被说成国之幸，便容易被做成国之器——器一成，人就难做回人了。”</p>
+  <p class="p rise">“小事也能酿大势。”赫连拓道，并不接她的刺，只把话往宽处推，“中原武林视西夏为狼，狼若养了虎，便更可怕。驸马若能为朝廷镇一镇那些山中人……边疆可安十年。安十年，百姓少死，公主与驸马也少听闲话。岂非多赢？”</p>
+  <p class="p rise">梦姑听懂了。镇山中人，就是要虚竹拿灵鹫宫的命，去换西夏朝堂的安枕。安枕的人坐在殿上，失眠的人在山上，流血的人在路上——账本上最会写“多赢”的，往往不写谁买单。</p>
+  <p class="p rise">“灵鹫宫不反西夏。”她说，“从未反过。不反的人，不必先被写成将反的人。”</p>
+  <p class="p rise">“没反，不代表不会被反者利用。”赫连拓仍笑着，笑意礼貌，礼貌里有钢，“公主聪明，不必我多嘴。改日我让门下送些边报给驸马过目——他若有意，朝里自有安排。安排妥当，大家体面；安排不妥，便只能……各凭本事了。”</p>
+  <p class="p rise">他让开路，姿态恭敬得挑不出错。恭敬有时比威胁更难接——你接了，像领情；你不接，像失礼。</p>
+  <p class="p rise">梦姑走过他身边时，只留下一句，声音不高，却足够他听清：“安排之前，先问他愿不愿意。他若不愿意，便是国法也强不来他的心。强心的朝堂，最后强出来的都是裂缝。”</p>
+  <p class="p rise">赫连拓目送她上轿，眼底算盘轻轻一拨，未置可否。风掀起他袍角，露出靴尖一丝极新的泥——像刚从某处不该留痕的地方回来。</p>
+  <p class="p rise">轿帘落下，梦姑靠着软垫，闭了闭眼。她在心里把今日的账列开：女眷的试探一笔，赫连的“借威”一笔，边市谣言的余波一笔。三笔都指向同一处——有人要把虚竹从“人”推成“刀”。刀好用，也好折。折了，推刀的人只会叹气：可惜，本是国之幸。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">驸马府里，虚竹已经先回来了。</p>
+  <p class="p rise">他换了常服，袖口还沾着一点边市的土，发际有风沙的干白。见梦姑进门，连忙起身，又像想起什么，把桌上的糕点往她那边推了推。桌上摆得有些可笑：半盘西夏奶皮点心，半笼中原馒头，还有一小碟切得过分整齐的果脯，像生怕她吃不惯任何一种。</p>
+  <p class="p rise">“饿不饿？我让厨房……厨房做的西夏点心，我怕你不惯，又叫他们蒸了馒头。馒头可能硬了点，我让他们再……再蒸一笼？”</p>
+  <p class="p rise">梦姑看着那一桌不中不西的吃食，忽然笑出声。笑完，心里那根绷了一路的弦松了一点：“虚竹，你是怕我饿死，还是怕我生气？”</p>
+  <p class="p rise">“都怕。”他老实承认，耳尖却红了，“你一生气，话比刀快。我武功再高，也接不住。”</p>
+  <p class="p rise">梦姑坐下来，先喝了口温水，才把宫里的话原样讲给他听。她不添油，也不减料——添油是坑他，减料是害他。讲到“借威名整肃”，虚竹眉头一点点皱起；讲到赫连拓那句“各凭本事”，他沉默更久，手指无意识地摩挲杯沿，像在寺里摩挲念珠。</p>
+  <p class="p rise">“我不会拿灵鹫宫去换谁的安枕。”他终于说，“她们信我，不是信一把刀。刀可以换安枕，人换不回来。”</p>
+  <p class="p rise">“我知道。”梦姑夹起一块点心，却没吃，点心在箸间微微碎了边，“可你要学会把这句话说给该听的人听。只在我面前说，没用。我听懂了，挡得住一阵风，挡不住一整座殿。”</p>
+  <p class="p rise">虚竹点头，像受教的小和尚。梦姑看他这样，心里又软又恼：软的是他真的好，好得干净；恼的是他总把“好”当成唯一的盔甲。盔甲太软，箭会穿；盔甲太硬，人会变成铁，铁不会疼，也不会爱。</p>
+  <p class="p rise">“还有。”她道，“你在边市放走的那些嘴碎的人，会把故事讲得更难听。你护了他们的命，他们未必护你的名。名这东西，你不在乎，别人会拿它当绳，往你脖子上绕。”</p>
+  <p class="p rise">虚竹苦笑：“名本来就是别人给的。给错了，我改就是。改不过来，便认——反正我知道自己做过什么。”</p>
+  <p class="p rise">“名改得掉，权改不掉。”梦姑盯着他，目光像钉，“你现在坐的每把椅子，都会有人来坐。你不坐稳，他们就来推你；你坐太稳，他们又说你有野心。所以你要学会的不是‘不坐’，是‘坐到该坐的边，拒到该拒的心’。”</p>
+  <p class="p rise">窗外有马蹄声急促靠近，蹄铁敲在冻石上，一声比一声紧。侍从奔入禀报，气还没匀：“城南驿馆外，商队与一伙挂着‘枢密府下人’腰牌的军士冲突，军士要强征骆驼与粮，商队里有中原妇孺，哭声传过两条街。围观的人越来越多，有人已经往宫城方向跑去报——”</p>
+  <p class="p rise">虚竹站起来。凳脚在地上轻轻一响。</p>
+  <p class="p rise">梦姑也站起来：“你要去？”</p>
+  <p class="p rise">“去。”虚竹已经往外走，步子不快，却没有回头的余地，“强征可以走官面，不能拿刀指着孩子。刀指孩子的时候，法就死了。法一死，剩下的全是力。力的世界里，最先死的永远是没力的人。”</p>
+  <p class="p rise">“赫连拓的人。”梦姑提醒，声音不高，却像把一块冰塞进他掌心。</p>
+  <p class="p rise">虚竹脚步一顿，回头看她。眼里有犹豫，犹豫里又有那条他永远跨不过去的线：“清露，若我今日不管，我怕我以后什么都不管了。不管一次，就会有第二次。第二次时，我或许能给自己找更多理由。”</p>
+  <p class="p rise">梦姑看着他，忽然觉得自己算的那本“人情账”上，又要添一笔硬开支。可她还是道：“去。我随后到。你若动手，留活口；你若说话，留余地。别把把柄亲手送给别人。把柄这东西，比刀更长，能从街口一直捅到殿上。”</p>
+  <p class="p rise">虚竹应了一声，夺门而出。风灌进来，吹得烛火斜了一下。梦姑站在原地，指尖慢慢收紧，又慢慢松开。她不是拦不住他——她是知道，拦下这一次，便可能把他拦成另一个人。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">驿馆外，人群像被冻住的潮水。</p>
+  <p class="p rise">几个军士横着刀，把骆驼往一边赶，驼铃乱响，像一串被拧断的句子。商队领头的汉子额角见血，仍张开手臂护着身后的妇人。孩子哭，女人捂着孩子的嘴，哭声便从指缝里漏出来，细而狠，狠得让人耳根发麻。泥雪里踩出许多脚印，脚印叠脚印，像一场还没开始的乱。</p>
+  <p class="p rise">虚竹分开人群，走到军士面前，先揖手。揖得很正，像把“礼”先摆上桌：“几位军爷，强征若有文书，请出示。若无文书，便请回去补。这里有孩子。孩子面前动刀，传出去，伤的是朝廷的脸，不是我的脸。”</p>
+  <p class="p rise">为首的军士打量他，见他衣着普通，鼻孔朝天，刀鞘一斜：“哪来的多事鬼？滚！耽误枢密府的差，你担得起？枢密府要畜力，要粮，是为安边——安边的事，也要你一个路人指点？”</p>
+  <p class="p rise">“我担不起。”虚竹道，“所以请你们走官面。官面在，安边才像安边；官面不在，安边就只是抢。”</p>
+  <p class="p rise">军士不耐烦，刀鞘一挑，要拨开他。虚竹侧身，手指在鞘上轻轻一点，刀没出，人却踉跄半步——内力接得极巧，像劝，不像打。泥水溅起一点，落在军士靴面上，像一个小小的羞辱。</p>
+  <p class="p rise">“你敢拦？”军士怒了，脸涨红，“抓起来！敢拦枢密差遣，就是反！”</p>
+  <p class="p rise">其余人一拥而上。虚竹不再多话。他步法仍是少林里那种稳，掌法却已是逍遥与天山的融合：点穴、封腕、卸力，干净得像扫地。片刻后，军士们跪坐一地，刀整齐地码在墙根，像一排认错的学生。没有一人残废，也没有一人能立刻再站起来骂人。</p>
+  <p class="p rise">人群爆出窃窃的惊呼。有人喊：“是驸马！”“是灵鹫宫主！”有人后退，有人伸颈，还有人迅速把这一幕记进嘴里，准备去茶馆换酒。</p>
+  <p class="p rise">虚竹抬头，对商队领头人说，语气仍缓：“去关城报备，走商路凭照。今晚别在这里过夜。夜里嘴杂，嘴杂的地方，刀也杂。”</p>
+  <p class="p rise">汉子千恩万谢，额头的血混着汗往下淌。虚竹摆手，转向那些军士，声音仍温和，温和里却多了一点不肯退的硬：“回去告诉赫连枢密：若边务缺畜力，可走府库调拨。强征妇孺商队，国法也不允。我今日拦的是法外之事，不是拦朝廷。朝廷若有明文，我接；没有明文，我便当没看见‘枢密’两个字——我只看见刀和孩子。”</p>
+  <p class="p rise">军士们又恨又惧，抬不起眼。恨的是当众丢脸，惧的是这温厚的人出手竟如此不容商量。</p>
+  <p class="p rise">梦姑的车恰好停在街口。她掀帘，把这一幕尽收眼底——虚竹站在泥雪里，像一截不肯弯的木头；木头周围，是即将生长的闲话与怨毒。闲话会往民心那边长一点好，怨毒会往权门那边长一枚刺。好与刺，从来同根。</p>
+  <p class="p rise">她在心里把账又算了一遍：护了商旅，得了民心一寸；得罪赫连门客，埋雷一枚。值不值？</p>
+  <p class="p rise">对虚竹来说，这个问题不存在。他的世界里，孩子哭了，就要去；刀指人了，就要拦。值不值是事后的词，他活在事中。</p>
+  <p class="p rise">对她来说，必须存在。存在，不是要他变坏，是要她提前把雷的引线看清，好在爆炸前用别的土压住。</p>
+  <p class="p rise">她下车，走到他身侧，当着众人的面，只淡淡道：“回去吧。这里的事，我会让人录成卷宗。录清楚：无文书，有妇孺，驸马止戈不伤命。”</p>
+  <p class="p rise">虚竹看她一眼，那一眼里有歉意，也有依赖。梦姑没有接他的歉意——街口不是认错的地方。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">夜里，夫妻对坐。</p>
+  <p class="p rise">灯芯跳了两下，灯花结成小小的穗。窗外雪又密了些，打在窗纸上，细碎如沙。梦姑把外氅脱了，只着中衣，发松松挽着，看上去比白日里软。软是给自己人看的；白日的硬，是给朝堂看的。</p>
+  <p class="p rise">“你今日做的事，我会在合适的人面前圆。”她说，一边用小剪轻轻剔灯芯，“圆不是撒谎，是把你的‘不愿’说成‘有度’。你自己不会说。你一说，就变成认错；我一说，才像解释。”</p>
+  <p class="p rise">虚竹低着头，手心里还像握着街口的冷：“辛苦你。”</p>
+  <p class="p rise">“别谢我。”梦姑伸手，点了点他眉心，指尖带着一点灯下的暖，“谢我的方式只有一个：下次有人拿‘国之幸’‘安边’‘大义’来推你时，你先问一句——推完之后，死的是谁，活的是谁，背锅的是谁。三个‘谁’问不清，就别点头。点头很容易，收尸很难。”</p>
+  <p class="p rise">虚竹抓住她的手指，握得很轻，像握一件易碎的瓷器。瓷器是她，也是他自己那点不肯磨灭的软。</p>
+  <p class="p rise">“清露，”他道，“我若问了，还是推无可推呢？有些局，不问也在，问了也在。”</p>
+  <p class="p rise">“那就扛。”梦姑反手回握，力道比他大，大得像要把他从沉里拽出来，“但扛的时候看着我。别一个人扛到把自己扛没了。你没了，灵鹫宫是没主，我是寡妇，西夏少个可用的人——三头都亏。你以为你在做好人，其实是在做最贵的亏本买卖。买卖可以亏一次，亏成习惯，家就空了。”</p>
+  <p class="p rise">虚竹怔住，随即低低笑了。笑意里有苦，也有暖。暖的是她骂他也算账，算完仍把他写在第一笔。</p>
+  <p class="p rise">“我从前在寺里，只算香火与功课。”他说，“功课漏了，挨戒尺；香火少了，佛不会生气。没想到成了家，还要学算账。账比戒尺难——戒尺打一下就完，账会跟着你睡。”</p>
+  <p class="p rise">“跟我学。”梦姑靠过去，额头抵着他的肩，声音忽然轻了些，“我账本上第一笔，写的是你这条命。其余的，慢慢加。民心、名分、灵鹫、朝堂……都能加。唯独你这条，不许减成零。”</p>
+  <p class="p rise">窗外雪又密了些。兴庆的夜深了，宫城方向隐约有更鼓。更鼓很远，像别人的事；可虚竹知道，从今日起，赫连拓那本账，也把他写进去了。写进去的不是“驸马”两个字，是“可利用，也可除掉”的一格。</p>
+  <p class="p rise">而他，仍不太会拒绝。</p>
+  <p class="p rise">他只是开始隐约明白：有一天，他必须学会。学会不是为了变冷，是为了让自己还能继续热——热给该热的人，冷给该冷的关口。</p>
+  <p class="p rise">梦姑在他肩上闭了闭眼，像终于肯把白日的锋刃收进鞘里。鞘在家里，刃才不会先割伤自己人。</p>
+  <p class="p rise">“睡吧。”她道，“明天还有人会来试你。试之前，至少让枕头先赢一回。”</p>
+  <p class="p rise">虚竹应是。灯被捻小，光圈缩拢，把两个人的影子叠在墙上。叠着的影子里，有账，有雷，也有一点还不肯灭的、凡人的安稳。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch1">← 雪后无事</a><a href="#ch3">故人袈裟 →</a></nav>
+
+<section class="chapter" id="ch3" data-num="3" data-title="故人袈裟" data-anchor="ch3" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 3 章</div>
+    <h2 class="ch-title">故人袈裟</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">袈裟是在辰时出现的。</p>
+  <p class="p rise">虚竹正在廊下练一套最简单的罗汉拳——不是为了用，是为了让身体记得：你曾经是个只会扫地、打坐、挨训的小和尚。拳风不急，呼吸绵长，每一次落脚都像把心往实地里按一按。梦姑在里间批阅府务抄件，笔尖沙沙，偶尔抬眼看他一眼，像看一只把自己安放在晨光里的动物——安放得越认真，越说明外面的风大。</p>
+  <p class="p rise">廊下砖缝里还有未化尽的雪，被他踩得湿亮。他出拳时，袖口带起一点冷气，冷气里混着厨房飘来的粥香。粥香很俗，俗得让他安心：至少这一刻，他不是宫主，不是驸马，只是一个在练拳的人。</p>
+  <p class="p rise">“驸马爷，城外来僧求见。”侍从的声音压得很低，像怕惊动什么，“自称少林慧净，说……旧识。身上只一件旧袈裟，不带随从，在门外站了有一炷香，说不见也无妨，见了便好。”</p>
+  <p class="p rise">虚竹拳势一滞，随即收势合十，动作自然得像呼吸。合十的瞬间，他几乎又回到山门影壁前那条石径——石径长，人小，钟声大。</p>
+  <p class="p rise">“请到前厅。茶用素的。素点心也备一份，他若不吃，便撤，别让他为难。”</p>
+  <p class="p rise">“要不要通传公主？”</p>
+  <p class="p rise">“先见我。”虚竹顿了顿，目光掠过里间门缝里那一点灯，“若他来意不善……也不必惊动她。不善的事，我先挡。她挡朝堂已经够累。”</p>
+  <p class="p rise">他进房换了身更素净的衣服，没戴西夏的冠饰，只把发简单地束了。镜中人眉目温善，已不是少林那副瘦削怯弱，却也仍不像会夺人宫门的枭雄。他看着自己，轻轻叹了口气：人会变样，镜不会替你圆谎。</p>
+  <p class="p rise">前厅里，慧净已经站好。</p>
+  <p class="p rise">那是个三十出头的僧人，眉目清正，袈裟洗得发白，却叠得一丝不苟，连袖口的补丁都补得平展。见虚竹进来，他先是一怔——怔的是这人身上那股说不清的“俗世沉”：不是富贵的沉，是责任压出来的沉。随即合十，躬身极深：</p>
+  <p class="p rise">“见过……虚竹师兄。”</p>
+  <p class="p rise">三个字，把许多年按回原处。厅柱、西夏纹饰、炭火与窗外的驼铃，都像忽然退远，只剩寺门影壁与两行小沙弥的脚步声。</p>
+  <p class="p rise">虚竹还礼，比他更深一点：“慧净师弟。你不该叫我师兄了。我已还俗。还俗的人，不配再占寺里的辈分。”</p>
+  <p class="p rise">“在寺门名册上，师兄仍是虚字辈。”慧净抬起眼，目光复杂，像既见故人，又见边患，“方丈说：名可去，缘未尽。故命我来探望。探望不是拿戒尺，是拿眼睛。”</p>
+  <p class="p rise">“探望。”虚竹请他坐，亲自斟茶，壶嘴稳，水线不断，“还是问罪？问罪也行。罪若在，我听；不在，我也听——听完，你们心里那块石头，至少有个地方放。”</p>
+  <p class="p rise">慧净接茶的手指微微一紧，旋即平静。茶香是清淡的，像故意选过，不争、不媚。</p>
+  <p class="p rise">“师兄若自认有罪，我便听罪；若无，我便听缘。”他道，“中原近日风声紧，说西夏驸马兼灵鹫宫主、逍遥掌门，三印在手，边患将起。茶馆里有人把您讲成妖僧，庙会上有人把您讲成英雄。两种讲法，都危险。少林不能装聋。装聋，便是弃武林于不顾；太吵，又恐逼人太甚，把可谈的人逼成不可谈的敌。故来看。”</p>
+  <p class="p rise">虚竹听完，沉默片刻，笑了笑。笑意浅，浅里有涩：“你比从前会说话了。从前你只会说‘师兄扫地扫得不干净’。”</p>
+  <p class="p rise">“师兄也比从前……更难说话了。”慧净看他府邸的梁柱、壁上的西夏纹饰，又看他手上并未戴戒指的指节——指节有薄茧，是常年运气与握物留下的，“师兄还吃斋吗？”</p>
+  <p class="p rise">“有时吃。有时不吃。”虚竹老实道，并不修饰，“公主吃肉，我陪。不陪，她以为我在用斋戒躲她。躲人比破戒更不像话。”</p>
+  <p class="p rise">慧净眼中闪过一丝极淡的笑，很快收敛。那笑像承认：这人还是那人，只是日子把他磨出了另一层皮。</p>
+  <p class="p rise">“那师兄心里，可还有佛？”</p>
+  <p class="p rise">虚竹望着茶汤上的热气。热气散去，露出青瓷碗底细小的开片，像一张被岁月写满细纹的脸。</p>
+  <p class="p rise">“有。”他说，声音不高，却稳，“只是佛在我这里，不再只是木鱼与戒尺。佛也在——我能不能少杀一个人，能不能多护一个人。护的时候若犯了戒……我认。认不是逞强，是不拿‘佛’当遮羞布，去盖自己不敢承担的决定。”</p>
+  <p class="p rise">慧净点头，不像满意，也不像不满，像把一块石头放进心里称重。称完，才道：“方丈说，能认的人，尚可谈。不能认的人，只会把杀写成天意。”</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">梦姑出现在屏风后。</p>
+  <p class="p rise">她没有立刻进来，先听了片刻。听虚竹承认“有时不吃斋”，她嘴角微弯；听他说“我认”，她眉心微蹙——认可以，认完还得活，活才是对认的负责。而后她掀帘而入，对慧净一福，礼数是公主的，语气却是主人的，主人意思很清楚：这不是只属于少林的审问场。</p>
+  <p class="p rise">“师父远来，府中简慢。若要住，西厢已净过；若要论武林大事，请当着我的面论。驸马的事，有一半是西夏的事。西夏的事，我不做聋子。”</p>
+  <p class="p rise">慧净连忙起身回礼，神色郑重，袈裟袖一摆，露出腕上旧念珠：“公主勿怪。僧人无状，只因中原门派推少林来问一句：虚竹……驸马，可愿给武林一个‘不为祸’的凭证？”</p>
+  <p class="p rise">“什么凭证？”梦姑问，坐得端，目光却锋利，“人质？降书？还是把灵鹫宫拆了，把逍遥印交出去，好让中原睡个安稳觉？”</p>
+  <p class="p rise">“非要人质，非要降书。”慧净道，神色不变，显然早料到这一问，“只要公开态度：灵鹫不南侵，逍遥不广收门人扰中原，驸马不借西夏兵刃泄私愤。有此三诺，中原清议可缓。缓不是服，是给人一条不立刻拔刀的路。”</p>
+  <p class="p rise">虚竹看着他，指尖在膝上轻轻一按：“若我不诺呢？”</p>
+  <p class="p rise">慧净沉默片刻，茶烟在两人之间细细拧着：“则各派自会防。防久了，便是敌。敌意一起，死人就不问青红皂白。师兄……您最清楚，死人堆里，道理最小。”</p>
+  <p class="p rise">厅中炭火噼啪。虚竹想起雁门关外的风，想起聚贤庄的火，想起乔峰倒下时天地都像哑了。哑了的天地里，活人还要说话，说话却更容易变成下一场火的引子。他不想像任何人的敌人，可“不像敌人”有时也要付出代价——被人写成软弱，写成可欺，写成可以拿来试刀的靶。</p>
+  <p class="p rise">“我可以诺。”虚竹缓缓道，每个字都像从胸口搬出来，“灵鹫本就自守；逍遥收徒，我也会慎。至于西夏兵刃……那不是我能私自调用的。我若泄私愤，先对不起公主，也对不起我自己。对不起自己这件事，我从前不懂，现在懂一点——人若把自己作践成刀，刀钝了就只剩废铁。”</p>
+  <p class="p rise">梦姑看他一眼，没打断。那一眼里有赞同，也有提醒：诺可以，别诺成把自己捆死。</p>
+  <p class="p rise">慧净却道：“口诺易，行难。中原有人建议：请师兄择日在边关‘会武’一场，不必生死，只让各派看看——您的武力用于止戈，而非开疆。看过，心安；心安，手才松。”</p>
+  <p class="p rise">“会武？”梦姑冷笑，笑意却不达眼底，“拿驸马当戏台？台上打赢了，说是示威；打输了，说是可欺；打出人命，说是西夏恶僧。怎么走，都是他们赢，我们付。”</p>
+  <p class="p rise">“是拿恐惧当戏台。”慧净坦然，并不回避，“中原怕的不是师兄这个人，是师兄身上的三枚印。印在明处，怕会少些。怕少了，才谈得成别的。”</p>
+  <p class="p rise">虚竹闭了闭眼。他听见自己心里两个声音在争：一个说“去吧，让他们安心”；一个说“去了，便是把自己摆上案板，由人评切”。案板上的肉没有自己的名字，只有别人的胃口。</p>
+  <p class="p rise">“我考虑。”他说。</p>
+  <p class="p rise">慧净似乎料到这答案，并不逼迫，只道：“我在城外清凉庵住三日。三日后，师兄给话。另……寺里有人念您。玄字辈老僧不多了，他们不求您回去，只求您别把自己活成恨。恨会传，比武功传得快。”</p>
+  <p class="p rise">虚竹喉头一紧，眼前忽然掠过旧日藏经阁的尘与光：“多谢他们。请师弟回去，也替我说一句：虚竹……还记得扫地。记得扫地的人，不会轻易把世界扫成尸场。”</p>
+  <p class="p rise">慧净起身，临走时又看了虚竹一眼，声音放得很轻，像只说给旧日同门，也像说给这个被三枚印压着的人：</p>
+  <p class="p rise">“师兄，袈裟可脱，心上的线脱不掉。线若扯着您向善，是福；若扯着您不敢担当，是障。您自己辨。辨清楚，比任何会武都重要。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">僧人去后，厅里只剩夫妻二人。</p>
+  <p class="p rise">炭火仍在烧，茶却凉了半截。梦姑走到虚竹面前，替他拢了拢其实并不乱的衣襟，动作细，话不细——细是疼惜，不细是清醒：</p>
+  <p class="p rise">“会武的事，你想答应。”</p>
+  <p class="p rise">“我想让他们少害怕。”虚竹道，“怕会生刀。刀生了，最先死的往往不是我，是拦在中间的人。”</p>
+  <p class="p rise">“怕是他们的，命是你的。”梦姑道，抬眼盯着他，“你一上台，便有人要试你深浅；试深浅便有人要逼你露杀着。你一露，话本就写成‘西夏恶僧’；你不露，又写成‘虚有其名’。怎么都是他们赢。赢的人回家喝茶，输的人——哪怕你没输——也要在夜里反复想：我是不是又被人写歪了。”</p>
+  <p class="p rise">虚竹苦笑，苦笑里有无奈，也有一点被说中的轻松：“那怎么办？不诺，他们防；诺了会武，你又说是案板。”</p>
+  <p class="p rise">“办法有。”梦姑坐到他身侧，袖口轻轻一拂，像把乱棋拨回棋盘，“你可以诺三事，但会武改成‘见证’。让慧净留下，看你如何断边市案子，如何管灵鹫，如何拒赫连拓的刀。看见的是行，不是表演。表演给观众看，见证给历史看——观众善忘，历史虽然也会忘，至少忘得慢一点。”</p>
+  <p class="p rise">虚竹眼睛一亮，随即又暗：“赫连拓那边……他巴不得热闹。热闹越大，他越能把我绑上‘安边’的车。”</p>
+  <p class="p rise">“赫连拓巴不得你去会武，最好打出人命，好把你绑上战车。”梦姑语气平得像在说天气，平里却有刀，“所以更不能遂他的意。你遂了中原的惧，也遂了朝里的贪，最后只剩你一个人在台上转，转到脚软，两边都说你不听话。”</p>
+  <p class="p rise">虚竹看着她，忽然很认真地说：“清露，有时候我觉着，你比我更像能撑住这些事的人。我只会心软，你会把心软安到能站住的地方。”</p>
+  <p class="p rise">“我撑得住名分，撑不住你那些江湖规矩。”梦姑耸肩，罕见地露出一点俏皮，俏皮里却有真，“谁是谁的兄弟，哪门旧怨该不该还，生死符解不解——这些我懂逻辑，不懂心。所以才要两个人。你以为嫁给你是享福？享福的人不会大半夜还在算‘谁在喂谣言’。”</p>
+  <p class="p rise">“我知道不是。”虚竹握住她的手，掌心有练拳后的微热，“是我连累你。”</p>
+  <p class="p rise">“又来。”梦姑抽回手，敲他手背一下，不重，却清楚，“连累两个字从你嘴里说出来，像把我写成受害者。我选的。选了，便是局中人，不是被你拖下水的人。局中人有权生气，也有权做主，不许你用道歉把我的主抹掉。”</p>
+  <p class="p rise">虚竹点头，连连说是。他从前不会驳人，如今在她面前，更不会驳——但这一次，他听懂了她要的不是道歉，是并肩。并肩的人，要一起看路，不是一个谢罪，一个原谅。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">午后，虚竹步行去清凉庵。</p>
+  <p class="p rise">他没有带太多护卫，只让两人远远跟着。城外的路被雪融湿了，泥沾靴底，一步一个轻响。庵小，香火淡，檐铃在风里响得孤单，像一句没有听众的偈。门前老槐尚未发芽，枝桠却指着天，指得很执拗。</p>
+  <p class="p rise">慧净在后院扫地，帚声一下一下，稳。见他来，并不意外，把扫帚靠墙，请他在井栏边坐。井水映着两人的脸，一僧一俗，中间隔着一层碎天光。</p>
+  <p class="p rise">“我诺三事。”虚竹开门见山，不绕，“会武不赴。你若愿做见证，可随我往灵鹫，再回兴庆。看我如何处事。看到不满意，你回中原照实说；看到尚可……也请照实说。我不要美言。美言是另一种谣言，只是听着舒服。”</p>
+  <p class="p rise">慧净注视他良久，缓缓合十。合十时，袖口补丁在风里轻轻一动：</p>
+  <p class="p rise">“师兄还是师兄。”</p>
+  <p class="p rise">“什么意思？”</p>
+  <p class="p rise">“从前您在寺里，最怕做错事。”慧净道，目光清，清里有痛惜也有敬，“现在您仍怕，可您不怕把怕说出来。敢把怕说出来的人，反而少做恶。做恶的人，最爱说自己从不怕。”</p>
+  <p class="p rise">虚竹笑了笑，笑意浅，浅到几乎像叹息：“我怕的事太多。怕她们失望，怕她伤心，怕中原再起血，怕自己有一天习惯了权，就忘了痛。权这东西，用久了，会把痛磨成茧。茧厚了，人就听不见别人的疼。”</p>
+  <p class="p rise">“那便记得痛。”慧净道，“痛是戒。戒不是不做事，是做事时知道疼。知道疼的人，下刀会慢半息；慢半息，有时就能少死一个人。”</p>
+  <p class="p rise">两人静坐片刻。远处有驼铃，近处有雀噪。雀在枯枝上跳，跳得很轻，像不懂人间的印与诺。虚竹忽然问，声音低得像怕惊动井里的影：</p>
+  <p class="p rise">“寺里……还讲乔峰的事吗？”</p>
+  <p class="p rise">慧净一顿，喉结微动：“讲。当戒。也当悲。有人说他是祸，有人说他是义。方丈只说：他是一个人，人走到绝处，天地都窄。窄了，仍要走完那几步——走完的人，最不该只被写成一个字。”</p>
+  <p class="p rise">虚竹眼眶微热，低头看自己的手。这双手点过生死符，接过北冥，也合过十。如今它们要去握权杖——权杖比兵刃更滑，滑在你以为握住了，其实是它在借你的手去握别人的命。</p>
+  <p class="p rise">“师弟，”他轻声说，“若有一天我变成你们口中的边患，你杀我，还是劝我？”</p>
+  <p class="p rise">慧净沉默很久。风过檐铃，铃响了三声，像替他数息。他才答：</p>
+  <p class="p rise">“先劝。劝不住，拦。拦不住……再论杀。论杀之前，我希望自己已经把能做的都做尽。我希望没有那一天。若有——”他看着虚竹，目光不避，“我会记得今日井栏边的话。记得您怕。怕的人，值得多劝一次。”</p>
+  <p class="p rise">“我也希望。”虚竹起身，对他还了一礼，礼是僧俗之间最中间的那种——不卑不亢，像一条自己划出的界。界不是墙，是让双方都知道：走到哪里为止，哪里开始要小心。</p>
+  <p class="p rise">回府路上，天色向晚。城门灯火渐次亮起，像一串被人强行按亮的星。虚竹走在人流里，听见有人低声议论“少林来人”“驸马要出事”，也听见有人说“驸马是好人”。好人两个字轻飘飘的，落在他肩上，却像雪，积多了也会压弯松枝。</p>
+  <p class="p rise">他抬手，拂了拂并不存在的雪，走进灯火通明的府门。门内有暖香，有饭菜气，有梦姑批阅时留下的纸页翻动声——这些琐碎，忽然比任何印信都像活着的证据。</p>
+  <p class="p rise">梦姑在灯下等他。见他进门，只问：“谈妥了？”</p>
+  <p class="p rise">“谈妥了。”虚竹道，把风尘留在门外，“他随我走一趟。不做监军，做镜子。镜子不替人美，也不故意丑——只照。”</p>
+  <p class="p rise">梦姑点头，把一杯热茶推过去：“镜子好。你最容易看不见自己。别人喊你一声主尊、驸马、掌门，你就以为自己该变成那三个词。其实你是虚竹。虚竹两个字，够用。够用的时候，别贪更响的称呼。”</p>
+  <p class="p rise">夜深时，虚竹在灯下写一封短柬，准备送往灵鹫：我将归山。随行有少林僧人慧净，以客礼待之。宫中勿扰，勿惧，勿先动手。动手的事先问我；问不到我，问符敏——她若说停，便停。</p>
+  <p class="p rise">写罢，他吹灭一盏灯，留一盏。黑暗便只敢围到光圈之外。光圈里有纸、有笔、有未干的墨，也有一个仍在学如何把袈裟的线与权柄的绳分开握的人。</p>
+  <p class="p rise">分开握，才能两边都不勒死自己。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch2">← 公主的账</a><a href="#ch4">仁者先伤 →</a></nav>
+
+<section class="chapter" id="ch4" data-num="4" data-title="仁者先伤" data-anchor="ch4" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 4 章</div>
+    <h2 class="ch-title">仁者先伤</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">出兴庆往天山的路上，雪停了，风还在。</p>
+  <p class="p rise">风从原野上推过来，把干草刮得沙沙响，像无数细小的警告。虚竹一行不多：他、慧净、两名灵鹫巡哨、四名西夏亲兵。人少不是轻敌，是不想把动静做得太大——动静太大，像出征；出征的姿态，最容易被写成边患。</p>
+  <p class="p rise">梦姑留在府中“按住朝里的嘴”，临行时站在门槛内，外氅被风掀起一角，只叮嘱一句：遇事留活口，遇火先救人。话不长，却像两道钉，把他的软与急都钉在该在的位置。</p>
+  <p class="p rise">虚竹一一应下，像领了寺里的差事。差事从前是扫地，如今是止戈。止戈比扫地脏，脏在血会溅到鞋面上，也溅到心里。</p>
+  <p class="p rise">行至边关以西三十里，驿道折入一条荒谷。谷口有断碑，字迹风化，只剩半个“安”字，像一句没说完的祝福，也像一句被打断的承诺。谷壁上挂着薄冰，阳光一照，冷得刺眼。马蹄声在谷里折返，听起来比实际更多，像有人在模仿他们的来路。</p>
+  <p class="p rise">慧净忽然止步，禅杖尾轻轻点地：“有杀气。”</p>
+  <p class="p rise">虚竹也感觉到了。不是很浓，却散得很开，像网。网不急着收，先让你走进去，走进去才发现线已经绕到脚踝。他抬手示意众人放慢，自己先走三步，朗声道：</p>
+  <p class="p rise">“路过借道。无冤无仇，请让一让。让了，大家省力气；不让，也请先报上名字——死人之前，总得知道自己死在谁手里，活着的人也好记。”</p>
+  <p class="p rise">笑声从两侧乱石后响起，沙哑，带着化功的燥，燥得像长久吞毒药后的喉：</p>
+  <p class="p rise">“借道？灵鹫宫主也要借道？丁老仙若在，定要笑掉大牙——伪掌门，把你师父偷来的功夫还来！还了，或许还能给你留个全尸！”</p>
+  <p class="p rise">人影翻出，约十六七人，衣着驳杂，袖口隐约有星宿门旧制的暗纹，却故意洗得不像。为首者脸窄，眼绿幽幽，腰间挂着一串干蝎，走动时轻轻碰撞，像细碎的骨响。那声音在风里特别清晰，清晰得像专门做给胆小学生听的。</p>
+  <p class="p rise">“石破尘？”虚竹问，声音仍平。</p>
+  <p class="p rise">窄脸人一愣，随即狞笑，干蝎一荡：“石大哥看得起你们，亲自来？我叫蝎子，石大哥的刀。刀不讲理，只讲割。今日只要你一件东西——”</p>
+  <p class="p rise">“什么？”</p>
+  <p class="p rise">“灵鹫宫主之令。”蝎子伸出手，掌心有旧伤结的痂，“写下来：交出解生死符之法，并承认逍遥传位不公。写了，放你们走；不写……”他舔了舔牙，牙黄，笑却亮，“西夏公主远，救不及。救不及的人，最会哭。哭声传回兴庆，比你这点佛门脸面响多了。”</p>
+  <p class="p rise">亲兵怒喝，要上。刀已经半出鞘。虚竹拦住，手臂横在他们身前，力道不重，意思却死：</p>
+  <p class="p rise">“且慢。”</p>
+  <p class="p rise">他看着蝎子，目光仍温和，温和里却有一种让人发毛的稳定。稳定不是无惧，是惧过之后仍选择站在这里：</p>
+  <p class="p rise">“解生死符，我不会给。那不是买卖，是许多人的命与怕。传位公不公，也不是你一句谣言定得了。你们若只为口饭，放下兵器，我给盘缠，送出西夏。若执意要血……”</p>
+  <p class="p rise">他叹了口气，叹意真，真得像对一群走错路的人仍不忍立刻下重手：</p>
+  <p class="p rise">“那我只能打。打的时候，我会尽量留你们能说话的嘴。嘴若还想骂，也可以。骂完，记得把石破尘的话原样留下。”</p>
+  <p class="p rise">蝎子大笑，笑得干蝎乱颤：“打？你那点佛门伪善——少林不要的货色，也配——”</p>
+  <p class="p rise">话音未落，他脚下的冻土突然碎开——虚竹已经到了他身前。不是瞬移，是步法快到在雪光里只剩残影。天山折梅手的变招点向肩井，蝎子横刀去格，刀刃却像砍进了软潮，内力被北冥轻轻一引，整条臂发麻，刀尖一垂，差点戳进自己靴面。</p>
+  <p class="p rise">“点到为止。”虚竹低声说，像在劝，也像在警告。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">乱石谷里顿时翻作一团。</p>
+  <p class="p rise">星宿余部用的多是毒烟、软兵、阴劲，阴得很，阴在专找眼睛、咽喉与马腿。灵鹫女弟子身法轻，专破毒烟阵眼，白绫一卷，毒粉便被卷到下风；西夏亲兵结盾护中，盾面撞得砰砰响；慧净袖中铁禅杖抖出半截，砸得沉实，专打关节，一杖下去，人跪，却不断气。</p>
+  <p class="p rise">虚竹在场中游走，像一滴油在沸汤表面——所到之处，攻势滑开，人倒下，却少见血。他封穴、卸骨、收兵器，极力避过致命处。有人暗器射向慧净后心，虚竹反手一拂，暗器拐进雪地，再顺势把偷袭者按进雪窝，像按一个闹事的孩子。孩子骂娘，他也不恼，只道：“别动。动了穴道更疼。”</p>
+  <p class="p rise">蝎子见势不妙，暴起发难，袖中散出绿雾。雾一出，谷里立刻多了一股甜腥。虚竹闭气，六阳掌力成圈，雾被逼得倒卷，反噬己方两人，惨叫刺耳，刺得连山雀都惊飞。蝎子趁乱抽身要逃，脚下一滑，仍旧快。虚竹踏雪追出十余丈，指风点中他膝弯，人跪下去，刀飞远，在石上磕出一串火星。</p>
+  <p class="p rise">“够了。”虚竹对众人道，声音不大，场中攻势却像被这句话按住。</p>
+  <p class="p rise">谷中喘气声此起彼伏。敌方倒地的十余人，大多活着，只有一人因自己毒刃反伤，流血不止，血在雪上开出黑红的花。虚竹蹲下替那人止了血，指法稳，像做过无数次。又把解毒的简易手法教给女弟子，一句一句，不厌其烦：</p>
+  <p class="p rise">“先保命。命在，话才在。话在，才能找到后面的人。死了一个，就少一条线。”</p>
+  <p class="p rise">女弟子应是，眼里有敬，也有一丝急：主尊总这样，会不会太慢？</p>
+  <p class="p rise">慧净站在侧后，看他做完这一切，缓缓道：“师兄出手，仍是止戈。止戈好看，也费神。”</p>
+  <p class="p rise">“止不住。”虚竹摇头，看向蝎子。蝎子跪在雪里，绿眼仍毒，毒里却多了一点被看穿的恼，“石破尘在哪？”</p>
+  <p class="p rise">蝎子吐了口血沫，血沫落在雪上，很快冻成脏斑。他笑：“你以为抓住我，就抓住根？根在更深的地方。你放了我，我告诉你一句真的——今晚关城有热闹，与你无关，也与你有关。有关的那种，最疼。疼在你以为自己做对了，结果错在你做对的地方。”</p>
+  <p class="p rise">虚竹心头一跳，像被细针刺了一下：“什么热闹？”</p>
+  <p class="p rise">蝎子只笑不答，笑得肩抖。虚竹盯着他，几乎要用力。手掌抬起，内力涌到指尖，指尖发烫，烫得像可以把人的秘密烫出来。又生生压下。压的时候，他听见自己骨节轻轻一响，像某种坚持在抗议。</p>
+  <p class="p rise">他听见自己说：“绑起来，带回关城。勿虐。水给温的，伤包好。他若死在路上，我们连这句‘热闹’都买不到。”</p>
+  <p class="p rise">女弟子领命。蝎子被拖走时，仍冲虚竹喊，嗓子破了，破得更尖：</p>
+  <p class="p rise">“伪善人！你今日不杀人，明日别人杀你的人！杀你的粮！杀你的名！你等着——”</p>
+  <p class="p rise">风把他的声音撕碎，抛进荒谷。荒谷很宽，宽得像容得下所有未被听完的诅咒。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">他们加速赶回关城时，天已擦黑。</p>
+  <p class="p rise">先闻到的是烟。</p>
+  <p class="p rise">不是炊烟，是焦粮的糊味，混着干草燃烧的腥甜，甜得恶心。城东方向火光冲天，把半边夜烧成橘红，民夫奔走，桶勺乱响，有人喊水，有人喊沙，有人只是站着看，看热闹的眼睛在火光里亮得可怕。虚竹脸色骤变，把缰绳一提，青马前蹄几乎离地：</p>
+  <p class="p rise">“救人！其余的话，火灭后再说！”</p>
+  <p class="p rise">到近处才看清：是边军囤积过冬的侧仓起火。火舌舔着木梁，像无数条饥饿的赤蛇。梁断时发出巨响，像天塌了一角。有人喊“灵鹫的人放的火”，有人喊“星宿门报复”，也有人喊“驸马刚打完人，便烧仓灭口”——三种喊声缠在一起，比火更会烧。</p>
+  <p class="p rise">虚竹没有争辩。争辩在火前最小。他冲进烟里。</p>
+  <p class="p rise">北冥在此刻不是吸人内力的魔功，而是他用以屏息、稳心跳、在高温中多撑片刻的根。热浪拍脸，睫毛都要烤焦。他撞开卡死的侧门，门轴尖叫，把门后两个被熏倒的仓夫拖出，一人一个肩，步子沉得像驮着整座仓的罪。又与亲兵接力，泼雪、泼沙、断火道。慧净禅杖挑落烧断的梁木，火星如雨；女弟子轻功往返于屋顶，把火种扫进雪堆，衣角燎黑了也不停。</p>
+  <p class="p rise">不知过了多久——久到手臂发木，久到耳中只剩自己的心跳——火势终于矮下去，只剩黑烟在夜空里拧成绝望的柱。柱很直，直得像一根指着天的控诉。</p>
+  <p class="p rise">虚竹站在焦土上，脸上乌黑，眼白却亮得吓人。靴底黏着半焦的粮粒，一踩就碎。他问守仓的小吏，声音哑得不像自己的：</p>
+  <p class="p rise">“死人了吗？”</p>
+  <p class="p rise">“两人重伤，一人……可能熬不过夜。”小吏跪地哭，哭得鼻涕都是黑的，“存粮三成毁了！过冬怎么办？他们说是您的人——满城都这么说——小的不敢信，可……可火是真的啊！”</p>
+  <p class="p rise">“不是。”虚竹道，声音哑，哑里有钉，“是我的错。”</p>
+  <p class="p rise">小吏愣住。慧净也愣住。亲兵们面面相觑，像没听懂这句自己人往身上揽的话。</p>
+  <p class="p rise">虚竹看着燃烧后的空架，梁炭还红着，像一只只不肯闭眼的眼。他像看着自己某次心软留下的缺口：</p>
+  <p class="p rise">“我在谷里放了人。不，我绑了人，却没立刻封住所有漏网。他们有后手。后手烧的是粮，写的是我的名。名可以脏，粮脏了，过冬的人会先死。死的人不会听我解释心软。”</p>
+  <p class="p rise">他抬头，对关城守将一揖到地。揖得很深，深到额上的灰都蹭到袖口：</p>
+  <p class="p rise">“粮损我赔。先开驸马府库与灵鹫外仓应急。伤者我延医。纵火者——我会找到。找到之前，请守将先把流言按一按：按不住全城，至少按住军心。军心一乱，比缺粮更快死人。”</p>
+  <p class="p rise">守将惶恐扶他，嘴里说不敢，眼里却有一丝动容：这驸马不像推责的官。推责的官最会说“查明再议”；查明再议的时候，灰已经凉了，人已经饿了。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">夜审在关城大牢。</p>
+  <p class="p rise">牢里潮，潮里有霉与铁腥。蝎子被带上来时，腿伤已草草包过，神色反而更横，横得像把命押在“你反正不杀我”上。油灯一豆，灯焰小，照不全人的脸，却把每个人眼里的算计照得很清楚。</p>
+  <p class="p rise">虚竹问他纵火的事，他先否认，后冷笑，冷笑里有血沫：</p>
+  <p class="p rise">“就算是，又如何？你不是不杀吗？不杀便是允我们玩下去。善人的规矩，我们记得比你还清——你软，我们便硬；你留活口，活口便去点下一把火。”</p>
+  <p class="p rise">虚竹看着他，很久很久。</p>
+  <p class="p rise">牢里只有油灯一豆。灯焰小，照不全人的脸，却照得全虚竹心里的那条裂缝：他一直相信“能不杀便不杀”。可今晚粮仓的火告诉他，不杀有时不是慈悲，是把刀递给别人，让别人去选死者。选完之后，死者的眼睛会在你梦里睁着，问你：你的善，谁付钱？</p>
+  <p class="p rise">“我可以杀你。”虚竹忽然说，语气平静得可怕，平静得连慧净都微微侧目，“我功力够。杀了你，解气，也堵住一张嘴。堵住之后，城里会拍手，山上会说主尊终于硬了，中原或许还会写一句‘恶僧终露凶相’——怎么写，都有人高兴。”</p>
+  <p class="p rise">蝎子眼神闪了一下。闪的是怕，怕很快又被横盖住。</p>
+  <p class="p rise">“可我仍不杀。”虚竹继续道，一字一字，像把自己钉在某个位置上，“不是允你玩。是杀你太便宜——真要玩的人，不在这间牢里。你若想活着看见明天，就说：后手几人，往哪跑，与石破尘如何联络，西夏谁给过你们方便。说得清，你多活；说不清，你也活，只是活得更难受——难受在你发现自己不过是棋盘上最容易被弃的一枚。”</p>
+  <p class="p rise">蝎子沉默。油灯噼啪。远处有人咳，咳得很长，像把整座牢的潮气都咳出来。</p>
+  <p class="p rise">半晌，他低声道，声音终于泄了：</p>
+  <p class="p rise">“……后手三人，早走了。联络靠边市药铺‘半夏堂’的幌子，幌子歪一天，便是有信。西夏的方便……我真不知名字。只知关文有时特别好过，粮草有时会在无人处‘遗落’。石大哥说，上面要的不是你死，是你脏。你一脏，中原恨你，西夏防你，灵鹫疑你。你就只剩被他们用。用到折，折了换下一把。”</p>
+  <p class="p rise">虚竹手指一紧，又缓缓松开。松开时，指节发白，白得像刚从雪里抽出来。</p>
+  <p class="p rise">“上面。”他重复，把这两个字放在舌尖上称了称。</p>
+  <p class="p rise">蝎子闭上眼，像把自己从棋盘上暂时摘下：“我说完了。杀剐随便。随便里，我只求一句——别让我死得像条没名的狗。狗至少还知道主人姓什么。我连姓什么的‘上面’都不知道。”</p>
+  <p class="p rise">虚竹起身，对外面道，声音恢复了那种令人安心的温和，温和里却多了钉：</p>
+  <p class="p rise">“严看。汤药照给。半夏堂连夜查封，活口优先。查封时别烧，别抢，别给闲人添材料。材料一多，火会从仓里烧到嘴里。”</p>
+  <p class="p rise">走出大牢时，冷风灌进领口，灌得他一震。慧净跟在身后，轻声道：</p>
+  <p class="p rise">“师兄今夜可还恨自己心软？”</p>
+  <p class="p rise">“恨。”虚竹答得干净，干净得像一刀切开，“也仍要心软。只是心软得换个法子——软给该软的人，硬给该硬的关口。关口若总开着，软就会变成别人的刀柄。”</p>
+  <p class="p rise">慧净点头，目光里有痛惜，也有一种近乎欣慰的沉重：“这便是戒与刀之间的路。路上会伤脚。伤脚的人，至少还知道自己在走。”</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">驿馆里，虚竹给梦姑写快信。</p>
+  <p class="p rise">窗外焦味未散，灯芯被风吹得斜。他的字迹比平日重，重得几乎要穿透纸背：</p>
+  <p class="p rise">粮仓火，我安。损粮我补。此火冲我而来，朝中若有闲话，请你按住，勿与硬顶。硬顶会把火引到你身上。我查半夏堂，若牵到权贵，证据先在你手里，我不公开撕破——除非不得不。不得不的时候，我会先让你知道。</p>
+  <p class="p rise">写到最后，他停笔，墨在笔尖凝聚成一点，像一滴不肯落下的血。又加一句：</p>
+  <p class="p rise">清露，我开始懂你说的账。今日这笔，是我付的学费。学费很贵，贵在有人可能熬不过夜。我若再只顾自己心安，便是拿别人的冬来供我的善。</p>
+  <p class="p rise">信送走后，他坐到窗前。关城外焦味未散，像一句不肯消的提醒。女弟子进来禀报，嗓子仍哑：</p>
+  <p class="p rise">“半夏堂掌柜跑了，柜下夹层搜出星宿门暗记，还有一张被烧去半截的关文残片，印鉴模糊，却隐约像枢密系某房的花押。另有几包半干的药渣，像常年给人‘顺路’带货。”</p>
+  <p class="p rise">虚竹把残片收好，包进油纸，贴身放着。纸贴着胸口，凉，却比任何护心镜都真实。</p>
+  <p class="p rise">“先不声张。”他对慧净说，“声张了，证据会先死。证据一死，剩下的只有嘴。嘴的战场上，权贵永远比我们会打。”</p>
+  <p class="p rise">慧净看他一眼，像重新认识这个昔日怯弱的师兄。昔日的师兄会躲，今日的师兄会藏——藏不是怂，是为了在该出手时手里还有东西。</p>
+  <p class="p rise">“您在学下棋。”</p>
+  <p class="p rise">“我学不会阴谋。”虚竹摇头，摇得很慢，“我只学……别把刀柄塞回别人手里。刀柄在别人手里时，我的善就是他们的燃料。”</p>
+  <p class="p rise">远处更鼓沉沉。虚竹闭上眼，脑海中却全是火焰。火焰里有人影晃动，像石破尘，像赫连拓，像无数张等着看他跌倒的脸。脸与脸重叠，重叠成一张巨大的、无声的笑。</p>
+  <p class="p rise">他低声道，像对火发誓，也像对自己立戒：</p>
+  <p class="p rise">“下次，我仍会救人。但我不会再让纵火的人，笑着走出我的眼界。走出眼界的，可以活；笑着走的，至少要留下疼。”</p>
+  <p class="p rise">窗外，雪又开始下。细雪覆盖焦土，像试图遗忘。虚竹知道，有些伤会被雪盖住，有些伤会在春天化开时，露出更黑的泥。泥里埋着粮，也埋着他今夜学会的那一点硬——硬得不多，却终于肯长在该长的地方。</p>
+  <p class="p rise">仁者先伤。伤过之后，仁若还在，便不是天真，是选择。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch3">← 故人袈裟</a><a href="#ch5">函谷旧灯 →</a></nav>
+
+<section class="chapter" id="ch5" data-num="5" data-title="函谷旧灯" data-anchor="ch5" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 5 章</div>
+    <h2 class="ch-title">函谷旧灯</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">半夏堂的灰烬比粮仓更冷。</p>
+  <p class="p rise">虚竹到时，铺面已封，门板上贴着关城的封条，封条被夜风掀起一角，像一只不肯闭严的眼。药香与焦味搅在一起，闻着像一场被煮坏的病——病不在人身上，在人心里，专治“信”字，治到人谁都不信，便好下手。</p>
+  <p class="p rise">柜板掀开，夹层里除了暗记，还有几卷抄得歪斜的话本。话本纸劣，墨却新，专讲逍遥派内斗：无崖子如何偏心，李秋水如何怨，丁春秋如何“真传人蒙冤”，虚竹如何“捡漏称尊”。字句油滑，像说书人的嘴，又比说书人更毒——说书为了钱，这几卷为了恨。</p>
+  <p class="p rise">慧净翻了两页，眉头越皱越紧，指节在纸边压出浅白：“这不是江湖传闻，这是有意写给人听的。传闻会走样，有意的字不会——它只朝一个方向走样。”</p>
+  <p class="p rise">“写给人恨的。”虚竹道，声音淡，淡里有沉，“恨比刀便宜，传得也比刀远。刀要人送，恨只要嘴。”</p>
+  <p class="p rise">他在后屋灶灰里拨了很久，灰细，细得像有人专门扬过，好掩盖足迹。拨到半块玉佩残片时，他指尖一顿。纹路似竹，竹节浅刻，工不精，却故意做得像旧物。心口一痛——那是逍遥旧物的仿制，故意做成“证据”，好让人相信：连门中信物都在控诉掌门不义。</p>
+  <p class="p rise">他把残片托在掌心，看了片刻，收入袖中。收入时动作轻，像怕惊醒什么不该醒的旧事。</p>
+  <p class="p rise">女弟子在天井里唤他，嗓音压着：“主尊，墙上有字。”</p>
+  <p class="p rise">墙被烟熏黑，字却是新刻的，刀痕白，白得刺眼：</p>
+  <p class="p rise">函谷灯未灭，伪尊命难全。</p>
+  <p class="p rise">虚竹伸手摸过刀痕。冰凉。凉意从指腹一直凉到肩。函谷八友的旧事他听苏星河说过些，丁春秋的恨他更深知。灯未灭，意思是旧怨还被人举着，当火把用；火把不照路，只照他的脸，好让所有人看清：这张脸不配坐那个位子。</p>
+  <p class="p rise">“石破尘在逼我回山。”虚竹说，目光仍停在那行字上，“回山，便把战场摆到灵鹫眼前；不回，便说我弃宫。怎么走都有坑。坑挖得很公道——公道在两边都叫我自己跳。”</p>
+  <p class="p rise">慧净问，声音低：“那师兄怎么走？”</p>
+  <p class="p rise">“回山。”虚竹收起玉片，拍了拍袖上的灰，“坑在那儿，我也得把自己的人拉出来。人比名分要紧。名分脏了可以洗，人没了，洗什么都是空。”</p>
+  <p class="p rise">他走出半夏堂时，回头看了一眼那行字。字不会自己灭。灭字的，从来不是风，是把添油的手按住。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">上山的路是雪路。</p>
+  <p class="p rise">雪深到脚踝，踩下去会发出细碎的咯吱声，像山在轻轻咬牙。灵鹫宫的山门在云里，像一座不肯落地的梦。虚竹走得快，却不乱。每过一处哨卡，女弟子见他，又喜又怨——喜主尊归，怨主尊归得太晚；喜的是人还在，怨的是人总像借来的。</p>
+  <p class="p rise">有人低声说：“主尊瘦了。”有人说：“主尊眼里有烟。”虚竹都听见了，也不辩。烟在关城，也在心里；瘦是两头跑的税，税总要交。</p>
+  <p class="p rise">“符敏姑娘在宫门等您。”巡哨小声道，像怕惊动山神，“脸色不好看。不好看的时候，话更直。”</p>
+  <p class="p rise">虚竹点头：“该不好看。好看的脸色，往往是把难听话吞回去了。吞久了，会病。”</p>
+  <p class="p rise">宫门前，符敏立在风里。她约二十六七，眉目清俊，头发梳得一丝不苟，是天山童姥旧日身边那种“把规矩当骨头”的人。风掀她衣角，她不动，不动得像一根钉在山门上的规矩本身。见虚竹到，她跪下，行的是灵鹫大礼，礼很满，话很刺——满与刺同时来，才是她：</p>
+  <p class="p rise">“属下恭迎主尊。主尊既归，请先看两样东西。看完，再谈别的。别的再大，也大不过山里人的心。”</p>
+  <p class="p rise">她呈上木盘。盘里一只焦黑的粮袋角，一只话本，还有一封匿名信。粮袋角还带着糊味，话本边角卷着，信纸却干净，干净得像故意。信上只有一句：</p>
+  <p class="p rise">虚竹若真是逍遥传人，便当众解生死符，证心无愧；解不得，便是窃位。</p>
+  <p class="p rise">虚竹看着这些，像看着自己的罪证陈列。罪证不是法司的，是人心的——人心的罪证最难洗，洗的时候会连带着把信任也洗淡。</p>
+  <p class="p rise">“我解不得。”他抬眼对符敏说，声音让满宫女弟子听见，听见的人轻轻吸气，“生死符是童姥之法，不是我的戏法。我若当众解，是欺你们；我若不解，有人便说我心虚。他们要的就是这个：解也死，不解也死。死的不是我，是你们对我的信。”</p>
+  <p class="p rise">符敏抬起头，眸子发亮，不知是怒还是泪。风把她眼角的一点湿意吹冷了，冷得更硬：</p>
+  <p class="p rise">“那主尊给个说法。山外谣言日日进耳，九天部有人问：我们跟着的，究竟是宫主，还是一个住在西夏的客人？客人来了有茶，走了有尘。尘一落，谁还记得茶热过？”</p>
+  <p class="p rise">场中静极。静到能听见旗角猎猎。慧净站在侧后，不插手，只看。他的看是见证，见证有时比劝更重。</p>
+  <p class="p rise">虚竹走到符敏面前，亲手扶她起来。他的手很稳，稳得不像那个会脸红的小和尚；稳里却有软，软是不肯用“主尊”两字把人压跪。</p>
+  <p class="p rise">“我是宫主。”他说，一字一顿，顿得像钉钉进木里，“也是客人——在西夏是客人，在中原是弃僧，在逍遥是……后来者。可在灵鹫，我是主。主的意思不是永远坐在这里发号，是你们有急难时，我在。今日我在。明日若我不在，也必让你们知道我去哪、何时回。吊着人心的事，到我为止。到不了的，我认差；认了差，就改，不拿‘两头忙’三个字当遮羞。”</p>
+  <p class="p rise">他顿了顿，目光扫过门前一张张年轻的、冷的、盼的脸，又道：</p>
+  <p class="p rise">“匿名信不必回。回了，便是被牵着走。石破尘要灯，我偏吹他的灯。吹不灭全部，也要让他知道：灵鹫不是靠他一封信就能乱的地方。”</p>
+  <p class="p rise">有女弟子眼圈红了，红得很快，又很快忍回去。符敏嘴唇动了动，终究只道，声音比刚才低些：</p>
+  <p class="p rise">“那请主尊先入宫。有些事，不能在风口说。风口说的话，会被人当成令；令一乱，人更乱。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">内殿炭火很旺。</p>
+  <p class="p rise">旺到人脸上有光，光却照不进每个人心里的缝。符敏屏退左右，只留虚竹与慧净。门一闭，殿外的风声远了，远得像另一个世界。她从袖中取出一只油纸包，打开，是半袋干粮，粮袋印记却是西夏边军的——印记清晰，清晰得像有人故意不擦干净，好让你看见“方便”从哪里来。</p>
+  <p class="p rise">“这是我们在山脚截到的‘遗落’。”符敏道，指尖点在印记上，“接应星宿余部的。主尊在关城看见的火，不是孤立的。有人养着石破尘，像养一条专咬您脚踝的狗。狗不求咬死，只求咬得您步步跛，跛了才好牵。”</p>
+  <p class="p rise">虚竹把关文残片也取出，并排放着。两件物事在火光下都像未愈的痂。痂下有脓，脓不挤，会自己找地方烂。</p>
+  <p class="p rise">“我知道。”他说，“所以更不能乱杀。乱杀，他们就说灵鹫嗜血；不查，他们就说灵鹫无能。嗜血与无能之间，还有第三条路——查到根，按到疼，却不把满山的人先变成刽子手。”</p>
+  <p class="p rise">符敏盯着他，目光像刀背，不锋，却沉：“您总在选两难里更像好人的那条。好人在山上吃不开。童姥在时，人以畏服；畏服不漂亮，却齐。齐了，才少死人。”</p>
+  <p class="p rise">“我知道。”虚竹又说了一遍，带着一点自嘲，自嘲里有痛，“可我若变成坏人，灵鹫就能吃得开吗？童姥的狠是她的骨，我硬学，会学成四不像，还会把人吓跑。吓跑的人里，也许就有将来肯替山死的人。我没有她的狠，我有我的在。在，有时比狠难——狠可以一鼓作气，在要一天一天熬。”</p>
+  <p class="p rise">符敏沉默。炭火崩了一声，崩得两人都微微一顿。半晌，她道，声音仍硬，硬里却松了一线：</p>
+  <p class="p rise">“那您给条能走的路。路要能走，不要只能讲。”</p>
+  <p class="p rise">虚竹看着炭火，火苗舔着炭心，像一枚不肯灭的旧灯。他缓缓道：</p>
+  <p class="p rise">“第一，宫中戒严，盘查内外，闲人不得近药室与令牌库；第二，对外只说主尊归山处置谣言，不提西夏权贵——提了，是把刀柄递给朝里的人；第三，我去见石破尘——他若敢露，便一锤定音；他若不敢，便让他的灯在暗处自己烧尽。烧尽之前，我们不跟着他的节奏跳。”</p>
+  <p class="p rise">“您要见他？”符敏色变，肩线绷紧，“那是送……主尊，山外的坑比山里深。”</p>
+  <p class="p rise">“不是送人头。”虚竹摇头，摇得很慢，慢里有决，“是送一个态度：灵鹫可谈，可打，不可辱。辱我们的名，我便把名夺回来；辱我们的人，我便让他付出代价。代价不一定是命，但是要疼。疼要让他记得，也让喂他的人记得：这条狗咬人，主人也会被血溅到袍上。”</p>
+  <p class="p rise">慧净忽然开口，声音在炭火边显得格外清楚：“师兄这像……乔帮主会说的话，却比乔帮主留了退路。”</p>
+  <p class="p rise">虚竹一僵。僵的不是恼，是疼。疼过之后，他低声道：</p>
+  <p class="p rise">“大哥的退路少。他走的路太直，直得两边的人都容不下。我想多留一条。留给她们，也留给我自己。留给自己不是怕死，是怕死得太干净——干净到什么都没护住。”</p>
+  <p class="p rise">慧净合十，不再多言。有些话，点到即可；点破了，就成伤。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">石破尘自己送上了门。</p>
+  <p class="p rise">准确说，是他的声音先到。夜半，宫外悬崖有人击掌三声，按旧日星宿门求见的规矩——嘲讽意味十足，像把一盆脏水泼在山门上，还说这是礼。风很大，掌声却清，清得像专门挑在人最困的时辰。</p>
+  <p class="p rise">虚竹带符敏与慧净至山门。崖对侧立着一人，青衣，脸掩半幅黑纱，身形瘦长，如一截冬枝。冬枝看上去易折，折了却会扎手。他身后雪光茫茫，茫茫里似有隐约人影，影不近前，只够撑腰。</p>
+  <p class="p rise">“伪掌门。”那人抱拳，姿态居然斯文，斯文得像来赴文会，不是来下战书，“在下石破尘。丁老仙门下不成器的。今日不取你性命，只送三句话。三句话比三招狠——招有尽，话会在你夜里反复响。”</p>
+  <p class="p rise">“请说。”虚竹道。他站在山门内，内力含着，含着不是怯，是不先把场子让给对方的节奏。</p>
+  <p class="p rise">“第一，逍遥旧债未清。你坐的位子，是许多人的血换的，不只是你的运气。运气可以羡慕，血只能讨。”石破尘顿了顿，黑纱下的眼睛像两点冷星，“第二，西夏不只要你的武，更要你的名。名脏了，你才好用。好用的刀，最怕自己还把自己当佛。第三——”</p>
+  <p class="p rise">他似在笑，笑意从声音里渗出来，渗得人肩背发寒：</p>
+  <p class="p rise">“你那位公主很能干。能干的人，死得往往比无能的快。好好看着她。看不住，就别怪旧灯照到兴庆的床前。”</p>
+  <p class="p rise">虚竹内力勃发，雪面一圈圈裂开，裂纹像被怒意写出来的字。他几乎要纵过去。纵过去的冲动来得猛，猛得像乔峰会做的事。符敏一把拉住他袖，力道大得指节发白：</p>
+  <p class="p rise">“主尊！对面是陷阱！崖下有暗弩味，风里有药！”</p>
+  <p class="p rise">石破尘退半步，黑纱下的声音仍清楚，清楚得像怕他听不真：</p>
+  <p class="p rise">“别急。粮仓那把火，只是开胃。真正的菜，在兴庆。你若只顾山，不顾城，城会教你做人；你若只顾城，不顾山，山会教你后悔。两头跑吧，伪掌门——跑到你自己先断。断的时候，记得喊一声‘我是好人’。好人的绝响，最受听。”</p>
+  <p class="p rise">话音落，人影已在风雪里散碎。显然用了某种迷踪步法，又有人接应，接应得熟，熟得像排练过不止一次。虚竹追出数十丈，雪沫打脸，只摸到一块冰凉的铁牌。牌上刻着半颗星，半个“拓”字残测——像故意留下的挑衅，又像无心的泄露。故意与无心之间，往往藏着真正的手。</p>
+  <p class="p rise">虚竹握着铁牌，指节发白。白的不是怕，是把怒意硬生生按回去时的力。</p>
+  <p class="p rise">“他在逼我在山与城之间撕开。”他道，声音哑，“撕开了，两边的人都会先怪我，怪完再被他们分别收编。”</p>
+  <p class="p rise">符敏问，目光仍锁着风雪散去的方向：“那您回兴庆，还是留山？”</p>
+  <p class="p rise">虚竹看着夜色中的宫灯。灯连成一线，像一条被风吹得摇晃的河。河里有人等他，有人怨他，有人拿命信他。</p>
+  <p class="p rise">“我留三日。”他说，每个字都像从齿间量过，“三日把宫里人心稳住，把巡防布好，把你扶正为内务总摄——名分我给，你要的是能做事，不是我天天坐在这儿看着。三日后，我回兴庆。石破尘说菜在兴庆，我便去掀桌子。掀之前，先让山上的碗稳。”</p>
+  <p class="p rise">符敏一震，震的不是权，是托付砸下来的实感：“您……信我？”</p>
+  <p class="p rise">“我信你敢把难听的话当面说。”虚竹看着她，目光清澈，清澈里有沉，“这种人，适合管事。背后咬耳朵的人，适合散。你若觉得我不够格，也请当面说。别让姑娘们在背后猜。猜久了，比敌人更伤人。”</p>
+  <p class="p rise">符敏眼眶微红，单膝跪地，额几乎抵雪：</p>
+  <p class="p rise">“属下……再信主尊一次。这一次，信的不是神，是您肯把自己的错也摆到灯下。”</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">当夜，虚竹未睡。</p>
+  <p class="p rise">藏书处灯火长明，纸页翻动声细。他翻逍遥旧札，找到苏星河留下的抄录：函谷八友散后，星宿门余绪如何潜藏西北，如何与边地商路纠缠，如何借“旧日不公”四个字在新人耳边生根。旧灯从来不是一盏，是一串。有人把灯重新点起来，只为照出他的影子，好让别人害怕影子——怕影子的人，会先向举灯的人买平安。</p>
+  <p class="p rise">慧净在门外入定。入定前只留一句，句轻，意重：</p>
+  <p class="p rise">“师兄若去掀桌子，记得桌子上还有你在乎的人。掀的时候，别砸到他们。砸到他们，赢了局，也输了家。”</p>
+  <p class="p rise">虚竹应是。应的时候，手指按在“拓”字残测上，按得很稳。</p>
+  <p class="p rise">他提笔给梦姑写信，比上一封更短，短得像刀：</p>
+  <p class="p rise">石破尘现身，放话威胁你。你护好自己，优先于护我的名。名可以脏一阵，人不能少。我三日后回。若赫连拓来逼，你可把我的态度说死——灵鹫不附战车，驸马不做私刀。说死了，他便少一条拿你做饵的路。</p>
+  <p class="p rise">写完，他吹灯。</p>
+  <p class="p rise">黑暗里，他想起无崖子、童姥、梦姑、乔峰、段誉。这些人像不同方向的风，把他吹成现在的形状。形状还不稳定，但已经不是一推就倒的纸人。纸人怕火，他如今怕的是火烧到不该烧的人。</p>
+  <p class="p rise">函谷旧灯在山外某处摇晃。</p>
+  <p class="p rise">他低声说，像对灯，也像对夜：</p>
+  <p class="p rise">“灯未灭，我便去看见底是谁在添油。添油的手若伸到兴庆，我就按住那只手。按不住全部，也要按疼。”</p>
+  <p class="p rise">雪打在窗纸上，细碎，不断。像有人在远处不停地磨刀，也像有人在不停地念经。磨刀与念经同夜，这便是他的江湖——他不能只选念经，也不能只配当磨刀石。</p>
+  <p class="p rise">他闭了闭眼。三日后，下山。山下有城，城中有灯，灯下有人等他回家，也有人等他犯错。</p>
+  <p class="p rise">回家与犯错之间，只隔一步。一步怎么迈，才是宫主真正的功夫。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch4">← 仁者先伤</a><a href="#ch6">九天疑主 →</a></nav>
+
+<section class="chapter" id="ch6" data-num="6" data-title="九天疑主" data-anchor="ch6" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 6 章</div>
+    <h2 class="ch-title">九天疑主</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">灵鹫宫的晨钟不响钟，响的是铜铃。</p>
+  <p class="p rise">铃声从九天部各处依次传来，像把整座山叫醒。铃与铃之间隔着雪与风，听起来却整齐，整齐是规矩养出来的。虚竹站在平台上，看云海在脚下翻涌，看姑娘们按阵巡走，身影轻捷，却少了从前那种“主尊在，天塌不下”的松。松意被抽走了，剩下的是绷。绷久了，人会脆；脆了，一点谣言就能成缝。</p>
+  <p class="p rise">风灌进衣领，他却不躲。躲风容易，躲问心难。</p>
+  <p class="p rise">符敏在他身侧汇报，肩上搭着昨夜未干的霜：“昨夜外巡抓到两名探子，一中原口音，一西夏边民。中原的咬死是‘慕名观光’，西夏的吞了毒药，救不回来。毒药化得快，唇先黑。”</p>
+  <p class="p rise">“毒药？”虚竹眉心一跳，跳的不是怕死，是怕有人把“封口”做得这么干净。</p>
+  <p class="p rise">“封口的。”符敏道，目光冷，“有人怕话从活人口里出去。活口一死，剩下的全是猜。猜对灵鹫最伤——猜会把人分成两派：信主尊的，与信自己耳朵的。”</p>
+  <p class="p rise">虚竹点头，声音沉：“尸体妥善葬，别抛崖。中原那个……问清来路，若真只是误入，驱离，给干粮；若有关文假造，移交关城。移交时把经过写明白，别让关城只看见‘灵鹫又抓人’。”</p>
+  <p class="p rise">符敏应了，又道，像把一块烫石递到他手里：“今日九天部小会，有人要主尊出席。不是议事，是……问心。问心难听，可比背后咬耳朵强。背后咬久了，会咬穿。”</p>
+  <p class="p rise">虚竹一笑，笑意淡，淡里有苦也有坦：“也好。问心比背后咬耳朵强。咬在当面，我至少知道牙从哪来。”</p>
+  <p class="p rise">他转头望向宫阙深处。宫阙在云里，云白得像无事。无事的天，最适合把有事的话摊开。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">议事厅里，炭火两边排开。</p>
+  <p class="p rise">九天部管事姑娘分坐，衣色不同，神色却像被同一根绳轻轻勒着。目光落在虚竹身上，有敬，有怨，有等待被说服的空白。空白最可怕——空白可以被他填，也可以被谣言填。</p>
+  <p class="p rise">一个姓梅的管事先开口，声音发紧，紧得像绷到极限的弦：</p>
+  <p class="p rise">“主尊，生死符在，没人敢公然不从。可人心不是符。符能让人跪，不能让人暖。主尊一年里，在山的日子掰着手指能数清。姑娘们练功谁看？争端谁断？有人病了，飞鸽到兴庆，回信来时人已经好了，或者……已经不好了。不好了的那几个，坟在后山。坟不会问主尊忙不忙。”</p>
+  <p class="p rise">厅里有人低头。低头不是不敬，是把疼按回去。</p>
+  <p class="p rise">另一人接话，声音更直，直得像刀背拍桌：</p>
+  <p class="p rise">“西夏待主尊不薄，我们也不求主尊抛妻弃安。只求一句实话：灵鹫宫在主尊心里，是家，还是一份不得不背的产业？产业可以托人管，家不能总空着。空着的家，灯再亮，也像给外人看的。”</p>
+  <p class="p rise">话很重。厅里吸气声细细碎碎，碎得像冰裂。符敏坐在侧席，指尖扣着膝，扣得死，却不打断——打断是护主尊的面子，不打断是护山里的真。</p>
+  <p class="p rise">虚竹没有生气。他起身，对众人一揖。这揖让好些人慌了，要跪，被他抬手止住。止的动作轻，意思却明：今日不是压你们跪，是我先把腰弯下去听。</p>
+  <p class="p rise">“是家。”他说，声音不高，却让每个人听见，“可我这个当家人，当得很差。差在我想同时当好许多家：逍遥的、灵鹫的、西夏的、还有我自己心里那点……想做个好人的家。结果哪边都像客人。客人有礼，没根。没根的人，最容易被风吹成别人嘴里的‘伪’。”</p>
+  <p class="p rise">他抬眼，目光一一扫过。扫过梅管事发紧的唇，扫过有人发红的眼眶，扫过角落里慧净安静的袈裟：</p>
+  <p class="p rise">“你们问我能不能在。我答：我不能天天在。天山到兴庆，不是隔壁。路有雪，有关，有人要我的命，也有人要我的名。但我能做到三件事。一，重大事务飞鸽必复，半日为限——路途允许的前提下；延误了，我说明延误的原因，不拿沉默当威严。二，内务交符敏总摄，我授她调人权，出了差错我担——担不是甩锅给她，是她有权做事，我有肩扛事。三，每年四分之三的节令，我在山里过。剩下的日子，我在兴庆把你们的后顾之忧按住——朝堂的刀，别先砍到山上。山上若先乱，朝堂的刀反而更好砍。”</p>
+  <p class="p rise">梅管事咬唇，唇色发白：“主尊如何保证？保证两个字，山上听得太多，也碎得太多。”</p>
+  <p class="p rise">“保证用字写，用行验。”虚竹从袖中取出早已写好的告示，当众展开。纸边被他捏得微皱，皱是反复看过的痕，“今日贴上宫门。谁见我违，谁可当众责我。宫主可责，才像活人，不像泥胎。泥胎不疼，也帮不了你们疼。”</p>
+  <p class="p rise">厅中哗然。哗然里有震动，有将信将疑，也有一点点被认真对待的酸。符敏看着那张纸，指尖微微发抖——不是怕，是一种被托付砸中的震动。震动过后，她抬眼，眼底有火：火不是反，是燃起来的责。</p>
+  <p class="p rise">有人仍不服，冷冷道，冷得像专挑最疼处下针：</p>
+  <p class="p rise">“若西夏逼主尊拿灵鹫换安，主尊换不换？”</p>
+  <p class="p rise">虚竹答得很快，快得没有给自己留滑开的缝：“不换。”</p>
+  <p class="p rise">“若中原逼主尊解散灵鹫呢？”</p>
+  <p class="p rise">“不散。散了，山里的人去哪？去当流民，还是去当别人的刀？我不许。”</p>
+  <p class="p rise">“若……公主与灵鹫只能保一个呢？”</p>
+  <p class="p rise">空气像被刀切开。切开之后，连炭火的响都显得太响。所有人都看着他，包括符敏，包括站在角落的慧净。慧净的目光不逼，却清——清是镜子，镜子不替人选，只照人如何选。</p>
+  <p class="p rise">虚竹沉默了数息。数息里，他想起梦姑窗上的灯，想起阿穗怕黑的那句话，想起童姥把宫塞进他手里时那种近乎任性的托付。托付从来不是荣耀，是债。债要还，却不能拿一个人去抵另一个人。</p>
+  <p class="p rise">“不会只剩一个。”虚竹终于说，声音低而硬，硬得像从软里炼出的铁，“谁逼我做这种题，谁就是要我死。我死之前，会先让出题的人知道：题出错了。出错的题，不配被回答，只配被撕掉。撕的时候若要血，血先从出题的人开始——不是嗜杀，是止祸。”</p>
+  <p class="p rise">这话不像他平日的软。软尽之处，反而见骨。厅里有人眼眶红了，有人低头，有人轻轻吐出一口气，像把压了很久的石头放下一角。角还在，石还在，可至少能喘。</p>
+  <p class="p rise">梅管事起身，郑重一礼，礼里有暂且的服：</p>
+  <p class="p rise">“属下……暂信。暂信不是轻，是把心先押在主尊这三件事上。事若空，心收回；事若不空，信会长。”</p>
+  <p class="p rise">“暂信就够。”虚竹道，反而松了些，“信满了反而假。日子会把暂信变成长信，或变成失望。我争取前者。争取的时候，请你们监督，也请你们——别把监督做成折磨自己。折磨自己最容易，也最没用。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">散会后，虚竹去了药室。</p>
+  <p class="p rise">药室在偏殿后，药香浓，浓得能把人的锐气压一压。最年轻的小侍女名叫阿穗，不过十五六，正在捣药。见他进来，手一抖，药杵差点砸到自己脚背。虚竹连忙接住，笑道，笑意比在议事厅里真：</p>
+  <p class="p rise">“慢些。药砸了可以再配，脚砸了要疼很久。疼久了，值夜都不稳。”</p>
+  <p class="p rise">阿穗脸红，把碎发别到耳后，低声，声音细，细里有执拗：</p>
+  <p class="p rise">“主尊……她们说的那些，您别往心里去。我信您。信您不是因为您是主尊，是因为……您会记得小事。”</p>
+  <p class="p rise">“为什么信？”虚竹问，是真的想听。他听过太多大话，大话像风；小事才像钉子，能把人钉在“还像人”的位置上。</p>
+  <p class="p rise">阿穗想了想，认真道，认真得像在背一道自己写的功课：</p>
+  <p class="p rise">“因为您会记得我上次说怕黑。您让人在我值夜的廊下多挂了一盏灯。灯不贵，可有人会觉得‘怕黑’不值一提。您提了。真要做坏人的主尊，不会在乎一盏灯。坏人要的是怕，不是暖。”</p>
+  <p class="p rise">虚竹怔住。胸口某处又软又疼。软的是被信，疼的是自己原来连一盏灯都记得，却常常忘了让更多人看见自己记得。</p>
+  <p class="p rise">“一盏灯很小。”他说，像自言自语。</p>
+  <p class="p rise">“可夜很大。”阿穗道，抬眼看他，眼里有一点不属于这个年纪的清亮，“小灯也是灯。宫里若只有大规矩，没有小灯，规矩会冷。冷规矩能齐人，齐不久。”</p>
+  <p class="p rise">虚竹点点头，替她把药粉拢好，动作轻，像怕碰散什么珍贵的东西：</p>
+  <p class="p rise">“那你继续做你的小灯。宫里需要大规矩，也需要小灯。大规矩我与符敏扛，小灯——你们这些肯记得别人怕什么的人，也扛。”</p>
+  <p class="p rise">他离开药室时，听见阿穗在背后轻轻说：“主尊慢走。”声音像一瓣雪，落在他肩上，不重，却让他觉得自己还能被人需要成“人”，而不只是“主”。主会累，人会暖；暖着，才扛得动累。</p>
+  <p class="p rise">走廊外风一灌，他把那点暖按进心里，按紧些，像怕被下一次问心吹散。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">午后，虚竹与符敏巡看仓库、武场、囚室。</p>
+  <p class="p rise">仓库清点过，账册新；武场上有人练天山折梅，招式稳，眼神却仍飘——飘的是心。虚竹看了片刻，只说：“下盘再沉。心沉，拳才不虚。”说完便走，不把巡看变成审判。</p>
+  <p class="p rise">囚室里关着边市带回的蝎子一干人。潮气重，铁链轻响。蝎子见他，仍硬着脖子，硬得像把命押在“你假”两个字上。虚竹看了看他的伤，伤处肿着，却没有溃。他吩咐换药，换干净布，蝎子反倒骂，骂得难听：</p>
+  <p class="p rise">“假慈悲！药完了是不是还要超度？超度完把我送去见丁老仙，说你仁义？”</p>
+  <p class="p rise">虚竹不辩，只道，语气平得像谈天：</p>
+  <p class="p rise">“慈悲不假。假的是你以为慈悲等于可欺。可欺的人，才会把火点到别人粮上还笑。你笑过了，现在疼一疼。疼不是罚，是提醒：你还活着，活着就有机会把‘上面’两个字说得更清楚。”</p>
+  <p class="p rise">蝎子一噎，骂不出来，只能把脸扭到墙。墙上有水渍，水渍像一张无声的嘴。</p>
+  <p class="p rise">出了囚室，符敏低声道，声里有忧：</p>
+  <p class="p rise">“主尊若一直这样，敌人会笑。笑您软，笑灵鹫好欺负。笑久了，会当真来。”</p>
+  <p class="p rise">“让他们笑。”虚竹望着山顶的风，风把旗角吹得猎猎，“笑够了，会露出牙。牙露出来，我才好拔。藏着的牙，拔了也说不清是防是杀；露出来的牙，拔了，至少满山的人看得见：不是我们先咬人。”</p>
+  <p class="p rise">符敏一愣，随即明白：这不是突然变黑，是他在学把节奏拿在自己手里。节奏在自己手里，软才不是漏洞，是饵，也是界。</p>
+  <p class="p rise">“石破尘的铁牌，”她问，手指无意识地碰了碰袖中那块冰凉，“可要扩大追查‘拓’字？”</p>
+  <p class="p rise">“要。但在山里查，别打草惊蛇到兴庆。”虚竹道，目光远，远到关城方向，“兴庆那边，我回去亲自碰。碰的时候要证据，不要情绪。你在山里把网织好。有人要从内部捅刀子，先碰到你。碰到你，就是碰到我立的规矩。”</p>
+  <p class="p rise">符敏应下。两人走到崖边，云海翻开一道缝，隐约可见远方关城黑点。黑点很小，小得像棋盘上的一子，却压着整盘的气。</p>
+  <p class="p rise">“主尊，”符敏忽然道，声音罕见地轻，“我从前跟着童姥，信的是怕。怕才能齐。您让我们信的是……您这个人。人会变，也会死。我怕。怕不是不忠，是怕信错了之后，姑娘们连怕都不会了——不会怕的人，死得更快。”</p>
+  <p class="p rise">虚竹侧脸看她，目光清澈，清澈里有认：</p>
+  <p class="p rise">“那你把怕也用上。用怕去补我的疏漏，用怕去盯每一处不该松的绳。我允许你怕，不允许你瞒。瞒比怕更毁山。怕还能救，瞒只会把裂缝盖到塌。”</p>
+  <p class="p rise">符敏深深看他一眼，像把这句话刻进骨里。刻完，单膝微屈，又站直：</p>
+  <p class="p rise">“是。属下以怕做事，以忠复命。复命若难听，也复。”</p>
+  <p class="p rise">“难听最好。”虚竹道，“好听的话，兴庆多的是。”</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">第三日黄昏，虚竹要动身回兴庆。</p>
+  <p class="p rise">天边云烧成一线红，红得像把三日内所有问心都炼过一遍。宫门送行的人比来时多。没有哭天抢地，只有整齐的一礼。礼很静，静里有一种被安放好的力量——不是全信了，是肯再等一等他的行。</p>
+  <p class="p rise">阿穗挤在人群里，举起一盏小灯——白日点灯有些傻，可她仍点着，火苗在风里摇，像一句不肯改口的话：我信您。傻有时比聪明更硬，硬在它不讲理，只讲心。</p>
+  <p class="p rise">虚竹对那盏灯回了一礼。礼不轻，轻了就成敷衍。</p>
+  <p class="p rise">慧净走在他身侧，袈裟被风吹得贴腿，轻声道：“师兄这三日，像把一根钉钉进了山里。”</p>
+  <p class="p rise">“钉不进的。”虚竹上马，望着宫阙，宫阙在暮色里轮廓沉，“我只是让她们知道，钉还在我手里，随时能钉回来。更重要的是——钉孔旁边，还有灯。灯不靠钉活，靠人添油。”</p>
+  <p class="p rise">马蹄踏雪，折向山下。雪屑飞溅，打在靴面上，凉而脆。他却觉得比上山时暖些——暖的不是天气，是那种“被问难过、仍被留下”的实在。</p>
+  <p class="p rise">实在比崇拜可靠。崇拜会碎，实在会磨；磨过的东西，才配叫信任。</p>
+  <p class="p rise">他在心里对自己说：虚竹，你可以两头跑，但你不能两头都假装无事。有事，就说有事；能在，就说到；不能在，就让人顶上。这才是掌权，不是把所有绳子都缠在自己脖子上。脖子上的绳子多了，人就只能站着给别人看，不能低头去捡一盏灯。</p>
+  <p class="p rise">远方兴庆的方向，天色浑黄。他知道那里有梦姑，有赫连拓，有石破尘说的“真正的菜”。菜会烫嘴，也会烫心。烫之前，他把山上的碗先稳了稳。</p>
+  <p class="p rise">“走吧。”他对自己说，也对马说。</p>
+  <p class="p rise">马跑起来，雪屑飞溅，像一地碎掉的疑心——碎了不会消失，却至少不再整块压在胸口。胸口空出一点地方，好留给下一盏灯，下一封信，下一次必须说出口的“不”。</p>
+  <p class="p rise">山在身后，城在前方。两头都在，他才不是客人。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch5">← 函谷旧灯</a><a href="#ch7">大理来信 →</a></nav>
+
+<section class="chapter" id="ch7" data-num="7" data-title="大理来信" data-anchor="ch7" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 7 章</div>
+    <h2 class="ch-title">大理来信</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">归途第二日，天色灰白，像一张洗了太多次的旧纸。</p>
+  <p class="p rise">驿馆外停着一骑大理马。马身不高，蹄腕却干净利落，鬃上系着一缕素绦，鞍桥挂一只旧竹筒——虚竹一眼便认出那是段誉爱用的寄书法子：不贵，不炫，却让人隔着千里也能记得住。他几乎是小跑着迎出去，衣袂带起残雪，又在三步外硬生生停住，把失态按回一个成年人该有的步子里。</p>
+  <p class="p rise">来人是大理国小使，二十来岁，颊上还有风霜裂的细纹，笑起来却露出虎牙，像没被朝堂磨圆的少年：“驸马爷，我家王子……哦不，我家皇帝陛下有书。还带了普洱与乳扇，说您若想家，就尝尝。”</p>
+  <p class="p rise">虚竹接过竹筒，指尖微颤。竹筒表面被摩得发亮，有一道旧裂，用细丝缠过——段誉向来如此，贵物不在手，情分在痕里。</p>
+  <p class="p rise">“想家”两个字，被段誉用得轻巧，却准。他哪里是大理的家？可段誉永远把他的心当成可以随时敲门的院子：门不必新漆，院不必大，只要里头有人应一声“来了”。</p>
+  <p class="p rise">“一路辛苦。”虚竹让人安置使者，又吩咐厨下温酒、备姜汤，“今夜住下，明日我回信。马也要好生喂，这马识路，别亏待了。”</p>
+  <p class="p rise">小使连连称是，又从怀里摸出一方油纸包，郑重递上：“陛下说，乳扇要趁新鲜。普洱可久放，乳扇放久了就硬，硬了您还得泡软——他说，人有时候也一样，硬了就得有人记得泡一泡。”</p>
+  <p class="p rise">虚竹一怔，随即低低笑了。笑意未到眼底，喉间先热了一下。</p>
+  <p class="p rise">进房，他才拆信。</p>
+  <p class="p rise">窗外有驿卒扫雪，扫帚刮地，沙沙如雨。灯芯爆了一星，照见段誉的字：仍旧好看，行云流水，却比往日沉了半分，像把快活压在纸背，只把该说的话送到眼前。</p>
+  <p class="p rise"><strong>虚竹兄弟如晤：</strong></p>
+  <p class="p rise"><strong>大理近日无事，百姓安，我也安。王席坐着不习惯，好在有人催，有人骂，骂着骂着便像真的了。有人说我把皇帝做成了戏，我回他：戏若能让人少死，便演下去。</strong></p>
+  <p class="p rise"><strong>常念大哥。念他时，酒便淡。有人劝我少提，说提了惹中原忌讳。我偏提。人若死了连名字都不能活在朋友嘴里，那才是真死。我提他，不是要天下再起刀兵，是要我们这些还活着的人记得：义气不是用来殉的，是用来把路走完的。</strong></p>
+  <p class="p rise"><strong>听说你在西夏左右为难。我远，帮不上刀兵，只能说一句不中听的：莫学大哥把天下扛在一人肩上。大哥扛得动时，是英雄；扛不动时，天都窄。你武功高，心更软，软的人最容易把自己当成绳，去捆所有裂开的口子。绳会断。断的时候，先疼的是还指望你的人。</strong></p>
+  <p class="p rise"><strong>梦姑姑娘若骂你，你听着。她骂得对的多。你从前不会拒绝，如今要学。拒绝不是弃义，是留力气给真正要护的人。你护得住的，才叫护；护不住还硬护，最后只剩一个坟头给别人哭。</strong></p>
+  <p class="p rise"><strong>有空来大理。或我去看你。别怕我添乱——我现在添乱也会先下诏，名正言顺。诏书比拳头好看，也比拳头难挡。</strong></p>
+  <p class="p rise"><strong>弟 誉 顿首</strong></p>
+  <p class="p rise">虚竹把信读了两遍，第三遍时，眼眶热了。</p>
+  <p class="p rise">他笑，笑着笑着，又把脸埋进掌心。驿馆的灯很小，照着他的肩，像有人远远拍了拍——不重，却正好落在他这些日子绷得最紧的那一块。</p>
+  <p class="p rise">信纸边缘有一点油渍，大约是段誉写到中途吃了什么。虚竹用拇指轻轻摩过那一点，忽然想起聚贤庄前后的酒气、笑骂、还有后来再也拼不回的完整。大哥走了，名字还在；名字在，人就不该被世人用忌讳活埋第二次。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">慧净在门外轻咳一声：“师兄，可要独处？”</p>
+  <p class="p rise">“进来吧。”虚竹擦了把脸，把信递过去，“你可以看。不是密诏。段誉若写密诏，也写不成这样——他藏不住话。”</p>
+  <p class="p rise">慧净接信时很小心，像接一件会碎的东西。看完，沉默良久，合十：“段皇爷是明白人。”</p>
+  <p class="p rise">“他一向明白。”虚竹道，“只是明白得快活。我明白得沉重。同样一句话，从他嘴里出来是风，到我这儿就成了石头。”</p>
+  <p class="p rise">“那石头您接不接？”</p>
+  <p class="p rise">“接。”虚竹把信折好，贴身收起，贴在心口偏左的位置，像收一枚还温的印，“大哥不在了，这话更要听。我若再走他那条绝路，才是真的对不起他。他扛的是命，我若再扛一次命，世上就只剩故事，不剩人了。”</p>
+  <p class="p rise">慧净看着他：“师兄怕的，是自己也会变成别人嘴里的忌讳？”</p>
+  <p class="p rise">虚竹点头，又摇头：“怕，也不只是怕。我更怕我活着的时候，就已经把身边的人当成可以随时牺牲的棋。大哥不是那样的人。他死，是因为路走到了尽头；我若学他死法，却死在半路，那叫辜负。”</p>
+  <p class="p rise">窗外有人唱西夏小调，调子婉转，词却听不真切。炭盆里火星一跳，映得窗纸忽明忽暗。虚竹忽然问：“慧净，你说义气最大的样子，是什么？”</p>
+  <p class="p rise">慧净想了想，答得并不快：“从前我以为是同生共死。如今跟在师兄身边看，觉得……是把刀递给该用的人，而不是自己永远握着刀，替所有人砍。砍到后来，刀钝了，手也废了，旁人还以为你不够义。”</p>
+  <p class="p rise">虚竹点头：“段誉也是这个意思。他写得漂亮些。我只会说难听的——莫一人扛天下。”</p>
+  <p class="p rise">“难听的往往更真。”慧净道，“师兄若肯听，中原那边……我回去也能把这话带回去。不是替您开脱，是让他们知道：您拒的不是义，是把自己炼成绳。”</p>
+  <p class="p rise">虚竹看他一眼，目光里有感激，也有一点涩：“你还年轻，话却老。好。你带回去。带的时候别美化我，也别丑化西夏。原样说。”</p>
+  <p class="p rise">“是。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">使者住下后，虚竹又去马厩看了那匹大理马。</p>
+  <p class="p rise">马看见他，打了个响鼻，像认人。他伸手贴了贴马颈，触到汗干后的盐霜，忽然觉得自己也像一匹被远道赶来送信的牲口——信送到了，还要自己决定回不回、怎么回。</p>
+  <p class="p rise">夜里他睡不实。梦里有人举杯，杯沿相碰，清脆一声，醒来却是檐冰落地。他坐起身，摸到贴身的信，才知道自己仍在驿馆，仍在归途，仍要把“拒绝”两个字从纸上搬进日子里。</p>
+  <p class="p rise">回到兴庆，已是薄暮。</p>
+  <p class="p rise">城门灯火渐起，市声像退潮后又涌回来的水。府门灯火齐，梦姑亲自在廊下等，斗篷外沿沾着细雪，神色端正，只有看见他时眼底微微一松——那一松极短，像怕被旁人读出“牵挂”二字。</p>
+  <p class="p rise">见他风尘仆仆，她先打量他有没有伤：肩、腕、领口、靴底泥色。再问山里如何。虚竹把灵鹫三日的事说了，也把石破尘的威胁说了，说到“两头跑”，梦姑听完，脸色沉下，却先道：</p>
+  <p class="p rise">“你能把符敏扶正，算你没白跑。人心这东西，拖着最烂。烂到后来，不是不信你，是不信自己还能信谁。”</p>
+  <p class="p rise">虚竹从袖中取出段誉的信，给她看。梦姑读到“梦姑姑娘若骂你，你听着”，眉峰一挑，竟轻笑出声，笑意里有一点被看穿的恼，更多是认可：“他倒会说话。下次他来，我请他喝酒。”</p>
+  <p class="p rise">“他酒量……”虚竹想起旧事，有点无奈，“一杯就脸红，两杯就讲道理，三杯就……就容易把该藏的话全讲完。”</p>
+  <p class="p rise">“酒量差也请。”梦姑把信还他，眼神柔了一寸，“有朋友在远处记得你，是福。别把福当成债，天天还。债还多了，福也变恨。”</p>
+  <p class="p rise">虚竹应下。两人并肩入内，廊下亲兵目不斜视，墙上西夏纹饰在灯下沉着金。若忽略这些，他们倒像一对寻常归家的夫妻：男人说路上冷，女人说汤热了；男人说信到了，女人说先洗手再读。</p>
+  <p class="p rise">晚饭是清粥与羊汤，乳扇被切片温过，普洱另泡。梦姑尝了一口乳扇，点评道：“甜里有奶腥，像大理的太阳——照得人懒，却不假。”</p>
+  <p class="p rise">虚竹笑：“你没去过大理。”</p>
+  <p class="p rise">“信里去过。”梦姑道，“你把信给我看，就等于把路打开一寸。我不必真到，也能知道那边有人把你当兄弟，不是当西夏的棋。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">晚饭后，虚竹回信。</p>
+  <p class="p rise">书房灯亮，纸铺得平。他写得慢，字不像段誉那样飘，一笔一划都像在过河，怕深怕浅。涂改几处，纸边堆起细屑，最后定稿很短——短不是无话，是怕话多了又把自己写成绳。</p>
+  <p class="p rise"><strong>誉弟：信收讫。普洱乳扇亦收，我与清露同享。她说下次请你喝酒，你来时少带诏书，多带能下咽的酒。</strong></p>
+  <p class="p rise"><strong>大哥事，我亦常念。念时不酒，只坐。坐久了，像有人在对面空着位子，不催，也不走。</strong></p>
+  <p class="p rise"><strong>你说的拒绝，我在学。学不会的时候，清露会骂，你的信也会骂。我两边听。听得懂的，我做；听不懂的，我先记下，免得日后装傻。</strong></p>
+  <p class="p rise"><strong>灵鹫与西夏之间，我暂找到一点立脚处：在其位，尽其分，拒其贪。贪的是把我变成刀的人。刀我不当。当刀的人死得快，死了还脏了握刀的手。</strong></p>
+  <p class="p rise"><strong>你若来，我扫榻。我去，你别让我批折子。折子一事，我见字就头大，头大就容易答应不该答应的事。</strong></p>
+  <p class="p rise"><strong>兄 竹</strong></p>
+  <p class="p rise">写罢，他吹干墨迹，交给大理使者，又赠一匹骏马作回礼——不是比阔，是怕使者归途再骑疲马，信到得晚。使者千恩万谢，眼里竟有水光，夜里便走，说皇帝等信等得像等雨：雨若不来，田不至于立刻死，可人心会先裂。</p>
+  <p class="p rise">虚竹送出府门，看马蹄踏雪远去，才低声道：“誉弟，你轻，我重。轻的人把话送来，重的人要把话活成日子。难。”</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">同夜，赫连拓递了拜帖，约次日“议边”。</p>
+  <p class="p rise">帖子纸好，字也稳，稳得像一把放在桌面上的刀：不拔鞘，却让人知道鞘里有刃。梦姑捏着帖子，指节泛白：“来了。菜也来了。”</p>
+  <p class="p rise">虚竹道：“见。不见更像心虚。”</p>
+  <p class="p rise">“见可以，带脑子。”梦姑盯着他，目光里没有玩笑，“段誉让你拒绝，你明日就从赫连拓身上练。他提什么‘为国’‘安边’‘清剿’，你都先问代价是谁付。付不起的，不接。接了又还不起的，更不接。你从前总想先应下再想办法——那叫软，不叫仁。”</p>
+  <p class="p rise">虚竹郑重点头：“我问代价。代价若是灵鹫变刀、山上变空、你变人质，我拒。”</p>
+  <p class="p rise">“还有你自己。”梦姑补了一句，“你把自己当代价的时候，也要问我答不答应。我不答应你随手把自己押上桌。”</p>
+  <p class="p rise">虚竹一愣，随即应道：“好。”</p>
+  <p class="p rise">夜深，他独自在院中站了一会儿。雪后地面反光，像一面碎镜，照出他半张脸清晰、半张脸模糊。远处更鼓沉闷，近处檐角冰溜子被风吹得轻轻响，像谁在碰杯——碰的是还活着的人的杯。</p>
+  <p class="p rise">他想起乔峰。想起那人把义气活成脊梁，也活成绝路。想起段誉信上的字，轻得像风，却专吹他最容易断的地方。想起阿穗的小灯，想起符敏说“再信一次”，想起梦姑在廊下等他时那一寸极短的松。</p>
+  <p class="p rise">“大哥，”他在心里说，声音轻到自己几乎听不见，“我不当你第二。我当我自己。自己若也能护住人，就不算丢你的脸。你把天下扛到扛不动，我学你护人，不学你把命当成最后一张帖。”</p>
+  <p class="p rise">风没有回答。</p>
+  <p class="p rise">风只把碎镜般的雪光吹乱，又拼回。虚竹站到足冷，才回房。门轴轻响时，梦姑在暗中问：“还在想信？”</p>
+  <p class="p rise">“想信，也想明日。”他道。</p>
+  <p class="p rise">“明日是棋。”梦姑的声音带着困意，却清楚，“你别把棋当成命。命在这屋里，棋在殿上。分得清，才活得久。”</p>
+  <p class="p rise">虚竹应了一声，躺下，手还按在贴身的信上。信纸薄，却像一层新长出来的骨头——还软，已经开始撑着他，让他在下一次有人要把天下塞进他怀里时，能说一句：</p>
+  <p class="p rise">不。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch6">← 九天疑主</a><a href="#ch8">驸马棋子 →</a></nav>
+
+<section class="chapter" id="ch8" data-num="8" data-title="驸马棋子" data-anchor="ch8" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 8 章</div>
+    <h2 class="ch-title">驸马棋子</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">议事殿的暖比外面假。</p>
+  <p class="p rise">炭火烧得很足，铜盆沿烫得发亮，袍袖仍透着冷——那种冷不来自风，来自目光。目光有的锋利，有的含笑，有的故意放空，空里藏着算盘。虚竹按礼站在驸马班列，西夏礼服袖宽腰带，穿在他身上仍像借来的壳：肩沉，背直，像僧人入殿，不抢分毫多余的风头。</p>
+  <p class="p rise">梦姑在公主席侧，钗光不动，只有指尖在袖中微屈，像暗暗数着自己还能插话的时机。</p>
+  <p class="p rise">赫连拓持笏出列，声音宏亮得像早就排演过，每一个字都砸在该砸的点上：</p>
+  <p class="p rise">“启禀陛下：边境江湖人蠢动，星宿余孽烧我仓廪，中原门派又遣僧窥探。此皆因威不立。威不立，则民心摇；民心摇，则边事费。驸马兼灵鹫宫主，若能领命‘抚边’，一可震宵小，二可安中原之心，三可显我朝胸襟。请授驸马临时边务便宜，调灵鹫精锐协防关城。”</p>
+  <p class="p rise">殿中有人附和，声浪不高，却整齐，像事先约好的鼓点。有人沉默，沉默里藏着观望：驸马若接，日后可攀；若不接，日后可攻。皇帝坐得高，面容在纱影后不甚分明，只道：“驸马意下如何？”</p>
+  <p class="p rise">所有视线落在虚竹身上。</p>
+  <p class="p rise">那一刻，虚竹忽然想起段誉信上的字：莫一人扛天下。也想起梦姑昨夜的叮嘱：先问代价是谁付。他上前一步，揖手，动作稳，声线却在开口前先在胸腔里过了一遍——怕软，也怕硬得不像自己。</p>
+  <p class="p rise">“陛下，边务是国事，臣愿效力。”他道，“然灵鹫精锐并非边军。她们守山，是自守，也是不扰民。若尽调关城，山空，宵小反而更喜；山空之后，再有人假传号令，臣纵有通天本事，也难补回。臣请：灵鹫可协查江湖案，可清边市毒窝，但不入军籍，不充冲锋。臣个人——”</p>
+  <p class="p rise">他顿了顿，感到梦姑的目光像一根线，轻轻拽他：别把后半句说成求饶，说成边界。</p>
+  <p class="p rise">“臣个人可巡边、可断案、可与中原来使谈‘不为祸’之诺。但请勿授臣私调军马之权。臣武人，怕权一到手，便有人借臣之手做过分的事。到时臣死不足惜，恐污了陛下的名，也乱了边军的序。”</p>
+  <p class="p rise">殿中微哗。有人赞他谨慎，有人讽他推诿，有人低声道：“到底是僧出身，不懂国器。”赫连拓眉峰一动，笑意却更深，像把坑挖好了等人自己跳：</p>
+  <p class="p rise">“驸马太谦。权在有德者手，方是福。难道驸马自认无德？”</p>
+  <p class="p rise">这是坑。认无德，站不住；认有德，就该接权；接权之后，便是刀柄在他掌心，刀刃却朝向别人指定的方向。</p>
+  <p class="p rise">虚竹平静道：“臣有所守，便是德。守的是不把国事做成私刑，不把山门做成刀圈。臣若无守，再大的权也只是祸。”</p>
+  <p class="p rise">赫连拓还要再逼，话锋已转到“民心”“粮仓”“中原僧人在城”，每一项都像往虚竹肩上加一块砖。梦姑忽然起身，行礼，声音清亮，清得像冰裂：</p>
+  <p class="p rise">“父皇，女儿有话。赫连枢密要的是安边，驸马给的也是安边，路径不同而已。强把灵鹫编成刀，刀会反光——光照到朝里，怕有人眼睛疼。女儿请以国法约束江湖案：有证据者抓，无证据者不兴大狱。驸马愿做执行，不愿做借口。借口若立了，今日砍宵小，明日就能砍到看不顺眼的人。”</p>
+  <p class="p rise">她说到“借口”二字时，目光扫过赫连拓，礼数仍在，刀意也在。殿中有老臣轻咳，像把笑意压进喉咙。</p>
+  <p class="p rise">皇帝沉默片刻，似乎笑了一下，笑声不高，却让纱影后的威压松了半寸：“准驸马协查江湖，不授军权。灵鹫仍自属。赫连爱卿，边军的事你自己扛，别什么都往女婿身上堆。堆多了，女婿成了墙，墙倒了，先砸的是家。”</p>
+  <p class="p rise">赫连拓立刻俯首：“遵旨。”</p>
+  <p class="p rise">像输了一子，又像埋了下一步。他退回班列时，笏板端得更稳，稳得让虚竹心口发沉：这种人输了不会恼在脸上，会把恼磨成更细的刀。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">退殿后，廊上风硬。</p>
+  <p class="p rise">宫墙内外温差像两张脸。虚竹呼出的白气很快散尽，赫连拓却“偶遇”一般转出回廊拐角，仍是春风笑，笑里带着长辈看晚辈的宽和：</p>
+  <p class="p rise">“驸马好本事，三言两语把权推干净。只是粮仓的火，民心要安抚。安抚需要人出面。驸马若肯在告示上署名‘奉枢密府会同查办’，事半功倍。民看见枢密与驸马一条心，宵小就不敢再烧。”</p>
+  <p class="p rise">虚竹看他，目光不硬不软：“会同可以。署名……要写清楚责任。火不是我放的，我查。查到谁，办谁。办的时候，请枢密府别先把人保走。保走了，会同就成了同演。”</p>
+  <p class="p rise">赫连拓眼神一凝，随即哈哈大笑，笑声在廊柱间撞出回音：“驸马疑我？”</p>
+  <p class="p rise">“臣不敢。”虚竹道，“臣只疑证据会跑。证据一跑，真相就变成话本；话本一传，再干净的手也洗不清。”</p>
+  <p class="p rise">两人对视一息。廊外有宫人远立，不敢近。赫连拓先移开眼，拍拍虚竹的肩，力道不重，却像在试他骨头硬不硬：“年轻人，太干净会摔跤。摔了，没人扶。朝里不是山门，山门里讲规矩，朝里讲输赢。”</p>
+  <p class="p rise">“有人扶。”虚竹轻声说。</p>
+  <p class="p rise">赫连拓顺着他目光，看见梦姑站在廊尽处等他，斗篷被风掀起一角，人却立得像钉进石板。权臣笑意更深，也更冷，拱手离去，临去丢下一句：“扶得了一时，扶不了一世。驸马好自为之。”</p>
+  <p class="p rise">虚竹望着他的背影，忽然明白：今日殿上拒的是军权，廊上递来的是名。名比权软，软刀子更难防。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">回府路上，车帘半掩，马蹄敲石。</p>
+  <p class="p rise">梦姑在车里问：“害怕吗？”</p>
+  <p class="p rise">“怕。”虚竹骑马并行，老实道，不饰不瞒，“怕他说得对——我太干净会摔跤。也怕我拒得太像推诿，日后有人把边祸全算在我头上。”</p>
+  <p class="p rise">“摔了有我。”梦姑道，“但你别自己先往泥里躺。今日你拒绝得还行，像那么回事。像那么回事，比像圣人重要。圣人站不住朝，站得住的是会说‘不’的人。”</p>
+  <p class="p rise">虚竹笑了一下，笑意短：“段誉若听见，要高兴。”</p>
+  <p class="p rise">“他高兴之前，先让赫连拓不高兴。”梦姑掀帘看他，眼里是算过的冷，“你注意到没有？他要的不是你立刻接军权，是让你习惯被提名、被捆绑、被写成‘国之干城’。写多了，你拒一次就成一次不忠。舆论比刀快。刀还能挡，舆论是水，水漫过来，你只会觉得自己先湿了。”</p>
+  <p class="p rise">虚竹沉默。车轮碾过石板，一声一声，像在给他数剩余的退路。退路不多：接，是刀；拒，是谤；不接不拒，是被人写成墙。</p>
+  <p class="p rise">“那我们怎么办？”他问。</p>
+  <p class="p rise">“抢着写。”梦姑道，“我们写你的边界：做什么，不做什么。贴到该看的人眼前。你在灵鹫贴过宫门，在兴庆也要贴——不是真贴木板，是贴进关键老人的耳朵里。老人耳沉，可一旦听进去，皇帝也要掂量。明日我去走动。你去见慧净，把今日朝议说与他听，让中原的‘见证’先记下：驸马拒的是私刀，不是拒国。拒国是罪，拒私刀是分寸。分寸二字，我们要先占住。”</p>
+  <p class="p rise">虚竹看着她，眼里有光，光里有疼：“清露，你像在下棋。”</p>
+  <p class="p rise">“我像在活命。”梦姑回视，声线平，字却重，“你的命，我的命，山上那些姑娘的命。棋只是样子。样子好看，是为了让敌人以为我们在玩；我们不玩，我们在守夜。”</p>
+  <p class="p rise">车过市口，有孩童追着看驸马旗号，笑闹一声。虚竹抬手回了一礼，孩童愣住，随即更欢。梦姑低声道：“看见没有？民心里你还是人。赫连拓要的是把你写成器。器好用，人难用。你就继续难用。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">夜，府中来了不速之客。</p>
+  <p class="p rise">不是刺客，是赫连拓门下那几个曾在驿馆被虚竹制住的军士，盔甲整齐，神色尴尬，捧着礼盒，说是“赔罪”。盒里是美玉与金，玉温润，金成锭，还有一纸“边市商路干股”，字迹恭敬，条款却滑：干股不干事，干事时便成把柄。</p>
+  <p class="p rise">虚竹看也不看，退回，连盒盖都不愿多碰：</p>
+  <p class="p rise">“罪不在你们。礼更不该来。告诉枢密：若真要赔，便把纵火案的关文流放清楚。金玉我碰了，手会脏；手脏了，查案时人就不信。人不信，我这协查便成了空衔；空衔一立，便有人拿空衔做实祸。”</p>
+  <p class="p rise">军士面面相觑，有人想劝，有人想怒，最终只得带走。临走一人低声道：“驸马……我们真只是奉命。”</p>
+  <p class="p rise">虚竹点头：“我知。奉命的人，有时比下命的人更苦。回去吧。别为这盒东西折了自己的脊梁。”</p>
+  <p class="p rise">人去后，梦姑在屏风后走出来，给他倒茶，茶香冲开厅里残留的冷：“你今日拒绝了三次。军权，署名陷阱，金玉。像在练功。”</p>
+  <p class="p rise">虚竹接茶，吹了吹，热气模糊了他片刻视线：“练功会疼。拒绝也疼。我总觉得拒了，就对不起谁。对不起边民，对不起陛下的信任，对不起……那些指望我一把扛起的人。”</p>
+  <p class="p rise">“对不起该被对不起的人，才叫对。”梦姑在他对面坐下，认真道，一字一字像钉，“你欠灵鹫一个能主事的主，欠西夏一个不惹祸的婿，欠中原一个不启战的邻居。你不欠赫连拓一条听话的狗。狗听话，主人开心；狗死了，主人再买一条。你若把自己做成狗，死了都换不来安。”</p>
+  <p class="p rise">虚竹把这句话记住了。像记住一段新的心法：不是口诀，是界。</p>
+  <p class="p rise">他起身走到窗边，看更鼓敲过。棋子落在看不见的盘上，咔嗒一声——有人以为驸马只是软，有人开始发现软里有界。界还薄，像初冬的冰，一踩就裂；可已经存在。</p>
+  <p class="p rise">存在，就有长厚的可能。</p>
+  <p class="p rise">梦姑在他身后道：“明日我去后族走动。你把今日的话再理一遍，别到了会审席上，被人三言两语绕回去。”</p>
+  <p class="p rise">“好。”虚竹应道，又补了一句，“清露，今日殿上……辛苦你。”</p>
+  <p class="p rise">“别把护你说成辛苦。”梦姑道，“我护你，是护我自己的日子。你若成了刀，我第一个被割到。明白吗？”</p>
+  <p class="p rise">虚竹回头，郑重一礼。礼不像驸马对公主，更像一个终于肯把命交给并肩之人的男人。</p>
+  <p class="p rise">窗外雪意又起，细得像粉。粉落在檐上，无声。无声之处，制度的软刀子也在磨——磨得越细，越要人用血才能看见刃。</p>
+  <p class="p rise">虚竹回房后，又把今日三拒写在纸角：军权、署名、金玉。写完看了看，像看三道浅浅的疤。疤不致命，却提醒他：下次还会有第四拒、第五拒。拒多了，人会习惯；习惯了，才不会在关键一息突然心软，把整盘棋又推回去。</p>
+  <p class="p rise">他吹灯前对梦姑道：“明日你走动，我见慧净。再往后……布我们的界。”</p>
+  <p class="p rise">“嗯。”梦姑在暗中应了一声，声音已带睡意，却仍清楚，“界要写给人看，也要写给自己看。你忘的时候，我提醒你；我软的时候，你拉住我。”</p>
+  <p class="p rise">“好。”</p>
+  <p class="p rise">而他今日第一次真正体会到：拒绝不是把路堵死，是把路让回自己脚下。</p>
+  <p class="p rise">脚下有路，才走得动明日。明日有赫连拓，有朝议余波，有可能落在告示上的另一只手。手可以再伸，他也可以再说不——不字虽短，却要拿命去养。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch7">← 大理来信</a><a href="#ch9">守势之局 →</a></nav>
+
+<section class="chapter" id="ch9" data-num="9" data-title="守势之局" data-anchor="ch9" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 9 章</div>
+    <h2 class="ch-title">守势之局</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">虚竹把自己关在书房里半日。</p>
+  <p class="p rise">不是逃避，是排布。案上摊开三样东西：灵鹫告示抄件、朝议记录摘要、半夏堂关文残片的拓印。炭笔在他指间磨短一截，纸上画出三个圈，分别写：山、城、中原。圈与圈相交处，他写了一个字：界。</p>
+  <p class="p rise">界字写得重，纸背微微凸起。</p>
+  <p class="p rise">他坐着看了很久，像看一张自己画出来的命。命从前是别人塞给他的：掌门、宫主、驸马，一件件往肩上挂。如今他第一次试着自己画线——线内守，线外拒，拒不是绝情，是别把自己扯成一张到处补洞的网。</p>
+  <p class="p rise">梦姑推门进来，看了一眼，唇角微动：“像个孩子画画。”</p>
+  <p class="p rise">“是孩子学认路。”虚竹抬起头，眼里却有成年人的疲与决，“清露，我想把拒绝写成可核对的事。光靠嘴拒，人家当软；写成条，人家才知道我不是随口推。”</p>
+  <p class="p rise">他一条条说，说时并不激昂，像在报账：</p>
+  <p class="p rise">其一，向灵鹫公开行程：每月初一、十五飞鸽报平安；突发事半日复；今年剩余节令驻山计划表，由符敏张贴。贴出来，就有人可对；可对，才有信。</p>
+  <p class="p rise">其二，请梦姑出面，把“驸马不领边军、灵鹫不入军籍”说给后族与稳健老臣听，换他们在皇帝耳边的稳定声音。稳定比锋利更贴皇帝的心。</p>
+  <p class="p rise">其三，对慧净完全敞开边市案卷，任他抄录见闻，回中原可原文转述——美丑不饰。饰了，见证就成宣传；宣传一破，比不写更糟。</p>
+  <p class="p rise">其四，边市半夏堂一系，联合关城明查，抓活口，不兴谣狱；查到权贵，证据先交梦姑，由她择机走国法，不走江湖夜刺。夜刺痛快，痛快之后是更大的口实。</p>
+  <p class="p rise">梦姑听完，慢慢点头，走到案边，用指尖点了点那个“界”字：“像那么回事。你终于肯把自己放进局中，而不是站在局外做好人。局外好人最省事，也最误事——误到别人流血，你还在心疼自己心软。”</p>
+  <p class="p rise">“我还是想做好人。”虚竹认真道，像怕被误解，“只是好人也可以布阵。阵是守，不是坑人。坑人的局，赢了也脏；守的局，输了也还站得住。”</p>
+  <p class="p rise">“守势之局。”梦姑唇角微扬，眼底却认真，“这名字好。你去办一、三、四。二我来。二比一更难——耳朵比告示滑，滑的东西要反复说，说成他们自己的主意才算成。”</p>
+  <p class="p rise">虚竹起身，对她一揖：“辛苦。”</p>
+  <p class="p rise">“又来。”梦姑抬手止住，“把辛苦收着，留到真撑不住的时候。现在还早。”</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">慧净听完安排，沉默片刻，合十，僧衣袖角微颤：“师兄这是把自己放到阳光下。”</p>
+  <p class="p rise">“阳光刺眼，但少鬼。”虚竹道，“鬼最怕被写进纸里。你若看见我不对，当场说。别等回中原再写成话本。话本一出，死人都能被写成活的，活人也能被写成鬼。”</p>
+  <p class="p rise">“我会。”慧净应下，目光清，“也会记下赫连拓如何逼、公主如何撑。公正不是只写你。只写你，那是捧，捧跟踩一样，都会把人从真人里抽出去。”</p>
+  <p class="p rise">虚竹感激地看他一眼。有镜子在侧，人会少做些见不得光的自欺。自欺从前是他的病：总以为多扛一点就能换来全安。如今他要学的是：把该给别人看的先给看，把该自己守的先守住。</p>
+  <p class="p rise">当天下午，虚竹亲赴边市。</p>
+  <p class="p rise">关城旌旗被风扯得猎猎，守将已得驸马府知会，盔甲齐整，神色却复杂——有敬，有忌，有看热闹的冷。库门打开时，霉味与粮香绞在一起，像把过冬的命摊在日光下核对。虚竹把灵鹫外仓调拨文书放下，又把私出的银子补进民户账册，经手处一一签字，不让银子变成“恩赐的雾”。</p>
+  <p class="p rise">粮可后补，冻死的人补不回。有老人拉着他的手哭，手背青筋鼓起，像冬天里勉强活着的根。虚竹只会说：“先活着。活着比分对错重要。对错我们慢慢查，人冷了就先暖。”</p>
+  <p class="p rise">老人叩头，他慌忙扶起，扶起时自己膝头也沾了泥。泥不脏，脏的是有人拿饥寒当棋。</p>
+  <p class="p rise">半夏堂旧址在市尾，门楣焦黑，墙根还留着毒粉腐蚀的白斑。虚竹令人掘地三尺，铁锹起落，土腥上涌。掘到半人深，铲尖碰到硬物，挖出一只铁盒。盒锁已锈，撬开后不是金银，是往来暗号册，册页边角有极淡的“拓”字花押练习——一笔一画像教人模仿，模仿到能乱真。</p>
+  <p class="p rise">慧净脸色凝重，指尖停在那花押上，不敢多碰：“再往上，便是朝中。”</p>
+  <p class="p rise">“所以更要慢。”虚竹把铁盒封好，封条上亲自按印，“慢不是怕，是别让证据变成我栽赃的口实。口实一旦立了，真证据也没人信。我们要的是能上国法的东西，不是能上酒桌的传闻。”</p>
+  <p class="p rise">关城守将在侧，喉结滚动：“驸马……这盒子……”</p>
+  <p class="p rise">“先封存在关城公库，双人值守，钥分两处。”虚竹道，“一处你处，一处我府。动它要两边到场。谁独开，谁就是贼。”</p>
+  <p class="p rise">守将一凛，应下。虚竹看他神色，知道这话既是防外人，也是给他一条能站直的绳：绳在，人就不用跪着办事。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">梦姑那头更无声。</p>
+  <p class="p rise">她不入刀光，入茶香。宗室女眷的茶局里，炭暖、瓷细、笑意浅。她把“驸马拒军权”说成“懂分寸”，把“灵鹫协查不入籍”说成“免后患”。她不骂赫连拓，只夸老臣们“看得远”——夸完，自然有人愿把话带进更深的门，像把糖纸折进袖里，回家再展开给该听的人听。</p>
+  <p class="p rise">有一位太妃问她：“清露，你就不怕驸马软弱，被人看轻？”</p>
+  <p class="p rise">梦姑放下茶盏，声线稳：“怕。更怕他强到只剩一把刀。刀强，握刀的人先死。我要他活着把日子过完，不要他死成别人嘴里的英雄。”</p>
+  <p class="p rise">太妃看她半晌，轻轻点头：“你倒像你母妃。母妃从前也说，能守住的家，才叫国。”</p>
+  <p class="p rise">傍晚回府，雪又细细地下。梦姑解下斗篷，对虚竹道：“三成老的被我说动，两成骑墙，其余是赫连的人。够用。皇帝要的是稳，我们给稳，比给刀更对他胃口。刀响，他烦；稳住，他能睡。”</p>
+  <p class="p rise">虚竹倒茶给她，看她眼尾有倦，心口一紧：“辛苦。”</p>
+  <p class="p rise">“别辛苦来辛苦去。”梦姑饮茶，茶雾遮住半张脸，“你布的局，缺一块：若有人今晚就掀桌呢？你守得住吗？局是给明天用的，敌人不一定等到明天。”</p>
+  <p class="p rise">虚竹想了想，答得并不漂亮：“守不住所有。但我守得住你，守得住该守的令。其余……交给运气，不。交给符敏在山上的网，交给关城的兵，交给你在宫里的眼。运气是推脱，网与眼才是事。”</p>
+  <p class="p rise">梦姑看着他，忽然伸手抚了抚他的脸，指腹有一点凉：“你说话越来越像能活下去的人了。能活下去的人，才会把‘我’放进‘我们’里。”</p>
+  <p class="p rise">虚竹握住她的手，低声道：“清露，若局破了……”</p>
+  <p class="p rise">“破了再补。”她打断，“先别在破之前先哭。哭留给成的时候——成了，才有资格软一下。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">夜初，布局的线都已抛出。</p>
+  <p class="p rise">书房灯下，虚竹写最后一封飞鸽给符敏。字迹比平日更慢，慢到每一笔都像在把命押上去：</p>
+  <p class="p rise">兴庆已明边界。山中勿因我归城而松。若有以我之令调人离山者，非我亲笔、印、与你所知暗记三者齐备，一律不从。三者缺一，即视为假。假令来时，先囚来人，再飞鸽问我。问不到我，便当我已出事——出事也不许空山。</p>
+  <p class="p rise">写到“一律不从”时，他停笔片刻。这是把权分出去，也是把命托出去。符敏若背叛，局毁；她若不背叛，局才活。活与毁之间，只隔一张薄纸与一颗还肯信他的心。</p>
+  <p class="p rise">他想起山上议事厅里那些姑娘的眼睛，想起“暂信”。暂信要靠日子养，也要靠制度托。制度冷，冷得像铁；铁若铸在该铸的地方，就能少流一点血。</p>
+  <p class="p rise">他封信、盖印、加上只有符敏认得的暗记，亲自送到鸽房。鸽翎在灯下闪着冷光，像一封会飞的誓。鸽丁是府中老人，接信时多看了他一眼，欲言又止。虚竹道：“若回信有异，先报我，再报任何人。”老人点头，把信筒系得死紧，像系住一条不该松的命。</p>
+  <p class="p rise">回院时，他听见院墙外极轻的一声猫叫——不像猫。</p>
+  <p class="p rise">虚竹抬眼，内力悄然散开，像无形的网铺过砖石与树影。院中亲兵仍在，灯火仍稳，更道上脚步均匀。那声却像试探：有人在量这座府的深度，量护卫的空档，量主子的睡相。量完，才会决定是翻墙，还是先放火、先喊街、先借刀。</p>
+  <p class="p rise">梦姑推开窗，望着黑暗，声音很轻，轻得像怕惊动暗处的耳：“来了。”</p>
+  <p class="p rise">“还没到。”虚竹走到她身边，与她共一窗冷风，“在闻。闻我们是不是真的布了局，还是装样子。装样子的局，一戳就破；真局，戳的人会先疼。疼了，才会换法子。”</p>
+  <p class="p rise">“那便让他们闻清楚。”梦姑道，“我们不是装。我们是守。守到他们自己先乱。乱的人会露马脚，露了，我们才接得住。接不住的时候，也别先散——散是敌人最想看见的样子。”</p>
+  <p class="p rise">远处宫城方向，有一盏灯突然灭了，又亮。像眨眼，像信号，像谁在暗处轻轻拍手：好，戏可以开场了。</p>
+  <p class="p rise">虚竹握住梦姑的手。手心都有汗。汗在冬夜发凉，凉得真实。真实比豪言更让他踏实——至少说明他没有把自己骗成无畏的泥胎。</p>
+  <p class="p rise">“清露，”他说，“若明日有变，你先保自己。你活着，证据才有人递，边界才有人说。我若先护你而乱了局，你骂我；你若为护我而把自己送出去，我不答应。”</p>
+  <p class="p rise">“你也是。”梦姑反握，力道不轻，“别又一个人冲出去当英雄。英雄死了，局就散了。散了的局，会把活着的人踩进泥里，还说是为了纪念你。我不要纪念，我要你人在。”</p>
+  <p class="p rise">两人在灯下对坐，像两枚终于放对位置的棋子——仍是棋，却不再任人随手捏起。案上那张画着三圈的纸还在，炭痕未干，“界”字如钉。钉住的不只是山与城，还有他终于肯承认的那一点：好人也可以布阵，布阵不是变坏，是学会活。</p>
+  <p class="p rise">夜色更深。守势之局成了。</p>
+  <p class="p rise">而所有棋手都知道：局成的下一息，往往就是有人要破局。破局的人不会先敲门，会先学猫叫，会先灭一盏灯，会先让你以为夜还很长。</p>
+  <p class="p rise">虚竹吹灭一盏多余的灯，只留一豆光。光小，影就大；影大之处，他看见自己的肩终于不像从前那样空——空肩好扛天下，满肩才能扛住该扛的人。</p>
+  <p class="p rise">风过廊角，像有人在远处轻轻笑了一声。笑意不明，敌友难辨。虚竹没有追出去看。追出去，便是中了调虎；不追，便把夜留给守。</p>
+  <p class="p rise">守，从今夜起，才算真的开始。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch8">← 驸马棋子</a><a href="#ch10">雪夜未成 →</a></nav>
+
+<section class="chapter" id="ch10" data-num="10" data-title="雪夜未成" data-anchor="ch10" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 10 章</div>
+    <h2 class="ch-title">雪夜未成</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">雪是子时下起来的。</p>
+  <p class="p rise">细雪无声，贴着窗纸，像无数白蛾。虚竹睡得浅——这些日子他的浅睡像一把总半开的锁，风一碰就醒。内息一丝紊乱便让他睁眼：不是自己的紊乱，是府中护卫的气机断了一截，像琴弦突然被掐哑。</p>
+  <p class="p rise">他翻身而起，低喝：“清露——”</p>
+  <p class="p rise">梦姑已醒，手中多了一柄短刃，是他不知何时塞在她枕下的。刃短，利于贴身，不利张扬。两人目光一对，她先道：“别顾我，先守门。门破了，护我也只是困兽。”</p>
+  <p class="p rise">“一起。”虚竹拉她起身，力道稳而不慌，“分开才正好被人捉。他们要的从来不是杀我一个，是把我们拆开写进两份话本。”</p>
+  <p class="p rise">院中已有兵器轻响，金属相磕被雪吞去半声。亲兵在前门顶着，喊声短促，像被训练过的纪律压着恐惧。后院却有人翻墙而入——身法杂，毒烟先到，绿意在雪光里一闪，腥甜钻鼻。</p>
+  <p class="p rise">虚竹一掌拍开窗棂，六阳真气化圈，烟在门槛外凝成绿雾，倒卷。有人闷哼，坠雪中，面具歪斜。</p>
+  <p class="p rise">“灵鹫侍女？”梦姑眯眼，声线冷。</p>
+  <p class="p rise">虚竹心沉：“装的。真侍女不会先放毒烟伤府中。山上的人再怨我，也不会拿毒开路——毒一开，就是把灵鹫往贼路上推。”</p>
+  <p class="p rise">果然，来人面具下是男子喉结。他们高喊，声量故意放大，像要让半条街都听见：“奉宫主密令，接公主上山避祸——主尊有令，迟则生变！”</p>
+  <p class="p rise">“我没有密令！”虚竹怒声如雷，罕见地失了温吞。怒不是爆发的火，是压了太久的冰裂。北冥展开，当场吸住两人内力，其余人腿软跪倒，刀剑落地，雪里开出几道黑痕。他撕开一人衣领，露出星宿门旧疤，疤在锁骨下，像一枚被时间磨浅却抹不掉的印。</p>
+  <p class="p rise">假令。</p>
+  <p class="p rise">石破尘说过要他两头跑——跑到自己先断。如今直接伸手进家，把手伸到枕边、伸到他最怕失去的那个人身上。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">前门忽然火起。</p>
+  <p class="p rise">不是烧屋，是烧车马棚。火光一晃，马嘶人乱，亲兵阵脚被扯开一道缝。虚竹咬牙：“他们要调虎。虎离山，山里的人就好拿。”</p>
+  <p class="p rise">话音未落，屋顶瓦裂，三道黑影扑向梦姑。虚竹横身，折梅手连点，两人坠地，骨节错响；第三人刀已到梦姑颈侧半寸——寒光贴肤，雪落刀背即融。梦姑短刃上挑，磕开刀尖，刀刃却刮破她肩袖，血珠溅雪，红得刺眼。</p>
+  <p class="p rise">虚竹眼底血丝一涌。指风透空，点中那人膻中，力道控制到“生不如死却还活着”——活着，才能问；死了，就只剩他们想写的故事。对方口喷白沫，滚落阶下，手指还死死抠着雪，像抠住最后一点任务。</p>
+  <p class="p rise">“你受伤了。”虚竹声音抖，抖里有他自己都嫌的慌。</p>
+  <p class="p rise">“皮外伤。”梦姑咬牙，肩头血色洇开，神色却更冷，“先清府。血可以流，人不能乱。”</p>
+  <p class="p rise">此时街巷有马蹄狂驰，有人高呼，呼声像排练过：“驸马府刺客！快报枢密——”</p>
+  <p class="p rise">虚竹听出味来：报的不是“卫戍”，是“枢密”。像有人等着这声呼，好名正言顺插手府务，把保护写成接管，把接管写成软禁。</p>
+  <p class="p rise">“我们冲出去。”他对梦姑道，语速快却清楚，“留在府里，会被写成保护性看管。看管一日，话本就能写三天。”</p>
+  <p class="p rise">梦姑一点头，撕下内里衣料，草草勒住肩伤。两人带贴身亲兵，从侧门转入城西窄巷。雪大了，脚印乱，乱里有人故意踩出更多脚印，像要让追捕的人迷路，也像要让真相迷路。</p>
+  <p class="p rise">虚竹护她在内侧，自己外侧接了两次暗器，袖中金铁交鸣，火星一闪即灭。他不还暗器伤人要害，只打偏、打落、打废手腕——血可以少流，口实不能多留。</p>
+  <p class="p rise">巷尽处，一辆黑篷车拦住去路。车轮卡住雪泥，像故意卡在咽喉。车帘掀开，石破尘半幅黑纱后的眼睛弯着，弯得像笑，也像钩：</p>
+  <p class="p rise">“伪掌门，夜深路滑，上车说话？车上暖，巷里冷，公主肩上还在流血呢。”</p>
+  <p class="p rise">虚竹把梦姑往身后微侧，肩替她挡风，也挡视线：“你要什么？”</p>
+  <p class="p rise">“要你乱。”石破尘坦然，坦然得近乎礼貌，“乱了，才有人好收场。你看——”</p>
+  <p class="p rise">他扬手，远处驸马府方向火光更旺，又有军士喊：“灵鹫逆贼劫公主！”</p>
+  <p class="p rise">梦姑冷笑，笑意里全是刀：“拙劣。”</p>
+  <p class="p rise">“拙劣够用。”石破尘道，声线轻快，“中原僧人在城，粮仓余悸在民，你今夜一出手，北冥吸人，六阳震场——明日话本就是：西夏恶僧发威。赫连大人那边……哦，我不该说名字。说了，像攀交情。不说，你心里也会自己接上线。人一慌，线就接得特别快。”</p>
+  <p class="p rise">虚竹心中一凛。石破尘把名字吐得半真半假，却足以在他心里把线接上：假令、火光、枢密、街呼，像同一只手的五指。</p>
+  <p class="p rise">“你上钩了。”石破尘似笑非笑，“你不是来杀我，是来护她。护的人越重，绳越紧。你越是好人，绳结越漂亮。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">虚竹没有废话。</p>
+  <p class="p rise">废话是给还能坐下来谈的人。对石破尘，谈只会让毒粉多飞一息。</p>
+  <p class="p rise">他踏雪而起，人在半空已至车前。石破尘显然早备后手，车厢炸开毒粉，白里透绿，地面翻出伏兵，短兵与钩索齐出。虚竹护住梦姑口鼻，掌力一层层推开毒雾，身法却不追石破尘，专打伏兵关节——腕、膝、肘，点到即止。他要的是活口与出路，不是此刻决生死。生死一决，城中便是血海；血海之上，任何解释都会沉底。</p>
+  <p class="p rise">石破尘后退，黑纱猎猎，退得从容，像早算定他护妻心重：“不追？聪明。可你聪明也晚了。假令已经送上山——”</p>
+  <p class="p rise">虚竹瞳孔骤缩。雪落在睫上，也不及擦。</p>
+  <p class="p rise">“——调九天部精锐离山‘勤王’。”石破尘遥遥抱拳，礼数嘲弄，“你说她们听不听？听了，山空；不听，她们抗主令。怎么都好看。好看的戏，最怕主角冷静。告辞。”</p>
+  <p class="p rise">人影没入雪幕，毒粉余烟卷成一条淡痕。虚竹要追，脚下一滞，梦姑拉住他，指尖全是血与冷：“先截假令！山比他重要！人跑了还能再抓，山空了，抓回来也只是空主。”</p>
+  <p class="p rise">虚竹猛地清醒，对亲兵喝，声线劈开雪夜：“飞鸽！快！传符敏：一切调令作废，死守！我亲笔随后到！三路齐发，别走同一条天！”</p>
+  <p class="p rise">亲兵去了。虚竹抱起肩伤的梦姑——她本要自己走，被他半强迫地托起。她轻得不像平日里能在殿上挡刀的人，轻得让他心惊。</p>
+  <p class="p rise">他们转入一条更暗的巷，敲开一扇他白日里悄悄买通的民居后门——守势布局里留的退子。屋主是边市被他救过的商队亲属，见血就慌，手抖着让出阁楼，嘴里只重复：“别出声……别出声……”</p>
+  <p class="p rise">虚竹道：“劳烦。天明前走，不会连累你们。”</p>
+  <p class="p rise">屋主摇头，眼眶红：“驸马救过我家粮……这点楼……应该。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">阁楼小，梁低，灯不敢亮太旺。</p>
+  <p class="p rise">虚竹替梦姑清洗肩伤，热水一触伤口，她眉心一拧，却不哼。伤口不深，皮肉外翻一线，在他眼里却深得像一道审判：审判他布了局仍慢一步，审判他把最软的地方露给了最脏的手。</p>
+  <p class="p rise">“疼吗？”他问，声音低得像怕惊动伤口。</p>
+  <p class="p rise">“疼。”梦姑看着他，目光直，“比疼更气。他们用我当你的软肋，用假令当你的绳。软肋在，绳就有处可勒。”</p>
+  <p class="p rise">“是我不好。”虚竹低头，水盆里的红丝散开又聚，“若我更早硬一点，若我今夜不在府中睡得那么……那么像可以偷袭的人……”</p>
+  <p class="p rise">“停。”梦姑用没受伤的手捂他的嘴，掌心有药气与血气，“别把所有因果都收成你的功课。今晚他们未成——人还在，府可修，令可截。未成就是未成。你要做的是下一步，不是跪在这一步里。跪久了，他们就真把你当成可以随便踩的台阶。”</p>
+  <p class="p rise">虚竹眼圈红了，点头。他从怀中取出关文残片与暗号册的摘要，纸角已有汗渍，他仍仔细叠好，塞进梦姑贴身衣里：“这些你收着。若我有事，你交皇帝，走国法。别交赫连拓。交他，就等于把刀柄送回他手里。”</p>
+  <p class="p rise">梦姑目光一闪：“你要去哪？”</p>
+  <p class="p rise">“回府清场，再连夜写真令送山。”虚竹道，字字像钉，“你留这里。天明前我来接。这里偏，他们一时想不到。”</p>
+  <p class="p rise">“一起。”梦姑要起身，肩伤扯得她脸色一白。</p>
+  <p class="p rise">“这次听我。”虚竹少有地坚决，坚决里有哀求，也有命令，“你是他们要的棋。棋若再入局中心，盘就翻了。你活着，我才能把局守住。我若为了此刻逞强把你带回去，等于帮他们把人质送回场上。”</p>
+  <p class="p rise">梦姑盯着他，半晌，竟笑了一下，笑意苦，苦里却有一丝奇异的宽慰：“你学会拒绝了。先拒绝的是我。”</p>
+  <p class="p rise">“清露——”</p>
+  <p class="p rise">“去。”她推他，推得不重，却不容回旋，“别死。死了，我把你从坟里骂出来。骂到你在地下都不得安生。”</p>
+  <p class="p rise">虚竹握住她的手，放下一息，又松开。松开比握住更难。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">虚竹冲回驸马府时，火已被扑灭，焦糊味却仍钉在鼻腔里。军士已围住外墙，甲叶雪光，为首的正是赫连拓门下校尉，脸上写着“护卫”，眼里写着“接管”。</p>
+  <p class="p rise">“驸马！枢密府接报，特来护卫——府中混乱，请允许我部入内清查！”</p>
+  <p class="p rise">“谢护卫。”虚竹拦住他们入内，人站在焦黑的门楼下，身上雪与灰，肩上还沾着梦姑的血，“府中我自清。真凶是星宿余孽，假传灵鹫令。请贵部城外搜捕，入府须有皇帝手谕。无谕而入，便是越权；越权之事，他日也可写成别的名字。”</p>
+  <p class="p rise">校尉变色：“驸马这是——不信任枢密府？”</p>
+  <p class="p rise">“这是守法。”虚竹一字一顿，内力隐隐压场，不伤人，只让周围军士觉腿软、心慌，像有巨石悬在头顶，“我今晚动手，是护公主，不是叛。谁把护写成劫，谁就是帮凶。帮凶的字，我会让慧净原样记下，也会让关城的活口认。”</p>
+  <p class="p rise">他目光清，清得不像刚从血与火里走出来的人。北冥与六阳的余威像无形的墙。军士们对视，最终退去——不是服，是怕。</p>
+  <p class="p rise">怕会变成明日的章奏。章奏里会写：驸马以武压人，目无枢密。</p>
+  <p class="p rise">虚竹顾不得了。顾得了，山就顾不得。</p>
+  <p class="p rise">他冲进书房，灯都不用人点，自己打火。写下给符敏的亲笔，盖印，加暗记，三路飞鸽齐发。字迹比平日更重，重到纸背透墨。又写短柬给慧净：今夜之事请原样记下。我未劫公主，公主肩伤，贼人有星宿疤。枢密军士围府，我拒无谕入内。</p>
+  <p class="p rise">写完，他靠着椅背，眼前发黑。武功再高，人也是肉。肉会累，心更累。累到想闭眼，又不敢闭——闭眼之间，假令可能已到山门。</p>
+  <p class="p rise">窗外雪大。雪夜里，政变未遂，绑架未遂，假令在路上飞。</p>
+  <p class="p rise">“未成。”他喃喃，像给自己打气，也像给梦姑在暗处的阁楼许诺，“只要山不乱，城不塌，就还有明天。”</p>
+  <p class="p rise">而他不知道，假令的其中一路，已被人用更快的鹰截下，换了一纸更像他笔迹的伪书——伪书不调精锐离山，只调符敏本人“秘密赴关城面会主尊”。</p>
+  <p class="p rise">绳，换了一种绑法。</p>
+  <p class="p rise">绑法一换，守势之局便从城落到了山，从公开落到了最信他的那个人心里。</p>
+  <p class="p rise">雪继续下，像要把所有脚印盖住。盖住脚印容易，盖不住的是：有人已经在黎明前，朝灵鹫宫最要紧的那根梁，轻轻锯了一刀。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch9">← 守势之局</a><a href="#ch11">霜沾袍 →</a></nav>
+
+<section class="chapter" id="ch11" data-num="11" data-title="霜沾袍" data-anchor="ch11" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 11 章</div>
+    <h2 class="ch-title">霜沾袍</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">符敏收到“亲笔”时，正在巡夜。</p>
+  <p class="p rise">天山的夜冷得干净，星子像碎在冰里的钉子。她站在九天部巡道上，披风猎猎，手里的信却比风更沉。字像，印像，暗记也像——至少像到她愿意信七分。信上说：关城有变，需内务总摄亲往交接证据，勿带大队，免打草惊蛇。主尊语气急，却仍有他一贯的克制，克制得像真。</p>
+  <p class="p rise">符敏犹豫片刻。犹豫不是怕死，是怕信。信错了，山会空一角；信对了，她若不去，证据可能丢，主尊可能危。</p>
+  <p class="p rise">她最终选了六名精锐，下山。</p>
+  <p class="p rise">她不是莽。她在山道留了后手信鸽：若辰时未归，宫中戒严，梅管事代摄内务，任何人不得以任何令调精锐离山。可石破尘要的就是这六人的空档与她本人的分量——分量一离山，谣言就有了骨头：连内务总摄都“奉召”而去，城里的人还不能说灵鹫将乱吗？</p>
+  <p class="p rise">伏击发生在关城以北的死桦林。</p>
+  <p class="p rise">林里桦树早死，白枝如骨，雪落无声。毒烟先起，地弩后发，内力阴损的掌劲专克她这种刚猛路数。符敏拼开一条血路，刀光与内力齐爆，把三名姑娘推出包围，自己却被一枚倒刺蝎钉钉穿左肩，钉上有星宿旧毒。毒入经脉时，她眼前一黑，仍记得把令牌死死按在怀里——按不住。有人硬生生掰开她的手指。</p>
+  <p class="p rise">她吐血跪地时，听见有人冷笑，笑声被雪吞去一半：</p>
+  <p class="p rise">“宫主的人，也不过如此。把她的令牌带走——兴庆城里，够写三天谣言。三天，够枢密府做很多事。”</p>
+  <p class="p rise">符敏想骂，血先堵住喉咙。她最后看见的，是死桦林白骨般的枝桠，像无数只手，指着她“信错了”的那七分。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">虚竹赶到死桦林，只见到血。</p>
+  <p class="p rise">雪地红了一大片，像谁把一颗心扔在了路上，还被人踩过几脚。三名重伤女弟子哭着说：符敏被劫走，令牌被夺。哭声碎，碎在风里，像把灵鹫这些日子的“暂信”一起哭裂。</p>
+  <p class="p rise">虚竹内息大乱，险些走火——北冥与六阳在经脉里冲撞，像两头被惊醒的兽。还是慧净一声“师兄”，掌心按住他的背，佛号低沉，把他拽回。</p>
+  <p class="p rise">“师兄！您乱了，她们更没主！”</p>
+  <p class="p rise">“追。”虚竹声音哑得不像话，哑得像喉咙里也钉了一枚钉。</p>
+  <p class="p rise">他们循着毒迹追到半山废窑。窑口雪被踏乱，窑里空无一人，只有符敏被丢在稻草上，肩钉已拔，毒却攻心，气息如游丝。草上有拖痕，像有人故意把她放在“刚好能被找到、又刚好晚一步”的位置——生不如死的羞辱，比杀死更有用。</p>
+  <p class="p rise">她见虚竹，眼睛亮了一下，立刻又狠起来，狠是对敌人，也是对自己：</p>
+  <p class="p rise">“主尊……别赎。他们要赎，就是要你乱……令牌……我丢了……对不起……”</p>
+  <p class="p rise">“别说对不起。”虚竹跪在她身边，内力缓缓渡入，六阳驱寒，北冥却不敢乱吸——毒与内力绞在一起，吸错即死。他只能稳，再稳，稳到自己后背心全是冷汗，稳到指尖发麻还不撒手。</p>
+  <p class="p rise">符敏抓住他的袖，力气小得像孩子，眼睛却仍是侍女长的眼睛：“她们……信你……别……退……退了……就全完了……”</p>
+  <p class="p rise">说完，人晕了过去。</p>
+  <p class="p rise">虚竹把她抱出窑时，天光已白。霜挂在他袍摆上，一碰即碎。他忽然想起少林冬日扫雪，霜也这样沾衣。那时他无官无职，霜只是霜；如今霜像罪，像一张贴在身上的罪名：你布了局，仍慢；你让人信你，信成了伤。</p>
+  <p class="p rise">慧净在侧，低声道：“师兄，先送关城医馆。毒要剥，晚了经脉会废。”</p>
+  <p class="p rise">虚竹点头，抱着人下山，一步一步，像把自己的骨头也踩进雪里。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">消息比人快。</p>
+  <p class="p rise">兴庆城里，已有话本与闲话：灵鹫宫主令牌落入贼手，九天部将乱；驸马府夜斗，北冥噬人；公主被劫又被救，真相成谜。茶肆里有人拍桌：“我说嘛，僧做驸马，迟早出事。”也有人摇头：“公主肩伤是真的，假不了。”真假搅在一锅里，越搅越浑。</p>
+  <p class="p rise">赫连拓在朝上“痛心”，笏板稳，声线沉：请严查灵鹫，以免“内患”。内患二字一出，殿中许多眼睛便亮了——亮的是机会，不是公道。</p>
+  <p class="p rise">梦姑肩伤未愈，强行入宫。袖里藏着假令抄件、星宿疤证词、暗号册摘要，步步稳，稳到太监都不敢劝她回去养伤。她与赫连拓当庭对峙，不吵，只呈：</p>
+  <p class="p rise">“贼用假令，用星宿疤，用夜火。令牌被夺，是中伏，不是叛。严查可以，查的是贼，不是先把灵鹫写成贼。”</p>
+  <p class="p rise">皇帝压了严查，却也下了“驸马府暂闭门思过，江湖案另组会审”的旨意——两边不得罪的稳。</p>
+  <p class="p rise">稳在权术上，像刀在虚竹心上。刀不见血，割的是名，是进退的余地，是他这些日子辛辛苦苦画出的界。</p>
+  <p class="p rise">他回府时，梦姑正在撕一份抄来的话本。纸屑落了一地，像一场室内的雪。见他满身血气，她先问，声音紧：“符敏呢？”</p>
+  <p class="p rise">“关城医馆。命保住了，肩……恐留残。”虚竹站在门内，像个等待发落的人，肩上霜还未化尽，“是我。我布了局，仍慢一步。我总想两全，两全变成两伤。她信我，信成了钉。”</p>
+  <p class="p rise">梦姑看着他，眼里的火一下子烧起来，烧得厅里的冷都退了半寸：“你又要说退了？”</p>
+  <p class="p rise">虚竹一震。</p>
+  <p class="p rise">“我认得你这副脸。”梦姑步步走近，肩伤因动作牵扯，她却像感觉不到疼，“你一受重创，就想回寺、想让位、想把自己删掉，以为删掉就干净。虚竹，你删掉自己，符敏的伤就好了吗？山上的人就稳了吗？我肩上的口子就合了吗？你一删，他们的血就变成‘谁让你们信他’的笑话！”</p>
+  <p class="p rise">“我不是……我只是怕我继续当主，还会害人。”虚竹声音发颤，颤里有真实的惧，“我武功高，心却总慢。慢的人，不配掌权。掌权该是快的、硬的、能一眼看穿假令的——我看穿了，仍晚。晚一次，就废一个人。”</p>
+  <p class="p rise">“慢可以练！”梦姑厉声，声震梁尘，“逃不可以练！你一逃，赫连拓笑死，石破尘酒钱都省了。他们要的就是你自己把椅子踢翻！踢翻了，他们连推都不用推，只消在旁边叹气：看，好人自己走了。”</p>
+  <p class="p rise">厅里静得可怕。亲兵都退得远远的，连呼吸都小心。纸屑还在她脚边，像一场未扫完的仗。</p>
+  <p class="p rise">虚竹低头，泪落在霜还未化尽的袍上，洇开深色。“清露，我好累。”</p>
+  <p class="p rise">这一句不是求饶，是从骨头里挤出来的真。累不是睡不够，是把每条命都放在心上称，称到自己先塌。</p>
+  <p class="p rise">梦姑胸口起伏。怒到极处，反而冷下来。冷比怒更锋利。她伸手，用力抓住他的衣领，把额头抵上他的额头，齿间发恨，恨里全是疼：</p>
+  <p class="p rise">“累就靠着我喘。不许躺下装死。你把我当什么？只会享你护着的花瓶吗？符敏为你流血，我为你顶朝，你却想一个人退到干净里去——你这是仁，还是自私？”</p>
+  <p class="p rise">“自私？”虚竹怔住，像被一个他最怕的词点中。</p>
+  <p class="p rise">“是。”梦姑眼也红了，泪却先忍着，忍成刃，“你把所有痛都收成自己的修行，却不给我们留下一起扛的位置。你一退，我们的血都变成笑话。笑话传出去，比令牌被夺更伤——伤的是以后还有谁肯为你站那一刻。你要干净，你就自己回寺扫地；你要做人，你就留下，把脏的一起擦。擦不干净也擦，擦到他们知道：我们不是一个人在撑。”</p>
+  <p class="p rise">虚竹像被点中死穴，整个人僵在那里。良久，他慢慢跪下——不是求饶，是把自己放回地面，放回还能被骂、还能改、还能站起来的位置。</p>
+  <p class="p rise">“我不退。”他哑声说，每个字都像从霜里抠出来，“我学。你教我。符敏好起来，也教我。我再慢，也走。走错了，你们骂，我改。只是别……别让我一个人干净。一个人干净，太冷，也太……不义。”</p>
+  <p class="p rise">梦姑看着他，泪终于掉下来，却笑了，笑得很难看，也很难得：“这还差不多。起来。地上冷。你膝盖要是再坏了，我还得扶你——我肩也疼。”</p>
+  <p class="p rise">虚竹起来，伸手想扶她肩，又怕碰着伤口，手悬在半空。梦姑抓住那只手，按在自己完好的那侧肩上：“可以碰人。别只碰自己的罪。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">当夜，两人分灯而坐，很久没说话。</p>
+  <p class="p rise">不是冷战，是把裂开的缝对着风，吹干了再缝。缝要密，密之前要先承认裂过。厅外更鼓一声声，像给这对夫妻数还剩多少夜可以浪费在自责上。</p>
+  <p class="p rise">梦姑先开口，声线哑了些，却清楚：“符敏令牌在外，会有假令继续飞。你明日公开废牌，换新制：双印，符敏伤愈前由梅管事与我各执一验。缺一不可。再有‘亲笔’，先对印，再对暗记，再对飞鸽复核。三关不过，谁也别想调走一个人。”</p>
+  <p class="p rise">虚竹点头，像把每个字都钉进心里。</p>
+  <p class="p rise">“赫连拓会审里会做文章。”梦姑继续，指尖按着桌沿，按出浅白，“你少说话，多呈证。说话容易被改，证物难改。慧净的记录也要在，中原见证不是为了讨好中原，是为了让西夏也不能只写一面词。”</p>
+  <p class="p rise">又点头。</p>
+  <p class="p rise">“还有，”梦姑看着他，目光里怒意未尽，却已经在护，“你不许再把‘我想回少林’挂在嘴边。你可以想，想完吞回去。那是你的软，也是敌人的刀眼。刀眼对着你软处，一捅一个准。软处留给家里，不留给殿上，不留给话本。”</p>
+  <p class="p rise">虚竹轻轻“嗯”了一声。他走到窗边，霜气扑面，像给发热的脸降温。远处城楼上有灯，像一只不合眼的眼。眼在看谁？看驸马是否真的闭门思过，还是在闭门里把下一局重布。</p>
+  <p class="p rise">“清露，”他问，声音轻，“你恨我吗？”</p>
+  <p class="p rise">梦姑想了想，想得认真，不敷衍：“恨你慢，恨你软，恨你总把自己放在可牺牲的位置。不恨你这个人。人还在，就能骂，能改，能继续过。恨事，不恨命。命若还在，事就还能扳。”</p>
+  <p class="p rise">虚竹回头，对她极郑重地一礼——像对恩人，也像对并肩的战友，更像对一个不肯让他独自干净的妻子。</p>
+  <p class="p rise">“那我继续过。”他说，“过到符敏能骂我的那天，过到山上的暂信变长信的那天，过到你肩伤结痂、还能再骂我一顿的那天。”</p>
+  <p class="p rise">梦姑鼻尖一酸，抬手推他的额：“油嘴。去睡。明日废牌，你来写告示。写短点，写硬点。别写忏悔录。”</p>
+  <p class="p rise">“好。”</p>
+  <p class="p rise">霜沾袍，袍未脱。人还在夜色里，低谷也还在，可他不再把低谷当成终点。</p>
+  <p class="p rise">终点若有，也该是走出去之后，再回头看的那个坑。</p>
+  <p class="p rise">而不是自己跳下去，还以为跳得很干净。</p>
+  <p class="p rise">窗外雪停了片刻，又下。下的雪盖住旧痕，盖不住明日要贴出的新界——界上写着：牌可废，人不可退；退一步干净，进一步才有资格谈义。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch10">← 雪夜未成</a><a href="#ch12">戒与刀 →</a></nav>
+
+<section class="chapter" id="ch12" data-num="12" data-title="戒与刀" data-anchor="ch12" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 12 章</div>
+    <h2 class="ch-title">戒与刀</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">清凉庵的井水冬日不结厚冰，只结一圈白边。</p>
+  <p class="p rise">虚竹来时，肩上仍带着未化尽的霜意。庵门半掩，檐下风铃被雪压哑了，只偶尔轻轻一颤，像谁在极远处咳嗽。慧净在井边打水，木桶撞着井壁，咚咚两声，极稳。见他，并不问伤问败，也不问符敏生死，只递木瓢：“喝。再说话。”</p>
+  <p class="p rise">虚竹接过，喝了。水冷，齿关一紧，人反而清醒。井中倒映出他的脸：眉心有倦，眼底有红，却还认得自己。</p>
+  <p class="p rise">“会审定在三日后。”他道，“赫连拓要我‘展示决心’。有人暗示——不止一人——若我当众杀一批星宿俘虏，民心立稳，闲话自灭。说书的、茶馆的、甚至军中几个嘴碎的，都在等我亮那一刀。”</p>
+  <p class="p rise">慧净看着他，袖中禅杖半截抵地，像一根临时的界桩：“师兄动心了？”</p>
+  <p class="p rise">“动过一下。”虚竹坦白，声音不高，却不肯躲，“一下就够可耻。杀俘止谤，像用血洗地，地红了，人说干净了。可我知道不干净。地还是那块地，血只是把脚印盖住。”</p>
+  <p class="p rise">“那师兄来问我什么？”</p>
+  <p class="p rise">“问戒。”虚竹望着井中自己的影子，影子被风一吹，碎成细纹，“杀戒。我已不是僧，可戒还在我骨头里。符敏快死的时候，我几乎要屠了半座山去换她。那念头来得极快，像火，烧得我自己都怕。我若真做了，还算人吗？若我不做，又算义吗？义若只剩杀，义还叫义吗？”</p>
+  <p class="p rise">慧净把水桶放下，双手合十，又放下，像把一句话从胸腔里端正地摆到井沿上。</p>
+  <p class="p rise">“佛门说不杀，是劝人别起杀心当捷径。”他缓缓道，“不是让人看着恶人屠尽无辜还合十微笑。师兄若杀的是正在下手的凶手，那是止戈；若杀的是已降的口实，那是祭旗。止戈可，祭旗不可。”</p>
+  <p class="p rise">虚竹咀嚼这两个词，齿间发涩，却也发亮。</p>
+  <p class="p rise">“止戈……”他重复，“是把刀插回鞘里，还是把刀插进该插的地方？”</p>
+  <p class="p rise">“是让刀知道自己是刀，不是戏台上的锣鼓。”慧净道，“戈止了，人才有地站。旗祭了，站的就只剩观众。”</p>
+  <p class="p rise">“那权柄呢？”虚竹又问，目光抬起，“掌权的人，总被人逼着祭旗。不祭，就说你妇人之仁。仁字被他们说轻了，像骂。我若硬，他们又说我嗜杀。软硬都是罪，中间那条路，窄得像井绳。”</p>
+  <p class="p rise">“仁不是妇人的。”慧净正色，声音忽然大了些，惊得檐下麻雀扑棱飞起，“仁是人的。谁把仁说成软弱，谁就在卖刀。卖刀的人最怕你不买。师兄可以硬，硬在关口：假令必斩来使的退路，纵火必查主使，劫人者可杀——在对战里杀，在国法里杀，不在戏台上杀给别人看。戏台一开，人就不是人，是道具。”</p>
+  <p class="p rise">虚竹沉默很久。风从庵后松林掠过，雪粉细细落下，落在他肩上，像又一层霜。</p>
+  <p class="p rise">“段誉写信，让我别一人扛天下。”他忽然道，“大哥……扛到最后，天地都窄。他的刀快，义更重，可他走到尽头时，连笑都像哭。我怕我一开杀戒当手段，就收不住；收不住，就变成第二个把命抵给天下的人。我武功够，够的人更危险——够了，就容易信自己永远对。”</p>
+  <p class="p rise">慧净眼中闪过悲悯，也闪过一点近乎严厉的亮：“所以要戒。戒不是绑住您的手，是提醒您：手能翻云覆雨时，仍要知道疼。疼在，人在；不疼了，魔在。魔不必长角，魔只是不再问自己一句：这一刀，是为活人，还是为名声？”</p>
+  <p class="p rise">虚竹点头，点得很慢，像把每个字都按进骨缝里。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">两人入庵中小殿。</p>
+  <p class="p rise">殿里供的不是少林的佛，是一尊残缺的边地佛像，半边脸被风沙磨平，只剩半边慈悲，半边空白。香灰冷了，有人昨夜添过一炷，烟尽了，味还在。虚竹对它合十，动作自然，像呼吸。合完，他问：</p>
+  <p class="p rise">“护一人与护万人，哪一句经文教我选？”</p>
+  <p class="p rise">慧净摇头：“经文不替人选。人选完，经文才来安你的心，或刺你的心。师兄选过了——您总先护眼前的人。这不丢人。丢人的是护完眼前，便假装天下不存在；或为了天下四个字，把眼前的人当柴烧。柴烧尽了，天下也暖不了多久。”</p>
+  <p class="p rise">虚竹低声：“我要两者都尽量护。护不住时，我拒绝被逼着选‘只剩杀’的那条。只剩杀的时候，人已经输了，只是还没倒下。”</p>
+  <p class="p rise">“这便是答案。”慧净道，“您可以杀必杀之恶：正在作恶、证据确凿、对战中的恶。您不做清剿天下的事，不做以杀止谤的戏。中原若因此仍怕您，怕就怕了。怕比血海好。血海一开，怕的人更多，连您自己也怕自己。”</p>
+  <p class="p rise">虚竹抬起头，眼里有水光，也有定：“多谢师弟。”</p>
+  <p class="p rise">“莫谢。”慧净道，“我是镜子。镜子不杀人，只照。您若哪日变成血海之主，我会先照您，再拦您。拦不住……才论其他。我希望没有那一天。”</p>
+  <p class="p rise">“我也希望。”虚竹重复那句旧话，这一次比在井边更稳。他看着残佛空白的半边脸，忽然道，“这佛像少半边，却还坐得住。我少许多东西——少决断、少狠劲、少把闲话当粪土的本事——却也得坐得住。”</p>
+  <p class="p rise">慧净微微一笑，笑意极淡：“坐得住，比站得高难。高处风大，容易把自己吹成旗帜。旗帜被人举着走，就由不得自己了。”</p>
+  <p class="p rise">殿外有小沙弥轻咳，不敢进。慧净应了一声，取出一页纸，是他连夜抄的见闻提纲：夜袭、假令、符敏之伤、俘虏处置之议。纸角有墨渍，字却端正。</p>
+  <p class="p rise">“会审时我在场。”他说，“不作帮凶，不作帮闲。只作见证。见证若偏，佛门也脏。”</p>
+  <p class="p rise">虚竹接过看了一眼，还给他：“你脏不了。我若脏了，你照着骂便是。”</p>
+  <p class="p rise">“骂不够时，拦。”慧净道，“拦也不够时……我再想。先别把那一步想成必然。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">出庵后，虚竹去关城医馆。</p>
+  <p class="p rise">医馆屋檐下挂着干草药，气味苦，苦里有活。符敏醒着，脸白得像纸，目光却利，利得像还能巡夜。见他来，第一句仍是事：“令牌？”</p>
+  <p class="p rise">“废了。新制双印，山上已传。”虚竹坐到床边，先替她看了看肩上换药处，伤口边缘仍青，毒退了些，人却虚，“你醒得比大夫料想的早。”</p>
+  <p class="p rise">“早醒才能骂人。”符敏哼了一声，又咳，咳得肩抖，却把话咬住，“主尊眼里有霜。霜化了些？”</p>
+  <p class="p rise">“有人骂化的。”虚竹把与慧净所辩择要相告，“我会杀该杀的。不演给人看。你的伤，我记着。记着不是为了恨到失明，是为了下次不慢。慢一次，你们就用命填。”</p>
+  <p class="p rise">符敏盯着他，忽然道：“石破尘要的是您脏。赫连拓要的是您顺。您脏了，中原推；您顺了，西夏用。您最好的活法，是不脏也不顺——难，可您得难下去。姑娘们信您，不是信您无敌，是信您还像个人。人一不像，令牌新制也没用，大家心里先散。”</p>
+  <p class="p rise">“难下去。”虚竹应。</p>
+  <p class="p rise">她沉默片刻，声音低了些：“我丢了令牌，山上会有闲话。闲话让梅管事压，压不住的，您别急着杀鸡儆猴。儆猴容易，猴死了，鸡也寒。”</p>
+  <p class="p rise">虚竹点头：“不杀鸡。查。查清谁在传，谁在怕，谁在故意搅。怕的安，搅的办——办用人证物证，不用我一掌拍桌子。”</p>
+  <p class="p rise">符敏极淡地笑了一下，笑完就疼得抽气。虚竹替她按住伤口附近的穴道，六阳真气如温水，缓缓化开痛感。她在痛里仍把话说明白：</p>
+  <p class="p rise">“您若会审上被逼杀俘，您拒。拒的时候别软声软气，软了他们以为您可欺；也别怒到失态，怒了他们说您心虚。您就说：臣查案，不为儆效尤的戏。俘虏可审，不可杀给民看。”</p>
+  <p class="p rise">虚竹一怔：“你连词都替我想好了？”</p>
+  <p class="p rise">“内务总摄的本事，不只管钥匙。”符敏闭上眼，像把力气省着，“主尊去吧。我睡着了，您别站着像守灵。我还没死。”</p>
+  <p class="p rise">虚竹起身，又顿住：“符敏。”</p>
+  <p class="p rise">“嗯。”</p>
+  <p class="p rise">“谢谢你还信我。”</p>
+  <p class="p rise">“信过就别保证太满。”她闭着眼道，“满了假。您把事做对，比把话说满强。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">回城的路上，天晴了片刻。</p>
+  <p class="p rise">阳光照在雪上，刺眼。街巷里有人扫雪，有人卖热汤，热气在冷风里拧成白线。虚竹想起乔峰，想起他大笑与悲吼，想起聚贤庄前后那条越走越窄的路。大哥的刀快，义更重；自己的掌柔，戒更深。两条路都能护人，也能毁人。他选柔里带骨的那条：骨是拒绝，柔是不滥杀。</p>
+  <p class="p rise">经过茶馆时，帘子半卷，里面正热闹。有人拍桌讲书，嗓门亮：</p>
+  <p class="p rise">“那夜驸马府中风雷大作，驸马运功噬人，内力如海吞江！星宿贼人魂飞魄散，有的当场化作干尸——”</p>
+  <p class="p rise">虚竹驻足听了几句。身边有人认出他，猛地肘了同伴一下。说书人还在兴头上，没察觉。虚竹掀帘走进去，对说书人拱手：</p>
+  <p class="p rise">“先生，我是虚竹。那夜我护妻，点穴封脉，未取人命。内力是护，不是噬。您若愿意，我把经过说一遍，您改改词。不愿意，也没关系——假话传千遍，真的还在我心里。真的在，我就还能睡。”</p>
+  <p class="p rise">茶馆炸锅。碗筷一顿，有人站起又坐下，有人瞪大眼像见了书中人从纸里走出来。说书人脸红到脖子，结巴着要跪。虚竹扶住，把他轻轻托起，声音不高，却让满堂听得清：</p>
+  <p class="p rise">“夜袭者携假令、用毒烟。我先护人，后制敌。制敌用穴道，用封脉，用夺兵刃，不用取命作戏。有人伤在对战中，那是兵戈之事；有人降了，我未补刀。先生若爱听热闹，热闹可以听；若要把热闹说成噬人，热闹就脏了。”</p>
+  <p class="p rise">他讲得极简，不渲染，不自夸，像报一件公事。讲完便走，留下满堂嘈杂——有人骂说书人胡说，有人仍半信半疑，有人悄悄说：“驸马亲自来改词，这人……怪。”</p>
+  <p class="p rise">街对面，慧净站在风里，对随行的小沙弥（关城寺里的）道：“看见了吗？这是不祭旗的人。他连闲话都想用真相渡，渡不过也不靠血。渡不过时，他仍把真话说一遍——说一遍，心里就多一根桩。”</p>
+  <p class="p rise">小沙弥懵懂点头：“师傅，他说的是真话吗？”</p>
+  <p class="p rise">“真话不一定好听。”慧净道，“好听的常常是刀。记住这一眼，比背十卷经有用。”</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">夜，虚竹回到府中。</p>
+  <p class="p rise">灯下，梦姑在批一封关城急报，眉心微蹙。见他进门，她放下笔：“庵里问完了？”</p>
+  <p class="p rise">“问完了。”虚竹解下外氅，雪水滴在青砖上，很快化开，“我定了。”</p>
+  <p class="p rise">“定什么？”</p>
+  <p class="p rise">“可杀必杀之恶。不做戏台上的屠夫，不做清剿天下的英雄。”他看着她，目光稳，“会审若逼我杀俘，我拒。石破尘若阵前杀来，我不拒。你若再被劫，我……仍可能手重。重完我认，我受责，我不把重说成正确的表演。表演一开，戒就成了妆。”</p>
+  <p class="p rise">梦姑静静听完，点头：“像人话。像能活下去的人话。”</p>
+  <p class="p rise">她顿了顿，又道：“符敏如何？”</p>
+  <p class="p rise">“骂我，也信我。”虚竹道，“山上有人骂有人信，我反而踏实。一致的歌颂最可怕——歌颂像蜜，蜜多了，人不知道刀从哪来。”</p>
+  <p class="p rise">梦姑起身，走到他面前，伸手拭去他眉上未干的雪水，动作不轻不重：“赫连拓会把你的拒，说成妇人之仁。你准备好听吗？”</p>
+  <p class="p rise">“听。”虚竹道，“听完，仍拒。拒的时候把证据摆上桌，把法摆上桌。仁可以挨骂，法不能缺席。”</p>
+  <p class="p rise">“你会审上别只硬。”梦姑低声，“硬之外，要准。准在线：粮草、假令、门客、治下。准了，他才痛。痛了，才会丢卒。你要的不是他跪，是他断石破尘的粮。”</p>
+  <p class="p rise">虚竹认真听着，忽然笑了，笑意苦暖：“清露，我从前只会挨打。现在会看人怎么自己打自己了——是你教的。”</p>
+  <p class="p rise">“这不叫阴险。”梦姑正色，“这叫让规则回到规则。你仍不夜刺，不栽赃，不屠俘。你只是不把刀子还回去时还擦干净再还。”</p>
+  <p class="p rise">灯芯爆了一下，火星短暂地亮，又灭。两人相对，低谷的风还在屋外转，屋内却有了新的心法：戒与刀之间，不是无路，是一条要自己一步步踩实的窄道。</p>
+  <p class="p rise">窄道之外，杀声与闲话仍在等他。</p>
+  <p class="p rise">他准备走上去——不是因为不怕，是因为怕也要走。走的时候，手里有刀，心里有戒；刀可出鞘，戒不出卖。</p>
+  <p class="p rise">窗外雪又细细落下来。虚竹听着雪声，像听一群极轻的脚步，跟着他，也看着他。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch11">← 霜沾袍</a><a href="#ch13">揭皮一层 →</a></nav>
+
+<section class="chapter" id="ch13" data-num="13" data-title="揭皮一层" data-anchor="ch13" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 13 章</div>
+    <h2 class="ch-title">揭皮一层</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">会审设在西夏官厅里。</p>
+  <p class="p rise">炭火烧得旺，墨味、纸味、人的冷汗味绞在一起，与中原公堂并无不同。不同的是墙上挂着西夏纹饰，不同的是旁听席里多了边市商旅与关城守将，不同的是主审侧席上坐着赫连拓——笑意周全，像冬日暖阳，照得到人，也晒得干。</p>
+  <p class="p rise">虚竹入厅时，脚步稳，袖中却有薄汗。他看见慧净坐在见证席，僧衣整，脊背直，像一尊会呼吸的木雕。梦姑不在旁听，她在侧厢等结果；结果之前，她把材料分作三份：官面、密呈、备用，并叮嘱他：“先拒戏，再呈证。证要冷，话要短。”</p>
+  <p class="p rise">案由被读得很漂亮：边市谣言、粮仓纵火、夜袭驸马府、灵鹫令牌被夺。每一条都能写成虚竹的罪，也能写成他的功，取决于往哪边拨。书记官的嗓音平稳，平稳得像在念一首与己无关的诗。</p>
+  <p class="p rise">赫连拓先拨。</p>
+  <p class="p rise">“驸马连夜出手，手段骇人，民有惊。”他语调温和，像关心，“是否当众处置俘虏，以儆效尤？民心一稳，闲话自息。本官并非嗜杀，只是边事如火，火要用土压——土不够时，有人便想到血。”</p>
+  <p class="p rise">堂上微哗。有人点头，有人看虚竹，像看一出戏的主角该不该举刀。</p>
+  <p class="p rise">虚竹出列，拱手，声音不高，却清：</p>
+  <p class="p rise">“臣查案，不为儆效尤的戏。俘虏可审，不可杀给民看。杀俘止谤，臣拒。”</p>
+  <p class="p rise">哗声更大。赫连拓眉尖一跳，随即笑：“驸马好慈悲。”</p>
+  <p class="p rise">“是戒。”虚竹道，“也是法。国法若允许臣私刑表演，臣便先自请罪。罪在臣，不在俘。俘有罪，罪归审；审有据，据归法。法若变成戏台，戏台下站的便不是民，是看客——看客看多了血，便会忘了血从哪来。”</p>
+  <p class="p rise">监临使轻咳，像把一盆冷水轻轻泼在炭上：“审证据。”</p>
+  <p class="p rise">证据上台。</p>
+  <p class="p rise">半夏堂暗号册、关文残片拓印、假令原件、夜袭者星宿疤的画影，一件件铺开，冷静得像一条不得不走的路。虚竹不渲染，只指认：暗号对应边市接头日，关文残片对上关城某吏私放记录，假令与真令暗记差在何处，画影与医馆伤者所见一致。他每指一件，便停一息，让旁听把“不得不走”四个字自己走完。</p>
+  <p class="p rise">刑曹吏把假令与灵鹫新制双印的拓样并排，灯光下，暗记的缺口清晰如伤口。有商旅小声道：“这缺口……我在边市见过仿的。”话一出，又被人肘住。虚竹不追问那商旅姓名，只道：“愿作证者，会后可至刑曹。不愿者，亦不逼。证在物，不在吓。”</p>
+  <p class="p rise">有人咬“伪证”。声音尖，像怕冷场。</p>
+  <p class="p rise">慧净当场起身，合十：“部分抄件由贫僧监看封存，封条仍在。贫僧不入党争，只入见证。见证若假，贫僧愿受寺门与国法双罪。”</p>
+  <p class="p rise">僧人不入党争——这话在堂上竟比刀硬。尖声的人坐了回去，像被自己的舌头绊住。监临使点头，示意继续，炭火在沉默里噼啪，像替所有人把心跳说出来。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">真正让皮裂开的，是活口。</p>
+  <p class="p rise">关城抓住石破尘的粮草押运小头目，人赃俱在：车辙、帐册、半夏堂接头暗号。虚竹未用酷刑，只用六阳真气逼出的寒意，与“你说谎时脉象如此”——他把手指搭在那人腕上，像大夫，也像判官。小头目先硬，后抖，抖到崩溃，供词断断续续，却连成线：</p>
+  <p class="p rise">粮草三批。两批“无主遗落”，一批来自枢密府某仓“损耗”。接头有时经半夏堂，有时经枢密门客的马夫。马夫名姓、接头地点、交接暗号，他都能说。说到马夫时，他嗓子发紧，像怕自己说完就活不成；虚竹只道：“说完，按从犯议。说谎，按再犯论。你选。”</p>
+  <p class="p rise">小头目选了说完。帐册上的“损耗”二字被刑曹吏高声复读，复读声在厅里转了一圈，像把“损耗”两个字剥成“给匪”。</p>
+  <p class="p rise">堂上空气凝固。炭火噼啪一声，像有人把秘密扔进了火里。</p>
+  <p class="p rise">赫连拓脸不变色：“仓损耗年年有，马夫数百，岂可污我？驸马若因马夫便指本官，未免把西夏官制看得太浅。本官治下人多，人多则杂，杂则难免有鼠。鼠在仓中，岂能说仓主便是鼠王？”</p>
+  <p class="p rise">虚竹平静：“臣未说是枢密大人授意。臣说的是：线在大人治下跑。请大人自清。自清之前，请回避本案主审。回避不是羞辱，是让线跑得再快，也跑不出法眼。”</p>
+  <p class="p rise">这一句是梦姑教的。软刀子，回敬软刀子。刀不见血，血却在权限上。旁听席有人倒吸凉气，有人眼底闪过一点快意——快意很短，短得像怕被赫连拓看见。</p>
+  <p class="p rise">监临使沉默片刻，目光在虚竹与赫连拓之间走了一遭，像走钢丝。钢丝那头是皇权要的平衡，这头是证据顶上来的硬。他终于道：“赫连枢密暂时回避。本案改由刑曹与驸马会同，僧人见证。回避不是定罪，是避嫌。避嫌，是官场的体面，也是法的体面。”</p>
+  <p class="p rise">赫连拓起身，对虚竹一笑，笑意深，深得像井：“驸马长进了。”</p>
+  <p class="p rise">“托大人的福。”虚竹回礼，礼数不缺。礼数不缺，不等于退。</p>
+  <p class="p rise">赫连拓离席时，衣袂带起一阵风，风里有香，也有冷。他经过虚竹身侧，声音低到几乎只有两人听见：“长进得好。好到会伤自己。”虚竹不答，只再一礼。旁听席有人低语，有人噤声。虚竹站在原地，指尖仍有一点抖——抖仍在，话已说出口。说出口的话，像钉进公堂木柱里，拔不掉。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">会后密室。</p>
+  <p class="p rise">灯少，窗纸白，白得刺眼。梦姑从袖中取出一枚旧玉佩，纹路是西夏后族旧制，背面却刻着极小的“秋”字残测——不是李秋水本人，是她当年安在宫中的暗记体系留下的尾巴。玉温润，字冷硬。</p>
+  <p class="p rise">宫中老人被悄悄请来，认了片刻，声音发颤：“昔年有一房女官，专管‘外面的消息’，后被裁撤。裁撤名单上……有人进了赫连拓的外宅管事。不是说她们还为那位娘娘活着，是说路还在。路在，人就能改投。”</p>
+  <p class="p rise">“这就是拼图。”梦姑道，指尖点在玉佩上，“李秋水的人未必还为李秋水活着。人会改投，会把旧路卖给新主。新主要的是把你驯成刀：你脏，中原推你；你顺，西夏用你。石破尘是前台的牙。牙断了，还可以换；驯成的刀，才省事。”</p>
+  <p class="p rise">虚竹握着玉佩，指节发白：“赫连拓……要我到什么地步？”</p>
+  <p class="p rise">“到你自己愿意领军清剿江湖，并感激他给你平台。”梦姑冷冷道，“最好你还与灵鹫离心，只剩他能‘理解’你。理解你的人，最容易变成你唯一的岸。岸若是他，你就永远游不出他的湖。”</p>
+  <p class="p rise">慧净合十：“阿弥陀佛。这比魔功更脏。”</p>
+  <p class="p rise">“脏可以擦。”虚竹抬眼，目光清了些，“先擦到让人看见脏在谁手上。石破尘仍在逃，令牌仍在外。揭了一层皮，下面还有。”</p>
+  <p class="p rise">梦姑点头：“下一层别急着当众撕。当众撕，皇帝也难做。你把线咬死在‘治下失察与门客通匪’，逼赫连拓吐出几人保自己。他吐人的时候，石破尘的粮道会断一截。断一截，够我们喘口气，不够我们骄傲。”</p>
+  <p class="p rise">虚竹认真听着，忽然笑了：“清露，我从前只会挨打。现在会看人怎么自己打自己了。”</p>
+  <p class="p rise">“这不叫阴险。”梦姑正色，“这叫让规则回到规则。你仍不夜刺，不栽赃，不屠俘。你只是不把刀子还回去时还擦干净再还。”</p>
+  <p class="p rise">慧净在一旁静静道：“师兄今日拒杀俘，又请回避，两刀都准。准在‘不脏自己’，也准在‘不让对方干净’。贫僧记下了。”</p>
+  <p class="p rise">虚竹把玉佩还给梦姑：“秋字暗桩……先作拼图，不作舆论。舆论一闹，又成戏。”</p>
+  <p class="p rise">“聪明。”梦姑收起玉佩，“你终于肯把聪明用在活路上，而不是只用在挨打后自我责备。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">当晚，赫连拓果然“自清”。</p>
+  <p class="p rise">消息来得快，像他早备好了剧本。连夜斩了两名马夫、一名仓吏，并呈文痛心疾首：治下不严，臣罪当诛，先诛小人以谢天下。血很快，像急着止血。名单送到虚竹案前时，墨迹未干，纸角还有一点溅开的红——不知是印泥还是别的。</p>
+  <p class="p rise">虚竹看着名单，知道真要害人的名字不在上面。那两名马夫他在活口供词里听过，仓吏却像临时填上的名字，填得太齐，齐得像刀背。可断粮道的效果是真的——关城密报：石破尘外围两处接头点空了，有人连夜撤货，有人焚毁帐册，烟味传到巡逻队鼻子里。第三处接头点仍有人影，却不敢收货，像牙掉了还想咬，咬不动。</p>
+  <p class="p rise">“他在丢卒。”虚竹对梦姑说。</p>
+  <p class="p rise">“丢卒保车。”梦姑道，“车还在。车要自己翻，得在更大的坡上。坡，在夹地，在证据，在你不给他把你写成祸首的机会。你今日请他回避，他丢卒回敬。下一手，他会把脏水泼回你身上——说你逼死小吏，说你借案乱政。你要提前把‘不杀俘、不私刑、证据在案’写进每一份呈文。”</p>
+  <p class="p rise">虚竹应是，亲自在呈文末添了两句：俘虏仍押，未戮一人；所斩马夫仓吏，皆出枢密自清，非臣所请。写完，他觉得笔杆有些沉，沉的不是墨，是把血与责分开的力气。</p>
+  <p class="p rise">虚竹走到窗前。雪停了，屋檐滴水，一滴一滴，像在数他今日说过的话。他想起石破尘黑纱后的眼睛，想起符敏的血，想起会审上自己说出“请回避”时手指的抖。</p>
+  <p class="p rise">抖仍在，话已说出口。</p>
+  <p class="p rise">揭皮一层，疼的不只是敌人。他自己也像被揭开：原来好人也可以把证据摆上桌，把权臣逼到不得不流血洗地。洗地不是他的目标，目标是让更多不该死的人活过这个冬天。好人不是不会用规则，是用规则时仍记得疼——疼在，就不会把规则用成另一把屠刀。</p>
+  <p class="p rise">监临使遣人来传话：皇帝已知会审梗概，暂不深究枢密，先办江湖案。话里有平衡，也有缝。梦姑听完，淡淡道：“缝够我们走。别把缝扯成洞——洞一开，所有人都掉下去。你要的是石破尘落网，不是赫连拓立刻身死。立刻身死，反成他的忠名；慢慢失势，才成你的活路。”</p>
+  <p class="p rise">虚竹点头。他在灯下写了一封极短的信，给段誉那边的暗线：绳会断，我改织网。网需要眼与耳，不需要更多兵。写完，他吹干墨，像吹干一点犹豫。又写一页给韩林那边可能存在的接头——他尚不知韩林之名，只知江湖上有人愿为乔峰的兄弟站中间。写到“中间”二字时，他停了停，终究落下：中间若站得住，两边才少死人。</p>
+  <p class="p rise">“下一步，”他轻声说，“该见真正的外援了。我一个人的戒与刀，不够。”</p>
+  <p class="p rise">梦姑看着他背影：“你终于肯开口要人帮。”</p>
+  <p class="p rise">“段誉说得对。”虚竹道，“绳会断。我得把绳换成网。网上的结，可以是法，可以是见证，也可以是……还记得情义的人。”</p>
+  <p class="p rise">窗外滴水声渐渐密了。雪化的声音，像某种缓慢的投降，也像某种缓慢的开始。</p>
+  <p class="p rise">他知道皮只揭了一层。下面还有肉，有骨，有咬人的牙。可一层揭开，光就能进来一点。一点光，够他看见下一步落脚的地方。落脚处不在血泊，在证据、在回避、在丢卒之后仍不断的那条线——线还在，人就还得走；走的时候，戒在前，刀在侧，谁也别想再逼他祭旗。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch12">← 戒与刀</a><a href="#ch14">旧部与新盟 →</a></nav>
+
+<section class="chapter" id="ch14" data-num="14" data-title="旧部与新盟" data-anchor="ch14" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 14 章</div>
+    <h2 class="ch-title">旧部与新盟</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">边关客栈的酒浊，人杂。</p>
+  <p class="p rise">门帘一掀，热气与臊气一齐扑出来，像把冬日的冷硬生生顶回去。虚竹按密信到后厢时，先看见的是一只打狗棒式的短棍——不是真的打狗棒，是仿的，磨得发亮，像主人天天摸它取暖。持棍的汉子约四十，脸上有旧疤，从眉骨斜到颧骨，像一道没写完的字。眼睛却亮，亮里有风霜，也有不肯灭的火。</p>
+  <p class="p rise">“韩林。”那人自报家门，抱拳不卑不亢，“从前跟过乔帮主跑过腿。帮主不在了，我也不在帮里混了。可有些事，人死了，义不能死。义若死了，活人走路都轻，轻得不像人。”</p>
+  <p class="p rise">虚竹喉头一紧，回礼极深，深到像要把多年欠的礼一次补完：“韩兄……坐。酒我敬你。”</p>
+  <p class="p rise">韩林摆手，短棍往桌上一横：“酒后头。我带了二十三个兄弟，都是旧日认得乔帮主面目的。有的要过饭，有的跑过信，有的在聚贤庄外捡过命。我们不是来给你当兵，是来当你缺的眼睛和耳朵。石破尘在西北商路的毒线，我们摸过；赫连拓门客在边市吃的干股，我们也记过。你要用，我们给。你要我们替你杀人灭口——”</p>
+  <p class="p rise">他盯着虚竹，目光像钉子：“免谈。乔帮主不干脏的，我们也不干。你若干脏的，我们转身就走，走之前把丑话说完：别提帮主一声。”</p>
+  <p class="p rise">虚竹眼眶发热，声音却稳：“正要这样的帮。我若要脏，也不配提大哥一声。韩兄来得及时——我刚在会审上揭了一层皮，皮下面还有牙。牙我能挡，线我不够。”</p>
+  <p class="p rise">厢房里气氛一松。有人起哄要酒，被韩林一眼瞪回去，酒壶放下的声音都规矩了。虚竹把近日局势择要说了：假令、粮草、符敏之伤、拒杀俘、请回避、赫连丢卒。不藏丑，不夸功，像把伤口掀给大夫看。说到符敏中伏时，他声音哑了一下；说到会审拒杀俘时，有人轻轻拍了拍桌沿，像无声叫好。</p>
+  <p class="p rise">韩林听完，拍桌，桌上短棍跳了一下：</p>
+  <p class="p rise">“所以你不是缺武功，缺的是‘有人在江湖说话’。中原怕你，西夏用你，中间空着。空着最危险——空着就有人往里塞谣言。我们站中间，告诉两边：这人是乔帮主的兄弟，做事有底线。底线在，怕会少一点。怕少一点，你就有地方落脚。落脚了，才谈得上把石破尘的毒线掐断，把赫连拓的门客干股揭开。”</p>
+  <p class="p rise">一个瘦高汉子插话：“我们在边市记过三家铺子，挂羊头，吃的是枢密外宅的干股。账本抄不全，抄全了也进不了公堂——除非有人敢呈。”</p>
+  <p class="p rise">“我敢呈。”虚竹道，“呈时把你们的名隐掉，写成‘边市义士密报’。名可以隐，义不能隐成脏。”</p>
+  <p class="p rise">虚竹点头：“我收情义，不收私军。你们的衣食我出，行动听商量，不听单方面的杀令——包括我的。我若杀红了眼，你们拦我。拦不住，就骂我。骂比跪强。跪会把人跪成神，神一落地，全是碎。”</p>
+  <p class="p rise">韩林愣了愣，大笑，笑得厢房梁上落了点灰：“好！这才像人话。乔帮主若在，也要拍你肩膀——拍完再骂你太软。软点好，软点活得久。硬到只剩硬，就跟铁一样，冷，也脆。”</p>
+  <p class="p rise">笑声里，有人偷偷抹眼。虚竹知道，他们来，一半为他，一半为自己心里那尊过不去的碑。碑不能说话，人就替碑走路。走的时候，脚会冷，义却热。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">席间，酒才温，门帘又动。</p>
+  <p class="p rise">大理使者至——简直像段誉在远方掐着时辰。使者风尘满面，却礼数周全，先对虚竹一拜，再对厢中众人一拱，不卑不亢，像把“外援”两个字轻轻放在桌上，又不压死人。</p>
+  <p class="p rise">送来的不是兵，是一封短信与一面小旗。短信只有两行，字迹熟，熟得让虚竹鼻尖一酸：</p>
+  <p class="p rise"><strong>网比绳好。旗给你撑场面，兵我不给——给了，西夏要疑。誉。</strong></p>
+  <p class="p rise">小旗是大理国私人信物，绣工细，见旗如见外臣礼遇，可在边关谈判时添一分“不是孤立无援”的颜色。颜色不重，却够让某些人下嘴时多想一想。</p>
+  <p class="p rise">虚竹把旗收好，对使者道：“回去告诉你家陛下：旗我收，人他别来送死。他坐得稳，比什么都强。也告诉他——绳我换成网了，网上有见证，有法，有还记得情义的人。”</p>
+  <p class="p rise">使者应下，又低声补一句：“陛下另嘱：莫一人扛天下。扛塌了，朋友也扶不起。”</p>
+  <p class="p rise">“知道。”虚竹道，“我正学着让人扶。学得晚，总比不学强。”</p>
+  <p class="p rise">使者去后，韩林瞅着旗，啧声：“你朋友会做人。会做人比会打架难。打架赢一场，做人赢一世。乔帮主……做人有时太直，直得让人疼。你朋友这旗，直里带弯，弯得漂亮。”</p>
+  <p class="p rise">虚竹把短信叠好，收入贴身：“段誉从不教我变坏，只教我别把自己折断。”</p>
+  <p class="p rise">“折断了就成英雄碑。”韩林道，“碑好看，人没了。我们这些活着的，更爱看人。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">当夜，他们定三事。</p>
+  <p class="p rise">厢房灯火压得很低，纸窗上人影晃，像一群商量大事的剪影。韩林把短棍当笔，在桌面上点三点，每点一下，屋里就静一分。</p>
+  <p class="p rise">其一，韩林的人散入边市与商路，专挖石破尘余线，活口优先，账册优先，不求斩草除根的痛快，求断粮断信的实在。<br>其二，虚竹公开会晤“中原义士”（即韩林），慧净在场见证：所谈为清毒安商，非勾结作乱。见证要写进文书，文书要能拿给人看。<br>其三，梦姑在朝中放风：驸马得江湖义助，专对付星宿余孽，与边军井水不犯河水——堵赫连拓“私军”之诬。诬若成，网就破；诬不成，网就紧。</p>
+  <p class="p rise">定完，有人问：“若赫连拓硬咬我们是私军呢？”</p>
+  <p class="p rise">虚竹道：“咬就咬。我们衣食有帐，行动有见证，不占城，不夺仓，不夜刺。他咬得动谣言，咬不动法。法咬不动时，还有民——民要安商，不要私军。商路通了，毒线就窄；毒线窄了，石破尘就急；急了，就容易进我们布的缝。”</p>
+  <p class="p rise">韩林又补一条：“假线我来放。放的时候真假掺半——真到他不能不信，假到他一信就进夹道。夹道里，你们山上别乱动，关城里别浪射。浪射一开，就成屠，屠一开，义就脏。”</p>
+  <p class="p rise">虚竹郑重：“记下了。不屠，是底线，也是给你们的回报——别让乔峰的名字沾血成河。”</p>
+  <p class="p rise">韩林忽然问：“乔帮主……你梦见他吗？”</p>
+  <p class="p rise">虚竹一静。酒香在鼻尖转了一圈，像往事。往事里有聚贤庄的火，有黄河的风，有大哥把酒一饮而尽时那双又热又冷的眼睛。</p>
+  <p class="p rise">“梦见。”他道，“他不说话，只站在远处看。我一喊，人就淡了。淡的时候，天很宽，我却站不稳。我有时想，他是不是在等我自己把路走直，而不是等我把他的路再走一遍。”</p>
+  <p class="p rise">韩林沉默片刻，摸了摸脸上的疤：“那便是了。他要是开口，你该听；不开口，你就自己走。别老等死人教你活。死人把义留下了，活法得你自己踩。踩歪了，我们骂你；踩对了，我们跟着。跟着不是当兵，是当还记得他的人。”</p>
+  <p class="p rise">虚竹深深看他：“韩兄像大哥。”</p>
+  <p class="p rise">“我差远了。”韩林笑，笑里有涩，“我只是还活着的、记得他的人。记得，就够把路照亮一截。照不了天下，照你脚前三步，也够。”</p>
+  <p class="p rise">厢中有人低声说：“三步够走到明天。明天够走到夹地。”</p>
+  <p class="p rise">虚竹抬眼：“夹地？”</p>
+  <p class="p rise">韩林点头：“石破尘不会等你网织好。他要脸，也要你的命。灵鹫与关城之间那条夹道，最像你现在的身份——两山夹一缝，缝里人难走，可两边都看得见。看得见，就好收场，也好做象征。象征脏了，你脏；象征清了，闲话少一半。决战若在夹地，赫连拓也难看——他想观战收场，也得站到光里。”</p>
+  <p class="p rise">虚竹默念“夹地”二字，像把一块棋子轻轻按上棋盘。棋未落定，风已从门缝进来，带着边关的冷，也带着一点将亮未亮的天色。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">回城时，天将明。</p>
+  <p class="p rise">东方一线白，白很薄，像希望，也像刀刃。虚竹把经过告诉梦姑。梦姑听完，只问一句：“他们要什么回报？”</p>
+  <p class="p rise">“要我别丢人。”虚竹道，“别把乔峰的名字活成脏的。也要我活得像自己——韩林原话是：像自己，比像英雄重要。”</p>
+  <p class="p rise">梦姑点头，眼底有软，也有冷：“这回报贵，也干净。你给得起。给不起的时候，我会拦你——拦你丢人，也拦你把自己活成别人的碑。”</p>
+  <p class="p rise">她顿了顿，又道：“外援来了，敌人会提前动手。石破尘不会等你网织好。准备决战吧——地点我看在灵鹫与关城之间的夹地。你身份夹缝在哪，战场就在哪，才有象征，也才好收场。收场时，韩林的人在暗，慧净在明，我在关城顶上。你只管打该打的线，别扫该避的梁。”</p>
+  <p class="p rise">虚竹应是。他走到院中，看着那一线白渐渐扩开，像有人把天轻轻撕开一条缝。</p>
+  <p class="p rise">“大哥，”他在心里说，“你的人来了。我不当你第二，可我借你的光。光用来照路，不用来烧城。城烧了，义也成灰。”</p>
+  <p class="p rise">风过，檐铃轻响，像谁远远应了一声。应得很轻，轻到像雪落，却让他肩上的重量稳了一些。</p>
+  <p class="p rise">午后，公开会晤成了。</p>
+  <p class="p rise">地点选在关城外驿馆，慧净在场，关城守将列席，文书吏动笔。韩林不穿旧帮服，只着短褐，短棍在腰。虚竹把话说得清楚：清毒、安商、缉拿星宿余孽，不为私斗，不为夺权。韩林把话说得更清楚：我们不为西夏官，不为中原刀，只为别让乔帮主的兄弟被谣言活埋。</p>
+  <p class="p rise">慧净在文书末添了一行见证：所谈皆安商清毒，未见谋乱之辞。僧人落款，墨色沉。关城守将看了看虚竹，又看了看韩林，终究也签了名——签名像在两边之间搭了一块可走的板。</p>
+  <p class="p rise">散场时，边市已有风声传开。风声有真有假，真的那部分够用：驸马有江湖义助，义助有底线。假的那部分有人写成“丐帮余党犯边”，梦姑那边自会用朝中放风压回去：专对付星宿，与边军井水不犯河水。井水河水一旦被说清，私军之诬就少了半张嘴。</p>
+  <p class="p rise">夜深，虚竹独坐灯下，把大理小旗与会审抄件并排放着。旗是颜色，抄件是骨。颜色与骨合成网的一结。他想起韩林笑里的泪，想起二十三个名字将散入商路，想起段誉短信里那句“网比绳好”。</p>
+  <p class="p rise">绳会勒人，网会托人。托人的网，结要多，结要净。</p>
+  <p class="p rise">他知道石破尘的牙还在。可牙要咬人，也得有粮。粮道断了一截，下一口会更狠，也更急。急的人，容易进套。</p>
+  <p class="p rise">“夹地。”他轻声说给自己听，“那就夹地见。见的时候，我不祭旗，不屠人。大哥，你的人来了——我借光照路，不借火烧城。”</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch13">← 揭皮一层</a><a href="#ch15">战前夜 →</a></nav>
+
+<section class="chapter" id="ch15" data-num="15" data-title="战前夜" data-anchor="ch15" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 15 章</div>
+    <h2 class="ch-title">战前夜</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">决战的前夜，雪又来了。</p>
+  <p class="p rise">不是暴雪，是细而密的那种，落在甲胄上无声，落在人心上有声。关城到灵鹫的夹道被定为交锋处——石破尘果然按韩林放出的假线咬钩，要在此“截杀伪掌门，夺回逍遥颜面”。钩饵是半真半假的粮车与“新令交接”的流言，真到他不能不信，假到他一信就进缝。赫连拓那边则突然“病了”，避不出面，像把脏事留给江湖，自己坐等收场。病得及时，及时得像剧本。</p>
+  <p class="p rise">虚竹站在临时大帐外，看雪。</p>
+  <p class="p rise">帐内灯不多。他刻意少点，说灯多了晃眼，其实是怕亮太盛，照出每个人眼里的怕。怕不可耻，怕被照成溃，才可耻。他不要溃，他要每个人把怕压成一步步可走的脚。</p>
+  <p class="p rise">符敏是用担架抬上关城的。伤未好，人硬要来。虚竹在医馆阻过一次，在山道驿阻过一次，都被她一眼瞪回：“主尊可以两头跑，我不能躺着听结果。躺着听，像等讣告。讣告一到，山上先乱；乱了，石破尘不用打，自己就赢一半。”</p>
+  <p class="p rise">她把新令牌体系的暗记亲手交给梅管事，交接时语音清，手却抖。抖完，她对虚竹道：“山上已按您的真令死守。我来，是告诉姑娘们：内务总摄还在局中。在，就还能信。信若断了，令牌新制也只是铁片。铁片不能护人，人能护人——人在，铁片才有用。”</p>
+  <p class="p rise">虚竹握住她完好的那只手，掌心温，像要把自己的稳渡过去：“再信一次，我尽量不让你们亏。”</p>
+  <p class="p rise">“信过就别保证太满。”符敏哼了一声，倒像恢复了几分，“满了假。您把阵守住，把俘不屠，把假令的案办死——比保证强。还有，明日若生擒石破尘，别当众辱他。辱他，是给他身后的人送刀；不辱，是把刀留在法里。”</p>
+  <p class="p rise">虚竹一怔，随即郑重：“记下了。生擒，交法，不辱。”</p>
+  <p class="p rise">梅管事在侧低声道：“宫里平安火已约好。火亮，人在；火灭……我们仍守，不散。守的不是火，是您定过的双印与符敏留下的班次。”</p>
+  <p class="p rise">虚竹点头。雪落在担架沿上，像一层极轻的白绒。他忽然觉得，这些姑娘把命押在他身上，不是因为他永远对，是因为他还肯被骂，还肯改。肯改的人，才配再信一次。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">梦姑在帐中铺开一张简图：山、关、夹道、退路、风向、毒烟易聚处。</p>
+  <p class="p rise">她肩伤已结痂，动作仍利落，笔尖在图上点出三个字：收、堵、证。收是收败，堵是堵事后文章，证是证通匪线不断。</p>
+  <p class="p rise">“我明天不入阵。”她先堵虚竹的嘴，像知道他要说什么，“我在关城顶上，看得见旗帜。你败了，我开城门收；你胜了，我堵赫连拓的事后文章。战场你主，名分我主。大事——”</p>
+  <p class="p rise">“同决。”虚竹接道。</p>
+  <p class="p rise">梦姑看他，眼底有火，也有软：“你记住就好。上次你拒绝带我冲，我气。气完了，算你对。这次我自己拒绝入阵，你别英雄到把我又拽进去显你能护。护成那样，是把我当弱，也把共治当空话。”</p>
+  <p class="p rise">虚竹郑重：“听你的。共治不是我赢了分你一杯羹，是你本来就有一半的决断。一半不是恩赐，是你早该有的位置。”</p>
+  <p class="p rise">她指尖在简图的关城顶上点了点：“赫连拓若派接管，我用朱批挡。朱批我连夜去求，求的时候只说江湖案归刑曹，不说你要拆他。拆他的话留给证据，留给山梁上的令签。你只管把石破尘留下。”</p>
+  <p class="p rise">“留下，不辱。”虚竹道。</p>
+  <p class="p rise">“好。”梦姑应。</p>
+  <p class="p rise">两人静了一息。帐外有人走过，脚步很快，像把夜色踩出细响。梦姑忽然伸手，理了理他领口，手指在喉结旁停了一停，声音低：“若回不来……”</p>
+  <p class="p rise">“回得来。”虚竹道。</p>
+  <p class="p rise">“我没说完。”梦姑瞪他，眼眶却红了一线，“若回不来，灵鹫交给符敏与梅管事共理，西夏这边我自己扛。你的名，我不许人写成叛。所以你最好回来，省得我费劲。费劲可以，费成恨，我不答应。”</p>
+  <p class="p rise">虚竹笑了，笑意湿：“我回来。回来听你骂。”</p>
+  <p class="p rise">“骂是轻的。”梦姑靠过去，额头抵他肩，只这一下，像把一整夜的话都抵进去，又分开，“去睡片刻。你不睡，我睡不着；你装睡，我也认。装睡也算睡，睡了，明天手才稳。手稳，才不屠；不屠，才像我们约过的人。”</p>
+  <p class="p rise">虚竹应声。他没有立刻躺下，先把简图又看了一遍，把退路记进心里。退路不是怂，是给人活路，也给自己不屠城的借口——有退，才有收；有收，才有“不绝”。他把“同决”二字在心里又念了一遍，念得像誓言，也像家常。家常比誓言更难毁——誓言可以吼，家常要日日做。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">慧净在侧帐写文书。</p>
+  <p class="p rise">灯一盏，墨一砚，纸一张，写的是今夜见闻与明日将见之原则：止戈，不屠城，不杀俘作祭，不把胜仗写成血海。字迹端正，像给未来的自己与寺门留证。写到“止戈”时，他停了停，又写：戈止于该止处，不止于名声。写完，他吹干墨，对进来的虚竹道：“师兄若死，我把这些带回中原。若活，我也带回。横竖要让人知道您想成什么样的人。人知道了，闲话少不了，可闲话会软一点。软一点，少林那边也好替您说话——说话不是包庇，是把看见的真写下来。”</p>
+  <p class="p rise">虚竹合十：“有劳。明日你不必上阵。”</p>
+  <p class="p rise">“我在关楼。”慧净道，“做镜子。镜子碎了，就没有人照你是否走偏。走偏时，您自己未必察觉——血一热，人就信自己全对。全对的人最可怕，可怕在不再问疼。”</p>
+  <p class="p rise">虚竹点头。他忽然问：“你怕吗？”</p>
+  <p class="p rise">慧净想了想，答得极诚实：“怕。怕你死，怕你杀红，怕我回去无法向寺门交代看见的一切。怕完了，还是坐在这里。坐着，就是不逃。逃了，镜子就变成借口。借口一多，佛门也脏，中原的忌惮也更真。”</p>
+  <p class="p rise">虚竹沉默片刻：“若我杀红了……”</p>
+  <p class="p rise">“我先照，再拦。”慧净道，“拦的时候不讲情面。讲情面的镜子，照出来的是妆，不是人。您在清凉庵问过戒，我把戒写在纸上——纸会旧，戒不能旧成空话。”</p>
+  <p class="p rise">帐外雪声细密。虚竹听着，忽然觉得这声音像庵里井边的水声，冷，却能醒人。他在灯下看了一眼那页文书，看见自己的名字被写得很淡，原则被写得很重。重得好。</p>
+  <p class="p rise">“师弟，”他说，“谢谢你还肯当这面镜子。”</p>
+  <p class="p rise">“莫谢。”慧净合十，“谢什么。镜子不求谢，只求您别把我砸了——砸镜子的人，往往已经不敢看自己。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">韩林钻进大帐，带进一阵雪气，短棍上挂着细白。</p>
+  <p class="p rise">“钩咬实了。”他低声，眼睛亮，“石破尘亲至。左右约百人，杂，毒多，硬桥少。赫连的人在东侧山梁‘观战’，不助他，也不助你——谁倒了扶谁，最恶心。恶心归恶心，令签我们摸到影了，印记像外宅那一路。”</p>
+  <p class="p rise">虚竹道：“观战的，别先动。动了，再算。先动，就成清剿；清剿一开，中原闲话又写成我屠尽江湖。屠尽的名声一起来，符敏的伤、会审的拒、茶馆的真，全白费。”</p>
+  <p class="p rise">韩林盯着他：“你真不先下手清山梁？清了干净，少一支暗箭。”</p>
+  <p class="p rise">“干净的是场面，脏的是名。”虚竹摇头，“我明日只打石破尘这条线。打完，证据在，名分在，山梁上的人自己会撤。撤不了，再请国法。国法比我的掌宽，宽才能装下更多不该死的人。暗箭若来，我接；接不住，也别先把别人射成借口。”</p>
+  <p class="p rise">韩林啧了一声，像骂，又像服：“乔帮主会骂你迂。骂完，也许会敬你一口。敬完再骂——他骂人从来不含糊。迂一点好，迂一点，才不像把天下扛成一口棺材。”</p>
+  <p class="p rise">他放下酒囊，酒囊沉，像装着一句不肯轻易说的话：“我不劝你喝。我只说一句——大哥若在，也只愿你活得像自己。像自己，比像他重要。像他，你会死得漂亮；像自己，你能活着把路走完。漂亮的死，留给话本；走完的路，留给活人。”</p>
+  <p class="p rise">虚竹接过酒囊，没喝，只当作接过一句话。掌心感受着囊皮的凉，凉里有人情的热。他忽然问：“韩兄，你怕吗？”</p>
+  <p class="p rise">“怕。”韩林爽快，“怕你们死，怕我们白来，怕义又变成坟。怕完了，还是站这儿。站着，就是不逃。逃了，碑就真的只剩碑了。”</p>
+  <p class="p rise">“韩兄，”虚竹道，“明日你的人破毒线，别贪功。贪功容易深入，深入容易被咬。”</p>
+  <p class="p rise">“知道。”韩林笑，“我们要眼，不要坟。坟多了，义也埋了。大哥若在，大概也只拍你肩，不替你喝那口不该喝的酒。”</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">夜最深时，雪小了。</p>
+  <p class="p rise">虚竹出帐，走上土坡。远处灵鹫方向有一点灯，极小，像阿穗那种小灯被风送到了天边。他知道那是宫里按约亮的“平安火”。平安不代表无事，代表人还在。人在，令就在；令在，心就不先散。风一过，火光微晃，晃得像有人在山上轻轻点头。</p>
+  <p class="p rise">他在心里把人都过了一遍：梦姑、符敏、慧净、韩林、段誉的旗、乔峰的沉默、山上的姑娘、城里的闲话、会审上抖过的手指、茶馆里改过的词。还有赫连拓那声“长进了”，还有石破尘黑纱后的急。</p>
+  <p class="p rise">每一张脸都像一枚棋子，却不是他随意摆的——是他们自己愿意站在那里。他能做的，是不把他们当柴烧。柴烧尽了，火也暖不了多久；人还在，火才能传到明天。</p>
+  <p class="p rise">“明日，”他对雪说，“我尽量不丢人。丢人的不是败，是把戒卖了换一声喝彩。喝彩散了，人还要活。活着的人，要比喝彩长久。”</p>
+  <p class="p rise">雪不答。雪只是落，落在他肩上，像无声的托付。</p>
+  <p class="p rise">回帐时，他看见符敏的担架停在侧篷，她没睡，眼睛在暗里亮着。见他，只说两字：“去。”</p>
+  <p class="p rise">“去。”虚竹应。</p>
+  <p class="p rise">梦姑那边灯还亮着。他没有再进去说话，只在布帐外停了一息，让自己的影子贴着她的光。光不动，他便走。共治的约，不在这一息里重复，已在这一息里发生——你守城，我入阵；你主名分，我主战场；大事同决，小事各担。</p>
+  <p class="p rise">帐中灯一盏盏灭到只剩两盏。一盏在他，一盏在梦姑那边。两盏隔着布，光却像能碰到一起。</p>
+  <p class="p rise">战前夜，少说话。</p>
+  <p class="p rise">该说的，都已变成明日要走的步子：止戈，不祭旗，不屠，生擒优先，山梁后动，关城收堵，镜子在楼，平安火在山，大哥若在只愿像自己。</p>
+  <p class="p rise">步子清楚了，心反而静。静不是无惧，是惧有了名字，名字有了位置，位置之外，仍是人。</p>
+  <p class="p rise">虚竹躺下，闭眼。闭眼前最后一眼，是帐顶被雪压出的浅痕，像天也在听。</p>
+  <p class="p rise">他轻声道：“回来听你骂。”</p>
+  <p class="p rise">像对梦姑，也像对自己。骂是轻的，活着才重。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch14">← 旧部与新盟</a><a href="#ch16">情义落点 →</a></nav>
+
+<section class="chapter" id="ch16" data-num="16" data-title="情义落点" data-anchor="ch16" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 16 章</div>
+    <h2 class="ch-title">情义落点</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">晨光是灰的。</p>
+  <p class="p rise">夹地两山夹一缝，雪地里插着临时的界旗，旗角被风扯得啪啪响，像催人开口。虚竹立在阵前，未披重甲，只着劲装，外罩一件素色短氅——像要提醒自己：你不是开疆的将军，是来止祸的人。止祸的人若披成屠城的样，祸会换一张脸回来。</p>
+  <p class="p rise">韩林的人已散在毒线必经处，灵鹫女弟子占了两侧高点，关城弓手只守不浪射。慧净在关楼，像一枚钉住的镜子。梦姑在城头，手按旗杆，旗未动，心先动。</p>
+  <p class="p rise">石破尘对侧而立，黑纱换成半透明的薄纱，露出下半张脸的笑。笑里有毒，也有急——粮道断了一截后，急是真的。</p>
+  <p class="p rise">“伪掌门，”他扬声，声盖过风，“今日可还讲慈悲？讲慈悲的人，昨夜可还睡得着？你的人在山上点灯，像给自己上坟！”</p>
+  <p class="p rise">“讲。”虚竹道，声音不高，却传得远，“讲完再打。讲完，你仍可降；打完，降也算数。不降，我擒。擒了，交法。法外，我不加戏。”</p>
+  <p class="p rise">石破尘一窒，随即大笑，笑声尖：“你总爱把刀说成尺子！尺子量人，量不了命！”</p>
+  <p class="p rise">他举手挥下。毒烟、暗器、杂兵如潮涌来。雪地瞬间脏了，白里渗黄，黄里窜黑。韩林的人专破毒线，以湿布、逆风、短突打断施毒节奏；灵鹫女弟子专夺高点，不贪杀，只夺眼；关城弓手箭出如篱，篱内是人，篱外是乱。</p>
+  <p class="p rise">虚竹入阵，不求一掌定乾坤，专找石破尘的气机。掌风过处，毒烟裂开一条缝，缝里两人相对，像把整个夹地缩成三步。三步里有旧怨新仇，有假令与真伤，有符敏肩上的钉，有会审上未杀的俘——所有未做的祭旗，都在这一刻化作他脚下更稳的一步。</p>
+  <p class="p rise">石破尘用的是星宿门阴劲变招，夹杂化功残留的腥，腥里有狠，狠里有慌。虚竹以北冥化其力，化得稳，不贪吸；以六阳破其寒，破得准，不滥爆；以少林稳马步，不让自己飘成只攻不守的疯魔。疯魔赢了，也是输——赢给血，输给戒。戒在骨里一响，他便知道：这一掌可以重，不可脏；可以擒，不可辱。</p>
+  <p class="p rise">“你总留手！”石破尘怒，掌影如蛇，“留手就会死！你那点慈悲，在毒烟里跟纸一样！”</p>
+  <p class="p rise">“你总要命。”虚竹应，指风如针，“要命就会绝。绝了，你身后的线也绝，绝给灭口的人看。我留的不是手，是口——你的口，要在公堂上说话。”</p>
+  <p class="p rise">两人连环三掌。第一掌，虚竹卸力；第二掌，他借势前压；第三掌，石破尘阴劲反卷，卷向虚竹心口。虚竹不退，侧肩让过半寸，半寸之间，生死符的旧意在指尖一闪又收——他不用那种毁人根基的手段作表演，只用封脉与点穴把人留下。</p>
+  <p class="p rise">一招错位，虚竹侧步避开他胸口的阴劲，指风点中石破尘腕脉，再震其肩井，黑纱碎裂，飞起如黑蝶。石破尘喷血后退，仍要咬舌自尽，被虚竹扣住牙关，内力封哑穴——生擒。</p>
+  <p class="p rise">动作干净，干净得像早就演练过“不让他死”。</p>
+  <p class="p rise">“我说过，”虚竹喘着气，气白在冷风里，“杀你太便宜。便宜的是你，贵的是证据。证据在，你身后的车才颠；你死了，车轮上的血只会洗成别人的忠名。”</p>
+  <p class="p rise">他对押解的人喝道：“封穴，上绳，勿辱。辱他者，我先责。”</p>
+  <p class="p rise">石破尘眼中怨毒如火，火烧不出口，只能在瞳仁里烧。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">东侧山梁的“观战者”动了。</p>
+  <p class="p rise">不是救石破尘，是要趁乱射死他灭口，顺带“误伤”虚竹。箭簇寒光一闪，韩林早伏一队在梁后，短促交锋，刀影不过十余息，便缴下几张带枢密外宅印记的令签。令签落地，比箭更响。</p>
+  <p class="p rise">虚竹不登山梁屠杀，只令人围住，喝道：</p>
+  <p class="p rise">“放下弓！你们主子要灭口，我偏留口。谁再射，地我接下——人，交国法！国法能办的，我不办成私仇。私仇一开，你们死，我也脏！”</p>
+  <p class="p rise">箭雨稀疏下去。有人逃，不追尽；有人降，不辱。逃的人背后没有追兵如潮，只有喝令如钉。有人把弓扔在雪里，双手抱头，像怕被当成灭口的余党；虚竹令人只收兵刃，不搜身辱骂。慧净在关楼上双手合十，像为这场“停”而不是“屠”而默念。默念里有怕，也有定：怕的是血再起，定的是血止住了。</p>
+  <p class="p rise">令签被韩林的人用布包好，当众呈给关城方向，让城头也能看见“外宅印记”四个字如何从山梁落到法里。落法里，就不是私仇；是私仇，赫连拓反而好洗。</p>
+  <p class="p rise">石破尘被押到虚竹面前，眼神仍怨：“你赢了又怎样？赫连拓会把你写成祸首，中原会把你写成魔。你永远脏。脏的人，讲再多戒，也只是自己骗自己。你不杀我，是因为你不敢——你怕血沾上你那点假慈悲！”</p>
+  <p class="p rise">虚竹看着他，目光不闪：“脏不脏，不由你一张嘴。你要我两头断，我偏两头接。接得辛苦，却还在。还在，就还能把证据交出去——证据比你的咒骂硬。我不杀你，不是不敢，是不让你死得便宜，也不让灭口的人如意。”</p>
+  <p class="p rise">他抬高声音，让两军能听见，让山梁能听见，让关城能听见：</p>
+  <p class="p rise">“石破尘通匪烧仓、假令劫人，罪证后呈。从者不究既往，弃械者可回乡。再执兵器者，当阵擒拿——非必要，不取性命！”</p>
+  <p class="p rise">雪地里，兵器落地声渐渐密集，像一场延迟的雨。雨落在泥上，溅起的不是欢呼，是松一口气的细响。有人跪，有人哭，有人把毒囊远远扔开，像扔开自己昨夜做过的梦。有女弟子在高点收了弓，没有补射逃兵——补射容易，收住才难。</p>
+  <p class="p rise">韩林从山梁方向折回，短棍上沾了雪，也沾了点血——不致命的血。他看一眼虚竹，只点头，不说话。话在眼中：像。像自己，也像一条还能走下去的路。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">赫连拓的“病”在午时好了。</p>
+  <p class="p rise">好得及时，及时得像他一直在听夹地的风。他派人来“接管要犯”，话漂亮：江湖案亦属边事，枢密有责，要犯当解入府中严鞫，以免走漏。</p>
+  <p class="p rise">被梦姑在关城挡住。</p>
+  <p class="p rise">公主手持皇帝临时手谕——她连夜求得的“江湖案归刑曹，权贵回避”的朱批——把接管挡成越权。朱批一亮，来使的笑容裂开细纹。城门洞里风大，手谕的边角猎猎响，像另一面不落地的旗。</p>
+  <p class="p rise">“驸马押人，刑曹收人，僧人见证。”梦姑声音清冷，“枢密府若病好了，先把自己的病根查清。查不清，别伸手。伸手越权，本宫便当庭参。参的不是你一人，是整条‘观战灭口’的线。”</p>
+  <p class="p rise">来使还要争：“公主，江湖案事关边安，枢密有统筹之责——”</p>
+  <p class="p rise">“统筹不是吞案。”梦姑打断他，“吞案的人，最爱说统筹。手谕在此，谁再争，谁就是抗旨的影子。”</p>
+  <p class="p rise">来使语塞。梦姑只看他一眼。那一眼里没有火，只有制度。制度比火烫。共治的另一半在此刻落地：战场他主，名分她主；主得住，才叫同决，不叫分赃。</p>
+  <p class="p rise">虚竹押着石破尘入关，对赫连来使只一句话：“要犯交给监临使与刑曹。枢密府若要人，请先交出自家通匪门客的全名单。交不清，就别伸手。伸手要人，先伸手交人。”</p>
+  <p class="p rise">来使面色如土，退时脚步乱，乱得像雪地里站不稳的鹿。石破尘被押过城门时，回头看了虚竹一眼，那一眼里怨毒仍在，却多了一丝不敢置信——不屠、不辱、不交人给枢密，像三种他没算进局里的棋。</p>
+  <p class="p rise">韩林在侧，忽然道：“乔帮主若在，大概也只愿你活得像自己。你今儿像了。”</p>
+  <p class="p rise">虚竹一愣，回头：“韩兄……”</p>
+  <p class="p rise">韩林笑，笑里有泪，泪很快被风吹干，干成一点亮：“像自己，比像英雄好看。英雄死太多了。死了的英雄，我们记得；活着的你，我们更需要。需要你把戒走完，把网织牢，把名字活成不脏的。昨晚我说‘大哥若在’，不是要你变成他，是要你别辜负他还肯把兄弟二字留给你。”</p>
+  <p class="p rise">虚竹喉头一紧，抱拳极深：“这声‘像’，我收下。收下就得配得上。”</p>
+  <p class="p rise">“配不配，看后头。”韩林拍他肩，力道重，像乔峰会拍的那样，又不完全一样，“后头还有账。账让会算的人算，你别把自己算进去当抵债。抵债的英雄，我们见得够多了。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">战事收束得比许多人预想的快。</p>
+  <p class="p rise">不是虚竹无敌，是网先织好：假线、见证、国法、外援、山上不动摇、拒祭旗的名声、会审揭开的皮。武戏再大，也只是网的最后一结。结打紧了，鱼跳不出去；结打脏了，网也会臭。他在城头数了数：弃械者过半，死伤者少，生擒者有名有姓，山梁令签在案。数完，他才敢承认——这一阵，还算人。</p>
+  <p class="p rise">虚竹站在城头，看着夹地里的雪被踩成泥，泥里有血，血不多——在他的标准里，这叫“还算人”。还算人的胜仗，不会写进传奇话本的高潮，却会写进许多人能不能回家的夜里。夜里若能回家，话本里少一段血海，也值。</p>
+  <p class="p rise">符敏被抬到城门洞，看他一眼，目光利，利里有湿：“赢了？”</p>
+  <p class="p rise">“赢了一阵。”虚竹道，“后面是账。账比阵难，难在人不死在刀上，死在话上。”</p>
+  <p class="p rise">“账让会算的人算。”符敏看向梦姑，“主尊回去吃饭。吃饭比摆功重要。摆功的人，容易把自己摆成靶。山上姑娘等的是您还在，不是您封侯。”</p>
+  <p class="p rise">梦姑走到虚竹身边，替他拭去额上的雪与汗，动作自然得像家常。家常在血气未散时出现，比任何颂词都重。</p>
+  <p class="p rise">“活着。”她只说这两个字。</p>
+  <p class="p rise">“活着。”虚竹应。</p>
+  <p class="p rise">她又低声补一句：“接管我挡了。下一手他会哭穷、会自请、会把脏水泼你。你别急着接他的位子，也别急着杀他全家。不屠，是阵上的；不贪，是阵后的。”</p>
+  <p class="p rise">“同决。”虚竹道。</p>
+  <p class="p rise">慧净从关楼下来，把那页写着原则的文书收入袖中，对虚竹合十：“镜子还在。师兄今日未砸。贫僧把‘不取性命’四字也写进去了——写进去，中原若再只传噬人，至少有纸可对。”</p>
+  <p class="p rise">“有劳照着。”虚竹道。</p>
+  <p class="p rise">远处灵鹫方向，平安火仍亮着，细如针。针尖上的光，把整座冬山缝在“还在”两个字上。风从夹地吹来，带着雪泥与药草味，像把战场一点点洗回人间。</p>
+  <p class="p rise">夕阳穿过灰云，给关城镶了一条冷金边。决战落点不是谁跪地求饶，是许多人还能站着回家——包括那个从前不会拒绝、如今会在阵前喊“不取性命”的人。</p>
+  <p class="p rise">他知道石破尘背后的车还没完全翻。可车轴已经断了一根。山梁上的令签、活口、粮道缺口、朱批挡接管，都是断口。</p>
+  <p class="p rise">断一根，就有人摔下来。</p>
+  <p class="p rise">摔下来的人会不会再爬起，是后话。眼下，雪又细细落了几点，落在他肩上，像无声的嘉许，也像无声的提醒：戒还在，刀已入鞘；鞘外的闲话未停，鞘内的人，先吃饭，先活着。</p>
+  <p class="p rise">虚竹最后看了一眼夹地。夹地空了，风还在。风过两山，像一句没有说完的话：情义落点，不在掌声，在不屠。不屠之处，人才回得了家；回得了家，才谈得上把下一层皮揭开，把下一根轴折断——折的时候，仍不把人折成魔。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch15">← 战前夜</a><a href="#ch17">真空 →</a></nav>
+
+<section class="chapter" id="ch17" data-num="17" data-title="真空" data-anchor="ch17" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 17 章</div>
+    <h2 class="ch-title">真空</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">胜仗之后的城，比败仗还吵。</p>
+  <p class="p rise">有人放鞭炮，炮屑落在雪泥里，红得像没干的喜；有人抢着递状子，状子里把自己写成“早就看出枢密府有问题”的先知；有人连夜改口，改得比换衣还快。茶馆里说书的嗓子抬高了半度，把昨夜的刀光说成传奇，又把传奇说成“国之幸”。虚竹坐在驸马府厅中，听这些声音像听雨——雨落在别人屋顶上时，总特别响；落在自己心里时，又特别冷。</p>
+  <p class="p rise">厅外廊下，靴声来来去去。每双靴都像带着一点没问出口的要求：要官，要赏，要一个能靠的新主子。新主子三个字，比刀锋还滑。</p>
+  <p class="p rise">石破尘已下狱。供词写了厚厚一叠，把赫连拓咬出七分，又在关键处留了三分滑——滑在“知情”与“主使”之间，滑在“失察”与“合谋”之间。滑是给自己留命，也是给上面留面子。赫连拓上表自请罢职查办，姿态漂亮，字句恭顺，像把刀柄先递到皇帝手里，以免别人抢着递。递刀柄的人，往往最懂如何让握刀的手心软。</p>
+  <p class="p rise">梦姑把表文丢在桌上，纸页轻响，像一记无声的掌：</p>
+  <p class="p rise">“他在赌。赌皇帝念旧，赌你不会赶尽杀绝，赌风头过了还能复起。复起的人最会写‘当年错在小人’，把自己写成被蒙蔽的忠臣。”</p>
+  <p class="p rise">虚竹拿起表文，看了两行，又放下。墨香还新，新得像伤口上刚敷的药，药香遮不住脓：</p>
+  <p class="p rise">“我们呢？我们也赌吗？”</p>
+  <p class="p rise">“我们把证据交全，把人交法，把话说死：驸马不接他的位子，不领他的军，不报私仇。”梦姑道，目光稳，稳里有疲，也有锋，“真空最容易吞人。你若跳进去当新权臣，就中了另一种套。套上写着‘为国为民’，里面却是同一把椅子。椅子不认人，只认坐上去的重量。”</p>
+  <p class="p rise">虚竹点头。他想起段誉的信里那句“莫一人扛天下”，想起自己写过的“拒其贪”。贪的不只是财，是那把看起来能解决一切的椅子。椅子一坐，事好像好办了；办着办着，人就变成椅子的形状——方，冷，只剩四面都要防。</p>
+  <p class="p rise">他起身走到窗边。窗外兴庆的灯火比战前更密，密得像生怕黑暗再来一次。密灯之下，仍有巷子黑着，黑着的地方，才是真空真正的胃口。</p>
+  <p class="p rise">“清露，”他轻声说，“若我不坐，会有人说我推责；若我坐，会有人说我夺权。怎么都脏。”</p>
+  <p class="p rise">“那就选不那么脏的那种脏。”梦姑走到他身侧，肩几乎相抵，“不坐权臣的椅，坐你该坐的位：灵鹫的主，逍遥的掌，西夏的婿。位在，分在；分尽了，贪止住。止住贪，比坐上一把更大的椅更像赢。”</p>
+  <p class="p rise">虚竹看着她，忽然觉得战后真正的仗，不在城外，在这句话里。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">殿上再议时，气氛比战前更奇异——奇异在人人都像赢家，又人人都怕自己其实是下一场的输家。纱后帝座沉，沉得像在称每一句话的分量。有老臣咳，有新贵挺胸，有人把目光一瞥一瞥地往驸马身上送，送得像在递一把看不见的印。</p>
+  <p class="p rise">有人出列，嗓门亮，亮得像早背好了稿：</p>
+  <p class="p rise">“边事初定，人心未稳。臣建议：以驸马暂领枢密事，安抚中外。驸马有武、有功、有民望，正可填此真空。真空不填，乱芽再生。”</p>
+  <p class="p rise">殿中有人附和，附和声像一阵有组织的风。风的方向很清楚：把虚竹推上去。推上去的人，有的真心觉得稳，有的只想看他坐不稳时摔得响不响。</p>
+  <p class="p rise">虚竹出列，叩首。叩得很正，正得让想笑他“假谦”的人一时找不到缝：</p>
+  <p class="p rise">“臣不敢。臣武人，刚从血里走出，眼易红，手易重。枢密重地，宜用稳慎老臣，宜用懂粮、懂边、懂法度的人。臣请仍协查江湖余党，并约束灵鹫不生事。若陛下要罚臣‘生事扰边’，臣领罚——罚在臣身上，比罚在百姓身上干净；若要赏，请赏给死伤士卒与山中姑娘，别赏臣权。权在臣手里，容易被写成野心；赏在死伤者身上，至少像一句人话。”</p>
+  <p class="p rise">殿中静了一息。静里有意外，有不满，也有一点点被冒犯的权威——权威最怕有人当众说“我不要”。</p>
+  <p class="p rise">皇帝在纱后似乎叹了口气，叹意复杂，复杂得像又怒又怜：</p>
+  <p class="p rise">“你这女婿，总把好东西往外推。推久了，别人会当你矫情。”</p>
+  <p class="p rise">“推的是臣拿不稳的。”虚竹道，额仍抵着冷砖，声音却清，“拿得稳的，臣不推——灵鹫臣仍主，逍遥臣仍掌，驸马的分臣仍尽。尽到边，止于贪。贪若起于臣，臣先斩自己的念；贪若起于旁人借臣之名，臣拒。拒不是抗旨，是护住西夏别再养出第二把只认私渠的刀。”</p>
+  <p class="p rise">赫连拓在班中抬眼看他。那一眼复杂难辨：像恨，像意外，像终于确认这人驯不成刀，也像一丝极淡的……松。松得很丑，丑在他发现自己输给了一个不肯坐他椅子的人。不肯坐，有时比夺更羞辱。</p>
+  <p class="p rise">有人还要再劝，被帝座一侧轻轻抬起的手势按住。旨意下来，字句不华丽，却像往真空里填土：</p>
+  <p class="p rise">赫连拓免职待罪，家产暂封，人交法司；边务另委老成；驸马不加官，赐金帛抚恤死伤；灵鹫协防有功，准其自守如故，不得编入军籍，亦不得以军令驱之。</p>
+  <p class="p rise">真空被填上了制度的土，而不是虚竹的身体。土不漂亮，却能长路。</p>
+  <p class="p rise">虚竹谢恩时，听见自己心里那六个字轻轻落下来：在其位，尽其分，拒其贪。落得很轻，轻到殿上无人听见，却够他站起来时膝盖不软。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">出宫后，天光白得刺眼。宫道上的人让路，让得比从前更殷勤，殷勤里有恐惧，也有新的算计——算计他“不加官”究竟是失还是赢。</p>
+  <p class="p rise">韩林在巷口等他，披风旧，疤在脸上发白。见他来，撇嘴，撇得很丐帮：</p>
+  <p class="p rise">“你真不坐那把椅子？坐了，多好办事。办事的时候，谁还敢拿‘安边’两个字堵你的嘴？”</p>
+  <p class="p rise">“坐了，就变成下一个被盯着驯的人。”虚竹道，步子放慢，与他并肩，“我办事靠证、靠人、靠戒，不靠那把椅子。椅子会让证变成借口，让人变成属下，让戒变成装饰。装饰多了，人就看不见自己脏在哪。”</p>
+  <p class="p rise">韩林盯着他半晌，忽然笑，笑里有酒气，也有痛：</p>
+  <p class="p rise">“行。乔帮主的兄弟里，你最不像官，也最像能活成官的人——矛盾，却真。真的人少，所以你更得活着。活着，才有人记得：义不一定要走到绝，也可以走到界。”</p>
+  <p class="p rise">虚竹喉头一紧。绝与界，一字之差，差的是许多人的命，也差他自己能不能回家。</p>
+  <p class="p rise">“韩兄，”他道，“狱里的石破尘，供词还有滑。滑处我会让法司磨。磨的时候，别让江湖的兄弟去‘私了’。私了一时痛快，痛快完，制度那点土又被挖空。”</p>
+  <p class="p rise">“晓得。”韩林拍拍他肩，力道重，“我们扫毒线，不扫你的局。你的局，你自己站。站歪了，我骂你；站直了，我喝酒。喝酒比哭强。”</p>
+  <p class="p rise">符敏的信鸽同日到，筒很小，字却密：山上安，假令绝迹，巡防按新规。姑娘们要主尊回去吃一顿热的。梅管事说，热的比令牌暖。阿穗仍点灯，白日也点，说怕主尊在城里忘了山还有夜。</p>
+  <p class="p rise">虚竹回：会回。先把城里的刀收进鞘。鞘不收好，带回山的只会是血味。</p>
+  <p class="p rise">写完，他把信筒交给飞鸽。鸽翅一振，灰影掠过屋脊，像把一句承诺送回云上。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">夜里，法司传来消息：赫连拓外宅管事畏罪，供出与石破尘联络的私渠——渠在商路、在关文、在“遗落”的粮。私渠一断，西北毒线塌了半壁。塌的时候有人哭，有人逃，有人连夜把账本烧了，烧得满巷都是纸灰。纸灰轻，罪不轻。</p>
+  <p class="p rise">赫连拓本人仍不认主使，只认失察。失察两个字，像一件裁得好的袍，穿上就能把刀藏进袖里。</p>
+  <p class="p rise">梦姑问虚竹，灯下眉眼软了些，软里仍有清：</p>
+  <p class="p rise">“你恨他吗？”</p>
+  <p class="p rise">虚竹想了很久。恨很容易，容易得像伸手就能抓到的炭；可炭抓久了，烫的是自己的手。</p>
+  <p class="p rise">“恨他拿人命当棋。”他终于说，“棋盘上的人会哭，会烧，会在粮仓前跪。可我若以恨处置他，我就把自己降成棋盘上的另一枚——枚与枚咬，旁观者笑，真正的局还在。让法司审，让证据说话。他若复起，我们再挡。挡，不是斩草到地底——地底有时埋的是自己。自己埋深了，春天便不长东西。”</p>
+  <p class="p rise">梦姑看着他，眼中有赞许，也有疲惫。疲惫是战后的税，谁掌过事谁都要交：</p>
+  <p class="p rise">“你长大了。长大会累。累的人容易想找一把更大的椅来靠。你今晚没靠，我才信你说的‘拒其贪’不是漂亮话。”</p>
+  <p class="p rise">“有你，累能分。”虚竹道，伸手覆住她的手背，“分不是让你替我扛刀，是让我知道扛完还能回家。能回家的人，才敢在殿上说不。说不的时候若无处可回，那不是拒绝，是自绝。”</p>
+  <p class="p rise">窗外，兴庆的灯火比战前安静些。安静不是无事，是事被暂时按进了法度与文书里。真空不会永远空，总会有新的风，新的人，新的“国之幸”。可至少这一次，风没有立刻变成刀，而虚竹也没有把自己填进每一个空洞里。</p>
+  <p class="p rise">他把那六个字又在心里写了一遍。</p>
+  <p class="p rise">在其位，尽其分，拒其贪。</p>
+  <p class="p rise">六个字，轻，却够他走很长一段。段上有雪，有泥，有人叫他主尊、驸马、掌门；他应，却不再把应声当成把自己整个人交出去。</p>
+  <p class="p rise">交出去的太多，回来的就只剩空壳。空壳填真空，真空会更大。</p>
+  <p class="p rise">他要做的，是活着的界：界内尽心，界外不贪。</p>
+  <p class="p rise">夜深时，更鼓远，像从宫城方向一下一下敲在他的戒上。戒不响，人却听见了。</p>
+  <p class="p rise">他回到内室时，梦姑已将灯芯剔短，只留一豆光。光小，正好照见桌上一角未收拾的边报摘要——摘要里有人建议“以战功扩权”，有人建议“以柔远之名收编灵鹫”。两种建议都像糖，糖衣下是同一枚钩。</p>
+  <p class="p rise">“这些我都看见了。”梦姑道，并不抬头，“看见不等于接。你今晚在殿上推的，是椅子；我在府里按的，是嘴。嘴按不住，椅子推了也白推。”</p>
+  <p class="p rise">虚竹在她对面坐下，掌心仍有殿砖的凉意：“若有人说我假清高呢？”</p>
+  <p class="p rise">“让他们说。”梦姑终于抬眼，眼里有倦，倦里却亮，“清高是骂给听不懂边界的人听的。听得懂的人，会看见你把抚恤金拨出去的手，也会看见你把枢密印推回去的手。两只手都在，才叫尽分，不叫作态。”</p>
+  <p class="p rise">虚竹点头。窗外有夜鸟短啼，啼完又寂。寂里他忽然很明确：战后真正的胜利，不是无人敢惹，而是有人敢依法惹，也有人敢依法挡——挡的时候，不靠自己变成更大的权臣，靠证据、靠界、靠还不愿意把自己卖成刀的那点心。</p>
+  <p class="p rise">心还在，真空就填不满他。填不满他，他才能继续把土填回真空里。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch16">← 情义落点</a><a href="#ch18">双影同灯 →</a></nav>
+
+<section class="chapter" id="ch18" data-num="18" data-title="双影同灯" data-anchor="ch18" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 18 章</div>
+    <h2 class="ch-title">双影同灯</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">雪停后的第三夜，府里终于没有急报。</p>
+  <p class="p rise">急报一停，世界像突然缺了一角声音。虚竹觉得这种安静不真实，像战场后的耳鸣——耳鸣里仍有刀、有火、有人喊他的名字，只是名字落不到实地。他在廊下站了很久，看檐角残雪，看井栏湿痕，看自己的手：手上伤已结痂，痂下的人还在不在，他一时不敢确认。</p>
+  <p class="p rise">梦姑却很会利用安静。她遣退左右，只留一室灯，把火盆拨旺，炭红得像要把整个冬天的冷都关在门外。门一闭，府里的广便缩成一间；一间里，两个人才像从“驸马”与“公主”里被放出来，放回姓虚的竹，与名叫清露的她。</p>
+  <p class="p rise">“坐。”她说，指了指灯侧的位置，“今晚不谈赫连拓，不谈石破尘。谈我们。我们若总被事推着走，走久了，会变成两件会呼吸的公器。公器没有家。”</p>
+  <p class="p rise">虚竹坐下，手不知道放哪，最后放在膝上，像个被叫去受戒的沙弥。受戒时心虚，是因为怕犯；今夜心虚，是因为怕自己已经犯过——犯过慢，犯过软，犯过想一个人退。</p>
+  <p class="p rise">梦姑看着他，忽然笑了。笑意不尖，尖的那些话她已经在霜夜说过；今夜的笑像把霜化开一点：</p>
+  <p class="p rise">“你还是这样。外面能擒人，在我面前像做错事。做错事的人若总像做错事，家里就永远像公堂。”</p>
+  <p class="p rise">“我确实做错过。”虚竹低声，声音里有砂，“慢，软，想一个人退。把你晾在风口。风口上的人会冷，冷了还会被写成‘护短的公主’。那顶帽子扣在你头上，是我的账。”</p>
+  <p class="p rise">“那些骂过了。”梦姑道，抬手止住他要继续的歉，“骂是为了改，不是为了让你一辈子跪。跪久了，我面前就不是丈夫，是一尊自己罚自己的泥胎。泥胎不能共治，只能供着。我不要供。”</p>
+  <p class="p rise">灯芯轻轻一跳。虚竹抬眼，见她目光清，清里有锋，锋却朝着事，不朝着折人。</p>
+  <p class="p rise">“我想问的是另一件事——”梦姑顿了顿，像把最硬的字放软了再递出，“你娶我，心里有没有过后悔？”</p>
+  <p class="p rise">虚竹猛地抬头，肩线一绷：“没有。”</p>
+  <p class="p rise">“我想过。”梦姑很坦然，坦然得近乎残忍，残忍却是对自己，“在你两头跑、我被当软肋、朝里把我写成‘护短的公主’时，我想过：若当初只是梦中相见，不落地成婚，是不是更干净。干净的梦不会被边报砸，不会被门客盯，不会在殿上被人拿来当棋。想完，我否了。干净不是我们的命。我们的命是脏一点的人间，两个人一起擦。擦不干净也擦，总比各自装作没沾过强。”</p>
+  <p class="p rise">灯芯轻轻一爆，爆出极小的灯花。虚竹眼眶热，热意来得凶，凶得像积了整场仗的委屈与庆幸同时决堤。他没有哭出声，只把呼吸放慢，慢到能把自己从“空壳”里一点点拽回。</p>
+  <p class="p rise">“清露，”他道，声音哑，“我从前在山洞里叫你梦姑，觉得你是天上的。天上的人不能碰，碰了会碎。现在知道你是地上的，更舍不得。地上的人才会疼，才会骂，才会把账算清楚还肯留。肯留的人，比任何仙都难求。”</p>
+  <p class="p rise">梦姑伸手，按住他的手背。手背有薄茧，茧下有温：</p>
+  <p class="p rise">“那我们立几条共治——不是朝廷的，是我们的。朝廷的法能管人，管不了两个人如何不把对方用废。用废了，外面再赢，家里也是真空。”</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">她一条条说，他一条条应。应的时候不像画押，像把绳结打在该打的地方。</p>
+  <p class="p rise">其一，大事同决：山、城、杀伐、名分，任一方说“等等”，另一方必须停一停。停不是怯，是给并肩留半息。半息里或许能看见坑。</p>
+  <p class="p rise">其二，可互相拒绝：她可拒他为义轻生，他可拒她为权强他成刀。拒绝不是背叛，是护。护对方，也护自己还能继续做对方的人。</p>
+  <p class="p rise">其三，秘密不拿来伤对方：梦中相识、少林旧事、宫中闲话，可说可不说，但不可在吵时当刀子甩。刀子甩出去，赢的是嘴，输的是夜里还能不能同灯。灯一灭，共治就只剩两张各自的嘴，嘴再利，也拼不成一个家。</p>
+  <p class="p rise">其四，累了要开口：不许再用“我没事”把人关在门外。门外的人会撞，会冷，会在某一天不再敲门。门一久不开，再好的并肩也会变成隔墙的两个人。</p>
+  <p class="p rise">虚竹听完，沉默片刻，像把四条在心里走了一遍。走过最窄的是第四条——他太会把疼吞下去，吞成“我可以”。可以久了，人就以为自己是铁；铁不会疼，也不会在灯下说“我累”。</p>
+  <p class="p rise">“第四条我最难。”他认真道，“寺里教忍，江湖教扛，两边都教我别出声。我学。学不会的时候，你骂我；骂比我自己骗自己强。”</p>
+  <p class="p rise">“我监督。”梦姑道，唇角微扬，“监督很烦。烦着，才像日子，不像传奇。传奇里的人都会死，日子里的人会喝茶。”</p>
+  <p class="p rise">两人沉默片刻。炭火噼啪，像替他们把未说完的话轻轻砸碎，砸成可以呼吸的颗粒。虚竹忽然问，问得很低，低得像怕答案太响：</p>
+  <p class="p rise">“你还怕我是‘捡来的宫主’吗？怕我哪天被旧债吞掉？石破尘说的那些——位子是血换的，名脏了才好用——你怕它们哪天变成真的？”</p>
+  <p class="p rise">梦姑摇头，摇得很慢：</p>
+  <p class="p rise">“怕过。在你刚归山、姑娘们问心、你眼里全是债的时候，怕过。现在不怕这个。旧债可以还，可以拒，可以慢慢拆。我怕的是你把自己活成只剩责任的空壳。空壳不是丈夫，是牌位。牌位前能上香，不能并肩。我要并肩，不要香。”</p>
+  <p class="p rise">虚竹握住她的手指，像握住温度本身。温度不烈，却把整个冬天从指缝里挤出去一点。</p>
+  <p class="p rise">“那我留壳里的人。”他说，一字一字，像立誓，又像请求允许，“人叫虚竹。虚竹会怕，会疼，会想喝你递的奶茶，会想回山看阿穗的灯，也会想……多看看你。看你不是为了躲事，是为了做事时还知道自己为谁留一条回家的路。”</p>
+  <p class="p rise">梦姑耳尖微红，哼了一声，哼里有软：</p>
+  <p class="p rise">“油嘴。跟段誉学的？他写信能把石头写成花，你学了三成，已经够我受。”</p>
+  <p class="p rise">“他比我会。”虚竹老实道，老实得像在寺里认错，“我会的那点，都是被你逼出来的。不逼，我只会说对不起。”</p>
+  <p class="p rise">两人都笑了。笑意在灯下摊开，像一块终于晒到的布——布上还有褶皱，褶皱是伤，伤不遮，却不再盖住整匹布。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">后半夜，风又起。</p>
+  <p class="p rise">风过屋脊，像远处有人轻声走过，不敲门。梦姑靠着他肩，发丝擦过他下颌，声音懒，懒里有清醒：</p>
+  <p class="p rise">“朝里还要余波。中原还要闲话。法司审赫连拓，审到哪一层，都会有人想把水再搅浑。我们不能当故事结束。结束的心态最危险——危险在松。松了，针就进来。”</p>
+  <p class="p rise">“知道。”虚竹道，下巴轻轻抵了抵她发顶，“结束的是这一阵。日子还长。长日子里，我按我们的四条走。走歪了，你拉；你若为权把我往刀上推……我也拒。拒的时候，请你别把拒当成不爱。”</p>
+  <p class="p rise">“拒是爱的一种。”梦姑闭上眼，像把这句话也收进睡意边缘，“爱若只会答应，那是溺。溺死人的水，往往比刀温柔。”</p>
+  <p class="p rise">虚竹看着灯。灯焰稳，稳得像终于肯停在一个地方。灯里有两个人的影，叠在墙上，像一对不会分开的剪影——不是因为命运绑死，是因为他们选择站在同一圈光里。光圈外仍有夜，夜仍大；光圈内有界，界内有人。</p>
+  <p class="p rise">他轻轻说：“梦姑。”</p>
+  <p class="p rise">“嗯。”</p>
+  <p class="p rise">“谢谢你还在。还在比赢更难。赢可以靠一次出手，还在要靠许多个夜里不走。”</p>
+  <p class="p rise">梦姑不睁眼，只回，声音带一点笑，笑意浅：</p>
+  <p class="p rise">“谢来谢去的，不如明天早起给我煮茶。茶淡一点。你总煮得太苦。苦是你的日子，不必全都倒进我的碗里——碗里留一点淡，我才能尝出你今天有没有偷偷加糖。”</p>
+  <p class="p rise">“好。”虚竹应。应得很认真，认真得像接下另一道旨意。旨意不来自殿，来自灯。</p>
+  <p class="p rise">苦的日子还多。可灯下这一刻，苦被甜的细节按住了，动弹不得。细节很小：茶、灯、并肩的肩、可以互相拒绝的权利。小，却是共治真正的根。根不在告示上，在两个人还肯把“我们”两个字说出口。</p>
+  <p class="p rise">他想起议事厅里那句“公主与灵鹫只能保一个”，想起自己硬邦邦的回答。今夜他更懂那回答的后半截：不会只剩一个，因为他们拒绝做这种题；拒绝的时候，不是靠吼，是靠先在灯下把自己站成两个人，而不是一把刀与一个鞘。</p>
+  <p class="p rise">双影同灯。灯不灭，影就还在。</p>
+  <p class="p rise">影若走偏，还有人伸手把影拉回光圈里——伸手的权利，写在第二条：可互相拒绝，也可互相拉回。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">天将亮未亮时，虚竹其实没有真睡。</p>
+  <p class="p rise">他听着梦姑均匀的呼吸，听着远处隐约的更鼓，听着自己胸口那点终于肯落下的安。安不是无事，是事来时知道身旁有人，有约，有可以停一停的半息。</p>
+  <p class="p rise">他在心里把四条又默了一遍，默到像功课。功课从前是经文，如今是人。人对了，经文才不像空壳。</p>
+  <p class="p rise">窗外有鸟叫了第一声。声很短，短得像试探：冬真的肯让路吗？</p>
+  <p class="p rise">虚竹想：让不让，他都要煮一壶淡茶。茶热了，日子才算从“战后”真正回到“还在”。</p>
+  <p class="p rise">还在，就是胜利里最不像胜利、却最像活着的那种。</p>
+  <p class="p rise">他轻轻起身，去灶间添水。水开时嘶声细，细得像怕惊醒谁。他记得她说淡一点，便少抓了半撮茶叶，又在壶旁放了两只杯——一只给她，一只给自己。自己的那杯，他故意偏苦些：苦是提醒，提醒他壳里还有人；人若全甜，便容易忘了昨夜的火与明日的针。</p>
+  <p class="p rise">端茶回房时，梦姑已半醒，看见他，嗓音带沙：“这么早？”</p>
+  <p class="p rise">“立第四条。”虚竹把淡的那杯递过去，“累了要开口。我开口：我累。累完，还想跟你过今天。”</p>
+  <p class="p rise">梦姑接茶，吹了吹，喝一口，眉眼松了：“这才像共治。共治不是两个人一起厉害，是两个人一起承认会软、会乏、会需要对方把灯拨亮一点。”</p>
+  <p class="p rise">窗外天光渐白。白不是无事，是有事的日子肯从同一扇门走进来。门内有茶，有约，有可以互相拒绝的权利——有这些，双影才不只是墙上的好看，而是扛得动朝堂与江湖来回撕扯的、活的并肩。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch17">← 真空</a><a href="#ch19">三角平衡 →</a></nav>
+
+<section class="chapter" id="ch19" data-num="19" data-title="三角平衡" data-anchor="ch19" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 19 章</div>
+    <h2 class="ch-title">三角平衡</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">虚竹回山时，宫门的铃比来时轻快。</p>
+  <p class="p rise">不是无事，是事被放回了该放的位置。位置一正，铃声便不发紧。云海仍翻，雪仍厚，姑娘们迎他时的目光却不再全是问心，而是带了一点“你还肯回来”的实在。实在比山呼海啸的敬更让他喘得匀。</p>
+  <p class="p rise">符敏伤肩未愈，臂以布吊着，已能坐着理事；案上令牌、飞鸽筒、巡防图摆得井井有条，条里有她的狠，也有他给的名。梅管事把新令牌双印跑顺了，跑的时候不再处处看主尊眼色——看眼色是客，跑得顺才是家。阿穗仍在药室，见他，立刻丢下药杵，举起一盏白日不该点的小灯，笑得没心没肺，没心没肺里却有钉：</p>
+  <p class="p rise">“主尊，灯还给您看。您不在的日子，我也点。点给自己壮胆，也点给山上记着：主尊说要有小灯。”</p>
+  <p class="p rise">“我看见了。”虚竹郑重回礼，礼得引得姑娘们一片轻笑。笑声在雪里散开，像终于肯从绷里漏出一点人气。</p>
+  <p class="p rise">他没有立刻歇，先去后山看了那几处新坟。坟前雪薄，薄处露出湿土。他站了片刻，合十，不念长经，只说：你们的账，我还在还。还的方式不是把自己赔进去，是让活着的人少进这里。</p>
+  <p class="p rise">而后他在议事厅公布三条长期之规，请慧净与韩林的代表在场听——听，是为了传；传，是为了让怕与贪都看见界在哪里。</p>
+  <p class="p rise">炭火两边坐满。他展开纸，纸是新的，字是他连夜写的，写得端正，端正得像把自己的手脚量给别人看：</p>
+  <p class="p rise">其一，逍遥派不广收门人扰中原，收徒须记名、须有德，宁缺毋滥。滥收是祸，祸起时死人不会先问你是不是出于好意。</p>
+  <p class="p rise">其二，灵鹫宫自守天山，不附西夏军籍，不南侵；江湖案可协查，军阵不充锋。协查是义，充锋是把姑娘们写成别人的刀。刀折了，写刀的人只会再找一把。</p>
+  <p class="p rise">其三，驸马尽西夏婿道，不领边军私权，不介入后族夺位；西夏若以国法问江湖，奉法；若以私怨驱刀，拒。拒的时候会难听，难听也拒——难听比血便宜。</p>
+  <p class="p rise">写完，贴宫门，抄三份：一份留山，一份送兴庆存档，一份交慧净可原文携回。原文二字很重，重在不许美化，也不许丑化；美化是媚，丑化是祸，都不是见证。</p>
+  <p class="p rise">符敏听完，抬眼，伤肩在布带下微微一动：</p>
+  <p class="p rise">“主尊把自己捆住了。捆住了，遇到变局，会不会反被这三条勒死？”</p>
+  <p class="p rise">“捆住，才站得直。”虚竹道，声音不高，却让厅里每个人听见，“不捆，风一来就飘到别人手里。别人手里的我，再强，也是别人的刀。刀没有三角，只有刃。我要的是三角：逍遥、灵鹫、西夏，谁也不能一口吞掉另外两角。吞了，天地就窄；窄了，就只剩绝路。”</p>
+  <p class="p rise">梅管事低声道：“那若有人逼主尊破规呢？”</p>
+  <p class="p rise">“先看谁逼。”虚竹道，“逼的若是私怨，我拒；逼的若是国法与公义，我按第三条奉法，同时守住第二条——灵鹫不为私军。破规的人若是我自己，你们可责。责过的宫主，才还像活人。”</p>
+  <p class="p rise">厅中有人眼热。热的不是煽情，是终于看见一张可以贴在门上的界。界在，心才有地方靠。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">慧净捧着抄件，在廊下看了又看。看的时候，风掀袈裟，袈裟旧，纸新，新旧叠在一起，像两种戒在对谈。</p>
+  <p class="p rise">“中原清议不会立刻变赞歌。”他抬眼，目光清正，“可有了这纸，怕会少些。怕少了，手才会松。我回去照实说：此人有权，有界；有武，有戒。有界的权，比无界的善更让人敢靠近。无界的善，有时会突然变成无界的刀——人怕的是那个突然。”</p>
+  <p class="p rise">虚竹送他到山门。雪光刺眼，刺得人几乎要眯。两人合十，合十时袖风轻碰，像旧日寺门一别，又不是。</p>
+  <p class="p rise">“师兄，”慧净道，“袈裟在您心里那根线，看来是向善的。善不等于弱。您已经会拒绝。拒绝的时候，脸上仍善，善就不假。”</p>
+  <p class="p rise">“会一点。”虚竹笑，笑意浅，浅里有实，“一点够用一阵。不够的时候，有人骂我。骂我的人里，有梦姑，有符敏，有你。常被该骂的人骂，比常被不该夸的人夸安全。”</p>
+  <p class="p rise">“那就常被骂。”慧净难得幽默一句，眼角纹路松了松，“骂是戒尺。戒尺在，人还像能回寺里那条石径——石径不必真回，心里有就行。”</p>
+  <p class="p rise">他转身下山，袈裟在风里像一块移动的旧布——旧，却干净。干净不是没沾尘，是沾了还肯洗。虚竹望着他的背影，直到背影被云气吞去一截，才低声道：</p>
+  <p class="p rise">“师弟，替我向方丈说：虚竹的佛，还在少杀人、多护人。护的时候若疼，便记得疼。疼着，仍护。”</p>
+  <p class="p rise">风把这句话送下山。送不送得到，他不知道；知道的是，自己已经把界交到一个肯照实说的人手里。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">韩林在关城摆了顿粗席，不请官，只请跑过腿的兄弟。</p>
+  <p class="p rise">酒是烈的，菜是糙的，桌上有刀痕，刀痕像他们走过的路。人一坐满，便有人起哄，有人拍桌，有人故意把“驸马”两个字叫得特别响，好看好笑。虚竹不恼，只夹菜，夹得很专心，像在寺里盛粥——粥要匀，席要稳。</p>
+  <p class="p rise">酒过三巡，韩林把碗一顿，疤在灯下发亮：</p>
+  <p class="p rise">“你这三角，站得住吗？逍遥、灵鹫、西夏，哪天拉扯起来怎么办？拉扯起来的时候，最亲的人也会变成三股绳，绳一紧，先勒的是你的脖子。”</p>
+  <p class="p rise">虚竹放下箸，想了想。席上渐渐静，静得能听见窗外驼铃远去。</p>
+  <p class="p rise">“拉扯起来，就看哪条线先要我变成刀。”他道，“先要的，我先拒。拒的时候会得罪人，得罪就得罪。拒到最后，若只剩死……那再死。死之前，尽量不把人拖绝。拖绝了，三角就变成坟。坟上站不住平衡，只站得住香。”</p>
+  <p class="p rise">韩林叹气，叹完又灌一口酒：</p>
+  <p class="p rise">“你说话还是像要去死。能不能改成像要活？活着的人说话，该带着明天的饭气，不该总带着后事。”</p>
+  <p class="p rise">虚竹认真纠正，纠正得一本正经，一本正经里却有暖：</p>
+  <p class="p rise">“我要活。活着才有的拒。死了，拒绝也没人听见。听见拒绝的人，才会知道界还在。界在，才有下一顿粗席可吃。”</p>
+  <p class="p rise">席上哄笑。笑里有松。松是一种胜利，比开仓放粮更安静。安静的胜利不进话本，却进骨头。</p>
+  <p class="p rise">有个年轻的丐帮弟子忽然问：“那我们以后怎么跟中原说你？说好人？说厉害？说驸马？”</p>
+  <p class="p rise">虚竹想了想：“说‘有界的人’。好人两字太轻，厉害两字太凶，驸马两字太官。有界，别人才知道怎么跟你过，而不必先拔刀试。”</p>
+  <p class="p rise">韩林拍桌：“成！有界的人——比神仙好打交道。”</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">回兴庆交抄件存档时，官署门前的雪已扫过。</p>
+  <p class="p rise">新任边务官礼数周全，周全里没有赫连式的春风，却有一种小心的敬——敬不是怕武，是怕这人真把“拒”字练成了习惯。他不再拿“安边”当套，只问协查章程、飞鸽时限、灵鹫自守的边界如何在关城备案。问得很细，细是制度的土，土比口号靠谱。</p>
+  <p class="p rise">梦姑在侧，看着虚竹把文书放下，像看着他把一块石头放回该放的溪流里——水还会响，石却不再砸人。她袖中的手微微松了松，松的是一路提着的心。</p>
+  <p class="p rise">“三角平衡。”她说，声音只够他听见，“不是永远不动，是动的时候有回中的力。力在规矩，也在人。人换了，规矩还在，就还有救；规矩若只写在你心上，你一不在，三角就塌。”</p>
+  <p class="p rise">虚竹点头：“所以要抄三份，贴宫门，送存档，交慧净。三处都有，烧一处也烧不尽。烧不尽的界，才像界。”</p>
+  <p class="p rise">他们走出官署，街市上人声杂。有说书人改了词，醒木一拍，讲“驸马阵前不屠，活捉星宿”。词仍夸张，方向却正了些。正了些就够——完全正确的故事没人爱听，爱听的人要的是能睡得着的方向。</p>
+  <p class="p rise">虚竹驻足听了两句，没有进去纠正细节。有人认出他，悄悄拉同伴袖子；他只点头，点完便走。</p>
+  <p class="p rise">有些真，传成故事就够了。太精确的真，人反而不爱听；不爱听的真，往往在夜里更有用——有用在提醒自己：故事里的你很光，灯下的你仍要洗碗、回信、说不。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">夜，他在灯下给段誉写信。</p>
+  <p class="p rise">纸不贵，字却慢。慢是因为有些话不能写太满，满了像炫耀；又不能写太空，空了像敷衍。他写：</p>
+  <p class="p rise">誉弟：网比绳好，你说得对。网已挂上，风仍有，人未散。网眼有三：逍遥、灵鹫、西夏。眼与眼相牵，谁也不能独吞。</p>
+  <p class="p rise">我拒了一些权，留了一些责。梦姑说这叫共治。我觉得这叫活路。活路上有骂，有茶，有阿穗的灯，也有韩林的粗席。粗席比金殿更像我们还能坐的地方。</p>
+  <p class="p rise">大哥的名字，我们仍提。提着，路就不会太黑。黑的时候，我想起他直；直走不通时，我学着留界。界不是退，是让义还能传下去，而不是只剩绝响。</p>
+  <p class="p rise">山中安，城中暂安。你若来，我煮淡茶。茶苦的那杯我喝。</p>
+  <p class="p rise">兄 竹</p>
+  <p class="p rise">写完，他吹灯。黑暗来时，他不再慌。黑暗里有界，有人，有可重复走的步子。步子不炫，炫的是绝招；可重复的才是日子，日子才是三角真正立住的地方。</p>
+  <p class="p rise">三角立住了。不是丰碑，是三个互相拉着不让谁吞掉谁的点。</p>
+  <p class="p rise">点还在，天地就还宽一点。</p>
+  <p class="p rise">宽一点，就够好人说不，也够说不之后，仍有地方站。</p>
+  <p class="p rise">信鸽送走后，他在灯下又誊了一份三规摘要，准备明日给梦姑过目。誊写时，他每写一条，便在心里走一遍可能破规的局：中原若以人质逼收徒，拒；西夏若以军功诱编灵鹫，拒；逍遥旧人若以“师门大义”逼他广开杀戒，也拒。拒不是冷酷，是把“义”从绝路上轻轻拽回可走的道。</p>
+  <p class="p rise">符敏的飞鸽恰在此时到，只一句：宫门告示前，姑娘们看了很久。有人哭，有人笑，有人说——这样像家有墙。墙不挡亲人，挡的是把家当刀鞘的手。</p>
+  <p class="p rise">虚竹回：墙要修，门也要开。开给该进的人，修给不该灌进来的风。</p>
+  <p class="p rise">写完这两个字“墙”与“门”，他觉得三角不只是三个点，更是一种活法：在其位，尽其分，拒其贪；在山，在城，在自己心里那点不肯磨灭的疼。疼还在，界就还在；界还在，平衡就不是死水，而是能回中的力。</p>
+  <p class="p rise">力不靠吼。靠抄三份、贴一处、说一句人话，也靠在粗席上认真纠正——我要活。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch18">← 双影同灯</a><a href="#ch20">春风未尽 →</a></nav>
+
+<section class="chapter" id="ch20" data-num="20" data-title="春风未尽" data-anchor="ch20" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 20 章</div>
+    <h2 class="ch-title">春风未尽</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">雪化的时候，兴庆的土先黑后润。</p>
+  <p class="p rise">黑是冬天的底，润是春天的手。虚竹站在驸马府的廊下，看院中老柳冒出极细的芽。芽很小，小得像还不敢相信冬天真的肯让路；风一过，芽轻轻颤，颤得像在问：我若绿了，你们还会不会再打一仗？</p>
+  <p class="p rise">他伸出手，芽擦过指尖，有一点痒，一点真。真比任何捷报都轻，轻才像活着。</p>
+  <p class="p rise">赫连拓一案仍在审，没有刀起刀落的痛快结局。法司的文书往来如蚁，蚁能搬山，只是搬得很慢。慢有时是公正的价钱。石破尘在狱中病了一场，烧得说胡话，胡话里仍有“伪掌门”三个字；又被救回来——虚竹吩咐的，活口比烈士有用，有用在还能把私渠的残线吐干净。有人说他妇人之仁，他不辩。辩仁的人，往往已经把仁用成表演。</p>
+  <p class="p rise">中原有书信来，语气谨慎，纸边压得很平，说“若西夏驸马信守边界，则各派愿观后效”。观后效三个字不漂亮，漂亮的话都像要钱；不漂亮，却是活路。活路从来不靠山呼万岁，靠的是别人还肯把刀多停半息。</p>
+  <p class="p rise">梦姑走出来，披着薄氅，把一件外衣塞进他手里，力道不容商量：</p>
+  <p class="p rise">“发什么呆。春寒咬人。咬了你，我还得给人解释驸马为什么在柳下咳嗽——解释比治病烦。”</p>
+  <p class="p rise">“看柳。”虚竹穿上，衣领还有她指尖的温，“以前在寺里，也有柳。那时我觉得柳只是柳，绿了是功课外的景。现在觉得柳在说明年还来。明年还来，人就有理由把今天的账算完，而不是把今天过成遗书。”</p>
+  <p class="p rise">“明年还来。”梦姑顺着他的目光看，目光里有春，也有未散尽的霜，“我们还在，就行。还在比大团圆老实。大团圆是话本收钱的地方，还在是日子继续的地方。”</p>
+  <p class="p rise">廊下有侍女扫地，帚声沙沙，像把冬天最后一点屑扫走。虚竹忽然想起第一场雪后的木鱼声——那时他觉得无事，无事碎得很。碎过之后，能站在柳下说“还在”，已经算赢。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">午后，有个小沙弥从清凉庵来。</p>
+  <p class="p rise">是慧净走前托庵里照看的孩子，脑袋剃得青青，袍子大了一号，送来一包寺里的粗茶。茶香淡，淡得像故意不跟宫廷争。孩子怯生生叫“驸马爷”，又改口，改得舌头打结：“虚……虚竹师……官人。”</p>
+  <p class="p rise">虚竹蹲下，平视他，让自己的眼睛与孩子的眼睛在同一高度：</p>
+  <p class="p rise">“叫我叔叔也行。叔叔比官人轻，比师兄……也更像现在的我。喝茶吗？苦。苦完会回甘，回不回得来，看你舌头乖不乖。”</p>
+  <p class="p rise">孩子摇头，又点头，点头时耳根红。虚竹给他倒了半杯，自己喝苦的那杯。苦进喉，他却觉得踏实——踏实在苦还认得他，他也还认得苦。</p>
+  <p class="p rise">“叔叔，”孩子忽然问，眼睛很亮，亮里有认真的糊涂，“好人是不是不能杀坏人？庵里有人说能，有人说不能。说不能的人，看我的眼神像在考我。”</p>
+  <p class="p rise">虚竹一顿，认真想了想。想的时候，院中风过柳芽，芽影在地上轻轻晃，像把答案也晃得不敢太满。</p>
+  <p class="p rise">“好人可以拦坏人，可以在坏人杀别人的时候出手。”他道，每个字都放慢，慢给孩子，也慢给自己，“出手重了，人会死。死了，好人会疼。疼着，仍要决定下一次怎么做。不是永远不杀，是永远不把杀当成轻松的捷径。捷径走多了，人会忘了自己为什么拦——拦是为了护，不是为了爽。”</p>
+  <p class="p rise">孩子似懂非懂，小手搓着杯壁：“那好人可以……说不吗？说不了，是不是就不算好人了？有人说好人要什么都答应。”</p>
+  <p class="p rise">虚竹笑了，笑意一直落到眼里，眼里有春，也有一整年学来的硬：</p>
+  <p class="p rise">“可以。好人最该学的，就是说不。不给不该给的权，不去不该去的局，不替别人扛到自己断掉。断掉的好人，救不了人，只会变成别人嘴里的故事。故事好听，活人更要紧。”</p>
+  <p class="p rise">孩子“哦”了一声，像把这句话塞进口袋，准备带回庵里慢慢嚼。梦姑在门边听着，唇角微扬，扬得克制，克制里有一种终于被证实的安心：他真的会说了。说不，且说得像人话，不像赌气，也不像空壳的威严。</p>
+  <p class="p rise">茶尽时，孩子起身要走，忽然又回头：“叔叔，柳绿了，您还会回山吗？”</p>
+  <p class="p rise">“会。”虚竹道，“山有灯。灯等我。城里有人，人也等我。两边都等，我就两边都回。回的时候，说清楚何时走，何时来——这是我欠她们的，也是欠自己的。”</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">傍晚，韩林来辞行。</p>
+  <p class="p rise">他要带兄弟回中原商路，行囊薄，刀在腰，疤在脸，笑却比初见时松。松不是无事，是事被认清之后的那种：知道脏还在，也知道脏可以扫，扫不完就扫一段。</p>
+  <p class="p rise">“毒线塌了，还有别的脏要扫。”他站在府门前，拍了拍身上并不存在的土，“你这儿站稳了，我们就不赖着吃你的。吃多了，你变成东家，我们变成闲人。闲人会生事，生事就对不起乔帮主教过的那点义。”</p>
+  <p class="p rise">虚竹送出城。城门洞的风大，大得吹得人说话都要偏头。两人在城门口停住，停住时像把一段路折齐。</p>
+  <p class="p rise">韩林摸了摸脸上的疤，疤在暮色里发白：</p>
+  <p class="p rise">“乔帮主的事，话本还在讲。讲对讲错的都有。你别去一本本纠正。纠正不过来的。你活成什么样，比话本硬。硬话本怕，怕你活着，活着就证明义不一定非死不可——非死不可的义，有时是把路走窄了。”</p>
+  <p class="p rise">虚竹抱拳，拳心有薄汗，汗不是怯，是郑重：</p>
+  <p class="p rise">“韩兄珍重。有难，飞鸽。我未必每次都能到，到不了也会回一句人话。人话比空头的‘赴汤蹈火’管用。管用的义，才传得远。”</p>
+  <p class="p rise">“够了。”韩林大笑，大笑里有湿意，湿意一闪便被他甩开，上马，挥手，背影很快变成尘烟里的一点。</p>
+  <p class="p rise">那一点在官道上颠了颠，像故意颠给送行人看：我走了，你别把脊背塌下去。</p>
+  <p class="p rise">虚竹望着那一点消失，才往回走。路上有人认出他，远远避让，避让是怕；也有人点头，点头像对一个还算靠谱的邻居。邻居比神佛真实。真实的人会借盐，会还刀，会在你说不的时候，不立刻当你叛。</p>
+  <p class="p rise">他走过茶馆，又听见说书人拍醒木。醒木响处，乔峰的名字与驸马的名字交错而过，真假交杂，如雪泥鸿爪。他没有进去。进去纠正，是把自己变成话本的奴；不进去，是把自己还给日子。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">夜深，飞鸽自大理来。</p>
+  <p class="p rise">鸽停在架上，翅上还有远路的乏。筒里只有四个字，字迹却熟得像当面一笑：</p>
+  <p class="p rise">春安。弟誉。</p>
+  <p class="p rise">虚竹把字帖在灯下看了很久。春安。简单得像偷懒，又重得像托付——托付他在春天里仍安，安了才配谈别的。兄弟之间，有时四个字比千言万语更像活着：活着的人知道，对方不需要你把苦写满，只需要你还在。</p>
+  <p class="p rise">他回了两个字：同安。</p>
+  <p class="p rise">写完，他没有立刻睡。他走到院中，看天。天中星疏，风有一点暖，暖里带着融雪的土气。土气一来，人就知道：冬天的账再长，也有结到土里的一天。</p>
+  <p class="p rise">他想起乔峰，想起聚贤庄与雁门关，想起所有把义字写到绝处的人。绝处很亮，亮得像火；火边的人会暖一阵，也会瞎。他不要瞎，他要看得见柳芽，看得见灯，看得见梦姑在灯下翻无聊的府务册时那一点故意的安。</p>
+  <p class="p rise">“大哥，”他轻声说，声音低得只给风听，“我还在。我不做你第二。第二会把你的绝再走一遍，走一遍就少一条活路。我做我，做能说不的人，做会回家的人。你若听见，就当我又吵你一次。吵你的时候，我其实是在谢你——谢你让我知道，义可以直，也可以有界。有界的义，才传得久。”</p>
+  <p class="p rise">风过柳梢，芽叶细响，像极轻的应。应或许只是风，可他把应收进心里，收成一种不孤单。</p>
+  <p class="p rise">不孤单的人，才敢在夜里把名字说出口。说出口，不是招魂，是把路灯再拨亮一点。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">屋内灯还亮着。</p>
+  <p class="p rise">梦姑没有睡，在翻一本极无聊的府务册。册上是粮、是人、是该修的墙，无聊得像故意——故意用无聊压住那些会让人半夜惊坐的旧响。见他进来，她抬眼，眼里有问，问里有暖：</p>
+  <p class="p rise">“看完天了？天若说话，记得翻译给我听。我不懂星，只懂你回来时鞋上的泥是城内的还是城外的。”</p>
+  <p class="p rise">“看完了。”虚竹道，在门边顿了顿，把风留在门外，“天不说话，柳说话。”</p>
+  <p class="p rise">“柳说什么？”</p>
+  <p class="p rise">“说春风未尽。”虚竹坐到她身边，肩与肩相挨，挨着却不重，“未尽就还有日子。日子里还有闲话、还有案子、还有人要把我推回棋盘。我接着拒，接着护，接着……和你一起算账。账算不清的时候，就先煮茶。茶淡一点。”</p>
+  <p class="p rise">梦姑合上册子，认真看他。看的时间稍长，长得像在核对：这还是那个只会道歉的人吗？核对完，她道：</p>
+  <p class="p rise">“你现在这样，我才像嫁对人。嫁对人不是嫁对神，是嫁对一个会说不、也会回家的人。神不会回家，神只受香。”</p>
+  <p class="p rise">虚竹耳朵红了，红得像被春气忽然捉住：“我一直是人。人会脏，会错，会在粮仓前恨自己心软，也会在殿上把椅子推回去。推回去之后，手是空的，心才满一点。”</p>
+  <p class="p rise">“人会退步，也会进步。”梦姑伸手，把他额发拨开，指尖在眉心停了一停，像点一盏很小的灯，“进步的那部分，留着。退步的时候，我骂你。骂是第二条——可互相拒绝，也可互相拉回。拉回的时候，不许说‘你烦’。烦是日子的税，税要交。”</p>
+  <p class="p rise">“好。”</p>
+  <p class="p rise">灯花结了又落。窗外春风穿过巷陌，带着融雪的土气与远处羊膻，像西夏的呼吸，也像灵鹫雪水在很远的地方开始松动。松动不是崩，是活。</p>
+  <p class="p rise">话本仍会说乔峰，茶馆仍会说驸马。真假交杂，如雪泥鸿爪。爪印会被新泥盖住，盖住不等于不曾走过。</p>
+  <p class="p rise">虚竹不再急着追每一句假话。假话像春泥，踩多了鞋脏；鞋脏了可以洗，人若为了追假话跑丢自己，洗什么都晚。</p>
+  <p class="p rise">他把手放在梦姑手边，两人十指没有扣死，只轻轻挨着——像两个并立的点，中间有风，也有暖。风是自由，暖是共治；自由让人不至于勒死对方，共治让人不至于各走各的绝。</p>
+  <p class="p rise">春风未尽。</p>
+  <p class="p rise">人还在路上。</p>
+  <p class="p rise">路的尽头不必写死。写死了，便不像活着的江湖。活着的江湖里，会有下一封边报，下一盏灯，下一次必须说出口的“不”；也会有奶茶、粗茶、淡茶，有人骂，有人信，有人在白日举一盏傻灯。</p>
+  <p class="p rise">好人也可以说不；说不之后，仍有灯，有人，有下一场雪，与雪化之后必然要来的、不算完美却值得过的春天。</p>
+  <p class="p rise">春天不保证无事。</p>
+  <p class="p rise">春天只保证：事来时，柳还肯绿，人还肯在。</p>
+  <p class="end-mark rise">（全书终）</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch19">← 三角平衡</a><span></span></nav>
+</main>
+
+<footer>
+  灵鹫之后 · 虚竹二十章<br>  <a href="index.html">← 返回书架</a>
+</footer>
+
+<button id="top" aria-label="回到顶部">↑</button>
+<noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
+#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
+<script>
+var TK='xhw-theme';
+var root=document.documentElement;
+function readTheme(){
+  try{ var v=localStorage.getItem(TK); if(v) return v; }catch(e){}
+  return matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+}
+function paintTheme(t){
+  root.dataset.theme=t;
+  var b=document.getElementById('theme');
+  if(b) b.textContent=(t==='night'?'日间':'夜间');
+}
+paintTheme(readTheme());
+function toggleTheme(){
+  var t=root.dataset.theme==='night'?'day':'night';
+  try{ localStorage.setItem(TK,t); }catch(e){}
+  // 支持时用 View Transitions 做交叉淡化
+  if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.startViewTransition(function(){ paintTheme(t); });
+  }else{ paintTheme(t); }
+}
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
+var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+  if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
+    return showAll;
+  }
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
+})();
+
+(function(){
+  // 关掉浏览器自带的滚动位置恢复，避免和下面按「章号+比例」算出的位置打架
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  var PK='xhw-pos-'+document.body.dataset.book;
+  var tools=document.getElementById('tools'), toc=document.getElementById('toc'),
+      scrim=document.getElementById('scrim'), bar=document.getElementById('bar'),
+      now=document.getElementById('now'), top=document.getElementById('top'),
+      cover=document.getElementById('cover');
+  var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
+  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var wide=function(){return window.innerWidth>=1080};
+  var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- 偏好
+  var st={scale:1,ch:null,ratio:0};
+  try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
+  var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
+  applyScale();
+
+  document.getElementById('theme').onclick=toggleTheme;
+  var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
+  var paintFont=function(){
+    var i=STEPS.indexOf(st.scale); fontBtn.textContent='字号 '+((i<0?1:i+1))+'/'+STEPS.length;
+  };
+  paintFont();
+  fontBtn.onclick=function(){
+    var i=STEPS.indexOf(st.scale); st.scale=STEPS[(i<0?1:i+1)%STEPS.length];
+    applyScale(); paintFont(); save();
+  };
+
+  // ---- 目录
+  function setToc(open){
+    toc.classList.toggle('open',open);
+    if(wide()){
+      toc.classList.toggle('hidden',!open);
+      document.documentElement.dataset.toc=open?'on':'off';
+      scrim.classList.remove('on');
+    }else{
+      scrim.classList.toggle('on',open);
+      document.documentElement.dataset.toc='off';
+    }
+  }
+  document.getElementById('menu').onclick=function(){ setToc(!toc.classList.contains('open')); };
+  scrim.onclick=function(){ setToc(false); };
+  toc.addEventListener('click',function(e){ if(e.target.closest('a')&&!wide()) setToc(false); });
+  setToc(wide());
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!wide()) setToc(false);
+  });
+
+  // ---- 入场动画
+  reveal(document.querySelectorAll('.rise,.ch-head,.sec-mark'));
+
+  // ---- 进度 / 当前章 / 封面视差
+  var cur=-1, raf=0, vh=innerHeight;
+  function tick(){
+    raf=0;
+    var y=window.scrollY, h=document.body.scrollHeight-vh;
+    bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
+    tools.classList.toggle('lifted',y>vh*.55);
+    top.classList.toggle('on',y>vh*1.2);
+
+    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
+    if(cover && !calm){
+      if(y<vh){
+        var k=y/vh;
+        cover.style.transform='translateY('+(y*.28)+'px)';
+        cover.style.opacity=String(Math.max(0,1-k*1.35));
+      }else if(cover.style.opacity!=='0'){
+        cover.style.opacity='0';
+      }
+    }
+
+    var probe=y+vh*.3, idx=-1;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].offsetTop<=probe) idx=i;
+    if(idx!==cur){
+      cur=idx;
+      var c=chapters[idx];
+      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
+      var curAnchor=c?c.dataset.anchor:null;
+      links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
+      if(c){
+        var vol=c.dataset.volume;
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+      }else{ now.textContent=''; }
+    }
+    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
+    if(idx>=0){
+      var chTop=chapters[idx].offsetTop;
+      var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
+      st.ch=chapters[idx].dataset.anchor;
+      st.ratio=Math.min(1,Math.max(0,(y-chTop)/Math.max(1,chBottom-chTop)));
+    }
+  }
+  var onScroll=function(){ if(!raf) raf=requestAnimationFrame(tick); };
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',function(){
+    vh=innerHeight;
+    setToc(wide()?!toc.classList.contains('hidden'):false);
+    onScroll();
+  });
+
+  top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
+
+  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
+  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
+  // 变成平滑滚过全书，恢复前临时关掉。
+  if(st.ch!=null && !location.hash){
+    var target=null;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    if(target){
+      var restore=function(){
+        var chTop=target.offsetTop;
+        var chBottom=(chapters.indexOf(target)+1<chapters.length)
+          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var prevBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        scrollTo(0, chTop+st.ratio*(chBottom-chTop));
+        document.documentElement.style.scrollBehavior=prevBehavior;
+        tick();
+      };
+      addEventListener('load',restore);
+      setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  }
+  tick();
+  addEventListener('beforeunload',save);
+  addEventListener('pagehide',save);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') save();
+  });
+  setInterval(save,4000);
+
+  // ---- 左右方向键翻章
+  document.addEventListener('keydown',function(e){
+    if(e.target.closest('input,textarea')) return;
+    var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
+    if(!d) return;
+    var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
+    chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

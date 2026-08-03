@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="day">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<meta name="description" content="6 部作品 · 约 24.7 万字，远观、我们的那些年、出差、高中生的秘密、没被发现的那部分">
+<meta property="og:title" content="书架">
+<meta property="og:description" content="6 部作品 · 约 24.7 万字，远观、我们的那些年、出差、高中生的秘密、没被发现的那部分">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiM4YzZmNGEiLz48L3N2Zz4=">
 <title>书架</title>
+<script>(function(){
+var r=document.documentElement;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+})();</script>
 <style>
 :root{
   --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
@@ -14,8 +26,12 @@
   --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
   --font-scale:1;
   --ease:cubic-bezier(.4,0,.2,1);
-  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC","Source Han Serif CN",
-          "SimSun","STSong",Georgia,"Times New Roman",serif;
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
   --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
          -apple-system,"Segoe UI",sans-serif;
 }
@@ -26,11 +42,16 @@ html[data-theme=night]{
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
   --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
 }
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
   transition:background .4s var(--ease),color .4s var(--ease);
 }
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
@@ -128,6 +149,8 @@ body{padding:0}
 .pill{padding:3px 9px;border-radius:999px;border:1px solid var(--rule);line-height:1.6}
 .pill.done{color:var(--bk);border-color:color-mix(in srgb,var(--bk) 40%,transparent);
   background:color-mix(in srgb,var(--bk) 9%,transparent)}
+/* 夜间背景变暗后书的原色文字对比度不够，换成提亮版 */
+html[data-theme=night] .pill.done{color:var(--bk-lit)}
 /* 成人向做成卡片右上角浮标，不占元信息那行的宽度 */
 .badge{position:absolute;top:0;right:0;z-index:1;
   font-family:var(--sans);font-size:9.5px;letter-spacing:.14em;color:var(--ink-faint);
@@ -137,6 +160,7 @@ body{padding:0}
 .arrow{margin-left:auto;color:var(--ink-faint);font-size:13px;
   transition:transform .4s var(--ease),color .4s var(--ease)}
 .card:hover .arrow{transform:translateX(4px);color:var(--bk)}
+html[data-theme=night] .card:hover .arrow{color:var(--bk-lit)}
 
 .foot-note{padding:0 26px 14vh;text-align:center;font-family:var(--sans);
   font-size:11.5px;letter-spacing:.18em;color:var(--ink-faint);line-height:2.2}
@@ -167,7 +191,7 @@ body{padding:0}
 <header class="hero">
   <h1>书架</h1>
   <div class="line"></div>
-  <div class="meta">5 部作品 · 约 16.3 万字</div>
+  <div class="meta">6 部作品 · 约 24.7 万字</div>
 </header>
 
 <div class="books">
@@ -246,10 +270,26 @@ body{padding:0}
         </div>
       </div>
     </a>
+    <a class="card rise" href="灵鹫之后.html"
+       style="--bk:#4a6670;--bk-lit:#72888f">
+      <div class="cv"><em style="--cvfs:17px">灵鹫之后</em></div>
+      <div class="info">
+        <h2>灵鹫之后</h2>
+      <div class="sub">虚竹二十章</div>
+      <p class="tag">婚后一年，好人被推上权位——灵鹫、逍遥与西夏之间，他要学会拒绝，也要学会并肩。</p>
+        <div class="foot">
+          <span class="pill done">已完结</span>
+          <span>20 章</span>
+          <span>约 8.4 万字</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </a>
 </div>
 
 <div class="foot-note">点开任意一本开始阅读<br>每本书都是独立页面，可单独分享</div>
 
+<noscript><style>.rise{opacity:1!important;transform:none!important}</style></noscript>
 <script>
 var TK='xhw-theme';
 var root=document.documentElement;
@@ -271,17 +311,25 @@ function toggleTheme(){
     document.startViewTransition(function(){ paintTheme(t); });
   }else{ paintTheme(t); }
 }
-// 观察器：元素进入视口后加 .in，一次性触发不回退
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
 var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
   if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
-    return function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+    return showAll;
   }
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  },{rootMargin:'0px 0px -12% 0px',threshold:.02});
-  return function(els){ [].forEach.call(els,function(e){ io.observe(e); }); };
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
 })();
 
 (function(){
