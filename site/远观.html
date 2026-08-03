@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="day" data-toc="off"
+<html lang="zh-CN" data-toc="off"
       style="--accent:#8c6f4a;--accent-lit:#a58f72">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#8c6f4a">
+<meta name="description" content="他们并肩，半步，不牵手——雨落在玻璃上，谁都没有先走近一步。">
+<meta property="og:title" content="远观 · 第一卷">
+<meta property="og:description" content="他们并肩，半步，不牵手——雨落在玻璃上，谁都没有先走近一步。">
+<meta property="og:type" content="book">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiM4YzZmNGEiLz48L3N2Zz4=">
 <title>远观 · 第一卷</title>
+<script data-book="远观">(function(){
+var r=document.documentElement, book=document.currentScript.dataset.book;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+try{
+  var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
+  if(st.scale) r.style.setProperty('--font-scale',st.scale);
+}catch(e){}
+if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
+})();</script>
 <style>
 :root{
   --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
@@ -16,8 +34,12 @@
   --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
   --font-scale:1;
   --ease:cubic-bezier(.4,0,.2,1);
-  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC","Source Han Serif CN",
-          "SimSun","STSong",Georgia,"Times New Roman",serif;
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
   --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
          -apple-system,"Segoe UI",sans-serif;
 }
@@ -28,11 +50,16 @@ html[data-theme=night]{
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
   --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
 }
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
   transition:background .4s var(--ease),color .4s var(--ease);
 }
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
@@ -95,6 +122,13 @@ a{color:inherit}
 #toc a i{font-style:normal;color:var(--ink-faint);font-size:11.5px;margin-right:8px;
   font-variant-numeric:tabular-nums}
 #toc a.on i{color:var(--accent)}
+/* 带小标题的分节符生成的二级目录项：单章多分节（如出差）时给出导航 */
+#toc a.sub-toc{padding:6px 22px 6px 40px;font-size:12px;color:var(--ink-faint)}
+#toc a.sub-toc:hover{padding-left:44px}
+/* 分卷书的卷标题：只在 章节/卷X/ 结构下出现 */
+.toc-vol{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.75}
+.toc-vol:first-child{margin-top:0}
 /* 抽屉打开时条目阶梯淡入 */
 #toc.open a{animation:tocIn .42s var(--ease) both;animation-delay:var(--d)}
 @keyframes tocIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
@@ -136,7 +170,9 @@ a{color:inherit}
 
 /* 正文 */
 main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
-  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em}
+  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em;
+  /* 避头尾：不让逗号句号右括号落在行首。中文长文必需，浏览器默认的 auto 较宽松 */
+  line-break:strict;word-break:normal;overflow-wrap:break-word}
 .chapter{padding-top:14vh}
 .ch-head{margin-bottom:9vh;text-align:center}
 .ch-num{font-family:var(--sans);font-size:11.5px;letter-spacing:.34em;text-indent:.34em;
@@ -146,7 +182,10 @@ main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
 .ch-line{width:26px;height:1px;background:var(--rule);margin:26px auto 0;
   transform:scaleX(0);transition:transform .8s var(--ease) .2s}
 .ch-head.in .ch-line{transform:none}
-.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end}
+/* hanging-punctuation 目前基本只有 Safari 生效，text-wrap:pretty 主要 Chromium 生效；
+   两者都是渐进增强，不支持的浏览器忽略即可，无副作用 */
+.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end;
+  text-wrap:pretty}
 strong{font-weight:600;color:var(--ink)}
 em{font-style:italic;color:var(--ink-soft)}
 
@@ -178,6 +217,13 @@ em{font-style:italic;color:var(--ink-soft)}
   letter-spacing:.22em;color:var(--ink-faint);text-indent:0}
 .ch-end{width:34px;height:1px;background:var(--rule);margin:4.5em auto 0}
 
+.ch-nav{max-width:34em;margin:2.4em auto 0;padding:0 26px;display:flex;
+  justify-content:space-between;gap:16px;font-family:var(--sans);font-size:12.5px;
+  letter-spacing:.05em;color:var(--ink-faint)}
+.ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+.ch-nav a:hover{color:var(--accent)}
+.ch-nav a:last-child{text-align:right}
+
 footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
   font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--ink-faint);
   line-height:2.4}
@@ -197,7 +243,6 @@ footer a:hover{color:var(--accent)}
   #toc{transform:none;background:transparent;border-right:0}
   #toc.hidden{transform:translateX(-100%)}
   #scrim{display:none}
-  #menu{display:none}
   /* 侧栏常驻时整页让开：用 body 内缩而非 main 的 padding，
      因为 main 是 border-box，加内边距会压缩字栏宽度 */
   html[data-toc=on] body{padding-left:238px}
@@ -210,11 +255,14 @@ footer a:hover{color:var(--accent)}
   #cover h1{letter-spacing:.22em;text-indent:.22em}
   #toc{width:76vw;padding-top:66px}
   #top{right:14px;bottom:18px}
+  .ch-nav{padding:0 20px;font-size:12px}
 }
 @media print{
-  #tools,#toc,#scrim,#bar,#top,#cover .go,#back{display:none}
+  #tools,#toc,#scrim,#bar,#top,#cover .go,#back,.ch-nav{display:none}
   body{background:#fff;color:#000;padding-left:0!important}
+  /* 首章紧跟封面，不需要再分页——否则会多出一张空白页 */
   .chapter{page-break-before:always;padding-top:0}
+  .chapter:first-of-type{page-break-before:avoid}
   .rise{opacity:1!important;transform:none!important}
 }
 </style>
@@ -233,16 +281,16 @@ footer a:hover{color:var(--accent)}
 <div id="scrim"></div>
 <aside id="toc" aria-label="章节目录">
   <h3>目 录</h3>
-    <a href="#ch1" data-ch="1" style="--d:0ms"><i>01</i>传说与风</a>
-    <a href="#ch2" data-ch="2" style="--d:26ms"><i>02</i>雨与墙</a>
-    <a href="#ch3" data-ch="3" style="--d:52ms"><i>03</i>他先笑出声</a>
-    <a href="#ch4" data-ch="4" style="--d:78ms"><i>04</i>神遇见风</a>
-    <a href="#ch5" data-ch="5" style="--d:104ms"><i>05</i>远观的练习</a>
-    <a href="#ch6" data-ch="6" style="--d:130ms"><i>06</i>亵与界</a>
-    <a href="#ch7" data-ch="7" style="--d:156ms"><i>07</i>并肩</a>
-    <a href="#ch8" data-ch="8" style="--d:182ms"><i>08</i>终提</a>
-    <a href="#ch9" data-ch="9" style="--d:208ms"><i>09</i>可远观的恋人</a>
-    <a href="#ch10" data-ch="10" style="--d:234ms"><i>10</i>恰好（未完待续）</a>
+    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>传说与风</a>
+    <a href="#ch2" data-ch="ch2" style="--d:26ms"><i>02</i>雨与墙</a>
+    <a href="#ch3" data-ch="ch3" style="--d:52ms"><i>03</i>他先笑出声</a>
+    <a href="#ch4" data-ch="ch4" style="--d:78ms"><i>04</i>神遇见风</a>
+    <a href="#ch5" data-ch="ch5" style="--d:104ms"><i>05</i>远观的练习</a>
+    <a href="#ch6" data-ch="ch6" style="--d:130ms"><i>06</i>亵与界</a>
+    <a href="#ch7" data-ch="ch7" style="--d:156ms"><i>07</i>并肩</a>
+    <a href="#ch8" data-ch="ch8" style="--d:182ms"><i>08</i>终提</a>
+    <a href="#ch9" data-ch="ch9" style="--d:208ms"><i>09</i>可远观的恋人</a>
+    <a href="#ch10" data-ch="ch10" style="--d:234ms"><i>10</i>恰好（未完待续）</a>
 </aside>
 
 <header id="cover">
@@ -255,7 +303,7 @@ footer a:hover{color:var(--accent)}
 </header>
 
 <main>
-<section class="chapter" id="ch1" data-num="1" data-title="传说与风">
+<section class="chapter" id="ch1" data-num="1" data-title="传说与风" data-anchor="ch1" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 1 章</div>
     <h2 class="ch-title">传说与风</h2>
@@ -339,8 +387,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 1 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><span></span><a href="#ch2">雨与墙 →</a></nav>
 
-<section class="chapter" id="ch2" data-num="2" data-title="雨与墙">
+<section class="chapter" id="ch2" data-num="2" data-title="雨与墙" data-anchor="ch2" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 2 章</div>
     <h2 class="ch-title">雨与墙</h2>
@@ -402,8 +451,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 2 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch1">← 传说与风</a><a href="#ch3">他先笑出声 →</a></nav>
 
-<section class="chapter" id="ch3" data-num="3" data-title="他先笑出声">
+<section class="chapter" id="ch3" data-num="3" data-title="他先笑出声" data-anchor="ch3" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 3 章</div>
     <h2 class="ch-title">他先笑出声</h2>
@@ -467,8 +517,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 3 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch2">← 雨与墙</a><a href="#ch4">神遇见风 →</a></nav>
 
-<section class="chapter" id="ch4" data-num="4" data-title="神遇见风">
+<section class="chapter" id="ch4" data-num="4" data-title="神遇见风" data-anchor="ch4" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 4 章</div>
     <h2 class="ch-title">神遇见风</h2>
@@ -526,8 +577,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 4 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch3">← 他先笑出声</a><a href="#ch5">远观的练习 →</a></nav>
 
-<section class="chapter" id="ch5" data-num="5" data-title="远观的练习">
+<section class="chapter" id="ch5" data-num="5" data-title="远观的练习" data-anchor="ch5" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 5 章</div>
     <h2 class="ch-title">远观的练习</h2>
@@ -583,8 +635,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 5 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch4">← 神遇见风</a><a href="#ch6">亵与界 →</a></nav>
 
-<section class="chapter" id="ch6" data-num="6" data-title="亵与界">
+<section class="chapter" id="ch6" data-num="6" data-title="亵与界" data-anchor="ch6" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 6 章</div>
     <h2 class="ch-title">亵与界</h2>
@@ -655,8 +708,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 6 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch5">← 远观的练习</a><a href="#ch7">并肩 →</a></nav>
 
-<section class="chapter" id="ch7" data-num="7" data-title="并肩">
+<section class="chapter" id="ch7" data-num="7" data-title="并肩" data-anchor="ch7" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 7 章</div>
     <h2 class="ch-title">并肩</h2>
@@ -711,8 +765,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 7 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch6">← 亵与界</a><a href="#ch8">终提 →</a></nav>
 
-<section class="chapter" id="ch8" data-num="8" data-title="终提">
+<section class="chapter" id="ch8" data-num="8" data-title="终提" data-anchor="ch8" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 8 章</div>
     <h2 class="ch-title">终提</h2>
@@ -764,8 +819,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 8 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch7">← 并肩</a><a href="#ch9">可远观的恋人 →</a></nav>
 
-<section class="chapter" id="ch9" data-num="9" data-title="可远观的恋人">
+<section class="chapter" id="ch9" data-num="9" data-title="可远观的恋人" data-anchor="ch9" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 9 章</div>
     <h2 class="ch-title">可远观的恋人</h2>
@@ -813,8 +869,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 9 章 · 完</p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch8">← 终提</a><a href="#ch10">恰好（未完待续） →</a></nav>
 
-<section class="chapter" id="ch10" data-num="10" data-title="恰好（未完待续）">
+<section class="chapter" id="ch10" data-num="10" data-title="恰好（未完待续）" data-anchor="ch10" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 10 章</div>
     <h2 class="ch-title">恰好（未完待续）</h2>
@@ -851,6 +908,7 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise"><strong>《远观》第一卷 · 未完待续</strong></p>
 </section>
 <div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch9">← 可远观的恋人</a><span></span></nav>
 </main>
 
 <footer>
@@ -858,6 +916,8 @@ footer a:hover{color:var(--accent)}
 </footer>
 
 <button id="top" aria-label="回到顶部">↑</button>
+<noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
+#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
 <script>
 var TK='xhw-theme';
 var root=document.documentElement;
@@ -879,20 +939,30 @@ function toggleTheme(){
     document.startViewTransition(function(){ paintTheme(t); });
   }else{ paintTheme(t); }
 }
-// 观察器：元素进入视口后加 .in，一次性触发不回退
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
 var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
   if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
-    return function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+    return showAll;
   }
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  },{rootMargin:'0px 0px -12% 0px',threshold:.02});
-  return function(els){ [].forEach.call(els,function(e){ io.observe(e); }); };
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
 })();
 
 (function(){
+  // 关掉浏览器自带的滚动位置恢复，避免和下面按「章号+比例」算出的位置打架
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
   var PK='xhw-pos-'+document.body.dataset.book;
   var tools=document.getElementById('tools'), toc=document.getElementById('toc'),
       scrim=document.getElementById('scrim'), bar=document.getElementById('bar'),
@@ -904,17 +974,21 @@ var reveal=(function(){
   var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ---- 偏好
-  var st={scale:1,pos:0};
+  var st={scale:1,ch:null,ratio:0};
   try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
   var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
   var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
   applyScale();
 
   document.getElementById('theme').onclick=toggleTheme;
-  var STEPS=[.88,1,1.14,1.3];
-  document.getElementById('font').onclick=function(){
+  var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
+  var paintFont=function(){
+    var i=STEPS.indexOf(st.scale); fontBtn.textContent='字号 '+((i<0?1:i+1))+'/'+STEPS.length;
+  };
+  paintFont();
+  fontBtn.onclick=function(){
     var i=STEPS.indexOf(st.scale); st.scale=STEPS[(i<0?1:i+1)%STEPS.length];
-    applyScale(); save();
+    applyScale(); paintFont(); save();
   };
 
   // ---- 目录
@@ -964,11 +1038,22 @@ var reveal=(function(){
     for(var i=0;i<chapters.length;i++) if(chapters[i].offsetTop<=probe) idx=i;
     if(idx!==cur){
       cur=idx;
-      links.forEach(function(a,i){ a.classList.toggle('on',i===idx); });
       var c=chapters[idx];
-      now.textContent=c?('第 '+c.dataset.num+' 章 · '+c.dataset.title):'';
+      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
+      var curAnchor=c?c.dataset.anchor:null;
+      links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
+      if(c){
+        var vol=c.dataset.volume;
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+      }else{ now.textContent=''; }
     }
-    st.pos=y;
+    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
+    if(idx>=0){
+      var chTop=chapters[idx].offsetTop;
+      var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
+      st.ch=chapters[idx].dataset.anchor;
+      st.ratio=Math.min(1,Math.max(0,(y-chTop)/Math.max(1,chBottom-chTop)));
+    }
   }
   var onScroll=function(){ if(!raf) raf=requestAnimationFrame(tick); };
   addEventListener('scroll',onScroll,{passive:true});
@@ -980,15 +1065,33 @@ var reveal=(function(){
 
   top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
 
-  // ---- 恢复进度（有 hash 时以 hash 为准）
-  if(st.pos>vh*.6 && !location.hash){
-    var p=st.pos;
-    var restore=function(){ scrollTo(0,p); tick(); };
-    addEventListener('load',restore);
-    setTimeout(function(){ if(!window.scrollY) restore(); },60);
+  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
+  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
+  // 变成平滑滚过全书，恢复前临时关掉。
+  if(st.ch!=null && !location.hash){
+    var target=null;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    if(target){
+      var restore=function(){
+        var chTop=target.offsetTop;
+        var chBottom=(chapters.indexOf(target)+1<chapters.length)
+          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var prevBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        scrollTo(0, chTop+st.ratio*(chBottom-chTop));
+        document.documentElement.style.scrollBehavior=prevBehavior;
+        tick();
+      };
+      addEventListener('load',restore);
+      setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
   }
   tick();
   addEventListener('beforeunload',save);
+  addEventListener('pagehide',save);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') save();
+  });
   setInterval(save,4000);
 
   // ---- 左右方向键翻章

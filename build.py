@@ -14,6 +14,7 @@
 新增作品无需改本脚本；正文书写约定见 README。
 """
 
+import base64
 import html
 import re
 import shutil
@@ -72,6 +73,11 @@ def parse_toml(path):
 
 def load_meta(book_dir):
     m = parse_toml(book_dir / "book.toml")
+    accent = m.get("accent") or DEFAULT_ACCENT
+    if not valid_hex(accent):
+        print(f"  ⚠ {book_dir.name}：book.toml 里 accent={accent!r} 不是合法颜色，"
+              f"回退为默认色 {DEFAULT_ACCENT}")
+        accent = DEFAULT_ACCENT
     return {
         "title": m.get("title") or book_dir.name,
         "subtitle": m.get("subtitle", ""),
@@ -79,7 +85,7 @@ def load_meta(book_dir):
         "epigraph": m.get("epigraph", ""),
         "status": m.get("status", "连载中"),
         "adult": bool(m.get("adult", False)),
-        "accent": m.get("accent") or DEFAULT_ACCENT,
+        "accent": accent,
         "cover": m.get("cover", ""),
         "order": m.get("order", 99),
         "dir": book_dir,
@@ -230,22 +236,88 @@ def parse_chapter(path):
     return {"num": num, "title": title or f"第 {num} 章", "blocks": blocks}
 
 
+def volume_order(dir_name):
+    """卷目录名 → 排序用数字。「卷一」「卷2」「第三卷」都认，认不出的排最后。"""
+    m = re.search(r"([0-9]+|[一二三四五六七八九十百零]+)", dir_name)
+    return cn_num(m.group(1)) if m else 9999
+
+
+def iter_chapter_files(book_dir):
+    """收集一本书的章节文件，返回 [(排序键, 卷名, 路径), ...]。
+
+    支持两种结构，可混用：
+      章节/ch001.md                直接放章节（卷名为 ""）
+      章节/卷一/ch001.md           分卷；卷序取目录名里的数字
+    卷内章号相同的不同卷不会相撞，因为排序键是 (卷序, 章号)。
+    """
+    ch_dir = book_dir / "章节"
+    items = []
+    for p in ch_dir.glob("ch*.md"):
+        items.append(((0, chapter_seq(p)), "", p))
+    for sub in ch_dir.iterdir():
+        if not sub.is_dir():
+            continue
+        vo = volume_order(sub.name)
+        for p in sub.glob("ch*.md"):
+            items.append(((vo, chapter_seq(p)), sub.name, p))
+    items.sort(key=lambda t: t[0])
+    return items
+
+
+def chapter_seq(path):
+    """章节文件名 → 章内序号。ch001 → 1；ch1-2（卷内第2章）→ 2。"""
+    nums = re.findall(r"\d+", path.stem)
+    if not nums:
+        return 0
+    # 有两段数字时（如 ch1-2）后一段才是章号，前一段是卷号
+    return int(nums[-1]) if len(nums) > 1 else int(nums[0])
+
+
 def load_book(book_dir):
     """读一本书：元信息 + 全部章节 + 字数统计。"""
     meta = load_meta(book_dir)
-    files = sorted(
-        (book_dir / "章节").glob("ch*.md"),
-        key=lambda p: int(re.search(r"\d+", p.stem).group()),
-    )
-    meta["chapters"] = [parse_chapter(f) for f in files]
-    meta["chars"] = sum(chapter_chars(c) for c in meta["chapters"])
+    entries = iter_chapter_files(book_dir)
+    chapters = []
+    for i, (_, vol, path) in enumerate(entries, 1):
+        ch = parse_chapter(path)
+        ch["volume"] = vol
+        # 锚点用全书序号而非章号：分卷时各卷章号会重复（卷一/卷二都有 ch001），
+        # 直接用 num 做 id 会撞。num 仍用于显示「第 N 章」。
+        ch["anchor"] = f"ch{i}"
+        chapters.append(ch)
+    meta["chapters"] = chapters
+    meta["chars"] = sum(chapter_chars(c) for c in chapters)
+    check_author_leak(meta)
     return meta
 
 
+def check_author_leak(book):
+    """构建期自检：extract_body 理应把创作笔记全部剔除，这里兜底检查一遍，
+    确保 AUTHOR_ONLY 里的作者侧字样没有随正文泄漏到网页里。
+    """
+    for ch in book["chapters"]:
+        for kind, content in ch["blocks"]:
+            parts = content if isinstance(content, list) else [content]
+            for p in parts:
+                if not isinstance(p, str):
+                    continue
+                for word in AUTHOR_ONLY:
+                    if word in p:
+                        print(f"  ⚠ {book['title']} 第 {ch['num']} 章疑似泄漏创作笔记"
+                              f"「{word}」，检查是否漏加 ## 正文 分隔")
+
+
 def chapter_chars(ch):
-    """章正文字数（去标签、去空白）。"""
+    """章正文字数（去标签、去空白）。
+
+    只统计 para / quote：section 本身是 (mark, sub) 元组已天然被排除，
+    但 endmark（如「（第 10 章 · 终）」「未完待续」）是字符串会被误计入，
+    这里显式跳过，避免章末标记的十几个字混进字数统计。
+    """
     n = 0
     for kind, content in ch["blocks"]:
+        if kind == "endmark":
+            continue
         parts = content if isinstance(content, list) else [content]
         for p in parts:
             if isinstance(p, str):
@@ -260,8 +332,42 @@ def fmt_wan(n):
     return f"约 {max(1, round(n / 1000))} 千字"
 
 
+def safe_filename(title):
+    """书名直接拿来当文件名，含 / \\ : * ? " < > | 会在磁盘上炸掉，清洗成 _。"""
+    return re.sub(r'[\\/:*?"<>|]', "_", title).strip() or "未命名"
+
+
+def escape_epigraph(text):
+    """转义题引文本，但放行 <br> 换行——书写约定允许用它分行。"""
+    escaped = html.escape(text)
+    return escaped.replace("&lt;br&gt;", "<br>")
+
+
+def favicon_data_uri(accent):
+    """用书的主色画一个纯色圆点当 favicon，内联成 data URI——
+    不依赖外部文件，保持单文件可分享的设计。
+    """
+    svg = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
+        f'<circle cx="16" cy="16" r="14" fill="{accent}"/></svg>'
+    )
+    b64 = base64.b64encode(svg.encode("utf-8")).decode("ascii")
+    return f"data:image/svg+xml;base64,{b64}"
+
+
+def valid_hex(hexcolor):
+    """校验 #rgb / #rrggbb 格式，book.toml 里的 accent 手填最容易出错。"""
+    return bool(re.fullmatch(r"#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})", hexcolor or ""))
+
+
 def lighten(hexcolor, amount=0.22):
-    """把颜色向白色插值，用于夜间模式提亮 accent 以保证暗底对比度。"""
+    """把颜色向白色插值，用于夜间模式提亮 accent 以保证暗底对比度。
+
+    非法颜色不应让整个构建崩掉：回退到默认色。
+    """
+    if not valid_hex(hexcolor):
+        print(f"  ⚠ 非法颜色 {hexcolor!r}，回退为默认色 {DEFAULT_ACCENT}")
+        hexcolor = DEFAULT_ACCENT
     h = hexcolor.lstrip("#")
     if len(h) == 3:
         h = "".join(c * 2 for c in h)
@@ -281,8 +387,12 @@ BASE_CSS = r"""
   --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
   --font-scale:1;
   --ease:cubic-bezier(.4,0,.2,1);
-  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC","Source Han Serif CN",
-          "SimSun","STSong",Georgia,"Times New Roman",serif;
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
   --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
          -apple-system,"Segoe UI",sans-serif;
 }
@@ -293,11 +403,16 @@ html[data-theme=night]{
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
   --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
 }
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
   transition:background .4s var(--ease),color .4s var(--ease);
 }
 ::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
@@ -362,6 +477,13 @@ READER_CSS = r"""
 #toc a i{font-style:normal;color:var(--ink-faint);font-size:11.5px;margin-right:8px;
   font-variant-numeric:tabular-nums}
 #toc a.on i{color:var(--accent)}
+/* 带小标题的分节符生成的二级目录项：单章多分节（如出差）时给出导航 */
+#toc a.sub-toc{padding:6px 22px 6px 40px;font-size:12px;color:var(--ink-faint)}
+#toc a.sub-toc:hover{padding-left:44px}
+/* 分卷书的卷标题：只在 章节/卷X/ 结构下出现 */
+.toc-vol{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.75}
+.toc-vol:first-child{margin-top:0}
 /* 抽屉打开时条目阶梯淡入 */
 #toc.open a{animation:tocIn .42s var(--ease) both;animation-delay:var(--d)}
 @keyframes tocIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
@@ -403,7 +525,9 @@ READER_CSS = r"""
 
 /* 正文 */
 main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
-  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em}
+  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em;
+  /* 避头尾：不让逗号句号右括号落在行首。中文长文必需，浏览器默认的 auto 较宽松 */
+  line-break:strict;word-break:normal;overflow-wrap:break-word}
 .chapter{padding-top:14vh}
 .ch-head{margin-bottom:9vh;text-align:center}
 .ch-num{font-family:var(--sans);font-size:11.5px;letter-spacing:.34em;text-indent:.34em;
@@ -413,7 +537,10 @@ main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
 .ch-line{width:26px;height:1px;background:var(--rule);margin:26px auto 0;
   transform:scaleX(0);transition:transform .8s var(--ease) .2s}
 .ch-head.in .ch-line{transform:none}
-.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end}
+/* hanging-punctuation 目前基本只有 Safari 生效，text-wrap:pretty 主要 Chromium 生效；
+   两者都是渐进增强，不支持的浏览器忽略即可，无副作用 */
+.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end;
+  text-wrap:pretty}
 strong{font-weight:600;color:var(--ink)}
 em{font-style:italic;color:var(--ink-soft)}
 
@@ -445,6 +572,13 @@ em{font-style:italic;color:var(--ink-soft)}
   letter-spacing:.22em;color:var(--ink-faint);text-indent:0}
 .ch-end{width:34px;height:1px;background:var(--rule);margin:4.5em auto 0}
 
+.ch-nav{max-width:34em;margin:2.4em auto 0;padding:0 26px;display:flex;
+  justify-content:space-between;gap:16px;font-family:var(--sans);font-size:12.5px;
+  letter-spacing:.05em;color:var(--ink-faint)}
+.ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+.ch-nav a:hover{color:var(--accent)}
+.ch-nav a:last-child{text-align:right}
+
 footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
   font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--ink-faint);
   line-height:2.4}
@@ -464,7 +598,6 @@ footer a:hover{color:var(--accent)}
   #toc{transform:none;background:transparent;border-right:0}
   #toc.hidden{transform:translateX(-100%)}
   #scrim{display:none}
-  #menu{display:none}
   /* 侧栏常驻时整页让开：用 body 内缩而非 main 的 padding，
      因为 main 是 border-box，加内边距会压缩字栏宽度 */
   html[data-toc=on] body{padding-left:238px}
@@ -477,11 +610,14 @@ footer a:hover{color:var(--accent)}
   #cover h1{letter-spacing:.22em;text-indent:.22em}
   #toc{width:76vw;padding-top:66px}
   #top{right:14px;bottom:18px}
+  .ch-nav{padding:0 20px;font-size:12px}
 }
 @media print{
-  #tools,#toc,#scrim,#bar,#top,#cover .go,#back{display:none}
+  #tools,#toc,#scrim,#bar,#top,#cover .go,#back,.ch-nav{display:none}
   body{background:#fff;color:#000;padding-left:0!important}
+  /* 首章紧跟封面，不需要再分页——否则会多出一张空白页 */
   .chapter{page-break-before:always;padding-top:0}
+  .chapter:first-of-type{page-break-before:avoid}
   .rise{opacity:1!important;transform:none!important}
 }
 """
@@ -562,6 +698,8 @@ body{padding:0}
 .pill{padding:3px 9px;border-radius:999px;border:1px solid var(--rule);line-height:1.6}
 .pill.done{color:var(--bk);border-color:color-mix(in srgb,var(--bk) 40%,transparent);
   background:color-mix(in srgb,var(--bk) 9%,transparent)}
+/* 夜间背景变暗后书的原色文字对比度不够，换成提亮版 */
+html[data-theme=night] .pill.done{color:var(--bk-lit)}
 /* 成人向做成卡片右上角浮标，不占元信息那行的宽度 */
 .badge{position:absolute;top:0;right:0;z-index:1;
   font-family:var(--sans);font-size:9.5px;letter-spacing:.14em;color:var(--ink-faint);
@@ -571,6 +709,7 @@ body{padding:0}
 .arrow{margin-left:auto;color:var(--ink-faint);font-size:13px;
   transition:transform .4s var(--ease),color .4s var(--ease)}
 .card:hover .arrow{transform:translateX(4px);color:var(--bk)}
+html[data-theme=night] .card:hover .arrow{color:var(--bk-lit)}
 
 .foot-note{padding:0 26px 14vh;text-align:center;font-family:var(--sans);
   font-size:11.5px;letter-spacing:.18em;color:var(--ink-faint);line-height:2.2}
@@ -618,22 +757,32 @@ function toggleTheme(){
     document.startViewTransition(function(){ paintTheme(t); });
   }else{ paintTheme(t); }
 }
-// 观察器：元素进入视口后加 .in，一次性触发不回退
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
 var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
   if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
-    return function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+    return showAll;
   }
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  },{rootMargin:'0px 0px -12% 0px',threshold:.02});
-  return function(els){ [].forEach.call(els,function(e){ io.observe(e); }); };
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
 })();
 """
 
 READER_JS = r"""
 (function(){
+  // 关掉浏览器自带的滚动位置恢复，避免和下面按「章号+比例」算出的位置打架
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
   var PK='xhw-pos-'+document.body.dataset.book;
   var tools=document.getElementById('tools'), toc=document.getElementById('toc'),
       scrim=document.getElementById('scrim'), bar=document.getElementById('bar'),
@@ -645,17 +794,21 @@ READER_JS = r"""
   var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ---- 偏好
-  var st={scale:1,pos:0};
+  var st={scale:1,ch:null,ratio:0};
   try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
   var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
   var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
   applyScale();
 
   document.getElementById('theme').onclick=toggleTheme;
-  var STEPS=[.88,1,1.14,1.3];
-  document.getElementById('font').onclick=function(){
+  var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
+  var paintFont=function(){
+    var i=STEPS.indexOf(st.scale); fontBtn.textContent='字号 '+((i<0?1:i+1))+'/'+STEPS.length;
+  };
+  paintFont();
+  fontBtn.onclick=function(){
     var i=STEPS.indexOf(st.scale); st.scale=STEPS[(i<0?1:i+1)%STEPS.length];
-    applyScale(); save();
+    applyScale(); paintFont(); save();
   };
 
   // ---- 目录
@@ -705,11 +858,22 @@ READER_JS = r"""
     for(var i=0;i<chapters.length;i++) if(chapters[i].offsetTop<=probe) idx=i;
     if(idx!==cur){
       cur=idx;
-      links.forEach(function(a,i){ a.classList.toggle('on',i===idx); });
       var c=chapters[idx];
-      now.textContent=c?('第 '+c.dataset.num+' 章 · '+c.dataset.title):'';
+      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
+      var curAnchor=c?c.dataset.anchor:null;
+      links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
+      if(c){
+        var vol=c.dataset.volume;
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+      }else{ now.textContent=''; }
     }
-    st.pos=y;
+    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
+    if(idx>=0){
+      var chTop=chapters[idx].offsetTop;
+      var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
+      st.ch=chapters[idx].dataset.anchor;
+      st.ratio=Math.min(1,Math.max(0,(y-chTop)/Math.max(1,chBottom-chTop)));
+    }
   }
   var onScroll=function(){ if(!raf) raf=requestAnimationFrame(tick); };
   addEventListener('scroll',onScroll,{passive:true});
@@ -721,15 +885,33 @@ READER_JS = r"""
 
   top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
 
-  // ---- 恢复进度（有 hash 时以 hash 为准）
-  if(st.pos>vh*.6 && !location.hash){
-    var p=st.pos;
-    var restore=function(){ scrollTo(0,p); tick(); };
-    addEventListener('load',restore);
-    setTimeout(function(){ if(!window.scrollY) restore(); },60);
+  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
+  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
+  // 变成平滑滚过全书，恢复前临时关掉。
+  if(st.ch!=null && !location.hash){
+    var target=null;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    if(target){
+      var restore=function(){
+        var chTop=target.offsetTop;
+        var chBottom=(chapters.indexOf(target)+1<chapters.length)
+          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var prevBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        scrollTo(0, chTop+st.ratio*(chBottom-chTop));
+        document.documentElement.style.scrollBehavior=prevBehavior;
+        tick();
+      };
+      addEventListener('load',restore);
+      setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
   }
   tick();
   addEventListener('beforeunload',save);
+  addEventListener('pagehide',save);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') save();
+  });
   setInterval(save,4000);
 
   // ---- 左右方向键翻章
@@ -764,16 +946,50 @@ SHELF_JS = r"""
 })();
 """
 
+# 预绘制：在 <head> 内同步执行，赶在首次渲染前把主题 / 字号 / 侧栏状态
+# 钉到 <html> 上，避免先刷默认态再被 </body> 前的脚本跳变。
+SHELF_PREPAINT_JS = r"""(function(){
+var r=document.documentElement;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+})();"""
+
+READER_PREPAINT_JS = r"""(function(){
+var r=document.documentElement, book=document.currentScript.dataset.book;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+try{
+  var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
+  if(st.scale) r.style.setProperty('--font-scale',st.scale);
+}catch(e){}
+if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
+})();"""
+
 
 # ---------------------------------------------------------------- 渲染
 
-def render_chapter(ch, first):
-    """渲染一章。first=True 表示是全书第一章，其内容不做滚动入场（首屏可见）。"""
+def render_chapter(ch, first, prev_ch=None, next_ch=None):
+    """渲染一章。first=True 表示是全书第一章，其内容不做滚动入场（首屏可见）。
+    prev_ch / next_ch 用于章末的上一章/下一章导航。
+
+    返回 (html, sections)：sections 是带小标题的分节符列表 [(id, label), ...]，
+    只有像「出差」这种单章多分节、每节带小标题的情况才非空，用于目录里的二级
+    导航——没有小标题的纯装饰性「一/二/三」不值得占目录条目。
+    """
+    vol = ch.get("volume") or ""
+    ch_label = (f"{vol} · " if vol else "") + f'第 {ch["num"]} 章'
     out = [
-        f'<section class="chapter" id="ch{ch["num"]}"'
-        f' data-num="{ch["num"]}" data-title="{html.escape(ch["title"])}">',
+        f'<section class="chapter" id="{ch["anchor"]}"'
+        f' data-num="{ch["num"]}" data-title="{html.escape(ch["title"])}"'
+        f' data-anchor="{ch["anchor"]}" data-volume="{html.escape(vol)}">',
         '  <header class="ch-head">',
-        f'    <div class="ch-num">第 {ch["num"]} 章</div>',
+        f'    <div class="ch-num">{html.escape(ch_label)}</div>',
         f'    <h2 class="ch-title">{html.escape(ch["title"])}</h2>',
         '    <div class="ch-line"></div>',
         "  </header>",
@@ -781,6 +997,7 @@ def render_chapter(ch, first):
     # 首章前几段已在首屏，不加 .rise 以免打开瞬间空白
     plain = 6 if first else 0
     seen = 0
+    sections = []
     for kind, content in ch["blocks"]:
         seen += 1
         r = "" if seen <= plain else " rise"
@@ -788,8 +1005,12 @@ def render_chapter(ch, first):
             mark, sub = content
             label = html.escape(mark)
             if sub:
+                sec_id = f'{ch["anchor"]}-sec{len(sections) + 1}'
+                sections.append((sec_id, sub))
                 label += f"<em>{html.escape(sub)}</em>"
-            out.append(f'  <div class="sec-mark"><b>{label}</b></div>')
+                out.append(f'  <div class="sec-mark" id="{sec_id}"><b>{label}</b></div>')
+            else:
+                out.append(f'  <div class="sec-mark"><b>{label}</b></div>')
         elif kind == "quote":
             msgs = "".join(f"<p>{m}</p>" for m in content)
             out.append(f'  <blockquote class="msg{r}">{msgs}</blockquote>')
@@ -799,7 +1020,17 @@ def render_chapter(ch, first):
             out.append(f'  <p class="p{r}">{content}</p>')
     out.append("</section>")
     out.append('<div class="ch-end"></div>')
-    return "\n".join(out)
+    if prev_ch or next_ch:
+        prev_a = (
+            f'<a href="#{prev_ch["anchor"]}">← {html.escape(prev_ch["title"])}</a>'
+            if prev_ch else '<span></span>'
+        )
+        next_a = (
+            f'<a href="#{next_ch["anchor"]}">{html.escape(next_ch["title"])} →</a>'
+            if next_ch else '<span></span>'
+        )
+        out.append(f'<nav class="ch-nav">{prev_a}{next_a}</nav>')
+    return "\n".join(out), sections
 
 
 def render_reader(book, has_shelf):
@@ -807,12 +1038,32 @@ def render_reader(book, has_shelf):
     chapters = book["chapters"]
     accent, lit = book["accent"], lighten(book["accent"])
 
-    toc_items = "\n".join(
-        f'    <a href="#ch{c["num"]}" data-ch="{c["num"]}" style="--d:{i * 26}ms">'
-        f'<i>{c["num"]:02d}</i>{html.escape(c["title"])}</a>'
+    rendered = [
+        render_chapter(
+            c, i == 0,
+            prev_ch=chapters[i - 1] if i > 0 else None,
+            next_ch=chapters[i + 1] if i + 1 < len(chapters) else None,
+        )
         for i, c in enumerate(chapters)
-    )
-    body = "\n\n".join(render_chapter(c, i == 0) for i, c in enumerate(chapters))
+    ]
+    body = "\n\n".join(html_ for html_, _ in rendered)
+
+    toc_parts = []
+    cur_vol = None
+    for i, c in enumerate(chapters):
+        vol = c.get("volume") or ""
+        # 分卷的书在目录里插入卷标题；不分卷时 vol 恒为 "" 不会触发
+        if vol != cur_vol:
+            cur_vol = vol
+            if vol:
+                toc_parts.append(f'    <div class="toc-vol">{html.escape(vol)}</div>')
+        toc_parts.append(
+            f'    <a href="#{c["anchor"]}" data-ch="{c["anchor"]}" style="--d:{i * 26}ms">'
+            f'<i>{c["num"]:02d}</i>{html.escape(c["title"])}</a>'
+        )
+        for sec_id, sub in rendered[i][1]:
+            toc_parts.append(f'    <a href="#{sec_id}" class="sub-toc">{html.escape(sub)}</a>')
+    toc_items = "\n".join(toc_parts)
 
     title = html.escape(book["title"])
     sub = html.escape(book["subtitle"])
@@ -820,18 +1071,30 @@ def render_reader(book, has_shelf):
     foot_link = (
         f'  <a href="index.html">← 返回书架</a>' if has_shelf else f"{title}"
     )
-    epi = f'  <p class="epi">{book["epigraph"]}</p>\n' if book["epigraph"] else ""
+    epi = (
+        f'  <p class="epi">{escape_epigraph(book["epigraph"])}</p>\n'
+        if book["epigraph"] else ""
+    )
     sub_el = f'  <div class="sub">{sub}</div>\n' if sub else ""
+    page_title = f"{title}{' · ' + sub if sub else ''}"
+    desc = html.escape(book["tagline"]) if book["tagline"] else f"{title}，在线阅读"
+    favicon = favicon_data_uri(accent)
 
     return f"""<!DOCTYPE html>
-<html lang="zh-CN" data-theme="day" data-toc="off"
+<html lang="zh-CN" data-toc="off"
       style="--accent:{accent};--accent-lit:{lit}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="{accent}">
-<title>{title}{' · ' + sub if sub else ''}</title>
+<meta name="description" content="{desc}">
+<meta property="og:title" content="{page_title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:type" content="book">
+<link rel="icon" href="{favicon}">
+<title>{page_title}</title>
+<script data-book="{title}">{READER_PREPAINT_JS}</script>
 <style>{BASE_CSS}{READER_CSS}</style>
 </head>
 <body data-book="{title}">
@@ -854,7 +1117,7 @@ def render_reader(book, has_shelf):
   <div class="rule"></div>
   <h1>{title}</h1>
 {sub_el}{epi}  <div class="meta">全 {len(chapters)} 章 · {fmt_wan(book['chars'])}</div>
-  <a class="go" href="#ch{chapters[0]['num']}">开始阅读 <span>→</span></a>
+  <a class="go" href="#{chapters[0]['anchor']}">开始阅读 <span>→</span></a>
 </header>
 
 <main>
@@ -866,6 +1129,8 @@ def render_reader(book, has_shelf):
 </footer>
 
 <button id="top" aria-label="回到顶部">↑</button>
+<noscript><style>.rise,.ch-head,.sec-mark{{opacity:1!important;transform:none!important}}
+#toc{{transform:none!important}}#scrim{{display:none!important}}</style></noscript>
 <script>{THEME_JS}{READER_JS}</script>
 </body>
 </html>
@@ -909,13 +1174,21 @@ def render_shelf(books):
         )
 
     total = sum(b["chars"] for b in books)
+    desc = f"{len(books)} 部作品 · {fmt_wan(total)}，" + "、".join(b["title"] for b in books[:5])
+    desc = html.escape(desc)
+    favicon = favicon_data_uri(books[0]["accent"] if books else DEFAULT_ACCENT)
     return f"""<!DOCTYPE html>
-<html lang="zh-CN" data-theme="day">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<meta name="description" content="{desc}">
+<meta property="og:title" content="书架">
+<meta property="og:description" content="{desc}">
+<link rel="icon" href="{favicon}">
 <title>书架</title>
+<script>{SHELF_PREPAINT_JS}</script>
 <style>{BASE_CSS}{SHELF_CSS}</style>
 </head>
 <body>
@@ -935,6 +1208,7 @@ def render_shelf(books):
 
 <div class="foot-note">点开任意一本开始阅读<br>每本书都是独立页面，可单独分享</div>
 
+<noscript><style>.rise{{opacity:1!important;transform:none!important}}</style></noscript>
 <script>{THEME_JS}{SHELF_JS}</script>
 </body>
 </html>
@@ -993,7 +1267,7 @@ def build(quiet=False):
             if not quiet:
                 print(f"  跳过 {d.name}：章节/ 下没有 ch*.md")
             continue
-        b["file"] = f"{b['title']}.html"
+        b["file"] = f"{safe_filename(b['title'])}.html"
         books.append(b)
     if not books:
         print(f"未在 {BOOKS_DIR} 下找到任何作品", file=sys.stderr)
@@ -1004,17 +1278,29 @@ def build(quiet=False):
     SITE_DIR.mkdir(exist_ok=True)
     has_shelf = len(books) > 1
 
+    keep = {"index.html", ".build-id"}
     for b in books:
         (SITE_DIR / b["file"]).write_text(render_reader(b, has_shelf), encoding="utf-8")
+        keep.add(b["file"])
         # 有封面图则拷进 site/，保持单目录可整体分享
         if b["cover"]:
             src = b["dir"] / b["cover"]
+            cover_name = Path(b["cover"]).name
+            keep.add(cover_name)
             if src.exists():
-                shutil.copy2(src, SITE_DIR / Path(b["cover"]).name)
+                shutil.copy2(src, SITE_DIR / cover_name)
             else:
                 print(f"  ⚠ {b['title']}：封面图不存在 {src}")
 
     (SITE_DIR / "index.html").write_text(render_shelf(books), encoding="utf-8")
+
+    # 清理陈旧产物：改书名 / 删书后，旧 HTML（含旧封面图）不会自动消失，
+    # 残留在 site/ 里还会被一起分享出去。
+    for stale in SITE_DIR.iterdir():
+        if stale.is_file() and stale.name not in keep:
+            stale.unlink()
+            if not quiet:
+                print(f"  🗑 清理陈旧产物 {stale.name}")
 
     # 供本地预览热刷新探测；分享 site/ 时无害，可忽略
     stamp = str(time.time_ns())
