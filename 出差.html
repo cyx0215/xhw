@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-toc="off"
+      style="--accent:#4a6b70;--accent-lit:#728c8f">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#4a6b70">
+<meta name="description" content="涉世未深的清纯职场新人第一次单独出差，雨夜被难搞客户的认真击中，交付身体也交付心。">
+<meta property="og:title" content="出差 · 短篇">
+<meta property="og:description" content="涉世未深的清纯职场新人第一次单独出差，雨夜被难搞客户的认真击中，交付身体也交付心。">
+<meta property="og:type" content="book">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiM0YTZiNzAiLz48L3N2Zz4=">
+<title>出差 · 短篇</title>
+<script data-book="出差">(function(){
+var r=document.documentElement, book=document.currentScript.dataset.book;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+try{
+  var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
+  if(st.scale) r.style.setProperty('--font-scale',st.scale);
+}catch(e){}
+if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
+})();</script>
+<style>
+:root{
+  --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
+  --ink-faint:#a89e94; --rule:#ddd5c8;
+  --accent:#8c6f4a; --accent-lit:#8c6f4a;
+  --shadow:0 1px 2px rgba(43,39,36,.04),0 8px 24px -12px rgba(43,39,36,.14);
+  --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
+  --font-scale:1;
+  --ease:cubic-bezier(.4,0,.2,1);
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
+         -apple-system,"Segoe UI",sans-serif;
+}
+html[data-theme=night]{
+  --bg:#16181a; --bg-elev:#1e2124; --ink:#cfc9c0; --ink-soft:#948d84;
+  --ink-faint:#645d55; --rule:#2e3236;
+  --accent:var(--accent-lit);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
+}
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* 通用入场：加 .rise 的元素初始下沉透明，进入视口时由 JS 挂 .in */
+.rise{opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+.tbtn{border:0;background:none;color:var(--ink-soft);font-family:var(--sans);font-size:13px;
+  cursor:pointer;padding:7px 10px;border-radius:6px;line-height:1;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+.tbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.tbtn:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .rise{opacity:1!important;transform:none!important}
+}
+
+/* 顶部进度条 */
+#bar{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 55%,transparent),var(--accent));
+  transition:width .12s linear}
+
+/* 工具条 */
+#tools{position:fixed;top:0;right:0;left:0;height:46px;z-index:50;display:flex;
+  align-items:center;gap:2px;padding:0 12px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid transparent;
+  transition:border-color .4s var(--ease),background .4s var(--ease)}
+#tools.lifted{border-bottom-color:var(--rule)}
+#tools .now{flex:1;min-width:0;font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transform:translateY(3px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#tools.lifted .now{opacity:1;transform:none}
+#back{font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);text-decoration:none;
+  padding:7px 10px;border-radius:6px;white-space:nowrap;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+#back:hover{color:var(--accent);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+
+/* 侧栏目录 */
+#toc{position:fixed;top:0;left:0;bottom:0;width:238px;z-index:55;padding:58px 0 24px;
+  background:var(--bg-elev);border-right:1px solid var(--rule);overflow-y:auto;
+  transform:translateX(-100%);transition:transform .38s var(--ease)}
+#toc.open{transform:none}
+#toc h3{margin:0 0 10px;padding:0 22px;font-family:var(--sans);font-size:11px;
+  letter-spacing:.22em;color:var(--ink-faint);font-weight:400}
+#toc a{display:block;padding:9px 22px;color:var(--ink-soft);text-decoration:none;
+  font-family:var(--sans);font-size:13.5px;letter-spacing:.03em;
+  border-left:2px solid transparent;
+  transition:color .25s var(--ease),border-color .25s var(--ease),
+             background .25s var(--ease),padding-left .25s var(--ease)}
+#toc a:hover{color:var(--ink);padding-left:26px}
+#toc a.on{color:var(--accent);border-left-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent)}
+#toc a i{font-style:normal;color:var(--ink-faint);font-size:11.5px;margin-right:8px;
+  font-variant-numeric:tabular-nums}
+#toc a.on i{color:var(--accent)}
+/* 带小标题的分节符生成的二级目录项：单章多分节（如出差）时给出导航 */
+#toc a.sub-toc{padding:6px 22px 6px 40px;font-size:12px;color:var(--ink-faint)}
+#toc a.sub-toc:hover{padding-left:44px}
+/* 分卷书的卷标题：只在 章节/卷X/ 结构下出现 */
+.toc-vol{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.75}
+.toc-vol:first-child{margin-top:0}
+/* 抽屉打开时条目阶梯淡入 */
+#toc.open a{animation:tocIn .42s var(--ease) both;animation-delay:var(--d)}
+@keyframes tocIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+#scrim{position:fixed;inset:0;z-index:54;background:rgba(0,0,0,.34);opacity:0;
+  pointer-events:none;transition:opacity .38s var(--ease);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#scrim.on{opacity:1;pointer-events:auto}
+
+/* 封面 */
+#cover{min-height:100svh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:60px 24px;
+  transition:padding-left .38s var(--ease)}
+#cover>*{will-change:transform,opacity}
+#cover .rule{width:1px;height:56px;
+  background:linear-gradient(var(--rule),color-mix(in srgb,var(--accent) 40%,transparent));
+  animation:dropIn .9s var(--ease) both}
+#cover h1{margin:26px 0 0;font-size:clamp(52px,15vw,86px);font-weight:400;
+  letter-spacing:.3em;text-indent:.3em;line-height:1.15;
+  animation:titleIn 1.1s var(--ease) .1s both}
+#cover .sub{margin-top:16px;font-family:var(--sans);font-size:12px;letter-spacing:.42em;
+  text-indent:.42em;color:var(--ink-faint);animation:fadeUp .9s var(--ease) .34s both}
+#cover .epi{margin-top:46px;font-size:15px;line-height:2.1;color:var(--ink-soft);
+  letter-spacing:.06em;animation:fadeUp .9s var(--ease) .5s both}
+#cover .meta{margin-top:52px;font-family:var(--sans);font-size:11.5px;letter-spacing:.16em;
+  color:var(--ink-faint);animation:fadeUp .9s var(--ease) .64s both}
+#cover .go{margin-top:34px;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.2em;color:var(--ink-soft);
+  text-decoration:none;padding:12px 28px;border:1px solid var(--rule);border-radius:2px;
+  animation:fadeUp .9s var(--ease) .78s both;
+  transition:color .3s var(--ease),border-color .3s var(--ease),gap .3s var(--ease)}
+#cover .go:hover{color:var(--accent);border-color:var(--accent);gap:14px}
+#cover .go span{transition:transform .3s var(--ease)}
+#cover .go:hover span{transform:translateX(2px)}
+@keyframes titleIn{from{opacity:0;transform:translateY(20px);letter-spacing:.52em}
+  to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dropIn{from{opacity:0;transform:scaleY(0);transform-origin:top}
+  to{opacity:1;transform:none}}
+
+/* 正文 */
+main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
+  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em;
+  /* 避头尾：不让逗号句号右括号落在行首。中文长文必需，浏览器默认的 auto 较宽松 */
+  line-break:strict;word-break:normal;overflow-wrap:break-word}
+.chapter{padding-top:14vh}
+.ch-head{margin-bottom:9vh;text-align:center}
+.ch-num{font-family:var(--sans);font-size:11.5px;letter-spacing:.34em;text-indent:.34em;
+  color:var(--accent);opacity:.85}
+.ch-title{margin:14px 0 0;font-size:1.5em;font-weight:400;letter-spacing:.12em;
+  text-indent:.12em}
+.ch-line{width:26px;height:1px;background:var(--rule);margin:26px auto 0;
+  transform:scaleX(0);transition:transform .8s var(--ease) .2s}
+.ch-head.in .ch-line{transform:none}
+/* hanging-punctuation 目前基本只有 Safari 生效，text-wrap:pretty 主要 Chromium 生效；
+   两者都是渐进增强，不支持的浏览器忽略即可，无副作用 */
+.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end;
+  text-wrap:pretty}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic;color:var(--ink-soft)}
+
+/* 分节符 */
+.sec-mark{display:flex;align-items:center;gap:18px;margin:3.2em 0 2.4em;color:var(--accent)}
+.sec-mark::before,.sec-mark::after{content:"";flex:1;height:1px;background:var(--rule);
+  transform:scaleX(0);transition:transform .9s var(--ease)}
+.sec-mark::before{transform-origin:right}
+.sec-mark::after{transform-origin:left}
+.sec-mark.in::before,.sec-mark.in::after{transform:none}
+.sec-mark b{font-weight:400;font-size:1em;line-height:1;letter-spacing:.2em;
+  text-indent:.2em;opacity:.9;white-space:nowrap}
+.sec-mark b em{font-style:normal;color:var(--ink-soft);font-size:.86em;
+  letter-spacing:.1em;margin-left:.7em}
+/* 章首第一个分节符紧贴标题，省掉横线（隐藏后需自行居中） */
+.ch-head + .sec-mark{margin-top:0;justify-content:center}
+.ch-head + .sec-mark::before,.ch-head + .sec-mark::after{display:none}
+
+/* 手机消息 */
+.msg{margin:1.9em 0;padding:14px 18px;border-radius:3px 12px 12px 12px;
+  background:var(--bg-elev);border:1px solid var(--rule);
+  border-left:2px solid color-mix(in srgb,var(--accent) 60%,transparent);
+  box-shadow:var(--shadow)}
+.msg p{margin:0 0 .5em;font-family:var(--sans);font-size:.88em;line-height:1.85;
+  color:var(--ink-soft);text-indent:0}
+.msg p:last-child{margin-bottom:0}
+
+.end-mark{margin:4em 0 0;text-align:center;font-family:var(--sans);font-size:.8em;
+  letter-spacing:.22em;color:var(--ink-faint);text-indent:0}
+.ch-end{width:34px;height:1px;background:var(--rule);margin:4.5em auto 0}
+
+.ch-nav{max-width:34em;margin:2.4em auto 0;padding:0 26px;display:flex;
+  justify-content:space-between;gap:16px;font-family:var(--sans);font-size:12.5px;
+  letter-spacing:.05em;color:var(--ink-faint)}
+.ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+.ch-nav a:hover{color:var(--accent)}
+.ch-nav a:last-child{text-align:right}
+
+footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--ink-faint);
+  line-height:2.4}
+footer a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+footer a:hover{color:var(--accent)}
+
+/* 回顶 */
+#top{position:fixed;right:20px;bottom:24px;z-index:40;width:38px;height:38px;
+  border-radius:50%;background:var(--bg-elev);color:var(--ink-soft);
+  border:1px solid var(--rule);cursor:pointer;font-size:14px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease),color .25s var(--ease)}
+#top.on{opacity:1;transform:none;pointer-events:auto}
+#top:hover{color:var(--accent);transform:translateY(-2px)}
+
+@media (min-width:1080px){
+  #toc{transform:none;background:transparent;border-right:0}
+  #toc.hidden{transform:translateX(-100%)}
+  #scrim{display:none}
+  /* 侧栏常驻时整页让开：用 body 内缩而非 main 的 padding，
+     因为 main 是 border-box，加内边距会压缩字栏宽度 */
+  html[data-toc=on] body{padding-left:238px}
+  html[data-toc=on] #tools{left:238px}
+}
+@media (max-width:600px){
+  main{font-size:calc(17px * var(--font-scale));line-height:1.98;padding:0 20px 30vh}
+  .chapter{padding-top:9vh}
+  .ch-head{margin-bottom:6.5vh}
+  #cover h1{letter-spacing:.22em;text-indent:.22em}
+  #toc{width:76vw;padding-top:66px}
+  #top{right:14px;bottom:18px}
+  .ch-nav{padding:0 20px;font-size:12px}
+}
+@media print{
+  #tools,#toc,#scrim,#bar,#top,#cover .go,#back,.ch-nav{display:none}
+  body{background:#fff;color:#000;padding-left:0!important}
+  /* 首章紧跟封面，不需要再分页——否则会多出一张空白页 */
+  .chapter{page-break-before:always;padding-top:0}
+  .chapter:first-of-type{page-break-before:avoid}
+  .rise{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body data-book="出差">
+<div id="bar"></div>
+
+<nav id="tools">
+  <a id="back" href="index.html">← 书架</a>
+  <button class="tbtn" id="menu" aria-label="目录">目录</button>
+  <span class="now" id="now"></span>
+  <button class="tbtn" id="font" aria-label="调整字号">字号</button>
+  <button class="tbtn" id="theme" aria-label="切换日间夜间">夜间</button>
+</nav>
+
+<div id="scrim"></div>
+<aside id="toc" aria-label="章节目录">
+  <h3>目 录</h3>
+    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>雨夜</a>
+    <a href="#ch1-sec1" class="sub-toc">落地</a>
+    <a href="#ch1-sec2" class="sub-toc">大堂</a>
+    <a href="#ch1-sec3" class="sub-toc">晚餐</a>
+    <a href="#ch1-sec4" class="sub-toc">夜访</a>
+    <a href="#ch1-sec5" class="sub-toc">雨声里</a>
+    <a href="#ch1-sec6" class="sub-toc">水声</a>
+    <a href="#ch1-sec7" class="sub-toc">第二次</a>
+    <a href="#ch1-sec8" class="sub-toc">清晨</a>
+</aside>
+
+<header id="cover">
+  <div class="rule"></div>
+  <h1>出差</h1>
+  <div class="sub">短篇</div>
+  <p class="epi">那一夜的雨，<br>下得比谁都耐心。</p>
+  <div class="meta">全 1 章 · 约 1.2 万字</div>
+  <a class="go" href="#ch1">开始阅读 <span>→</span></a>
+</header>
+
+<main>
+<section class="chapter" id="ch1" data-num="1" data-title="雨夜" data-anchor="ch1" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 1 章</div>
+    <h2 class="ch-title">雨夜</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark" id="ch1-sec1"><b>一<em>落地</em></b></div>
+  <p class="p">沈清然把工牌从领口摘下来的时候，手指尖还带着一点凉。</p>
+  <p class="p">落地之后天就阴了。H 市的风比她想象中湿，像有人把一整块海绵按在了空气里。她拖着那只浅米色的登机箱，跟着指示牌往出口走，箱轮在地面上滚出细细的声响，和周围匆忙的脚步叠在一起。</p>
+  <p class="p">这是她第一次单独出差。</p>
+  <p class="p">也几乎是她二十四年人生里，第一次把「工作」和「过夜的陌生城市」绑在一起——没有同事同行，没有室友在隔壁，只有一份方案、一间预约好的标间，以及一个在视频会议里总把她话堵回去的男人。</p>
+  <p class="p">早上出发前，组长在微信里叮嘱了三遍：「陆总那边很难搞，你态度放软一点，资料带全，别让人觉得我们不专业。」她回了好几个「好的」，把文件夹又检查了一遍，连备用的签字笔都多塞了两支。</p>
+  <p class="p rise">临出门，室友还趴在床上调侃：「清然，你可别被甲方吃了。你这人涉世未深，别人递根烟都要愣三秒，出去更要长眼睛。」</p>
+  <p class="p rise">她当时只是把脸埋进围巾里，含糊地「嗯」了一声。</p>
+  <p class="p rise">涉世未深——她自己也承认。</p>
+  <p class="p rise">不是没碰到过喜欢的人，是总慢半拍。大学时有过一段很短的暧昧，对方说「我们试试」，她认真地点头，结果连「试」的规则都没搞懂：对方已在跟别人吃饭，她还在想要不要把笔记整理得更工整再发过去。后来不了了之，她甚至是最后一个知道的。入职后部门聚餐，有人借着酒意靠得太近，她会安静地挪开半步，第二天照常叫「哥」——不是高冷，是真分不清那算不算越界，又怕自己反应过度显得矫情。</p>
+  <p class="p rise">身体上的事，她并非一无所知，只是很少、很浅，更谈不上被好好对待。偶尔的亲密像隔着一层毛玻璃：知道步骤，却总在半途因为害羞或对方的不耐烦而停住。室友聊起那些绘声绘色的细节时，她听得耳尖发热，心里却常飘过同一个念头——原来还可以是那样的。</p>
+  <p class="p rise">可她从没有遇见一个，肯把节奏放到她能跟上的人。</p>
+  <p class="p rise">可真正站在这座陌生城市里，她还是觉得胸口轻轻发紧。</p>
+  <p class="p rise">手机震了一下。</p>
+  <blockquote class="msg rise"><p>陆衡：沈小姐，我已到酒店大堂。不急，你按自己的节奏。</p></blockquote>
+  <p class="p rise">短短两句，没有多余的寒暄。沈清然盯着那个名字看了两秒，耳根不知为何热了一下。她见过陆衡——视频会议里，男人总是坐得笔直，白衬衫扣到最上面一颗，说话慢，却总能把她准备好的话堵回去。同事私下说他「难搞」，她倒觉得，更像是一种被好好看着的、逃不开的专注。</p>
+  <p class="p rise">有一次线上汇报，她念数据念到后半段声音发干，陆衡忽然说：「停。喝口水，再继续。我不急。」那一秒她端着杯子的手都稳了——原来「难搞」的人，也会给人留白。</p>
+  <p class="p rise">她把手机按亮，打字时指尖微微发颤：</p>
+  <blockquote class="msg rise"><p>沈清然：陆总好，我刚出机场，大概四十分钟到。给您添麻烦了。</p></blockquote>
+  <p class="p rise">发出去后，她才发觉自己用了「添麻烦」——明明是工作，却像在道歉。她咬了咬下唇，把手机塞回包里，深吸一口气，往出租车站走去。</p>
+  <p class="p rise">车窗外的霓虹被雨丝拉成淡色的光带。司机开着收音机，低声放着一首她叫不出名的老歌。沈清然侧脸贴着微凉的玻璃，看见自己的倒影：齐肩发被发夹松松别着，领口的白衬衫被安全带压出一道浅痕，眼睛里还残留着飞机上没睡够的疲惫，却仍干净得像一页刚拆封的纸。</p>
+  <p class="p rise">她并不知道，四十分钟后，在那间灯火通明的酒店大堂里，会有一双更深的眼睛，把这页纸慢慢掀开。</p>
+  <p class="p rise">雨越下越大。</p>
+  <div class="sec-mark" id="ch1-sec2"><b>二<em>大堂</em></b></div>
+  <p class="p rise">酒店旋转门一开，暖风带着淡淡的木质香扑面而来。沈清然把湿了边的行李箱立好，下意识抬手理了理被风吹乱的碎发。大堂水晶灯亮得过分，把大理石地面照得像一面浅浅的湖。</p>
+  <p class="p rise">她几乎是立刻就看见了他。</p>
+  <p class="p rise">陆衡站在接待台侧面，深灰色大衣搭在臂弯，里面仍是那件扣到最上面的白衬衫。比视频里更高，肩线更沉。他并没有看手机，只是微微侧头，像是早就估准了她会从哪个方向进来。</p>
+  <p class="p rise">四目相对的那一瞬，沈清然的脚步顿了一下。</p>
+  <p class="p rise">「沈小姐。」他先开口，声音比线上更低，也更近，「一路顺利？」</p>
+  <p class="p rise">「陆、陆总好。」她听见自己的声音轻轻的，像怕惊扰什么，「顺利……就是雨有点大。」</p>
+  <p class="p rise">陆衡的目光在她微红的鼻尖、湿润的睫毛上极短暂地停了一停，随即礼貌地收回，伸手接过她的登机箱拉杆。动作自然，却不容推拒。</p>
+  <p class="p rise">「我帮你。」他说，「先去前台拿房卡。今晚不谈公事，你飞了两小时，先吃饭。」</p>
+  <p class="p rise">「可是方案我带来了——」</p>
+  <p class="p rise">「明天上午。」他语气不重，却把话钉死，「今晚，你只需要把晚饭吃完。」</p>
+  <p class="p rise">沈清然咬了咬下唇，点头。她跟在他身侧，闻到那股极淡的雪松味，混在大堂中央空调的暖风里，让人莫名心口发软。</p>
+  <p class="p rise">开房时出了点小波折。前台小姐核对身份证，抬头笑道：「沈女士是第一次来我们酒店吗？看起来好年轻。」</p>
+  <p class="p rise">「嗯……出差。」她小声答，把工牌下意识往包里塞了塞，像生怕「看起来年轻」四个字会让人把她看轻。</p>
+  <p class="p rise">两张房卡并排放在托盘上——1608，1610，仅隔一道墙。</p>
+  <p class="p rise">陆衡把 1608 推到她手边：「你的。需要什么打内线。包括——」他顿了顿，像把一句更随意的话咽回去，换成正式的收尾，「包括打印、延长会议室，都可以找我。」</p>
+  <p class="p rise">「谢谢陆总。」</p>
+  <p class="p rise">电梯上行时，箱体轻微震动。她站在角落，盯着跳动的楼层数字，余光却总擦到他袖口露出的一截手腕，骨节分明，表带是简单的黑色。两人之间隔着半步，说近不近，说远——呼吸已经能隐约听见。</p>
+  <p class="p rise">「紧张？」陆衡忽然问。</p>
+  <p class="p rise">她一愣，下意识摇头，又诚实地小声补了一句：「……有一点。第一次单独见客户。」</p>
+  <p class="p rise">「我不是什么洪水猛兽。」他低声笑了一下，很短，「而且你比线上看起来……更像你自己。」</p>
+  <p class="p rise">沈清然没听懂后半句的意思，只觉得耳朵又热了。电梯叮地一声开，她几乎是逃也似的先迈了出去。</p>
+  <p class="p rise">把箱子推进 1608 时，她多看了一眼门卡套上的楼层示意：1610 就在左侧。一墙之隔四个字在心里一闪，她赶紧把门关上，像把什么不该有的念头也关在了外面。</p>
+  <div class="sec-mark" id="ch1-sec3"><b>三<em>晚餐</em></b></div>
+  <p class="p rise">晚餐定在酒店三楼的西餐厅。落地窗外雨线密集，室内灯光偏暖，把一切棱角都揉软了。</p>
+  <p class="p rise">陆衡点菜时问她忌口，她说「都可以」，声音小得像怕给人添麻烦。他便没再追问，只替她要了清淡的奶油蘑菇汤和一份煎鱼，自己则是牛排。红酒来了，他给她倒了半杯。</p>
+  <p class="p rise">「不用勉强。」他把杯柄转向她，「润嗓就行。你不像会喝酒的人。」</p>
+  <p class="p rise">「……很明显吗？」</p>
+  <p class="p rise">「明显。」他切牛排的动作很稳，「视频里你端水杯的方式，比端酒杯熟练。」</p>
+  <p class="p rise">沈清然被说中，低头抿了一小口。酒意并不冲，只在舌尖留下浅浅的涩，让心跳更清楚了一点。</p>
+  <p class="p rise">汤很暖，鱼肉嫩，可她吃得心不在焉——对面那人并不一直盯着她，可每当她抬头，总能撞上他平静而专注的视线，像在读一份还没写完的报告。</p>
+  <p class="p rise">「沈小姐入职多久了？」</p>
+  <p class="p rise">「一年半。」</p>
+  <p class="p rise">「单独跟项目，组长放心？」</p>
+  <p class="p rise">「……不放心。」她老实答，随即意识到失言，连忙补，「我是说，组长很细心，资料都帮我核对过。这次原本该她来的，家里临时有事，才让我顶上。」</p>
+  <p class="p rise">「顶上」两个字让她自己都顿了顿。陆衡听在耳里，却只是点头：「那她选人有眼光。你上次会上被我打断三次，第四次还能把逻辑补完整——这种人，少见。」</p>
+  <p class="p rise">沈清然的筷子尖在盘边点了一下：「那时……我还以为您在刁难。」</p>
+  <p class="p rise">「刁难是浪费时间。」陆衡说，「我只是想看，你慌的时候会不会撒谎。你没有。数据错了就认，口径不圆就重说。很干净。」</p>
+  <p class="p rise">「干净」落在桌上，比「好看」更让她不知所措。</p>
+  <p class="p rise">他似乎也觉出用词越了界，轻咳一声，把话题扳回安全区：「明天九点，会议室 B2。对方还有两位技术，你激进版方案里的排期，他们会抠。」</p>
+  <p class="p rise">「我准备了应答表。」她立刻切换回工作模式，连背脊都挺直了些，「最容易被问的六个点，我都写了备选口径。」</p>
+  <p class="p rise">「拿来我看看——不，」他改口，「今晚不看。你飞了两小时，再加班，明天嗓子会哑。哑了，气势先输一半。」</p>
+  <p class="p rise">沈清然忍不住弯了下眼睛。梨涡很浅，一闪就收。</p>
+  <p class="p rise">陆衡的刀叉停了半秒。</p>
+  <p class="p rise">餐后甜点是一份提拉米苏。他用勺子切下一角，推到她面前：「尝尝。这里的可可粉不苦。」</p>
+  <p class="p rise">她本想拒绝，却被那双眼睛看得推不出去，只好小口送进嘴里。甜意在舌尖化开的瞬间，她轻轻嗯了一声。</p>
+  <p class="p rise">「喜欢？」</p>
+  <p class="p rise">「喜欢。」她答完才觉出亲昵，连忙改口，「挺……挺好吃的。」</p>
+  <p class="p rise">陆衡看着她，目光暗了一暗，像有什么东西被妥善地按回了深处。他拿餐巾擦了擦手指，又补了一句几乎像闲聊的话：「你吃饭也小心。像生怕多占人一点好。」</p>
+  <p class="p rise">「习惯了。」她小声说，「家里排行最小，什么都要让着。」</p>
+  <p class="p rise">「那今晚不用让。」他说，「这顿我请。不是施舍，是东道主的礼貌。」</p>
+  <p class="p rise">结账时他没让她抢，刷卡动作干脆。回电梯的路上，走廊地毯吸走了所有脚步声，只剩下两人并排的沉默——不是尴尬，更像一层慢慢收紧的薄膜。</p>
+  <p class="p rise">到了 16 楼，灯带把墙面照成浅金色。</p>
+  <p class="p rise">「到了。」陆衡在 1608 门前停下，「进去先洗个热水澡。雨湿了衣服，别着凉。有任何事——打印、充电、甚至睡不着——发消息。别自己硬扛。」</p>
+  <p class="p rise">「陆总也是……」她抬头，话到嘴边散了。</p>
+  <p class="p rise">门牌号码旁的感应灯亮着。他离她很近，近到她能看清他下颌的阴影，以及衬衫领口那颗一丝不苟的扣子。不知是不是走廊暖气太足，她忽然觉得呼吸有些浅。</p>
+  <p class="p rise">陆衡伸出手。</p>
+  <p class="p rise">不是碰她——只是极轻地，用指背拂去她肩上一点不知何时沾上的、几乎看不见的水渍。动作克制，却像电流从肩窝一路窜进脊背。</p>
+  <p class="p rise">「进门。」他声音更低了些，「晚安，沈小姐。」</p>
+  <p class="p rise">「晚、晚安。」</p>
+  <p class="p rise">房卡拍上感应区，绿灯亮起。沈清然侧身进门。门即将合上时，她忍不住又看了一眼——</p>
+  <p class="p rise">陆衡仍站在原地。</p>
+  <p class="p rise">他没有立刻走开，只是看着她，像看着一场被雨困住的、还没开始的故事。直到门咔哒锁上，那道视线才被隔在外面。</p>
+  <p class="p rise">沈清然背靠房门，慢慢滑坐下去，手按在胸口。白衬衫领口被她捏得微微发皱，锁骨下的皮肤烫得不像话。</p>
+  <p class="p rise">隔壁，隐约传来 1610 开门又关上的声音。</p>
+  <p class="p rise">一墙之隔。</p>
+  <p class="p rise">手机又震了一下。</p>
+  <blockquote class="msg rise"><p>陆衡：房里温度可以调。有事发消息。</p><p>陆衡：以及——提拉米苏，可以再点一份送到房间。你刚才那口，吃得太小心了。</p></blockquote>
+  <p class="p rise">沈清然盯着最后一句，把屏幕按暗，又按亮，耳朵红了整整一路，红到浴室的灯打开为止。</p>
+  <p class="p rise">热水淋下来的时候，她才发觉，自己在笑——很轻，很羞，像做了什么不该被人知道的梦。</p>
+  <p class="p rise">而梦，显然还没有结束。</p>
+  <div class="sec-mark" id="ch1-sec4"><b>四<em>夜访</em></b></div>
+  <p class="p rise">十一点四十。</p>
+  <p class="p rise">沈清然换上带过来的浅粉睡裙，发梢还滴着水，坐在床沿把方案又翻了一遍。字在眼前过，意思却进不去。隔壁偶尔传来极轻的动静——水杯搁下，脚步走过，然后是长久的安静。</p>
+  <p class="p rise">她把手机电量看了三次：27%。充电线……她翻遍化妆包和电脑包，才想起来，那根线被她落在公司抽屉里了。</p>
+  <p class="p rise">几乎是本能地，她打开了和陆衡的对话框。打了半行「陆总，不好意思，请问您有没有」，又全删掉。再打：「我充电线忘带了，不知您方便——」</p>
+  <p class="p rise">发送键按下去的瞬间，她后悔了。</p>
+  <p class="p rise">不是后悔麻烦他，是后悔——自己其实有别的办法：可以打给前台，可以下楼去买。可她选了最危险的那一种：让他来到门前。</p>
+  <p class="p rise">回复快得不像刚准备睡的人。</p>
+  <blockquote class="msg rise"><p>陆衡：有。我送过去。</p></blockquote>
+  <p class="p rise">不到两分钟，门外两声不重不轻的叩击。</p>
+  <p class="p rise">沈清然深吸一口气，把门开了一条缝。陆衡仍穿着白衬衫，袖口却卷到小臂，领口那颗最上面的扣子解开了，露出一点锁骨的阴影。他手里只有一根原装线，没有多余的东西。</p>
+  <p class="p rise">「谢谢……」她伸手去接。</p>
+  <p class="p rise">指尖相触。</p>
+  <p class="p rise">那一点温热让她怔住。陆衡也没有立刻松手，只是低头看着她湿润的发、睡裙细细的肩带，以及因为紧张而微微发白的指节。</p>
+  <p class="p rise">「进风。」他声线很低，「我放进去就走。」</p>
+  <p class="p rise">沈清然侧身。门在身后合上时，发出很轻的一声。房间里只开着床头灯，光圈暖黄，把两人的影子叠在地毯上。</p>
+  <p class="p rise">充电线被放到书桌边缘。他却没有马上离开，目光落在摊开的方案上：「还在看？」</p>
+  <p class="p rise">「睡不着。」她老实地答，随即觉得这四个字太过坦白，耳根又红了，「可能是……换地方。」</p>
+  <p class="p rise">「也是雨。」陆衡说，「雨夜容易想不该想的事。」</p>
+  <p class="p rise">沈清然抬眼。</p>
+  <p class="p rise">那双眼睛比餐厅时更深。没有侵略的急躁，却有一种被耐心煮开的、绕不开的热。她想说「陆总我没有」，话却在喉咙里化开。空气里全是他身上未散的雪松味，混着她沐浴露残留的乳香，贴得太近。</p>
+  <p class="p rise">「沈清然。」他第一次叫她的全名，咬字很慢，「如果我现在走，明天我们还是甲方乙方。你点头，我立刻出去。」</p>
+  <p class="p rise">她的呼吸乱了。</p>
+  <p class="p rise">理智在喊：出差、客户、合同、组长的叮嘱。可身体更诚实——膝弯发软，指尖发麻，胸口那一点被他拂过肩的记忆，此刻烧成一整片。</p>
+  <p class="p rise">她没有点头。</p>
+  <p class="p rise">也没有说话。</p>
+  <p class="p rise">只是极其轻微地，摇了摇头。</p>
+  <p class="p rise">陆衡的喉结滚动了一下。他抬手，掌心贴上她的侧脸，拇指擦过她发热的耳垂，像在确认一件易碎的东西是否真实。</p>
+  <p class="p rise">「那就别怕。」他俯身，额头抵住她的额头，「怕的话，咬我。」</p>
+  <p class="p rise">吻落下时，沈清然的睫毛剧烈地颤。</p>
+  <p class="p rise">起初只是唇瓣相贴，干燥、克制，带着试探。她换气乱了半拍，牙齿轻轻磕到他，窘得想退。陆衡低笑一声，笑意震动传到她唇上，随即放慢，侧一点头，让她跟上。</p>
+  <p class="p rise">「生疏。」他问得很轻，不像嘲弄，像确认路况，「很久没这样？」</p>
+  <p class="p rise">沈清然的脸瞬间烧透。想装镇定，出口却是更细的：「……不太会。以前……也没人肯这么慢。」</p>
+  <p class="p rise">「嗯。」他应了一声，没有追问「以前」，只是更深地吻进来——舌尖顶开她微微发颤的齿关，缓慢地、彻底地卷进去，像把晚餐时那句「吃得太小心」一并吞掉。</p>
+  <p class="p rise">「唔……」</p>
+  <p class="p rise">细软的鼻音漏出来。她被亲得后退，小腿碰到床沿，整个人一晃。陆衡揽住她的腰，把她稳稳带进怀里，手掌宽热，隔着睡裙薄薄的布料，烫上她微微凹陷的腰线。</p>
+  <p class="p rise">吻从唇移到下颌，再到侧颈。他在她颈侧轻轻吮了一下，像盖章。沈清然仰起头，露出一截雪白的喉咙，眼睛蒙上水光，清纯里被情欲揉进第一丝狼狈。</p>
+  <p class="p rise">「陆总……」她唤他，声音软得不像讨价还价，「这样……是不是不太好。」</p>
+  <p class="p rise">「不好。」他承认，牙齿轻轻磕过她的锁骨，「所以更要认真一点。」</p>
+  <p class="p rise">睡裙肩带滑落半边。他没有立刻扯下，只是低头，隔着布料吻她胸前微微起伏的弧度。舌尖点过乳尖时，棉质被濡湿一小块，颜色变得更深。沈清然浑身一抖，手指插入他的发间，想推，推成了按——她甚至不知道该不该按，只是身体比脑子先做了选择。</p>
+  <p class="p rise">「敏感。」陆衡的呼吸也重了，「这里，平时也这么怕痒？」</p>
+  <p class="p rise">「别、别问……」她把脸别开，羞得眼角都红了，「很少……这样。以前都是……很快就结束，或者我自己先愣住。」</p>
+  <p class="p rise">他的动作明显顿住。</p>
+  <p class="p rise">抬起头时，那双眼睛里的暗色更深，却更稳：「清然。看着我。」</p>
+  <p class="p rise">她被迫对上他的视线。</p>
+  <p class="p rise">「所以你怕的不是发生。」他措辞很慢，给她留退路，「是怕发生完，自己又变成那个反应慢半拍、不知道算不算被当回事的人。」</p>
+  <p class="p rise">房间里只剩雨声和她的心跳。</p>
+  <p class="p rise">沈清然的嘴唇动了动。羞耻像潮水漫过头顶，可她想起他晚餐时说的那句「你慌的时候不会撒谎」。她不想在这种时候学会撒谎。</p>
+  <p class="p rise">「……对。」她闭了下眼，再睁开，眼尾湿着，「我涉世未深。不会玩，也不会装懂。如果你只是今晚想要个人，现在走也可以。我不会……不会怪你。我只是不想，明天还要笑着跟你谈方案的时候，自己先乱掉。」</p>
+  <p class="p rise">陆衡沉默了两秒。</p>
+  <p class="p rise">然后他做的第一件事，不是压下来，而是把滑落的肩带重新给她拉好——很轻，很郑重，像给一件易碎品重新封好包装。</p>
+  <p class="p rise">「介意。」他居然说，「我介意有人让你觉得亲密等于被赶进度。也介意——」他握着她的手，放到自己胸口，让她感觉那颗跳得并不慢的心，「你把信任交给一个雨夜里的客户。」</p>
+  <p class="p rise">「不是因为客户。」沈清然的声音发颤，却清楚，「是因为……你让我喝水。你让我别硬扛。你说我干净。我……想跟一个会把我当人看的人靠近。可以吗？」</p>
+  <p class="p rise">陆衡的呼吸乱了一拍。</p>
+  <p class="p rise">他低头，吻她的眉心、眼睫、鼻尖，最后才重新落到唇上。这一次的吻不再只是欲，还带着一种近乎承诺的缓慢。</p>
+  <p class="p rise">「可以。」他说，「但规则换一下。不舒服，就拍我。怕，就喊停。停了就真的停，明天早上我仍请你喝咖啡，方案仍按专业谈。听懂了吗？」</p>
+  <p class="p rise">「听懂了。」</p>
+  <p class="p rise">「还有——」他额头抵着她，「你生涩也好，慢半拍也好，都不用跟谁比。今晚的节奏，只以你为准。」</p>
+  <p class="p rise">沈清然点头，泪意却忽然涌上来。不是委屈，是被认真对待时，那种酸软的、想把整个人交出去的冲动。</p>
+  <div class="sec-mark" id="ch1-sec5"><b>五<em>雨声里</em></b></div>
+  <p class="p rise">他把她放倒在床上时动作并不粗暴，甚至垫了掌心护住她的后脑。床垫下陷，两人的重量叠在一起。台灯把她的皮肤照成温润的瓷色——肩、锁骨、睡裙堆起后露出的小腹，都干净得让人不敢太用力。</p>
+  <p class="p rise">陆衡解开自己剩余的扣子，一件件，不急。沈清然的目光无处安放，最后落在他小腹紧实的线条上，又慌忙闭上眼。</p>
+  <p class="p rise">「看着我。」他握住她的手腕，引她的手掌贴上自己的胸口，「不是客户。是想要你的人。也是——会负责把你平安送到早晨的人。」</p>
+  <p class="p rise">她睁开眼，眼尾湿润。那一点清纯被情欲浸泡后，反而更勾人——不是故意的媚，是诚实的不知所措。</p>
+  <p class="p rise">吻再次落下。这一次更深处，更缠。他的手从睡裙下摆探入，掌心贴着她光滑的大腿内侧向上，慢得像在丈量。触到棉质内裤边缘时，他停住，指腹只在那条细边上摩挲。</p>
+  <p class="p rise">「可以吗？」</p>
+  <p class="p rise">沈清然的大腿不自觉地夹紧，又在他耐心的等待里一点点松开。她把脸埋进他肩窝，声音细得像蚊呐：</p>
+  <p class="p rise">「……可以。你……慢一点就好。」</p>
+  <p class="p rise">布料被褪下时，凉意短暂爬上皮肤，随即被他的手掌取代。他先是安抚地抚摸她最柔软的外侧，再以指节极轻地分开，触到那一条已经湿润的缝。</p>
+  <p class="p rise">沈清然猛地吸气，腰肢弹起又落下——连她自己都惊讶，身体竟会比脑子更早说实话。</p>
+  <p class="p rise">「已经这样了。」陆衡的嗓音哑得厉害，像含着砂，「很好。身体比你诚实。」</p>
+  <p class="p rise">「你……讨厌，还讲这个。」她羞愤地咬了他肩膀一下——真的咬了，留下浅浅的齿痕。</p>
+  <p class="p rise">他倒抽一口气，却笑了：「记住了。这是你教我的。」</p>
+  <p class="p rise">指尖探入时很慢。她因紧张而绞得紧——内壁热而软，却像还在确认来人是否安全。他只进一个指节，便停住，拇指在上方那一点小小的核上画圈，耐心地等她适应。</p>
+  <p class="p rise">「不舒服吗？」</p>
+  <p class="p rise">「不、不是……」她仰起颈，发出断续的、压抑的呜咽，「是太清楚了。涨。又……又有点想让你再……」</p>
+  <p class="p rise">「再说一遍。」他吻她的眼尾，「想让我怎么样？」</p>
+  <p class="p rise">「再……深一点。」她把脸埋进枕头，耳尖红透，「求你了，别让我重复。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">第二指加入时，她真的叫了一声，又短又软，尾音发颤。陆衡没有趁乱加快，只用吻和另一只手去安抚她胸前、小腹，等绞紧的内壁重新变得柔软。水声在安静的房间里渐渐清晰，黏腻、羞耻、却诚实——那是她终于被允许把感觉走完，而不是中途被催着结束。</p>
+  <p class="p rise">他的手指屈起，按到某处时，她整个人痉挛般绷紧，足尖蜷起，睡裙皱成一团堆在乳下。</p>
+  <p class="p rise">「陆衡……」她第一次喊他的名，不带姓氏，「我……我好像……要……」</p>
+  <p class="p rise">「去。」他咬她的耳垂，指令一样温柔，「不用忍。我接着你。」</p>
+  <p class="p rise">高潮来得又急又羞。她像被从水面抛起来，眼前发白，腿根发抖，内里一阵阵绞紧他的手指。声音碎成泣音，手指死死抓着床单，指节发白。陆衡看着她失神的样子，眼睛里的暗色浓到化不开，却仍有耐心，等她一波一波地落回现实。</p>
+  <p class="p rise">她还在喘，他已撤出手指。指节上沾着透明的水光，他没有故意展示，只是抽了床头的纸巾，轻轻擦净，再俯身吻她汗湿的额发。</p>
+  <p class="p rise">「还要吗？」他问，「不要也成立。今晚到这里，我一样抱你睡。」</p>
+  <p class="p rise">沈清然的眼神涣散了两秒，才聚焦到他脸上。清纯被情欲浸泡过后，竟生出一种更危险的柔软。她点头，又觉得不够，便主动环上他的脖子，把滚烫的脸贴过去。</p>
+  <p class="p rise">「要……你。完整的。」她吸了吸鼻子，「别……别赶我。我反应慢，但我想跟完。」</p>
+  <p class="p rise">陆衡的呼吸乱了一拍。他把她抱得更紧，声音哑得厉害：「不赶。你交给我的每一点，我都当认真的。」</p>
+  <p class="p rise">他迅速处理掉剩余的障碍，从旅行洗漱包里取出安全套——动作坦荡，却在撕开前又问了一次：「套，可以？」</p>
+  <p class="p rise">「可以。」她努力把眼睛睁着，像在学着面对而不是躲开，「你……你来。」</p>
+  <p class="p rise">昂扬的性器抵上那处湿软时，两人都颤了一下。他没有立刻进入，只是用顶端前后磨蹭，把她的水液涂开，也把自己忍到额角青筋微显。沈清然紧张得脚趾都绷直，双手抓着他的小臂，像抓住唯一的岸。</p>
+  <p class="p rise">「不舒服就拍我。喊停就停。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">进入的瞬间，沈清然轻轻抽气。</p>
+  <p class="p rise">不是剧痛，是被填满的、清晰到近乎过分的胀。她下意识收紧，陆衡立刻停在半途，额头全是汗，一声都不催。</p>
+  <p class="p rise">「呼吸。」他吻她的眼角，「跟我。吸——呼。不急。」</p>
+  <p class="p rise">她点头，按他的节奏换气。涨意渐渐变成可承受的满，内里从戒备转为细细的接纳。她的指甲在他背上留下浅痕，过了好一会儿，才小小声说：</p>
+  <p class="p rise">「可以……再一点。」</p>
+  <p class="p rise">他进得很慢，一寸一寸，像把自己嵌进她愿意打开的深度。中途又停一次，用拇指去揉她上方那一点，用吻去接住她漏出的软音。直到完全没入，沈清然眼尾含着水光，却自己伸手抱住他的背。</p>
+  <p class="p rise">「……好满。」她哽着，「你别动。让我……再习惯一下。」</p>
+  <p class="p rise">「好。」陆衡的声音发颤，那是克制到极限的颤，「你夹得太紧。我怕弄疼你。」</p>
+  <p class="p rise">他们就那样嵌着，额头相抵，听雨，听彼此的心跳。不知过了多久，沈清然的腿根先放松了一点，内里也从死死绞紧，变成细细的、试探性的吮吸。</p>
+  <p class="p rise">「可以动了。」她说，「轻的。」</p>
+  <p class="p rise">他开始极小幅度地抽送。每一次退出都带出湿亮，每一次进入都只到她能承受的深。床架发出细微的响，雨声在窗外作掩护，肉体相撞的声音却越来越清晰，由涩转滑。</p>
+  <p class="p rise">「还好吗？」</p>
+  <p class="p rise">「涨……还在。」她老实得可怜，「可是……也有一点，想要你顶那里。」</p>
+  <p class="p rise">陆衡低咒一声，像被她的诚实击中。他调整角度，专去磨那处让她失神的点，幅度仍不算大，却准。沈清然起初还会咬唇忍声，后来被顶得说不出完整的句子，只能断续地「啊……慢、慢一点……」，而他会真的慢——慢，却更深、更缠。</p>
+  <p class="p rise">睡裙早被推到胸口以上，他含住一侧乳尖吸吮，手掌托着另一侧揉弄，身下却保持着耐心：不把她的生涩当成可乘之机，只当成需要被接住的诚实。汗水从他下颌滴到她锁骨，又滑进两乳之间。</p>
+  <p class="p rise">「清然。」他叫她，「看着我。谁在里面？」</p>
+  <p class="p rise">「陆……陆衡……」她被顶得声音发飘，泪和汗混在一起，「是你……今晚……是你……」</p>
+  <p class="p rise">「乖。」</p>
+  <p class="p rise">这个字让她小腹又是一紧。他察觉到，低笑，却没有立刻加快，而是问：「还要更密一点吗？」</p>
+  <p class="p rise">「要……」她带着一点哭腔点头，「可是你……你别太凶。」</p>
+  <p class="p rise">「不凶。」他吻她，「只更深地喜欢你。」</p>
+  <p class="p rise">节奏这才由缓到密。肉体拍击声变得清晰，结合处一片泥泞。沈清然的腿环上他的腰，脚跟扣着他紧绷的背肌，像漂在海上唯一的浮木。真正的高潮来得比手指那次更深，从被填满的最深处酸开，蔓延到指尖脚趾。她哭着喊他的名字，内壁剧烈收缩，把陆衡也绞得低吼出声。</p>
+  <p class="p rise">他抽动几下，埋到最深释放——隔着那一层薄薄的阻隔，热意仍烫得她轻哼，小腹微微痉挛，承受着每一阵脉动。两人交叠着喘息，汗水把床单沁出深色的痕迹。</p>
+  <p class="p rise">很久，他才退出。</p>
+  <p class="p rise">沈清然下意识并拢腿，又被他温柔地拢进怀里。灯下，她锁骨上的吻痕与凌乱的睡裙都像一场雨的证据。她羞得想用被子盖住脸，陆衡却先握住她的手。</p>
+  <p class="p rise">「别躲。」他吻她的后颈，声音低而稳，「很好看。是你愿意把节奏交给我的样子。我珍惜。」</p>
+  <p class="p rise">「……你别说了。」她闷声，鼻音还红着，「再说我会哭。」</p>
+  <p class="p rise">「哭也可以。」他把她整个人捞进怀里，「对你，我流氓得有限。今晚剩下的，都是温柔。」</p>
+  <div class="sec-mark" id="ch1-sec6"><b>六<em>水声</em></b></div>
+  <p class="p rise">他去浴室放热水，调到偏温的程度，又折回来——沈清然还侧躺着，睡裙歪在腰上，腿间的黏腻让她不敢轻易并拢。陆衡没让她自己走，直接用被子裹住她，横抱起来。</p>
+  <p class="p rise">「我可以自己——」</p>
+  <p class="p rise">「事后，不归你自己硬撑。」他语气平得像在布置会场，「你负责靠着。我负责洗干净。」</p>
+  <p class="p rise">浴缸里水汽氤氲。陆衡坐在她身后，让她靠进自己胸口，膝盖曲起，把她整个人圈在臂弯里。温水漫过小腹时，她轻轻嘶了一声——那里还残留着被打开的酸胀。</p>
+  <p class="p rise">「疼？」</p>
+  <p class="p rise">「酸。像……跑完很长的坡。」</p>
+  <p class="p rise">「那就泡着。」他拿过小毛巾，浸湿绞干，动作很慢地从她锁骨往下擦。经过胸口时，他刻意避开敏感，只做清洁；到了小腹，力道更轻。真正碰到腿心时，沈清然整个人一僵，双手抓住缸沿。</p>
+  <p class="p rise">「放松。只是洗。」他的嘴唇贴在她耳后，「酸的话跟我说，我轻一点。」</p>
+  <p class="p rise">毛巾极轻地覆上去，转圈，再换干净的一面。水被情潮留下的痕迹染得微浊，很快又被注入的净水冲淡。沈清然把脸埋进他小臂，羞得说不出话，却在某一刻忽然安静下来——原来「被珍惜」不是台词，是这种：连清洗都不肯弄疼你的仔细。</p>
+  <p class="p rise">「陆衡。」她小声叫他。</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「你以前……也这样对别人吗？」</p>
+  <p class="p rise">他擦手的动作顿了顿。「不。」很短的一个字，随后补完，「以前没有需要我这样慢的人。也没有——值得我把整晚都用来慢的人。」</p>
+  <p class="p rise">沈清然的心口像被热汤浇过。她转过身，跪在水里，平视他，水珠顺头发滴进肩窝。清纯还在，却多了一层被彻底打开后的软。</p>
+  <p class="p rise">「那我可以……亲你一下吗？不是你教的那种。是我想亲的。」</p>
+  <p class="p rise">陆衡眼底掠过笑意，抬了抬下巴：「批准。」</p>
+  <p class="p rise">她凑过去，只吻到他的唇角，浅浅的，像盖章。亲完自己先红了，又飞快退开，结果滑了一下——被他一把捞住，水花溅上瓷壁。</p>
+  <p class="p rise">「沈专员。」他哑声笑，「平衡感有待培训。」</p>
+  <p class="p rise">「……都怪浴缸。」</p>
+  <p class="p rise">「怪我。」他认领，低头在她眉心落下一吻，「怪我把你弄软了。」</p>
+  <p class="p rise">泡到手指微微发皱，他才放水，用浴巾把她整个人裹严实，抱回床上。床单已换过——不知他什么时候向客房服务要了备用（或许是进浴室前的电话，她迷迷糊糊没听见）。新的床单干净、微凉，被体温一点点捂热。</p>
+  <p class="p rise">「睡。」他替她吹干头发，动作生疏却认真，「明天九点。你至少要睡够四小时。」</p>
+  <p class="p rise">沈清然点头，眼皮却在黑里睁着。身体歇了，心里那根弦还没落回原位。她听着陆衡的呼吸渐渐平稳，忽然又轻轻喊：</p>
+  <p class="p rise">「你还在吗？」</p>
+  <p class="p rise">「在。」他收紧手臂，「一墙之隔变成零距离了。跑不了。」</p>
+  <p class="p rise">她「嗯」了一声，脚趾在他小腿上无了捏，像确认实物。安静了大约二十分钟，她又开口，声音细得像梦呓：</p>
+  <p class="p rise">「如果……我还想要呢？会不会太贪？」</p>
+  <p class="p rise">陆衡的呼吸明显乱了一拍。他撑起半身，借着窗边透进的城市光看她：眼睛亮着，唇瓣还肿着一点，锁骨上有他留下的浅痕——清纯与情欲叠在同一张脸上，比任何技巧都致命。</p>
+  <p class="p rise">「贪可以。」他拇指摩挲她的下唇，「但第二次更要听身体的话。还酸得厉害，就只抱着。想要，才准继续。成交？」</p>
+  <p class="p rise">「成交。」</p>
+  <div class="sec-mark" id="ch1-sec7"><b>七<em>第二次</em></b></div>
+  <p class="p rise">这一次少了试探的紧绷，却更缠。</p>
+  <p class="p rise">陆衡让她跨坐在自己腰上，只托着她的腰，不急着进入。「你主导。」他说，「多深、多快，你说了算。我的手只负责别让你跪不稳。」</p>
+  <p class="p rise">沈清然羞得想逃，却在他目光里慢慢沉下腰。抵上入口时，她自己先抖——那里仍残留着细细的酸意，却比刚才更懂迎接。她咬着唇，一点一点坐下去，每下一分就停一秒，像在把自己重新交给同一个人。</p>
+  <p class="p rise">「好吗？」他问，额角青筋又起，却纹丝不动。</p>
+  <p class="p rise">「满……」她扶着他的腹肌，声音发飘，「可是……不那么疼了。像……酸里的甜。」</p>
+  <p class="p rise">「那就自己动。」他引导她的髋，「前后，或转圈。找到你舒服的点。」</p>
+  <p class="p rise">她试着小幅度起伏，起初生涩得像学走路，后来在某一次角度里忽然「啊」出声，腰肢自己软下去。陆衡接住她，就着那个角度轻轻上送，幅度仍受控，却次次擦过让她眼尾发红的地方。</p>
+  <p class="p rise">水声不再，房间里只剩肉体细密的拍击、压抑的喘息，以及偶尔漏出的、带着哭腔的甜音。沈清然伏在他胸口，发丝扫过他下颌，自己把自己做到腿根发颤；他再翻身把她压回床里，从正面进入，更深，却仍问：</p>
+  <p class="p rise">「停，还是继续？」</p>
+  <p class="p rise">「继续……」她环住他的脖子，「你亲我。边……边做边亲。」</p>
+  <p class="p rise">他便边顶边吻，把所有呜咽都吞进唇齿之间。这一次的高潮来得绵长，像潮水一次次漫过沙岸，她绞紧他时，他低喘着退出，摘掉套，射在她小腹上——白浊淋上微微起伏的皮肤，他用指腹抹开一点，又立刻用纸巾擦净，像不愿让她带着凉意入睡。</p>
+  <p class="p rise">「为什么……不在里面？」她喘息着问，眼神还有点空。</p>
+  <p class="p rise">「今晚已经够了。」他吻她的眼皮，「里面要休息。你明天还要站在会议室里，声音不能哑，腿也不能软到走不稳。」</p>
+  <p class="p rise">「……你还想着开会。」</p>
+  <p class="p rise">「想着你。」他纠正，「开会只是你的战场。我负责让你带着完整的自己去。」</p>
+  <p class="p rise">沈清然盯着他看了很久，忽然把脸埋进他颈窝，肩膀轻轻抖——是笑，也是哭。</p>
+  <p class="p rise">「陆衡，你好过分。」</p>
+  <p class="p rise">「哪过分？」</p>
+  <p class="p rise">「过分到……让我觉得，亏一次爱，好像也值。」</p>
+  <p class="p rise">他沉默片刻，把她搂得更紧，紧到肋骨相抵。</p>
+  <p class="p rise">「不是亏。」他一字一顿，「是存。存在我这儿。以后慢慢取。」</p>
+  <p class="p rise">窗外雨小了。城市的光透过纱帘，落在交叠的身体上，像一层薄金。这一次，他们真的睡了过去——手指仍扣着，像怕梦把人拆走。</p>
+  <div class="sec-mark" id="ch1-sec8"><b>八<em>清晨</em></b></div>
+  <p class="p rise">五点五十。雨停了。</p>
+  <p class="p rise">沈清然比闹钟先醒。腰酸得明显，腿心残留的胀意提醒她昨夜不是梦；小腹干净，床单干净，空气里却还留着雪松与情欲混合后的淡味。她小心动了动，男人的手臂立刻收紧，下巴搁上她的发顶。</p>
+  <p class="p rise">「再睡四十分钟。」他声音沙哑，「闹钟我定了七点。早餐我让人送到 1608——你的房间。我会先回 1610 换衣服，大堂见。看起来，要像什么都没发生。」</p>
+  <p class="p rise">沈清然「嗯」了一声，又忍不住问：「你会后悔吗？」</p>
+  <p class="p rise">陆衡睁开眼。晨光里他眼底还有血丝，神情却清亮。</p>
+  <p class="p rise">「后悔没更早把你从视频里捞出来。」他答，「不后悔昨夜。更不后悔你肯把节奏交给我。」</p>
+  <p class="p rise">她耳根又热了，把脸埋进他胸口：「那会上……你还刁难我吗？」</p>
+  <p class="p rise">「刁难技术，不刁难你。」他揉她的后颈，「激进版排期，我昨晚——你进浴室第一次时——看过。很好。有两个点他们会攻，我列在你手机备忘录了。你打开就能用。」</p>
+  <p class="p rise">「你什么时候——」</p>
+  <p class="p rise">「职业病。」他理直气壮，「也是想多了解你一点。包括你的方案，包括你睡着时会不会蹭人。」</p>
+  <p class="p rise">沈清然气鼓鼓地锤他一下，力道软得像撒娇。锤完又想起什么，声音低下去：</p>
+  <p class="p rise">「陆衡，我们算什么？别用『雨夜先欠着』糊弄我。我……我可以接受慢，但我想知道方向。」</p>
+  <p class="p rise">他看了她很久。</p>
+  <p class="p rise">然后他拿过她的手机，在备注里把自己的名字从「陆总-客户」改成「陆衡」，保存，再把手机放回她掌心。</p>
+  <p class="p rise">「方向是这个。」他说，「沈清然，做我女朋友。不是甲方的附属条款，是我想每天给你发消息、改同一班飞机、把你送到家楼下再走的那种。用你诚实的点头。」</p>
+  <p class="p rise">窗外有鸟叫。房间里还残留着情欲与沐浴露混合的气味，以及一种更干净的东西——像雨后的天空。</p>
+  <p class="p rise">她看了他很久——看那张在会议里难搞、在夜里却肯为她一次次停下来的脸。</p>
+  <p class="p rise">然后，她点了头。</p>
+  <p class="p rise">像昨夜门边那次一样轻，却比任何合同都更确定。</p>
+  <p class="p rise">七点整，闹钟响。</p>
+  <p class="p rise">陆衡替她按掉，在她唇上极快地啄了一下，低声：「十分钟后我走。你化妆慢一点也没关系——你素颜开会，我也认。」</p>
+  <p class="p rise">「不许。」她把被子拉到鼻尖，只露出一双还带着水意的眼睛，「要专业。」</p>
+  <p class="p rise">「好。专业。」他边穿衬衫边笑，扣子一颗颗扣回去，又变回那个领口一丝不苟的陆总。走到门口时，他回头：</p>
+  <p class="p rise">「沈小姐，会议室见。」</p>
+  <p class="p rise">「陆总，」她坐在床沿，睡裙肩带端正，声音轻而稳，「方案——我会讲完。」</p>
+  <p class="p rise">门轻轻合上。</p>
+  <p class="p rise">一墙之隔重新成立，却再也隔不开什么。</p>
+  <p class="p rise">沈清然低头，看见自己锁骨下一小点藏不住的红，便翻出遮瑕，一点点按上去。按着按着，嘴角却自己弯起来。</p>
+  <p class="p rise">手机震了。</p>
+  <blockquote class="msg rise"><p>陆衡：咖啡要热的。糖少。提拉米苏——今天中午再点。你不用吃得那么小心了。</p><p>陆衡：以及，女朋友，早安。</p></blockquote>
+  <p class="p rise">她盯着「女朋友」三个字，把屏幕按在心口，听了好一会儿自己的心跳，才回复：</p>
+  <blockquote class="msg rise"><p>沈清然：早安。</p><p>沈清然：陆衡，昨夜……谢谢你肯停。</p></blockquote>
+  <p class="p rise">对面几乎秒回：</p>
+  <blockquote class="msg rise"><p>陆衡：该道谢的是我。</p><p>陆衡：开会时看我，别看地板。你比你以为的更站得住。</p></blockquote>
+  <p class="p rise">沈清然深吸一口气，拉开窗帘。H 市的晨光干净，雨后的街道反着浅光。她打开方案，备忘录里果然躺着两行简洁的攻防提示，末尾多了一句——</p>
+  <p class="p rise">「讲完后，我请你吃真正的午饭。不是工作餐。——L」</p>
+  <p class="p rise">她把发夹别好，白衬衫扣到合适的位置，镜子里的人仍眉眼清纯，只是眼神里多了一点被世界打开后的亮。</p>
+  <p class="p rise">第一次单独出差。</p>
+  <p class="p rise">第一次把心——连同那些涉世未深的慢与笨——一并交给同一个人。</p>
+  <p class="p rise">而故事，显然不会停在这一夜。</p>
+</section>
+<div class="ch-end"></div>
+</main>
+
+<footer>
+  出差 · 短篇<br>  <a href="index.html">← 返回书架</a>
+</footer>
+
+<button id="top" aria-label="回到顶部">↑</button>
+<noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
+#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
+<script>
+var TK='xhw-theme';
+var root=document.documentElement;
+function readTheme(){
+  try{ var v=localStorage.getItem(TK); if(v) return v; }catch(e){}
+  return matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+}
+function paintTheme(t){
+  root.dataset.theme=t;
+  var b=document.getElementById('theme');
+  if(b) b.textContent=(t==='night'?'日间':'夜间');
+}
+paintTheme(readTheme());
+function toggleTheme(){
+  var t=root.dataset.theme==='night'?'day':'night';
+  try{ localStorage.setItem(TK,t); }catch(e){}
+  // 支持时用 View Transitions 做交叉淡化
+  if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.startViewTransition(function(){ paintTheme(t); });
+  }else{ paintTheme(t); }
+}
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
+var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+  if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
+    return showAll;
+  }
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
+})();
+
+(function(){
+  // 关掉浏览器自带的滚动位置恢复，避免和下面按「章号+比例」算出的位置打架
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  var PK='xhw-pos-'+document.body.dataset.book;
+  var tools=document.getElementById('tools'), toc=document.getElementById('toc'),
+      scrim=document.getElementById('scrim'), bar=document.getElementById('bar'),
+      now=document.getElementById('now'), top=document.getElementById('top'),
+      cover=document.getElementById('cover');
+  var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
+  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var wide=function(){return window.innerWidth>=1080};
+  var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- 偏好
+  var st={scale:1,ch:null,ratio:0};
+  try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
+  var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
+  applyScale();
+
+  document.getElementById('theme').onclick=toggleTheme;
+  var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
+  var paintFont=function(){
+    var i=STEPS.indexOf(st.scale); fontBtn.textContent='字号 '+((i<0?1:i+1))+'/'+STEPS.length;
+  };
+  paintFont();
+  fontBtn.onclick=function(){
+    var i=STEPS.indexOf(st.scale); st.scale=STEPS[(i<0?1:i+1)%STEPS.length];
+    applyScale(); paintFont(); save();
+  };
+
+  // ---- 目录
+  function setToc(open){
+    toc.classList.toggle('open',open);
+    if(wide()){
+      toc.classList.toggle('hidden',!open);
+      document.documentElement.dataset.toc=open?'on':'off';
+      scrim.classList.remove('on');
+    }else{
+      scrim.classList.toggle('on',open);
+      document.documentElement.dataset.toc='off';
+    }
+  }
+  document.getElementById('menu').onclick=function(){ setToc(!toc.classList.contains('open')); };
+  scrim.onclick=function(){ setToc(false); };
+  toc.addEventListener('click',function(e){ if(e.target.closest('a')&&!wide()) setToc(false); });
+  setToc(wide());
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!wide()) setToc(false);
+  });
+
+  // ---- 入场动画
+  reveal(document.querySelectorAll('.rise,.ch-head,.sec-mark'));
+
+  // ---- 进度 / 当前章 / 封面视差
+  var cur=-1, raf=0, vh=innerHeight;
+  function tick(){
+    raf=0;
+    var y=window.scrollY, h=document.body.scrollHeight-vh;
+    bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
+    tools.classList.toggle('lifted',y>vh*.55);
+    top.classList.toggle('on',y>vh*1.2);
+
+    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
+    if(cover && !calm){
+      if(y<vh){
+        var k=y/vh;
+        cover.style.transform='translateY('+(y*.28)+'px)';
+        cover.style.opacity=String(Math.max(0,1-k*1.35));
+      }else if(cover.style.opacity!=='0'){
+        cover.style.opacity='0';
+      }
+    }
+
+    var probe=y+vh*.3, idx=-1;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].offsetTop<=probe) idx=i;
+    if(idx!==cur){
+      cur=idx;
+      var c=chapters[idx];
+      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
+      var curAnchor=c?c.dataset.anchor:null;
+      links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
+      if(c){
+        var vol=c.dataset.volume;
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+      }else{ now.textContent=''; }
+    }
+    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
+    if(idx>=0){
+      var chTop=chapters[idx].offsetTop;
+      var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
+      st.ch=chapters[idx].dataset.anchor;
+      st.ratio=Math.min(1,Math.max(0,(y-chTop)/Math.max(1,chBottom-chTop)));
+    }
+  }
+  var onScroll=function(){ if(!raf) raf=requestAnimationFrame(tick); };
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',function(){
+    vh=innerHeight;
+    setToc(wide()?!toc.classList.contains('hidden'):false);
+    onScroll();
+  });
+
+  top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
+
+  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
+  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
+  // 变成平滑滚过全书，恢复前临时关掉。
+  if(st.ch!=null && !location.hash){
+    var target=null;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    if(target){
+      var restore=function(){
+        var chTop=target.offsetTop;
+        var chBottom=(chapters.indexOf(target)+1<chapters.length)
+          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var prevBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        scrollTo(0, chTop+st.ratio*(chBottom-chTop));
+        document.documentElement.style.scrollBehavior=prevBehavior;
+        tick();
+      };
+      addEventListener('load',restore);
+      setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  }
+  tick();
+  addEventListener('beforeunload',save);
+  addEventListener('pagehide',save);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') save();
+  });
+  setInterval(save,4000);
+
+  // ---- 左右方向键翻章
+  document.addEventListener('keydown',function(e){
+    if(e.target.closest('input,textarea')) return;
+    var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
+    if(!d) return;
+    var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
+    chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

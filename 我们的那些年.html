@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-toc="off"
+      style="--accent:#5a6b7d;--accent-lit:#7e8c9a">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#5a6b7d">
+<meta name="description" content="同学会把未竟的孽缘拽回眼前：牧宁越要一个答案，顾裴江要一次被允许的靠近——他们先把身体谈妥，再敢谈心。">
+<meta property="og:title" content="我们的那些年 · 重写 · 续写稿">
+<meta property="og:description" content="同学会把未竟的孽缘拽回眼前：牧宁越要一个答案，顾裴江要一次被允许的靠近——他们先把身体谈妥，再敢谈心。">
+<meta property="og:type" content="book">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiM1YTZiN2QiLz48L3N2Zz4=">
+<title>我们的那些年 · 重写 · 续写稿</title>
+<script data-book="我们的那些年">(function(){
+var r=document.documentElement, book=document.currentScript.dataset.book;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+try{
+  var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
+  if(st.scale) r.style.setProperty('--font-scale',st.scale);
+}catch(e){}
+if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
+})();</script>
+<style>
+:root{
+  --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
+  --ink-faint:#a89e94; --rule:#ddd5c8;
+  --accent:#8c6f4a; --accent-lit:#8c6f4a;
+  --shadow:0 1px 2px rgba(43,39,36,.04),0 8px 24px -12px rgba(43,39,36,.14);
+  --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
+  --font-scale:1;
+  --ease:cubic-bezier(.4,0,.2,1);
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
+         -apple-system,"Segoe UI",sans-serif;
+}
+html[data-theme=night]{
+  --bg:#16181a; --bg-elev:#1e2124; --ink:#cfc9c0; --ink-soft:#948d84;
+  --ink-faint:#645d55; --rule:#2e3236;
+  --accent:var(--accent-lit);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
+}
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* 通用入场：加 .rise 的元素初始下沉透明，进入视口时由 JS 挂 .in */
+.rise{opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+.tbtn{border:0;background:none;color:var(--ink-soft);font-family:var(--sans);font-size:13px;
+  cursor:pointer;padding:7px 10px;border-radius:6px;line-height:1;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+.tbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.tbtn:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .rise{opacity:1!important;transform:none!important}
+}
+
+/* 顶部进度条 */
+#bar{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 55%,transparent),var(--accent));
+  transition:width .12s linear}
+
+/* 工具条 */
+#tools{position:fixed;top:0;right:0;left:0;height:46px;z-index:50;display:flex;
+  align-items:center;gap:2px;padding:0 12px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid transparent;
+  transition:border-color .4s var(--ease),background .4s var(--ease)}
+#tools.lifted{border-bottom-color:var(--rule)}
+#tools .now{flex:1;min-width:0;font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transform:translateY(3px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#tools.lifted .now{opacity:1;transform:none}
+#back{font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);text-decoration:none;
+  padding:7px 10px;border-radius:6px;white-space:nowrap;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+#back:hover{color:var(--accent);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+
+/* 侧栏目录 */
+#toc{position:fixed;top:0;left:0;bottom:0;width:238px;z-index:55;padding:58px 0 24px;
+  background:var(--bg-elev);border-right:1px solid var(--rule);overflow-y:auto;
+  transform:translateX(-100%);transition:transform .38s var(--ease)}
+#toc.open{transform:none}
+#toc h3{margin:0 0 10px;padding:0 22px;font-family:var(--sans);font-size:11px;
+  letter-spacing:.22em;color:var(--ink-faint);font-weight:400}
+#toc a{display:block;padding:9px 22px;color:var(--ink-soft);text-decoration:none;
+  font-family:var(--sans);font-size:13.5px;letter-spacing:.03em;
+  border-left:2px solid transparent;
+  transition:color .25s var(--ease),border-color .25s var(--ease),
+             background .25s var(--ease),padding-left .25s var(--ease)}
+#toc a:hover{color:var(--ink);padding-left:26px}
+#toc a.on{color:var(--accent);border-left-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent)}
+#toc a i{font-style:normal;color:var(--ink-faint);font-size:11.5px;margin-right:8px;
+  font-variant-numeric:tabular-nums}
+#toc a.on i{color:var(--accent)}
+/* 带小标题的分节符生成的二级目录项：单章多分节（如出差）时给出导航 */
+#toc a.sub-toc{padding:6px 22px 6px 40px;font-size:12px;color:var(--ink-faint)}
+#toc a.sub-toc:hover{padding-left:44px}
+/* 分卷书的卷标题：只在 章节/卷X/ 结构下出现 */
+.toc-vol{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.75}
+.toc-vol:first-child{margin-top:0}
+/* 抽屉打开时条目阶梯淡入 */
+#toc.open a{animation:tocIn .42s var(--ease) both;animation-delay:var(--d)}
+@keyframes tocIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+#scrim{position:fixed;inset:0;z-index:54;background:rgba(0,0,0,.34);opacity:0;
+  pointer-events:none;transition:opacity .38s var(--ease);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#scrim.on{opacity:1;pointer-events:auto}
+
+/* 封面 */
+#cover{min-height:100svh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:60px 24px;
+  transition:padding-left .38s var(--ease)}
+#cover>*{will-change:transform,opacity}
+#cover .rule{width:1px;height:56px;
+  background:linear-gradient(var(--rule),color-mix(in srgb,var(--accent) 40%,transparent));
+  animation:dropIn .9s var(--ease) both}
+#cover h1{margin:26px 0 0;font-size:clamp(52px,15vw,86px);font-weight:400;
+  letter-spacing:.3em;text-indent:.3em;line-height:1.15;
+  animation:titleIn 1.1s var(--ease) .1s both}
+#cover .sub{margin-top:16px;font-family:var(--sans);font-size:12px;letter-spacing:.42em;
+  text-indent:.42em;color:var(--ink-faint);animation:fadeUp .9s var(--ease) .34s both}
+#cover .epi{margin-top:46px;font-size:15px;line-height:2.1;color:var(--ink-soft);
+  letter-spacing:.06em;animation:fadeUp .9s var(--ease) .5s both}
+#cover .meta{margin-top:52px;font-family:var(--sans);font-size:11.5px;letter-spacing:.16em;
+  color:var(--ink-faint);animation:fadeUp .9s var(--ease) .64s both}
+#cover .go{margin-top:34px;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.2em;color:var(--ink-soft);
+  text-decoration:none;padding:12px 28px;border:1px solid var(--rule);border-radius:2px;
+  animation:fadeUp .9s var(--ease) .78s both;
+  transition:color .3s var(--ease),border-color .3s var(--ease),gap .3s var(--ease)}
+#cover .go:hover{color:var(--accent);border-color:var(--accent);gap:14px}
+#cover .go span{transition:transform .3s var(--ease)}
+#cover .go:hover span{transform:translateX(2px)}
+@keyframes titleIn{from{opacity:0;transform:translateY(20px);letter-spacing:.52em}
+  to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dropIn{from{opacity:0;transform:scaleY(0);transform-origin:top}
+  to{opacity:1;transform:none}}
+
+/* 正文 */
+main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
+  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em;
+  /* 避头尾：不让逗号句号右括号落在行首。中文长文必需，浏览器默认的 auto 较宽松 */
+  line-break:strict;word-break:normal;overflow-wrap:break-word}
+.chapter{padding-top:14vh}
+.ch-head{margin-bottom:9vh;text-align:center}
+.ch-num{font-family:var(--sans);font-size:11.5px;letter-spacing:.34em;text-indent:.34em;
+  color:var(--accent);opacity:.85}
+.ch-title{margin:14px 0 0;font-size:1.5em;font-weight:400;letter-spacing:.12em;
+  text-indent:.12em}
+.ch-line{width:26px;height:1px;background:var(--rule);margin:26px auto 0;
+  transform:scaleX(0);transition:transform .8s var(--ease) .2s}
+.ch-head.in .ch-line{transform:none}
+/* hanging-punctuation 目前基本只有 Safari 生效，text-wrap:pretty 主要 Chromium 生效；
+   两者都是渐进增强，不支持的浏览器忽略即可，无副作用 */
+.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end;
+  text-wrap:pretty}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic;color:var(--ink-soft)}
+
+/* 分节符 */
+.sec-mark{display:flex;align-items:center;gap:18px;margin:3.2em 0 2.4em;color:var(--accent)}
+.sec-mark::before,.sec-mark::after{content:"";flex:1;height:1px;background:var(--rule);
+  transform:scaleX(0);transition:transform .9s var(--ease)}
+.sec-mark::before{transform-origin:right}
+.sec-mark::after{transform-origin:left}
+.sec-mark.in::before,.sec-mark.in::after{transform:none}
+.sec-mark b{font-weight:400;font-size:1em;line-height:1;letter-spacing:.2em;
+  text-indent:.2em;opacity:.9;white-space:nowrap}
+.sec-mark b em{font-style:normal;color:var(--ink-soft);font-size:.86em;
+  letter-spacing:.1em;margin-left:.7em}
+/* 章首第一个分节符紧贴标题，省掉横线（隐藏后需自行居中） */
+.ch-head + .sec-mark{margin-top:0;justify-content:center}
+.ch-head + .sec-mark::before,.ch-head + .sec-mark::after{display:none}
+
+/* 手机消息 */
+.msg{margin:1.9em 0;padding:14px 18px;border-radius:3px 12px 12px 12px;
+  background:var(--bg-elev);border:1px solid var(--rule);
+  border-left:2px solid color-mix(in srgb,var(--accent) 60%,transparent);
+  box-shadow:var(--shadow)}
+.msg p{margin:0 0 .5em;font-family:var(--sans);font-size:.88em;line-height:1.85;
+  color:var(--ink-soft);text-indent:0}
+.msg p:last-child{margin-bottom:0}
+
+.end-mark{margin:4em 0 0;text-align:center;font-family:var(--sans);font-size:.8em;
+  letter-spacing:.22em;color:var(--ink-faint);text-indent:0}
+.ch-end{width:34px;height:1px;background:var(--rule);margin:4.5em auto 0}
+
+.ch-nav{max-width:34em;margin:2.4em auto 0;padding:0 26px;display:flex;
+  justify-content:space-between;gap:16px;font-family:var(--sans);font-size:12.5px;
+  letter-spacing:.05em;color:var(--ink-faint)}
+.ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+.ch-nav a:hover{color:var(--accent)}
+.ch-nav a:last-child{text-align:right}
+
+footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--ink-faint);
+  line-height:2.4}
+footer a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+footer a:hover{color:var(--accent)}
+
+/* 回顶 */
+#top{position:fixed;right:20px;bottom:24px;z-index:40;width:38px;height:38px;
+  border-radius:50%;background:var(--bg-elev);color:var(--ink-soft);
+  border:1px solid var(--rule);cursor:pointer;font-size:14px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease),color .25s var(--ease)}
+#top.on{opacity:1;transform:none;pointer-events:auto}
+#top:hover{color:var(--accent);transform:translateY(-2px)}
+
+@media (min-width:1080px){
+  #toc{transform:none;background:transparent;border-right:0}
+  #toc.hidden{transform:translateX(-100%)}
+  #scrim{display:none}
+  /* 侧栏常驻时整页让开：用 body 内缩而非 main 的 padding，
+     因为 main 是 border-box，加内边距会压缩字栏宽度 */
+  html[data-toc=on] body{padding-left:238px}
+  html[data-toc=on] #tools{left:238px}
+}
+@media (max-width:600px){
+  main{font-size:calc(17px * var(--font-scale));line-height:1.98;padding:0 20px 30vh}
+  .chapter{padding-top:9vh}
+  .ch-head{margin-bottom:6.5vh}
+  #cover h1{letter-spacing:.22em;text-indent:.22em}
+  #toc{width:76vw;padding-top:66px}
+  #top{right:14px;bottom:18px}
+  .ch-nav{padding:0 20px;font-size:12px}
+}
+@media print{
+  #tools,#toc,#scrim,#bar,#top,#cover .go,#back,.ch-nav{display:none}
+  body{background:#fff;color:#000;padding-left:0!important}
+  /* 首章紧跟封面，不需要再分页——否则会多出一张空白页 */
+  .chapter{page-break-before:always;padding-top:0}
+  .chapter:first-of-type{page-break-before:avoid}
+  .rise{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body data-book="我们的那些年">
+<div id="bar"></div>
+
+<nav id="tools">
+  <a id="back" href="index.html">← 书架</a>
+  <button class="tbtn" id="menu" aria-label="目录">目录</button>
+  <span class="now" id="now"></span>
+  <button class="tbtn" id="font" aria-label="调整字号">字号</button>
+  <button class="tbtn" id="theme" aria-label="切换日间夜间">夜间</button>
+</nav>
+
+<div id="scrim"></div>
+<aside id="toc" aria-label="章节目录">
+  <h3>目 录</h3>
+    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>同学会与未接来电</a>
+    <a href="#ch2" data-ch="ch2" style="--d:26ms"><i>02</i>旧时与酒后</a>
+    <a href="#ch3" data-ch="ch3" style="--d:52ms"><i>03</i>东郊与告别</a>
+    <a href="#ch4" data-ch="ch4" style="--d:78ms"><i>04</i>签售会后</a>
+    <a href="#ch5" data-ch="ch5" style="--d:104ms"><i>05</i>可以不是兄弟</a>
+    <a href="#ch6" data-ch="ch6" style="--d:130ms"><i>06</i>开门的人</a>
+    <a href="#ch7" data-ch="ch7" style="--d:156ms"><i>07</i>父亲的棋</a>
+    <a href="#ch8" data-ch="ch8" style="--d:182ms"><i>08</i>那些年补完</a>
+    <a href="#ch9" data-ch="ch9" style="--d:208ms"><i>09</i>敢要</a>
+    <a href="#ch10" data-ch="ch10" style="--d:234ms"><i>10</i>我们的现在</a>
+</aside>
+
+<header id="cover">
+  <div class="rule"></div>
+  <h1>我们的那些年</h1>
+  <div class="sub">重写 · 续写稿</div>
+  <p class="epi">那些年没说出口的，<br>后来都得用一生来还。</p>
+  <div class="meta">全 10 章 · 约 3.1 万字</div>
+  <a class="go" href="#ch1">开始阅读 <span>→</span></a>
+</header>
+
+<main>
+<section class="chapter" id="ch1" data-num="1" data-title="同学会与未接来电" data-anchor="ch1" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 1 章</div>
+    <h2 class="ch-title">同学会与未接来电</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p">记忆这东西很贱。</p>
+  <p class="p">早该烂掉的画面，偏要在某个气味、某阵风、某通电话里重新长出血肉。牧宁越有时觉得自己像被谁按了播放键：教室、口音、巧克力的锡纸、东郊那扇门——帧帧清晰，清晰到他想吐。</p>
+  <p class="p">D 市入冬狠。商务楼连吸烟室都抠门，他只能顶着刀子似的风下楼，躲进垃圾筒侧面那一小块避风角，打火，深吸。</p>
+  <p class="p">烟不是瘾。是最近那通电话。</p>
+  <p class="p">庄晏艾两天前从国外飞回来，约老同学聚一聚。局本身不稀奇——喝酒、吹牛、互换名片，生意场上的润滑剂，他应付得来。烦的是名字。名字一响，整条神经都跟着抽。</p>
+  <p class="p rise">顾裴江。</p>
+  <p class="p rise">孽缘。一开始不待见，后来拼了命想贴上去，结果人家不稀罕。</p>
+  <p class="p rise">「妈的。」他对着白烟骂了一句，「真犯贱。」</p>
+  <p class="p rise">烟尽。捻灭，扔进桶里，搓着手回楼。助理小刘在电梯口堵他，文件一叠，口述两分钟，他扫一眼，签字，笔锋利落。</p>
+  <p class="p rise">小刘要走，他叫住：「车洗一下。今晚要用。」</p>
+  <p class="p rise">小刘一顿，点头：「明白。」</p>
+  <p class="p rise">跟了这么久，都懂：boss 洗车，多半不是天气，是「事」。哪怕外面下刀子。</p>
+  <p class="p rise">办公室门一关，牧宁越才发现烟走得太急，手机落在桌上。屏幕亮着，庄晏艾的名字弹跳。</p>
+  <p class="p rise">「喂。」</p>
+  <p class="p rise">「哟，牧总。」那边懒洋洋的，「有空谈点私事吗？」</p>
+  <p class="p rise">「说。」</p>
+  <p class="p rise">庄晏艾也不绕：「你……多久没见顾裴江了？」</p>
+  <p class="p rise">牧宁越指尖一紧。早知道这孙子要刨，没想到第一刀就奔咽喉。</p>
+  <p class="p rise">「挺久。」他含糊，「记不清。」</p>
+  <p class="p rise">静了两秒。</p>
+  <p class="p rise">「我昨天见到他。」</p>
+  <p class="p rise">「D 市这么大。」牧宁越笑了一声，干的，「缘分啊。」</p>
+  <p class="p rise">「少来。他问起你，我才知道你俩掰了。」</p>
+  <p class="p rise">「打住。」牧宁越打断，声音陡然硬，「我俩就没开始过。」</p>
+  <p class="p rise">「那同学会也不必叫他？」庄晏艾往盐里又搓一把，「你这意思？」</p>
+  <p class="p rise">牧宁越盯着窗外灰白的天际线。玻璃映出自己——风衣、发型、体面。</p>
+  <p class="p rise">「你的事。」他说，「我不管。」</p>
+  <p class="p rise">「行。」庄晏艾立刻恢复那种欠揍的轻快，「地方订好了，定位待会发你。准时。」</p>
+  <p class="p rise">电话挂断。牧宁越把手机扣在桌上，像扣住什么会咬人的东西。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">晚八点。风抽人脸。</p>
+  <p class="p rise">他一向靠名牌风衣硬扛几步路的距离，车、门、空调，闭环完美。今天却在地下停车场里发动了车子，迟迟不走。助理备的咖啡捧在手里，一口口喝，等暖风把方向盘捂热。</p>
+  <p class="p rise">导航定位设好。通知栏却多了一行：未接来电。</p>
+  <p class="p rise">没有备注。号码他能倒背。</p>
+  <p class="p rise">顾裴江。</p>
+  <p class="p rise">拇指悬在回拨上方，停了三秒，像停在悬崖边。</p>
+  <p class="p rise">他锁屏。档挂 D。车滑出地库，尾灯吞进夜色。</p>
+  <p class="p rise">装作没看见。这是他这些年最熟练的技能之一。</p>
+  <p class="p rise">庄晏艾订的私房菜藏得深，装修却奢。牧宁越在 D 市混了这些年，竟头一回听说这地儿——不得不服，这孙子人脉脏归脏，好用。</p>
+  <p class="p rise">人不多。多是酒桌上见过的熟脸。唯一扎眼的是个从 Z 城赶来的女同学，眉眼有几分眼熟，名字卡在喉咙里出不来。男多女少，她自然受捧，一落座就挨着牧宁越，目光带着点毫不掩饰的打量。</p>
+  <p class="p rise">他这些年健身，肩背撑得开，风衣一脱更明显。暧昧不必说破，空气里自己会发酵。</p>
+  <p class="p rise">「牧大班长。」她笑嘻嘻，「都不认得我了吧？」</p>
+  <p class="p rise">「漂亮太多，不敢认。」场面话出口比脑子快。</p>
+  <p class="p rise">她捶他一下，力道轻得像调情：「不为难你——我是方霖。」</p>
+  <p class="p rise">方霖。</p>
+  <p class="p rise">名字一落地，旧画面跟着砸下来：转校生、口音、女生们交头接耳的嫌弃；后来好像还有人堵过顾家的门告白。再往后呢？他记不清。只记得那时自己也没多好心，不过是老师按头「帮扶」。</p>
+  <p class="p rise">方霖端杯挨个敬，像这场局是她开的。庄晏艾脸色沉了半寸。等酒敬到他面前，感谢「把老同学聚起来」时，他端杯又放下。</p>
+  <p class="p rise">「谢就不必。」庄晏艾站起来，声线仍懒，话却钉死场面，「我难得回国。大家给我面子。今天吃好玩好——我结账。」</p>
+  <p class="p rise">牧宁越立刻举杯接戏：喜迎回归、夸人脉、夸选址。两人一唱一和，把方霖的风头削得干干净净。在座都是成年人，没人会为远道而来的女同学，不给东道主留台阶。</p>
+  <p class="p rise">有人问庄晏艾待多久。他笑眯眯抛出官方版本：帮 Y 国某作家出译本，作家邀他同赴 L 国签售。牧宁越听着就知道——至少一半是烟雾。偏有做传媒的同学当真，想约采访。庄晏艾不拒不承：「我帮你问经纪人。」</p>
+  <p class="p rise">席间热。互换资源、试探深浅，人人都是精。牧宁越笑得得体，酒却喝得比平时凶。杯沿一碰，脑子里就闪那个未接来电——亮着，像一枚没拆的雷。</p>
+  <p class="p rise">方霖又侧过头，声音软：「班长现在在 D 市做什么？看起来很成功。」</p>
+  <p class="p rise">「广告。」他简短。</p>
+  <p class="p rise">「顾裴江呢？」她忽然问，「你们不是以前——」</p>
+  <p class="p rise">「不熟了。」他截断，笑还挂着，眼底已经冷，「很多年。」</p>
+  <p class="p rise">方霖眨眨眼，没再追。牧宁越却觉得肋骨下某根筋被她这句话扯了一下。不熟。多轻巧的两个字。轻巧到假。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">散场。</p>
+  <p class="p rise">庄晏艾把人送光，独留他。酒气呼在两人间，明知故问：</p>
+  <p class="p rise">「后悔了？」</p>
+  <p class="p rise">「后悔什么。」牧宁越也装傻，「那个作家，是你的——」</p>
+  <p class="p rise">「是。」庄晏艾坦荡，「一起两个月了。」</p>
+  <p class="p rise">牧宁越卡壳。盐撒不到这孙子身上。他转身要走，腕子却被拽住。</p>
+  <p class="p rise">「干嘛去？」</p>
+  <p class="p rise">「代驾。我这德行还能开？」</p>
+  <p class="p rise">庄晏艾笑得神秘：「别找了。我给你联系了一位。」</p>
+  <p class="p rise">不妙的直觉后脊发麻。还没咂出味儿，门口风一动——</p>
+  <p class="p rise">顾裴江站在光里。</p>
+  <p class="p rise">黑大衣，领口干净，神情像排练过无数次的准时。不是「闪亮」，是「必然」。像这出戏从一开始就写好他的上场时间。</p>
+  <p class="p rise">牧宁越心里把庄晏艾祖宗翻了个遍，狠狠剜他一眼。庄晏艾死猪不怕开水烫，附耳：</p>
+  <p class="p rise">「我知道你骂我。」</p>
+  <p class="p rise">随即抬高声音：「顾裴江！来得太晚，局都散了。」</p>
+  <p class="p rise">顾裴江淡淡一笑。</p>
+  <p class="p rise">还是那笑。眼尾轻微弯一下，像冬夜里忽然有人把暖风对准你——不讲道理，只讲反应。</p>
+  <p class="p rise">「不晚。」他说，「正好送你们回家。」</p>
+  <p class="p rise">牧宁越的心跳失了一拍。不是诗意，是生理：胸腔里那团肉不听话地重撞。他恨这反应，恨自己目光先落在对方手上——指节稳，虎口有旧茧，曾经扶过他无数次，也曾经在东郊那扇门后，什么都没抓住。</p>
+  <p class="p rise">「要这么说，来得正好。」庄晏艾拍顾裴江肩，「去我那儿续摊？J 国酒庄带的。」</p>
+  <p class="p rise">顾裴江没立刻答。他看向牧宁越。</p>
+  <p class="p rise">等。</p>
+  <p class="p rise">永远在等。姿态放得很低，低到像「你说什么都行」。可牧宁越太清楚——最该听他的那些年，这人把耳朵关得死死的。走的时候不听。开门的时候不解释。滚的时候，也只是站在风里。</p>
+  <p class="p rise">他本该拒绝。</p>
+  <p class="p rise">拒绝最体面：笑一下，叫代驾，回自己的床，明天继续当牧总。</p>
+  <p class="p rise">可酒精已经在血管里点火。未接来电还在手机深处发烫。顾裴江的目光平静，平静得像一种邀请，又像一种惩罚。</p>
+  <p class="p rise">牧宁越听见自己说：「……随你们。」</p>
+  <p class="p rise">声音哑。像妥协，又像宣战。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">庄晏艾的公寓暖得过分。落地灯把酒液照成深琥珀。J 国的酒入口软，后劲却像藏在舌头底下的刺。</p>
+  <p class="p rise">三人坐。话题东一句西一句。庄晏艾负责插科打诨，顾裴江话少，偶尔应一声，声音低，贴着耳膜走。牧宁越喝，喝，再喝——像要用酒把胸腔里那团不听话的东西淹掉。</p>
+  <p class="p rise">他发现自己一直在看。</p>
+  <p class="p rise">看顾裴江吞酒时滚动的喉结。看他抬腕看表时露出的一截小臂。看他坐得直，肩线利落，像这些年把日子过成了某种沉默的纪律。大衣挂在一旁，里面是深色薄衫，胸腹的轮廓被布料老实勾出来——不是刻意秀，是遮不住。</p>
+  <p class="p rise">牧宁越舌根发苦。他想：东郊那扇门后的男孩，是不是也看过这一层。</p>
+  <p class="p rise">妒意来得又脏又快。他灌一大口，呛得眼眶热。</p>
+  <p class="p rise">「慢点。」顾裴江把水杯推过来。指尖擦过他指背。极短。像无意。</p>
+  <p class="p rise">电流却实打实窜上小臂。</p>
+  <p class="p rise">牧宁越盯着那一点触碰消失的地方，忽然很想骂人。骂庄晏艾多事，骂顾裴江装，骂自己硬得毫无道理——酒精、旧恨、久未疏解的身体，搅成一锅。他并拢腿，靠进沙发，装作只是醉。</p>
+  <p class="p rise">「小越。」庄晏艾笑得不怀好意，「你脸红了。」</p>
+  <p class="p rise">「热。」他硬邦邦。</p>
+  <p class="p rise">「哦——热。」庄晏艾拖长音，转头对顾裴江挤眼，「你看见没？牧总会热。」</p>
+  <p class="p rise">顾裴江没接茬。只是把牧宁越面前的烈酒轻轻挪远，换成温水。动作自然得像做过一千次照顾。</p>
+  <p class="p rise">牧宁越恨这种自然。</p>
+  <p class="p rise">恨它像爱，又不负责说破。</p>
+  <p class="p rise">不知第几杯后，世界开始倾斜。天花板转。庄晏艾的声音远成水底。他记得自己好像说「地上凉快」，又好像骂了谁。再清楚的，是一双手穿过他腋下，稳，热，带着干净的冷空气味——顾裴江身上的味道，被风吹过仍压不住的那种。</p>
+  <p class="p rise">「庄晏艾呢？」他口齿不清。</p>
+  <p class="p rise">「睡了。」顾裴江答，「沙发上。」</p>
+  <p class="p rise">「……那孙子。」</p>
+  <p class="p rise">「别骂了。」顾裴江低声，近得呼吸扫过他耳廓，「我扶你去床上。」</p>
+  <p class="p rise">走廊很长。牧宁越的半边重量压在对方肩上。布料下的肌肉绷着，像一根不肯断的弦。他的额头一度磕到顾裴江颈侧，皮肤温热，脉搏清晰——一下，一下，打在他醉糊涂的神经上。</p>
+  <p class="p rise">下腹收紧。可耻，诚实。</p>
+  <p class="p rise">卧室门开。灯没全亮，只留床头一盏。顾裴江把他放到床沿，蹲身去解他的鞋。牧宁越低头，看见那颗熟悉的头顶，发丝服帖，耳后一点旧疤——小时候爬树留下的，他记得。</p>
+  <p class="p rise">记得就完了。</p>
+  <p class="p rise">欲望和疼搅在一起，涨得他眼眶发热。他伸手，抓住顾裴江的衣领，力道乱，却把人拽近了几公分。</p>
+  <p class="p rise">呼吸撞呼吸。</p>
+  <p class="p rise">近到再低一寸就是嘴。近到他能数清对方睫毛的颤。</p>
+  <p class="p rise">顾裴江身体明显僵了一下。没有退。也没有进。像钉在伦理与欲望中间的钉子。</p>
+  <p class="p rise">「宁越。」声音哑了半度，「你醉了。」</p>
+  <p class="p rise">「我知道。」牧宁越盯着他的唇，字句散，「你总听我的……最该听的时候，你装聋。」</p>
+  <p class="p rise">顾裴江睫毛动了动。眼里有什么一闪，深，重，像湖冰下的水。</p>
+  <p class="p rise">「现在呢？」牧宁越气音几乎贴上去，「现在听不听？」</p>
+  <p class="p rise">沉默拉长。暖气的声响忽然巨大。</p>
+  <p class="p rise">顾裴江抬手——牧宁越以为要被推开，或被按住后脑。两种可能都让他脊背发麻。</p>
+  <p class="p rise">落下来的，却是掌心覆上他的眼睛。温热。克制。像小时候哄他睡觉的手法，又完全不是。</p>
+  <p class="p rise">「睡。」顾裴江说，嗓子发紧，「有话……明天说。」</p>
+  <p class="p rise">掌心移开时，牧宁越看见他下颌线绷得死紧，喉结滚了一下。大衣下摆有极短的一瞬不自然——随即被对方侧身挡住，去拉被子。</p>
+  <p class="p rise">守礼。</p>
+  <p class="p rise">守到让人想咬破。</p>
+  <p class="p rise">被子盖到肩。顾裴江在床的另一侧坐下，没有走。像看守，又像自罚。牧宁越在黑暗里睁着眼，醉意翻涌，身体却清醒地叫嚣：硬着，空着，恨着。</p>
+  <p class="p rise">他听见自己含混地笑了一声。</p>
+  <p class="p rise">「顾裴江……」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「你要是敢又跑……」后半句淹没在酒里，只剩气，「我就……」</p>
+  <p class="p rise">「不跑。」顾裴江答得很轻。停半秒，又补了一句，像对自己说，「今晚不跑。」</p>
+  <p class="p rise">牧宁越终于闭上眼。</p>
+  <p class="p rise">黑暗里，未接来电的数字仍在视网膜上发亮。方霖的问句、东郊的门、那男孩的脸，全被这一室暖意暂时压下去——压不住的是身侧那个人的体温，隔着一拳距离，烫。</p>
+  <p class="p rise">他在睡着前最后的念头很下流，也很诚实：</p>
+  <p class="p rise">要是你现在翻过来碰我，我一定不会推开。</p>
+  <p class="p rise">顾裴江没有翻过来。</p>
+  <p class="p rise">他只是坐着，手撑在床沿，指节发白，把一整夜的欲念按进黑暗里。</p>
+  <p class="p rise">窗外风声掠过 D 市的钢筋。同学会散了。酒还在。人还在。</p>
+  <p class="p rise">而他们之间那根弦，已经响到了将断未断的地方。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><span></span><a href="#ch2">旧时与酒后 →</a></nav>
+
+<section class="chapter" id="ch2" data-num="2" data-title="旧时与酒后" data-anchor="ch2" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 2 章</div>
+    <h2 class="ch-title">旧时与酒后</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">醉里的梦不讲顺序。</p>
+  <p class="p rise">先是冬天。再是粉笔灰。然后是一双不太会笑的眼睛——不对，是后来才会笑，第一次站在教室门口时，那双眼睛只是亮，亮得发窘。</p>
+  <p class="p rise">牧宁越第一次见顾裴江，自己还在上小学。转学生。土。箱子旧，裤脚洗得发白。Z 城子弟学校的孩子看人很准：准在势利。口音一出，前排几个女生就交换眼神，嫌弃写在脸上，连遮都不遮。</p>
+  <p class="p rise">老师把班长叫到办公室：「宁越，起表率。多帮帮新同学。」</p>
+  <p class="p rise">他硬着头皮去。顾裴江说话慢，乡音沉，词和词之间像隔着田埂。牧宁越听得不耐烦，眉一拧，对方立刻察觉，下次开口更慢，一个字一个字往普通话上掰，掰得额角冒汗。</p>
+  <p class="p rise">牧宁越不懂体谅。回家跟母亲抱怨：「那人说话好怪，老师还让我帮。」</p>
+  <p class="p rise">苗老师笑眯眯：「那就教他拼音。教会了，不就好交流了？」</p>
+  <p class="p rise">他那时很听妈妈的话。次日课间，他把人拽到墙角：「我教你。你要好好学。」</p>
+  <p class="p rise">顾裴江抬眼。阳光正好，眼里有光一闪，郑重得不像小孩：「我一定好好学。」</p>
+  <p class="p rise">那是牧宁越第一次被那样看着。</p>
+  <p class="p rise">被看作「值得跟」的人。</p>
+  <p class="p rise">小学的书不难。顾裴江底子不差，只是气场怯。普通话顺了，成绩也追上来。期末发单，他第一时间找牧宁越——想分享。走廊尽头，牧宁越又拿了第一，被几个好学生围着，笑声清脆。</p>
+  <p class="p rise">顾裴江在五步外停住。</p>
+  <p class="p rise">手里的成绩单捏出痕。</p>
+  <p class="p rise">他没有上前。只是把那点喜悦咽回去，在心里加了一句：还不够。要更努力，才配把喜悦递到那个人面前。</p>
+  <p class="p rise">这些，是牧宁越很多年后才拼出来的。当时他只看见转学生越来越稳，越来越少被笑口音，像一棵在石缝里仍往上长的树。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">再后来，两家走近。</p>
+  <p class="p rise">顾裴江跟他同学一年多，才知苗老师在大学任教，牧父在 mt 单位，常年外派。牧宁越想父亲，想得上课都心不在焉。顾父顾母文化不高，人实在：自家孩子受了照顾，不能看着苗老师带娃还自己扛煤气罐。换罐、扛米，顾家包了。苗老师过意不去，便说：让裴江来家里，跟宁越一起写作业，我看着。</p>
+  <p class="p rise">两家的门槛，被两个孩子踩平。</p>
+  <p class="p rise">苗老师越来越喜欢顾裴江：聪明，懂事，少年持重。有时牧宁越都要吃味——自己亲儿子，反而不如「别人家的」省心。</p>
+  <p class="p rise">有一回牧父回 Z 城。牧宁越一天魂不守舍，偏赶上值日。下学铃响，顾裴江把扫帚一拿：「你回去。我替你。」</p>
+  <p class="p rise">郁闷一天的人瞬间活了。他给了顾裴江一个结实的拥抱，书包一甩就跑。顾裴江站在空教室里，笑着，把地扫得很干净。</p>
+  <p class="p rise">第二天课间，牧宁越神秘兮兮把人拉到角落，从书包掏出一盒包装精致的巧克力。字母看不懂。顾裴江那时没吃过这东西，表情困惑得像面对外星物。</p>
+  <p class="p rise">「我爸国外带的。」牧宁越挺胸，「比糖还甜。你尝。」</p>
+  <p class="p rise">锡纸撕开。醇香在嘴里化开。顾裴江眼睛亮了一下，随即把剩下的仔细装回去：「嗯。剩下的带给我弟弟尝尝。」</p>
+  <p class="p rise">牧宁越心里那根筋，猛地抽紧。</p>
+  <p class="p rise">东西是他给的。好东西。为什么要分。</p>
+  <p class="p rise">「你是不是什么好东西都要分给你弟弟？」他不会装，话刺刺的。</p>
+  <p class="p rise">顾裴江一愣：「他……是我弟弟。」</p>
+  <p class="p rise">牧宁越转身回座。耳朵热，胸口堵。说不清为什么。只觉得「给出去的东西」不该再流向别人——哪怕那是弟弟。</p>
+  <p class="p rise">很多年后他才给这感觉起名：结缔。不是恨一个小孩，是恨「不能独占」。恨自己连一盒巧克力都要计较，却计较得理直气壮。</p>
+  <p class="p rise">苗老师劝过几次，让他欢迎顾弟来玩。他口头答应，门缝里仍不痛快。直到更大一点，才慢慢放下。</p>
+  <p class="p rise">放下，不代表消失。</p>
+  <p class="p rise">独占欲只是换了皮：从巧克力，换成一个人。</p>
+  <p class="p rise">梦到这里本该停。偏多出一段没有声音的画面：东郊的门，一张更年轻的脸，顾裴江站在门后，嘴唇动了动，一个字也没传到他耳朵里。牧宁越在梦里想骂「滚」，声带却像被谁掐住——醒来前最后的感觉，是冷，和门轴转动的轻响。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">「宁越……小越？」</p>
+  <p class="p rise">声音从很远的地方捞他。梦里的粉笔灰散尽，暖气味涌回来。</p>
+  <p class="p rise">不对——</p>
+  <p class="p rise">牧宁越眼皮打架。意识像从酒缸底往上浮。肩被轻轻晃。那双手他还记得：昨夜扶他、解鞋、覆在他眼睛上的手。</p>
+  <p class="p rise">等等。昨夜？</p>
+  <p class="p rise">他猛地睁眼。</p>
+  <p class="p rise">刺眼的不是灯，是晨光。窗帘没拉严，一道白切在被子上。枕边——</p>
+  <p class="p rise">顾裴江。</p>
+  <p class="p rise">侧躺，呼吸匀，额发垂一点，睡颜比醒着时软。薄被滑到腰际，里面不知何时只剩一件深色背心，肩线、胸膛起伏清楚，腹肌在呼吸里缓缓收放。像某种不设防的邀请。又像某种残酷的陈列：你看得到，你昨夜什么都没得到。</p>
+  <p class="p rise">牧宁越脑子「嗡」的一声。</p>
+  <p class="p rise">酒后乱性四个字先砸进来。随即自我否决：他喝成那样，主动乱的可能性——低。可顾裴江呢？顾裴江守礼。顾裴江最会守。</p>
+  <p class="p rise">那为什么睡在一张床上。为什么自己衬衫扣子敞着两粒。为什么腿间那点晨间的硬，羞耻地贴着布料，提醒他身体比嘴诚实。</p>
+  <p class="p rise">他手忙脚乱去摸裤子——还在。人还在。痕迹……他不敢往深处想。只觉得耳根烧透，心却沉：要是真有什么，他第一反应竟不是怒，是「总算」。</p>
+  <p class="p rise">下流。</p>
+  <p class="p rise">更下流的是身体。晨间那点硬不只是生理，是贴着枕侧热源睡了一夜的结果。空气里有很淡的、属于另一个男人的味道——洗发露，或仅仅是皮肤本身。牧宁越并拢腿，深呼吸，骂自己像青春期处男。三十多岁的牧总，硬在旧人床边，荒谬得想笑。</p>
+  <p class="p rise">他记得昨夜自己几乎贴上去，问「现在听不听」。也记得掌心覆眼时的温度。顾裴江说「明天说」。现在明天到了，他反而怕听。</p>
+  <p class="p rise">怕听到解释。怕听到「我们还是朋友」。更怕听到沉默——沉默最像东郊那扇门。</p>
+  <p class="p rise">他翻身坐起，脚刚沾地，门「吱呀」开了。</p>
+  <p class="p rise">庄晏艾顶着鸡窝头，揉眼走进来，嘴里含糊：「浴室借——」</p>
+  <p class="p rise">目光落地。</p>
+  <p class="p rise">牧宁越半裸上身，手还抓着裤腰，脸是「被捉奸」的红。床上顾裴江睡袍未整，腹肌在晨光里理直气壮。</p>
+  <p class="p rise">三秒死寂。</p>
+  <p class="p rise">庄晏艾张了张嘴，只憋出两个字：</p>
+  <p class="p rise">「卧槽。」</p>
+  <p class="p rise">「不是你想的那样！」牧宁越衣服也不穿了，急吼吼解释，越急越像欲盖弥彰。</p>
+  <p class="p rise">床上人被吵醒。顾裴江撑肘坐起，嗓音还哑，第一句却是：</p>
+  <p class="p rise">「几点了？」</p>
+  <p class="p rise">庄晏艾瞬间从震惊切换成看戏，眉毛一挑：「现在这种情况，你只想问这个？」</p>
+  <p class="p rise">顾裴江这才看见门口的人。他坐直，背心被动作扯高一截，腹肌线条更明显——不是秀，是遮不住。他神色淡定，甚至淡定得过分：</p>
+  <p class="p rise">「不是你想的那样。」</p>
+  <p class="p rise">和牧宁越同一句。默契得像排练。</p>
+  <p class="p rise">「本来我还真没往深了想。」庄晏艾目光在两人之间来回荡，「可你俩这同步率，让我怀疑真实性啊。」</p>
+  <p class="p rise">牧宁越烦躁到顶点。羞、硬、恨、慌，搅成一团。他粗暴抓过长裤往腿上套，拉链声刺耳，嘴比脑子快：</p>
+  <p class="p rise">「你别瞎想！」</p>
+  <p class="p rise">停半秒，又补刀——补给庄晏艾，也像补给自己，更像抽在枕边那人脸上：</p>
+  <p class="p rise">「要真有什么，哪会等到现在啊！」</p>
+  <p class="p rise">话音落。</p>
+  <p class="p rise">空气像被谁抽走。</p>
+  <p class="p rise">顾裴江身体明显一僵。不是大动作，是肩线、指节、呼吸同时顿住。他慢慢低下头，目光落在自己膝上，不知在看什么，又像什么都不敢看。</p>
+  <p class="p rise">那僵直像一根针，精准扎进牧宁越胃里。</p>
+  <p class="p rise">他比任何人都清楚这句话有多脏。脏在真实。这么多年，拥抱有过，醉有过，几乎吻上有过，真枪实弹的「有」——没有。不是他不想。是顾裴江把「礼」守成城墙，他把自己摔在墙外，摔到膝盖碎，还要笑着说不疼。</p>
+  <p class="p rise">现在他用笑把刀递回去：哪会等到现在。意思是你看我多失败；也是你看你多干净。干净得像从来没渴望过他。</p>
+  <p class="p rise">牧宁越看见了那僵。</p>
+  <p class="p rise">看见就后悔。</p>
+  <p class="p rise">可男人的面子是玻璃做的，碎了还要端着。他背过身扣扣子，手指抖，扣错一粒，又重来。耳鸣里全是自己那句——轻蔑、自嘲、炫耀式的惨。</p>
+  <p class="p rise">他不敢回头。</p>
+  <p class="p rise">怕看见顾裴江眼里若有若无的疼。更怕看见——没有疼。</p>
+  <p class="p rise">下腹却在羞耻里又热了一寸。恨意和欲缠在一起，分不清谁先点燃谁。他只知道：说出「等到现在」的瞬间，他比任何时候都想把人按回床上，用身体把这句话打成谎言。</p>
+  <p class="p rise">他没有。</p>
+  <p class="p rise">他只是把扣子扣到最上一粒，像把自己重新封进「牧总」的壳。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">庄晏艾识趣地举起双手：「行行行，不是我想的那样。我去洗漱。你们……慢慢圆。」</p>
+  <p class="p rise">门关上。脚步远。</p>
+  <p class="p rise">卧室只剩两人。</p>
+  <p class="p rise">暖气仍旧嗡鸣。昨夜差点碰上的呼吸，此刻隔着三步，冷得像东郊的风。</p>
+  <p class="p rise">牧宁越终于侧过脸。顾裴江已经下床，背对他找外套，肩胛骨在背心下滑动。腰线收进裤腰时，有一瞬间的紧——像把什么欲望连同晨勃一起，蛮横按灭。</p>
+  <p class="p rise">「我……」牧宁越开口，又卡壳。</p>
+  <p class="p rise">解释什么？解释「哪会等到现在」是气话？解释自己硬了一夜？解释梦见巧克力的时候，梦见的其实是你？</p>
+  <p class="p rise">顾裴江穿好外套，转过来。脸上又是那层淡：礼貌、克制、把自己折叠整齐。</p>
+  <p class="p rise">「头还疼吗？」他问。</p>
+  <p class="p rise">牧宁越差点笑出声。疼。哪疼。心疼还是别处疼。</p>
+  <p class="p rise">「还行。」他哑声。</p>
+  <p class="p rise">「水杯在床头。」顾裴江顿了顿，「昨晚你说地上凉快。是我把你扶上来的。什么都……没有。」</p>
+  <p class="p rise">「我知道。」牧宁越打断，烦自己竟松了半口气，又烦这口气里的失落，「你最会『什么都没有』。」</p>
+  <p class="p rise">顾裴江睫毛一颤。没有争。</p>
+  <p class="p rise">像无数次那样，把刀口留给自己。</p>
+  <p class="p rise">牧宁越抓起风衣，往门口走。经过他身侧时，两人袖口擦过，静电细响。下腹那点残留的热又拱了一下——卑鄙地想起背心下的腹肌、昨夜覆在眼上的掌心、以及「今晚不跑」那句轻得像誓言的话。</p>
+  <p class="p rise">跑没跑？人还在。</p>
+  <p class="p rise">可「在」不等于「要」。</p>
+  <p class="p rise">门把手握在掌心。他忽然停住，没回头：</p>
+  <p class="p rise">「庄晏艾爱怎么想怎么想。你——」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「别用那种表情。」牧宁越牙关紧，「像我欠你似的。说话的人是我。」</p>
+  <p class="p rise">沉默。</p>
+  <p class="p rise">半晌，身后传来极低的一句：</p>
+  <p class="p rise">「……不是你欠。」</p>
+  <p class="p rise">牧宁越肩背一紧。还想再问，门外庄晏艾已经扯着嗓子喊早餐、解酒药、以及「你们要是打起来请去客厅，别砸我床」。</p>
+  <p class="p rise">气氛碎成日常。</p>
+  <p class="p rise">牧宁越拉开门，把没说完的话咽回去。舌尖全是酒气与悔。他知道自己把刀捅出去了，刀尖还沾着「等到现在」四个字；也知道顾裴江接刀的样子，会在接下来很久里反复折磨他。</p>
+  <p class="p rise">包括折磨他的身体。</p>
+  <p class="p rise">走廊凉。他深吸一口气，骂自己一句变态，跟在庄晏艾的嗓门后走向客厅——像逃，又像去赴一场还没开始的刑。</p>
+  <p class="p rise">而卧室里，顾裴江独自站了很久。</p>
+  <p class="p rise">晨光移到空皱的床单上。他抬手，摸了摸自己的下唇——昨夜几乎被吻到的地方，仍是完好的。完好得残忍。</p>
+  <p class="p rise">手机在外套口袋里震了一下。他掏出看：是昨晚那个未接、对方未回的号码——牧宁越的。并不是新通话，是系统愚蠢的「你可能想联系」。他盯着屏幕，拇指悬空，最终只是把手机塞回去。</p>
+  <p class="p rise">有些话不能打。打了就变成乞求。</p>
+  <p class="p rise">他低声，只有自己听得见：</p>
+  <p class="p rise">「哪会等到现在……」</p>
+  <p class="p rise">像复读，又像立誓。</p>
+  <p class="p rise">窗外，D 市的早高峰开始喧哗。同学会已经过去。酒劲褪了。人还醒着。</p>
+  <p class="p rise">下一刀，会在谁先开口的时候落下。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch1">← 同学会与未接来电</a><a href="#ch3">东郊与告别 →</a></nav>
+
+<section class="chapter" id="ch3" data-num="3" data-title="东郊与告别" data-anchor="ch3" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 3 章</div>
+    <h2 class="ch-title">东郊与告别</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">牧宁越知道昨夜什么都没发生。</p>
+  <p class="p rise">顾裴江亲口说的。他最会「什么都没有」。</p>
+  <p class="p rise">可遗憾像一根刺，横在胸腔里：如果那人不管不顾做点什么——吻、咬、把礼撕开——他是不是就能确认一些事。确认「你也想要」。确认自己这些年的犯贱不是单机游戏。</p>
+  <p class="p rise">顾裴江连妄念都不肯留给他。</p>
+  <p class="p rise">干净。干净得残忍。</p>
+  <p class="p rise">客厅里阳光已经很亮。庄晏艾顶着毛巾从卫生间探头，解酒药说明书念得像朗诵：「空腹服用……你俩要咖啡还是要命？」</p>
+  <p class="p rise">「要命。」牧宁越看表，推说公司有事。</p>
+  <p class="p rise">庄晏艾挽不住，只能甩钩子：「过两天詹姆士签售，你来捧场？顺带认认人——对你广告公司有用。」</p>
+  <p class="p rise">人脉。神仙。D 市的饭局从不是白吃的。牧宁越点头。风衣一披，像把晨间那句「哪会等到现在」也一起裹进去，假装带不走。</p>
+  <p class="p rise">顾裴江已穿戴整齐，站在玄关。黑大衣，领口齐，像昨夜那场几乎吻上的事从未发生。只有眼下青一点，像坐了整夜的哨。</p>
+  <p class="p rise">「我们不顺路。」牧宁越直接，「我打车。」</p>
+  <p class="p rise">顾嘴唇动了动。惯于接他的话，这回却卡壳——像第一次不会说普通话那样，词堵在喉咙。</p>
+  <p class="p rise">庄晏艾白眼翻到天：「我说你们俩，能不能别在我眼前演戏？这么多年，我看着都累。」</p>
+  <p class="p rise">怒意找错出口。牧宁越怼他：「谁让你瞎掺合！」</p>
+  <p class="p rise">「我瞎掺合？你白眼狼——」</p>
+  <p class="p rise">「宁越。」顾裴江打断。声音不高，却把火药按住，「这次是我找小艾帮忙的。我确实有话想跟你谈。」</p>
+  <p class="p rise">庄晏艾哼了一声，就差指着鼻子：「你 TMD 终于像个爷们儿解决问题了。」随后闪进卫生间收拾「残容」，约会要紧。水声哗哗，像给这屋留出审讯室。</p>
+  <p class="p rise">牧宁越盯着顾裴江，面无表情：「谈什么？」</p>
+  <p class="p rise">顾瞥向卫生间方向，又看他：「换个地方。」</p>
+  <p class="p rise">「怕人听见？」</p>
+  <p class="p rise">「怕你在这里……只会吵架。」顾诚实得笨，「我想把话说完。」</p>
+  <p class="p rise">牧宁越本该拒绝。拒绝最体面。可「哪会等到现在」还烫在空气里，他自己刺出去的刀，也硌着自己。</p>
+  <p class="p rise">「十分钟。」他说，「多一秒我下车。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">车出市区。楼变矮，天变阔。广告牌换成树。</p>
+  <p class="p rise">牧宁越坐副驾，风衣领竖起，像把自己封进壳。暖气开着，指尖仍凉。余光扫驾驶座：顾手握方向盘，虎口旧茧，指节稳——昨夜扶过他、覆过他眼睛的手。</p>
+  <p class="p rise">收音机被关掉。只剩胎噪。</p>
+  <p class="p rise">「东郊？」牧宁越开口，自己都意外这平静。</p>
+  <p class="p rise">「嗯。」顾像接住台阶，「当年填埋场。现在星级景区了。」</p>
+  <p class="p rise">东郊。</p>
+  <p class="p rise">两个字一响，门轴声就回来了。</p>
+  <p class="p rise">那年他休假回国，行李箱轮子磕在旧楼道。钥匙还没掏，门开了。开门的不是顾裴江，是个更年轻的男孩——脸嫩，睡衣松，眼里有未散的睡意与熟稔。像在别人的领地里醒来。</p>
+  <p class="p rise">脑子空白。慢镜头：顾从里间出来，惊慌，嘴唇张开，想辩解。</p>
+  <p class="p rise">牧宁越听见自己僵硬地笑：「他……是你男朋友？」</p>
+  <p class="p rise">顾没有回答。表情替他回答了。</p>
+  <p class="p rise">点头。拎箱。走。</p>
+  <p class="p rise">顾扔下那人追出来，抓住他手腕，力道大，话却一个字没有。牧宁越面目扭曲，只剩一个字：</p>
+  <p class="p rise">「滚。」</p>
+  <p class="p rise">现在想，自己也可笑。顾从未承诺。他却演足了被负心的戏。像把「结缔」用到最难看的地步——独占一个从未属于他的人。</p>
+  <p class="p rise">车停。湖面铺开，一眼望不到头。天冷，冰层灰白，风硬得像抽脸。观景台空无一人，只有栏杆上残留的雪。</p>
+  <p class="p rise">「心情不好的时候，我会来这儿。」顾裴江说。声音被风撕薄。</p>
+  <p class="p rise">以他现在的身价，散心的地方多了去。偏选这里。选那扇门还在的方向。选他们曾经短暂以为「可以」的坐标。</p>
+  <p class="p rise">「宁越。」他顿了很久，呼出白气，「有时我想，如果是现在的我与你初遇……是不是就不会变成现在这样。」</p>
+  <p class="p rise">牧宁越听懂了。阶层。口音。亏欠。棋子。M 市。</p>
+  <p class="p rise">「那我，也许就不是现在的我了。」</p>
+  <p class="p rise">顾苦笑：「是啊……也许我不该出现在你人生里。」</p>
+  <p class="p rise">风灌进领口。牧宁越看着他，失望比怒更沉：「你就想跟我说这个？把你自己从我人生里抠掉，然后算谈完？」</p>
+  <p class="p rise">「不是。」顾紧张起来，耳尖红，不像能谈成大事的人，像还在教室门口的转学生，「我知道……没资格再让你叫我哥。可我不想再这样僵持。」</p>
+  <p class="p rise">僵持。</p>
+  <p class="p rise">多轻的词。轻到盖不住东郊的门，盖不住「哪会等到现在」，盖不住昨夜几乎贴上的呼吸。</p>
+  <p class="p rise">牧宁越不去猜他的心思。猜过。累了。这人从前听他的，后来不听了，他更猜不到。</p>
+  <p class="p rise">「那你想怎样。」他逼问，「复合？做炮友？还是每年同学会出现一次，让我硬一晚上再守礼？」</p>
+  <p class="p rise">顾喉结滚动。风把他的下一句吹散一半：「我想……靠近。如果你肯。一步也好。」</p>
+  <p class="p rise">湖边站了很久。鼻涕都快冻出来。牧宁越呵出白气，看着冰面——什么都种不活。</p>
+  <p class="p rise">「回去吧。」</p>
+  <p class="p rise">话题又死。顾裴江只说：「好。」</p>
+  <p class="p rise">那声「好」像旧伤。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">回程牧宁越要开车。</p>
+  <p class="p rise">「你坐。」他绕到驾驶座，动作利落得像逃离某种被动。发动。暖风。路面直。</p>
+  <p class="p rise">开了两公里，他才开口，声音平得像谈方案：</p>
+  <p class="p rise">「你让庄晏艾安排见面，是我父亲授意的吗？」</p>
+  <p class="p rise">顾明显一怔。副驾上的人无奈摇头：「今天这些话，与牧叔叔无关。」</p>
+  <p class="p rise">牧宁越冷笑：「听听。你倒更像他儿子。他一招呼，你就出现；他一推荐，你就去 M 市。我算什么。副产品？」</p>
+  <p class="p rise">「宁越，别这样。」顾皱眉，「苗老师如果泉下有知，也不会希望你们父子——」</p>
+  <p class="p rise">「别拿我妈压我。」牧宁越打断，负气把刀磨快，「我是喜欢男人。不过你这美男计没奏效。让我爸下次换个年轻点的来——门后那种。」</p>
+  <p class="p rise">「宁越——」</p>
+  <p class="p rise">刹车。</p>
+  <p class="p rise">轮胎尖叫。车甩在路边。安全带勒进肩骨。他瞪着顾裴江，二话不说推门下车，风衣被风掀起，步子又快又狠，把人扔在车里。后头有人摇窗喊他的名字。</p>
+  <p class="p rise">他不回头。</p>
+  <p class="p rise">名字被风撕碎。像很多年前那声「滚」。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">走着走着，记忆自己接上了轨。</p>
+  <p class="p rise">高考第一天。本该是并肩的未来：成绩出来，报同一座城。铃响前，顾裴江的位置空着。</p>
+  <p class="p rise">缺考。</p>
+  <p class="p rise">牧宁越考完才知。母亲说怕影响他状态；顾还叮嘱「晚些再告诉宁越」。</p>
+  <p class="p rise">顾父脑梗。那一天。</p>
+  <p class="p rise">暑假本该轻松，未来却碎了。他劝复读，顾只沉默。后来是牧父问清楚：家里没了顶梁柱，弟快升高中，母身体不好——复读是奢侈。顾决定工作养家。</p>
+  <p class="p rise">牧父动了心思。大学同学在 M 市做生意，本想拉他自己下海，顺手把顾推荐过去。</p>
+  <p class="p rise">结果是：顾裴江比他更早离开 Z 城。</p>
+  <p class="p rise">突然的。干净的。像从他生活里被谁用刀裁走。</p>
+  <p class="p rise">没有盛大告别。没有「等我」。只有一个越来越远的背影，和牧宁越手里捏着的、再也送不出去的那盒——后来他在商店看见同款巧克力，买了，又扔了。</p>
+  <p class="p rise">定格在这一帧里，他站在东郊公路旁，肺叶里全是冷空气。身后引擎声靠近。顾裴江没有下车拉他，只把车门开着，像留一扇不会再被男孩打开的门。</p>
+  <p class="p rise">牧宁越站了很久，终于走回去。不是和解。是冻得受不了。也是——他还是会回去。贱。</p>
+  <p class="p rise">上车。关暖风。两人一路无话。指节在方向盘上发白。</p>
+  <p class="p rise">临到市区，顾才低声：「签售会……如果你来，我会在。」</p>
+  <p class="p rise">「关我屁事。」牧宁越盯着前方，「庄晏艾的局，我去。不是为你。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">又是「好」。听的姿态。把刀接住，把欲按住，把「哪会等到现在」按进湖冰下面。</p>
+  <p class="p rise">牧宁越下车前，忽然道：</p>
+  <p class="p rise">「顾裴江。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「下次想谈，就谈清楚。」他眼红，不知是风还是别的，「别带我来冰上。冰上什么都种不活。」</p>
+  <p class="p rise">车门关上。城市的噪音涌回来。</p>
+  <p class="p rise">他拦了辆出租，缩进后座，摸出烟。打火三次才着。白烟里，东郊的门、高考的空位、昨夜的掌心，叠成一张他撕不烂的网。</p>
+  <p class="p rise">手机震。庄晏艾：</p>
+  <blockquote class="msg rise"><p>人呢？别死外面。</p><p>签售地址待会发你。来不来随你——但你最好来。</p><p>顺便：顾刚才问我你恨不恨他。我没答。你自己答。</p></blockquote>
+  <p class="p rise">牧宁越盯着屏幕，回了一个字：</p>
+  <blockquote class="msg rise"><p>滚。</p></blockquote>
+  <p class="p rise">然后把未接来电那一栏划开，看了一眼那个能倒背的号码，没有拨。</p>
+  <p class="p rise">指尖却在屏幕上停了很久。</p>
+  <p class="p rise">像停在悬崖边。</p>
+  <p class="p rise">像停在将断未断的弦上。</p>
+  <p class="p rise">他知道自己会去签售会。</p>
+  <p class="p rise">不是为生意。是为那句「我会在」——像饵，像罚，像他还没死绝的妄念。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch2">← 旧时与酒后</a><a href="#ch4">签售会后 →</a></nav>
+
+<section class="chapter" id="ch4" data-num="4" data-title="签售会后" data-anchor="ch4" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 4 章</div>
+    <h2 class="ch-title">签售会后</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">签售会人多。灯白。空气里是新书油墨与香水。</p>
+  <p class="p rise">詹姆士笑得国际，笔锋潇洒。庄晏艾在侧像合格的伴侣与经纪人混合体，偶尔抬眼扫场——扫到牧宁越时，嘴角一扯，像说：来了就别装路过。</p>
+  <p class="p rise">牧宁越来得晚，站在后排，风衣未解。名片与目光在空气里交换。他本可以只做「牧总」：握手、交换、离开。</p>
+  <p class="p rise">直到看见顾裴江。</p>
+  <p class="p rise">靠柱，黑衣，不抢镜，却像钉在视网膜上。手里没有书，只有一杯水。袖口挽到小臂，腕骨与青筋在白光下清楚。目光一碰，又各自挪开，像怕擦出火。东郊的风仿佛还沾在两人袖口。</p>
+  <p class="p rise">「牧总。」有人拍肩，递方案。牧宁越应着，声音稳。只有自己知道袖口里的脉搏乱——乱得像车库里即将发生的事，提前在血里预演。</p>
+  <p class="p rise">中场休息。庄晏艾端两杯酒过来，硬塞给他一杯：「润润。你脸跟欠债似的。」</p>
+  <p class="p rise">「滚。」</p>
+  <p class="p rise">「顾在二号门。」庄晏艾压低声，「他问我你来没。我说你爱来不来。你最好爱。」</p>
+  <p class="p rise">「你很闲。」</p>
+  <p class="p rise">「我很累。」庄晏艾眨眼，「撮合你们比翻译还累。成了请吃饭，不成也请——当精神损失。」</p>
+  <p class="p rise">牧宁越没答。酒液在杯里晃。他喝了一口，苦。舌尖却想起昨夜梦里——顾的喉结、掌心、几乎贴上的呼吸。下腹轻轻一紧。他骂自己变态，把酒放回托盘。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">散场时走廊拥挤。笑与闪光灯。有人喊「牧总」。他应着，侧身——肩撞上另一个肩。</p>
+  <p class="p rise">顾裴江。</p>
+  <p class="p rise">近。近到能闻见他身上干净的冷气味，与东郊不同，像刻意洗过，仍压不住。近到牧宁越能看见他下唇细小的干纹，想起那晚自己几乎咬上去。</p>
+  <p class="p rise">「……抱歉。」顾先说。</p>
+  <p class="p rise">「没事。」牧宁越喉结滚。</p>
+  <p class="p rise">庄晏艾不知从哪钻出来，笑得欠揍：「停车库见？詹姆士还有局，我不耽误你们叙旧。」</p>
+  <p class="p rise">「谁叙——」</p>
+  <p class="p rise">人已经走了。詹姆士远远招手。庄晏艾融入人群，像完成任务的拆弹手。</p>
+  <p class="p rise">走廊人潮把他们挤到电梯口。电梯满。下一班。等待的九十秒长得像年。</p>
+  <p class="p rise">顾忽然道：「你冷不冷。」</p>
+  <p class="p rise">「东郊问过了。」牧宁越盯楼层灯，「别关心天气。」</p>
+  <p class="p rise">「那我关心你。」顾声音很低，「你来了。」</p>
+  <p class="p rise">「为了局。」</p>
+  <p class="p rise">「好。」顾说，「为了局也行。只要你在。」</p>
+  <p class="p rise">电梯门开。人涌入。两人肩臂相贴，谁都没挪开。顾的大衣袖擦过他手背，布料粗，热意却透过。电流沿着小臂爬进肋骨。牧宁越盯着跳动的楼层数字，想起十七岁天台差一公分的唇——那时顾说等配得上。现在配得上了吗。他还是不知道。他只知道硬了。可耻。诚实。西裤绷紧，他微侧身，用风衣遮。</p>
+  <p class="p rise">顾的呼吸在他耳侧，轻，却不稳。像也在忍。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">B2。灯管忽明忽暗。车位空旷。轮胎印与水渍。远处引擎声远去，又静。</p>
+  <p class="p rise">牧宁越走到自己车边，钥匙握出汗。身后脚步跟上，不紧不慢。像代驾那晚。像命运的复读。皮鞋跟敲水泥，一下，一下，敲在他尾椎神经上。</p>
+  <p class="p rise">「宁越。」</p>
+  <p class="p rise">「我说了，我来是为了局。」他不回头，声音硬，「不是为你。」</p>
+  <p class="p rise">「我知道。」顾的声音近了，热气几乎喷在他后颈，「我只问一句。东郊公路上……你冷不冷。」</p>
+  <p class="p rise">牧宁越转身，笑得难看：「现在关心这个？」</p>
+  <p class="p rise">顾看着他。眼里没有湖冰，只有烧了很久、终于漫过堤的东西。下颌线绷着，像在跟自己搏斗，搏斗失败。喉结滚了一下——牧宁越的目光不受控地追过去。</p>
+  <p class="p rise">「还有一句。」顾说，每个字都像从牙关里挤，「哪会等到现在——我等到了。我不想再等。」</p>
+  <p class="p rise">话落，世界轻了一寸。</p>
+  <p class="p rise">牧宁越还没骂出口，人已经被抵在车门上。金属凉，透过风衣刺进肩胛；胸膛烫，隔着两层衣服仍烫。顾裴江吻下来——不是试探，是撞。齿关磕碰，痛意一闪，随即被更深的吮吸盖过。呼吸乱，鼻息喷在彼此脸上，像把这些年的守礼一次性砸碎。</p>
+  <p class="p rise">舌强势地探入。先是掠过齿列，再缠住他的舌，卷，吸，退半寸又撞回来。牧宁越瞪大眼，随即咬回去——下唇，齿尖陷进软肉，尝到一点血丝的铁锈。恨与欲找到同一条出口。他手插进对方头发，发丝凉，头皮热，把人按得更近，近到髋骨相撞。</p>
+  <p class="p rise">硬。两边都硬。布料磨布料，形状清楚得下流。</p>
+  <p class="p rise">车库的冷气灌不进这方寸热。牧宁越被吻得腿软，后脑磕在车顶沿，又被顾的手掌护住——掌心烫，护得用力，像怕他疼，又像怕他逃。</p>
+  <p class="p rise">「你疯了……」他喘着骂，唇瓣分离半秒，银丝短得看不见，又贴上。</p>
+  <p class="p rise">「嗯。」顾额头抵他，鼻尖相蹭，眼睛红，「你说现在听不听——我听。你让我停，我停。你不说——」</p>
+  <p class="p rise">手从风衣下摆探入。掌心贴衬衫，沿腰线向上，拇指擦过肋下敏感带；再往下，覆上已经硬起来的轮廓。隔着西裤布料揉弄，先是整个掌心包住，缓慢地压、碾，再五指收拢，上下套弄那团鼓胀。布料被前液沁出一小点深色。牧宁越腰一软，骂声碎成气音，手死死抓着顾的大衣前襟。</p>
+  <p class="p rise">「顾裴江——」</p>
+  <p class="p rise">「让我。」顾哑着，嘴唇贴他耳廓，齿尖轻磕耳垂，「只是手。隔着衣服也行，脱掉也行。你要是不要，推开我。现在推，我走。一分钟后……我怕我走不了。」</p>
+  <p class="p rise">牧宁越的手抓住他手腕——不是推，是按实，往自己更硬的地方按，强迫那只茧手贴紧、收紧。</p>
+  <p class="p rise">「谁说不要。」他眼红，气音发抖，「你他吗终于肯脏一点。继续。用力。」</p>
+  <p class="p rise">顾喘了一声，像得到赦免，又像被判刑。手指找到拉链，金属齿一寸寸打开，声响在空旷车库里细得刺耳。西裤松了。内裤边缘被勾下。滚烫的性器弹进冷空气，又立刻被滚烫的掌心接住。</p>
+  <p class="p rise">「……好硬。」顾低声，像自语，又像惊叹。拇指擦过顶端，沾到黏滑，抹开，再整根握住，节奏由试探变成明确的上下。茧摩擦系带时牧宁越膝弯一颤，额头砸在顾肩上。</p>
+  <p class="p rise">「别……在这……」他嘴上说，腰却送。</p>
+  <p class="p rise">「去我车。」顾咬他颈侧，留下湿痕，「一分钟。忍一分钟。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">顾的车比他的更里，角落阴影浓。门锁咔哒，像与世界切割。座椅电动放倒一半，咔咔两声。遮阳板放下，后视镜被扳歪——像给荒唐盖章。</p>
+  <p class="p rise">没有开灯。只有仪表微光，把两人的轮廓切成明暗：唇湿，眼亮，喉结滚动的弧。</p>
+  <p class="p rise">皮带抽离裤袢，啪的一声。拉链。西裤褪到膝。皮肤接触空气时两人都颤。顾的手有茧，动作却生涩里带着狠——像怕慢了会被理智叫停，又像怕快了会弄疼他。先整根拢住，从根部捋到顶，虎口卡着最敏感的棱，再加重，再加快。前液不断渗出，沾湿指缝，拉出细丝。</p>
+  <p class="p rise">牧宁越仰头，喉结暴露。顾低头含住那一点凸起，舌面压上去，再轻咬。痛与爽并行。齿印会留到明天，藏在衬衫领下，像私刑，像勋章。</p>
+  <p class="p rise">「看我。」牧宁越抓住他的下巴，强迫对视。仪表光里顾的瞳孔散，唇湿，像终于被允许饥饿的人，「别装哥。别装照顾。你现在在干什么，自己说。」</p>
+  <p class="p rise">顾眼睛湿，声音却稳，稳得发抖：「在摸你。在要你。在用手操你。在把『等到现在』变成现在——变成你射在我手里。」</p>
+  <p class="p rise">「早该。」牧宁越骂，又笑，笑意碎，「再说。」</p>
+  <p class="p rise">「我想了很久。」顾一边套弄一边说，语速乱，「东郊公路你下车的时候。你说冰上种不活的时候。你说哪会等到现在的时候。我硬着开车……回家自己解决，射的时候喊你名字。」</p>
+  <p class="p rise">「操。」牧宁越被这句话顶得腰弓，前液涌得更多。</p>
+  <p class="p rise">他反手探进顾的裤腰。硬热，跳动，尺寸让他口干——比想象更沉，顶端已经湿透。他上下套弄，拇指恶意地碾过铃口，听顾压抑的喘破成破碎的「宁越……宁越……」。从前那人连喘都要礼，现在破了音，像从湖冰下浮出的水。</p>
+  <p class="p rise">两根并在一起时，热度叠热度。柱身相贴，前液抹开，滑得不像话。耻。真实。牧宁越用两手拢住，顾的手覆上来，十指交缠着动作，像十指扣紧的另一种版本。囊袋相撞，轻响。车身随动作微微轻晃。</p>
+  <p class="p rise">车库远处有车驶过，光扫过车窗又消失。有一瞬牧宁越紧张到收紧手指，顾却更用力地吻他，把惊喘吞进嘴里。像整个世界短暂允许他们荒唐——允许两个成年男人在 B2 的阴影里，用手把多年的弦磨断。</p>
+  <p class="p rise">「宁越……我快——」顾额抵额，汗滴到他唇上，咸。</p>
+  <p class="p rise">「射。」牧宁越咬他下唇，血腥味又起，「留点妄念给我。留痕迹。射给我看——你不是只会守礼。」</p>
+  <p class="p rise">顾颤着到了。腰死死向前顶，性器在两人掌心跳动，温热溅在小腹与手上，量多，烫，一股接一股，弄脏衬衫下摆与顾自己的腹肌。那副失神的脸——眉心皱、唇微张、眼睛却还死死盯着他——刺激得牧宁越小腹抽紧。</p>
+  <p class="p rise">「看着我射。」牧宁越喘，「别闭眼。」</p>
+  <p class="p rise">顾睁着眼，手加快，技巧笨拙却狠。牧宁越咬着对方肩，布料被牙印陷进去，闷哼着释放——白浊射在顾的小腹与两人交缠的手指间，溅到仪表微光里，亮一瞬。西裤、衬衫、皮肤，一片狼藉。腿根还在抖。</p>
+  <p class="p rise">车里只剩喘息。腥甜。雾气在玻璃内侧凝了一层，像冬天呵气。汗的味道混着须后水与情欲，密不透风。</p>
+  <p class="p rise">很久，顾抽出纸巾，动作仍本能地轻——像还想照顾。擦他手指，擦他小腹，擦到一半被按住。</p>
+  <p class="p rise">牧宁越抓住他的手，按在自己心口。心跳乱得像鼓，隔着肋骨撞掌心。</p>
+  <p class="p rise">「别擦得像什么都没发生。」</p>
+  <p class="p rise">顾一顿，点头。把脏纸巾扔到一边，低头亲了亲他汗湿的额角，亲眼皮，再亲鼻尖，最后极轻地碰了碰他的唇——像补十七岁没敢补的那一公分，补完又补第二公分、第三公分，直到吻又深起来，却不再急着硬，只是确认：还在。人还在。脏还在。</p>
+  <p class="p rise">「还硬。」牧宁越气音笑，感觉到自己与对方半软的性器仍贴着，余热未散，「你还敢说等到现在。」</p>
+  <p class="p rise">「敢。」顾哑着，「酒店……还有更敢的。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">「去酒店。」牧宁越说。声音仍飘。</p>
+  <p class="p rise">顾看着他：「你喝了酒吗。」</p>
+  <p class="p rise">「半杯。清醒。」牧宁越扣扣子，手指黏，扣错一粒又重来，仍抖，「比任何时候都清醒。你要是现在说『明天』，我就真滚。滚到你再也打不通的号码。滚到下次见面我只当你是空气。」</p>
+  <p class="p rise">顾沉默两秒。发动引擎。安全带「咔」一声。暖风开到最大，像要吹干荒唐，又吹不干。</p>
+  <p class="p rise">「安全带。」他说，「我订过一间。本来……不敢用。今晚敢。套……庄晏艾提醒过，我们中途买。」</p>
+  <p class="p rise">牧宁越侧脸看他。仪表光里，顾的下颌仍紧，耳尖却红透，唇肿，像破戒的人，又像终于被允许靠近火的人。衬衫下摆湿痕隐约，是他的痕迹。</p>
+  <p class="p rise">红灯。</p>
+  <p class="p rise">牧宁越忽然问：「东郊那男孩，叫什么？」</p>
+  <p class="p rise">顾手在方向盘上收紧，指节发白：「……沈屿。」</p>
+  <p class="p rise">「还联系吗？」</p>
+  <p class="p rise">「没有。很久没有。」顾直视前方，喉结滚，「那不是你以为的长久。是我糟糕的阶段。我欠你一个完整的解释——但不是今晚在车里。今晚我想先……属于你。用手不够。我想进去。你要是肯。」</p>
+  <p class="p rise">牧宁越「呵」一声，妒意仍在，却被余韵压成可燃的闷。下腹又热，性器在半软里再度抬头，可耻。</p>
+  <p class="p rise">「那你最好解释得让我满意。」他低声，手伸过去，隔着裤子按了按顾又硬起来的形状，听对方吸气，「不然下次我不会只用手。我会做到你走不了。做到你叫我名字叫到哑。」</p>
+  <p class="p rise">顾侧目，眼里火没灭，胯却诚实地顶了顶他的掌心：「好。做到我走不了——我也想。宁越……松手。再按，红灯里我就要再射一次。」</p>
+  <p class="p rise">牧宁越抽回手，笑得狠：「忍着。利息。」</p>
+  <p class="p rise">绿灯。车驶入夜色。城市灯河在后视镜里拉长。</p>
+  <p class="p rise">手机震。庄晏艾：</p>
+  <blockquote class="msg rise"><p>车库监控别太激情哈。</p><p>酒店我就不问了。套记得买。</p><p>恭喜破处（精神上的）。</p></blockquote>
+  <p class="p rise">牧宁越回：</p>
+  <blockquote class="msg rise"><p>滚。</p></blockquote>
+  <p class="p rise">然后把手机扔掉，侧头看顾裴江的侧脸。唇肿。耳红。下颌紧。</p>
+  <p class="p rise">弦断了吗？</p>
+  <p class="p rise">没有。弦换成了另一种紧——通向床，通向答案，通向他等了太久的「有」。掌心里还留着对方精液干了的涩意。他没急着洗。</p>
+  <p class="p rise">他伸手，覆在顾握方向盘的手上。顾翻转掌心，十指扣紧。一路红灯，都没有松开。</p>
+  <p class="p rise">便利店霓虹亮起时，顾把车停在路边。「我下去买。」</p>
+  <p class="p rise">「一起。」牧宁越说，「看着你买。别像做贼。」</p>
+  <p class="p rise">顾耳尖更红，却拉着他的手下了车。套、润滑，放上收银台。收银员面无表情扫码。牧宁越偏要在袋口打开看一眼，确认型号，像确认某种宣战。</p>
+  <p class="p rise">「今晚，」他把袋子塞回顾手里，指尖擦过掌心，「你听我的，也听你的。做到我不想逃。」</p>
+  <p class="p rise">顾握紧袋子，声哑：「好。」</p>
+  <p class="p rise">夜风冷。袋里的塑料响。荒唐与郑重并排走回车上。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch3">← 东郊与告别</a><a href="#ch5">可以不是兄弟 →</a></nav>
+
+<section class="chapter" id="ch5" data-num="5" data-title="可以不是兄弟" data-anchor="ch5" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 5 章</div>
+    <h2 class="ch-title">可以不是兄弟</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">房卡贴上。灯自动亮到一半。落地窗外是 D 市的灯河，远，冷，与房内将起的热无关。地毯吸音，走廊的脚步被关在门外。</p>
+  <p class="p rise">门一关，世界只剩中央空调的低鸣与两人的呼吸。</p>
+  <p class="p rise">牧宁越把顾裴江按在门板上吻。齿与舌不再客气——车库里那次是撞，这次是拆。他咬开顾的唇，舌顶进去，卷着对方的舌吮，手已经在解大衣扣。顾回应得凶，手从他腰滑到臀，隔着西裤用力揉，五指陷进软肉，像确认这具身体真的允许、真的不会在下一秒说「滚」。</p>
+  <p class="p rise">皮带扣撞门板，一声轻响。髋骨相顶。两边都硬，硬得发疼。</p>
+  <p class="p rise">「套。」牧宁越喘着从口袋掏出便利店袋——塑料响，像宣战书。润滑也在。庄晏艾那句「记得买」居然有用。像预谋。像终于把「等到现在」写成购物清单。</p>
+  <p class="p rise">顾接过，耳尖红，喉结滚：「我……也可以。我准备过——心理上。生理上……你一碰我就硬，准备不了。」</p>
+  <p class="p rise">「你扩张过别人，没？」牧宁越眼红，话刺，膝盖顶进他两腿之间，碾那团硬，「沈屿？」</p>
+  <p class="p rise">顾顿住，诚实，目光不躲：「有过。但和你不一样。」</p>
+  <p class="p rise">「哪里不一样。姿势？时间？还是射在里面还是外面？」</p>
+  <p class="p rise">「别。」顾握住他的腰，额抵额，「我想让你舒服。我想看着你。不想赶。不想做完就驱人。我想……留下。在你里面留下，在你早上醒来时还在。」</p>
+  <p class="p rise">牧宁越骂了句脏的，把人拽向床。膝盖抵上床沿，两人一起倒下去，弹簧轻响。便利店袋掉在地毯上，套盒滚出来，银光一闪。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">衣服掉了一地。风衣、衬衫、西裤、内裤，像脱掉「牧总」与「裴江哥」的壳。赤裸相对时两人都喘了一下——不是害羞，是终于看见。</p>
+  <p class="p rise">灯光下顾的身体比晨间背心更直白：肩宽，腹紧，人鱼线没入耻毛，耳后旧疤。胸膛起伏。性器已硬得贴小腹，顶端发亮，青筋盘绕。牧宁越跨坐上去，掌心压住那层腹肌，感受它随呼吸起伏，像按住一头终于被允许出笼的兽。他故意用自己的硬去蹭对方的硬，柱身相贴，前液抹开，滑。</p>
+  <p class="p rise">「看清楚。」他说，声音哑，「你要给的人是我。不是门后那个。不是任何人。」</p>
+  <p class="p rise">「一直是。」顾握住他的腰，拇指摩挲髋骨凹陷，再滑到臀缝边缘，试探地按，「只有你配让我破戒破得这么彻底。宁越……让我扩。」</p>
+  <p class="p rise">润滑挤出，凉。指尖先在穴口打转，涂匀，再浅浅探入一个指节。牧宁越额头抵着顾的肩，疼，胀，异物感鲜明。呼吸乱成热气，喷在对方颈侧。顾停住：「太紧就——」</p>
+  <p class="p rise">「别停。」牧宁越咬他肩肉，齿印立刻红，「我等了不是为了听你当医生。继续。第二根也给我。」</p>
+  <p class="p rise">顾低笑一声，罕见的，带着情欲的哑。手指弯曲，找角度，第二指加入，缓慢撑开。内壁热，绞，像拒绝又像吞。他用空着的那只手握住牧宁越的性器，上下套弄，分散疼——茧擦过系带时牧宁越骂出声，又化成喘。</p>
+  <p class="p rise">直到第三指，前列腺被反复擦过。牧宁越腰一弹，脚趾蜷起，眼前发白，前液滴在顾小腹上，拉丝。</p>
+  <p class="p rise">「这里。」他抖着指自己的小腹内侧，又改口，「里面。你按的——那里。」</p>
+  <p class="p rise">「嗯。记住了。」顾加重那一点的碾压，听他腿根发抖，「叫出来。别忍。这里没有别人。」</p>
+  <p class="p rise">扩张耐心得像报复——报复「等到现在」。牧宁越被照顾得烦，又爽得腿软。他伸手去套弄顾的性器，听对方呼吸乱成碎片，顶端不断吐水，弄湿他整只掌心。</p>
+  <p class="p rise">「进来。」</p>
+  <p class="p rise">「再等——」</p>
+  <p class="p rise">「顾裴江。」牧宁越抬眼，汗湿，发贴额，眼尾红，「现在听不听？我要你进来。现在。」</p>
+  <p class="p rise">顾抽出手指，穴口一时空得发慌。他撕开套，橡胶气味淡，滚上自己时手抖。顶端抵住入口，缓慢推进。一寸。一寸。每进一点，两人都停半秒，呼吸同步。</p>
+  <p class="p rise">太满。太真实。</p>
+  <p class="p rise">牧宁越指甲掐进他背，留下月牙痕。顾全根没入时两人都喘，额抵额，鼻尖相蹭。囊袋贴着臀。泪不知是谁的——或者都是汗。</p>
+  <p class="p rise">「……在。」顾声音抖，像从胸腔最深处挤出来，「我在你里面。宁越，我整根都在。热……你绞得太紧。」</p>
+  <p class="p rise">「废话。」牧宁越笑得狠，眼却湿，内壁却不受控地收缩，把那根绞得更深，「动。证明你不是哥。是男人。是操我的人。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">节奏由慢到深。</p>
+  <p class="p rise">先是小幅抽送，让身体记住形状。润滑与肠液混合，水声羞人。床架轻响。肉体拍合。牧宁越被顶得向前，又被捞回怀里。顾的眼睛一直睁着，像怕闭眼这就是梦，又像兑现某句没说出口的誓：第一次时，要看着你。</p>
+  <p class="p rise">「叫我。」牧宁越喘，手抓着他的头发。</p>
+  <p class="p rise">「宁越。」</p>
+  <p class="p rise">「还有呢。」</p>
+  <p class="p rise">「……小越。」顾更深地一送，碾过那点，精确得像报复学习，「我的。我的人。我的穴——」</p>
+  <p class="p rise">占有从受方嘴里出来，反而烫。牧宁越反制，翻身把人压下，自己坐上去。连接处短暂抽离又坐下，吃到底时两人都闷哼。他主导起伏，疼里生出掌控感。汗滴在顾胸口，沿着腹肌沟滑下，没入交合处。他按着那道沟起落，像把自己写进对方身体里，每一下都又深又慢，故意收紧。</p>
+  <p class="p rise">「说你要我。」</p>
+  <p class="p rise">「要你。」顾仰头，喉结滚动，双手死死扣他胯骨，指节发白，「只要你。操我——让我操你——啊——宁越——」</p>
+  <p class="p rise">牧宁越故意绞紧。顾腰拱起，整个人像弓。</p>
+  <p class="p rise">体位再换。侧入时能接吻，舌与下身同频；顾抬起他一条腿，进得更深，每一下都蹭过那点。牧宁越的性器夹在两人小腹间摩擦，前液涂满腹肌。后入时他跪不住，上半身塌进枕头，听见自己陌生的声音——软，荡，一点都不「牧总」。顾俯身咬他后颈，力道克制又凶，像把「守礼」啃碎咽下。一手绕到前面套弄他，节奏与撞击同步：顶一下，撸一下，囊袋拍臀。</p>
+  <p class="p rise">「射给我看。」顾气音贴耳，汗滴在他背上，「我想看你因为我射。因为我在你里面——因为不是兄弟。」</p>
+  <p class="p rise">「谁……说是兄弟……」牧宁越骂，尾音却碎。</p>
+  <p class="p rise">高潮来得凶。他先到。痉挛绞紧，精液溅在床单与顾手指上，内壁疯狂收缩。顾被绞得闷哼，腰眼发麻，跟着释放，隔着套仍烫得他小腹发麻，像内里被灌满宣告——跳动，一股一股，久得像要把这些年的欲全射空。</p>
+  <p class="p rise">两人维持连接的姿势喘了很久。顾伏在他背上，心跳透过胸膛传来，乱，重。</p>
+  <p class="p rise">「别拔。」牧宁越哑声。</p>
+  <p class="p rise">「……好。」顾亲他肩胛，「再待一会儿。让我多在一会儿。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">事后。</p>
+  <p class="p rise">拔出时两人都轻颤。套摘下，打结，扔进垃圾桶——像某种仪式完成。顾想抱他去洗，被甩开又拉回——别用照顾掩盖刚刚发生的事。</p>
+  <p class="p rise">「一起。」牧宁越哑声，「看着我腿软。别装你很稳——你刚才抖得比我厉害。」</p>
+  <p class="p rise">顾耳尖红，却笑，把人横抱起来。牧宁越骂「谁抱」，腿却诚实圈住他的腰。</p>
+  <p class="p rise">浴室雾气里，两人挤在花洒下。热水冲掉黏腻，冲过红痕与咬印。顾的手指穿过他的头发，轻，却不再「什么都没有」。清洗后面时牧宁越靠着瓷砖低喘，性器半软贴着腿根，像余震；顾的指节很轻，像道歉，又像眷恋。</p>
+  <p class="p rise">「疼吗。」顾问，吻他湿发。</p>
+  <p class="p rise">「疼。」牧宁越老实说，「走路会记得。爽也是真的。别道歉。」</p>
+  <p class="p rise">「没想道歉。」顾从身后抱紧他，硬又有抬头的趋势，贴着他臀缝，「想说谢谢。让我要你。让我……不是哥。」</p>
+  <p class="p rise">「硬什么。」牧宁越抬肘撞他，没用力，「休息。我又不是永动机。」</p>
+  <p class="p rise">「知道。」顾笑，把下巴搁在他肩上，「它比我诚实。它也等了很久。」</p>
+  <p class="p rise">回到床。新换的被单。沉默不是裂，是满。空调低鸣。腿间残留的胀与空并存。</p>
+  <p class="p rise">牧宁越盯天花板：「我们现在算什么。」</p>
+  <p class="p rise">顾侧躺看他，手指在他小腹画圈，画过刚射过的痕迹：「你定。」</p>
+  <p class="p rise">「我定你就听？」</p>
+  <p class="p rise">「听。」顾顿了顿，「但有一条：别再说美男计。别再说我是棋。我若是棋，今晚就是我自己走下的。走到你床上。走到你里面。」</p>
+  <p class="p rise">牧宁越鼻子一酸，笑骂：「油嘴。床上话术。」</p>
+  <p class="p rise">「不会。」顾认真，拉过他的手按在自己心口，「只有你。床上。床下。射的时候喊的名字，只有你。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">手机在地毯上震。牧宁越懒得看，腿还软。顾替他捞起来，屏幕亮：未知号码，随即挂断。又一条短信跳进——</p>
+  <p class="p rise">不是庄晏艾。</p>
+  <p class="p rise">系统显示原号段。内容极短：</p>
+  <blockquote class="msg rise"><p>裴江哥，东西还在你家吗？我明天路过东郊取。</p></blockquote>
+  <p class="p rise">牧宁越盯着那行字，血又往头上涌。刚做过爱的身体瞬间绷紧，内里那点被填满的余韵被妒意撕开。</p>
+  <p class="p rise">顾脸色白了：「我可以解释——」</p>
+  <p class="p rise">「明天。」牧宁越把手机扣死，翻身压住他，眼危险，腿卡进他两腿之间，感觉到对方又硬了一点——该死的诚实，「今晚你只许想我。想我怎么操你——不对，想我怎么被你操，也想我怎么回去骑你。明天……我们一起听他怎么叫你哥。叫完，你用身体还我。」</p>
+  <p class="p rise">顾握住他的手，放在自己心口。心跳乱得像要撞出来。性器顶着他的大腿，热。</p>
+  <p class="p rise">「好。一起。」他顿了顿，哑，「取完，门锁换过，人清干净。只留你能开的门。今晚……再来一次？轻一点。我想抱着你睡，还在你里面——用套，不弄伤你。」</p>
+  <p class="p rise">牧宁越骂他变态，却把腿张得更开。</p>
+  <p class="p rise">第二次更慢。润滑再补。进入时两人都「嘶」了一声——肿，敏，却仍要。顾从正面进，眼睛一直睁着，每一下都浅而深地磨那一点。牧宁越被磨得眼角湿，抓着他的背，射得比第一次稀，却更长。顾射在套里时咬着他的肩，闷哼他的名字，像立誓。</p>
+  <p class="p rise">窗外城市无眠。房间里两具刚确认过彼此的身体交叠。牧宁越把脸埋进他颈窝，咬了一口，不重，像盖章。腿间湿，心里更湿。</p>
+  <p class="p rise">可以不是兄弟。</p>
+  <p class="p rise">可以是更脏、更真、更疼的关系。</p>
+  <p class="p rise">而门——东郊那扇——即将再次被敲响。妒意已经在余韵里发芽。他知道明天会很难看。也知道他不会退。</p>
+  <p class="p rise">手指插进顾的指缝，扣死。</p>
+  <p class="p rise">「睡。」他说，「明天让你疼。今天……你先欠着。」</p>
+  <p class="p rise">顾「嗯」，把人搂紧。半软的性器贴着他的腿根，像未说完的句子。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch4">← 签售会后</a><a href="#ch6">开门的人 →</a></nav>
+
+<section class="chapter" id="ch6" data-num="6" data-title="开门的人" data-anchor="ch6" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 6 章</div>
+    <h2 class="ch-title">开门的人</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">东郊的楼还在。外墙新刷过，门旧。风比城里硬，灌进领口像细刀。</p>
+  <p class="p rise">牧宁越一夜睡不实。腿间还残留被进入的胀与钝痛，每动一下都想起顾睁着眼顶进来的样子——可短信里那句「裴江哥」像钉子，把余韵钉穿。酒店晨光里他看着顾洗脸、穿衣服，动作仍稳，耳尖却一直红——像做了错事的人去赴一场必须赴的局。后颈有他的咬印，衬衫领遮不住时，顾会下意识抬手去碰。</p>
+  <p class="p rise">「我可以自己去。」顾说。</p>
+  <p class="p rise">「想得美。」牧宁越扣风衣，嗓子还哑，「门是你开的，人是你睡过的，解释是你欠的。我到场。带着你昨晚射在我里面的感觉到场。」</p>
+  <p class="p rise">顾耳尖更红，没辩。</p>
+  <p class="p rise">车里沉默。收音机关着。座椅震动传到还敏感的尾椎，牧宁越并拢腿，烦。他盯着窗外树影，脑子里循环「裴江哥」三个字，循环到想吐，又循环到硬——妒意与欲搅在一起，恶心，诚实。</p>
+  <p class="p rise">沈屿来得准时。牛仔外套，头发潮，比记忆里更干净一点——像努力把自己过成「路过取物」的人，而不是床伴。手里空着，像真的只是来拿东西。</p>
+  <p class="p rise">看见门口两个人，他明显愣住。目光在顾与牧之间跳，最后落在牧宁越的风衣、表情、以及顾颈侧未遮全的红痕上，识趣地收了笑。</p>
+  <p class="p rise">「裴江哥。」他先喊顾，再对牧点头，「您好。」</p>
+  <p class="p rise">礼貌。刺耳。像在别人的故事里客串一句「哥」。像提醒：这张嘴也这样叫过，也许在床上叫过。</p>
+  <p class="p rise">顾声音平：「东西在箱子里。钥匙——门锁换过了。你只取物。」</p>
+  <p class="p rise">沈屿扯了下嘴角：「也是。该换。」</p>
+  <p class="p rise">纸箱不大。几件衣服，一个旧充电器，一本书。像一段关系被折叠成可邮寄的体积。牧宁越插袋而立，不说话。让场子先烧。风灌进楼道。他盯着沈屿接过箱子时与顾短暂相触的指尖——一瞬，却够他血往头上涌。</p>
+  <p class="p rise">「取完就走。」顾把箱递过去，手收得快，「以后不必联系。号我会换。」</p>
+  <p class="p rise">沈屿抱箱，沉默两秒：「那晚……我开门，是不是害你们——」</p>
+  <p class="p rise">「不是你的事。」顾打断，仍礼，却硬，「是我没处理干净。把不确定的人留在不确定的门后。对不起。」</p>
+  <p class="p rise">「哥，我们本来也不是……」沈屿看了一眼牧，识相地改口，「算了。祝福。真的。」</p>
+  <p class="p rise">脚步下楼。箱角磕到墙。声音远。楼道空了。只剩两人和旧门。风声像耳鸣。</p>
+  <p class="p rise">牧宁越才开口，笑意冷：「『裴江哥』叫得真亲。床上也这么叫？」</p>
+  <p class="p rise">「宁越——」</p>
+  <p class="p rise">「上楼。」他眼红，钥匙——顾的——在他掌心转，金属棱硌进肉，「你不是说解释吗。解释完，用别的还。用你下面那张嘴，用你里面——还。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">旧房空了大半。窗帘透光。床垫还在，像某种残忍的证物。灰尘在光柱里浮。空气有久无人住的干味，混着一点旧木质。</p>
+  <p class="p rise">顾站在窗前，背影直。像答辩。窗外是东郊的灰与远，湖的方向隐约发亮。</p>
+  <p class="p rise">「沈屿。短暂的性关系。没有承诺。没有同居约定。」他一字一句，「撞见你那天，我已经决定结束。他只是来过夜——听起来像借口，但是真的：取充电器，顺便睡一晚。我表情默认，因为我心虚。心虚的不是爱他，是你看见了我最难看的样子：我没有等你，我用别人填。用身体填空虚。脏。」</p>
+  <p class="p rise">牧宁越靠墙，笑，风衣未解：「最难看？你躺在别人身下更难看吧。他摸过你这里——」目光扫过顾的胸、腹、胯，「你叫过吗。叫裴江哥，还是叫别的。」</p>
+  <p class="p rise">顾闭了闭眼：「如果你要细节，我可以说次数、姿势、有没有接吻。但那对你不公平，也对我——我更想把力气留在你身上。现在。」</p>
+  <p class="p rise">「闭嘴。」牧宁越走过去，靴子踩在空房间里回声硬。他抓住顾的领子，布料勒进掌心，把人拽近，「我不要细节。细节我会吐。我要你现在只属于我。用身体还。用叫床还。用『我爱你』还。用你夹紧我的时候还。」</p>
+  <p class="p rise">吻砸下来。不是车库的急，不是酒店的深，是咬。下唇被咬破，铁锈味立刻漫开。顾吃痛，却更深地回吻，手抓紧他的风衣，像怕被推开，又像把自己献上去。</p>
+  <p class="p rise">衣服撕扯。扣子崩到地板，滚进墙角。风衣落地。衬衫半挂在臂弯。纸箱的影子还在门外走廊——沈屿刚走的走廊。吃醋让牧宁越的动作又凶又乱：把人按在墙上，墙皮凉，顾的背一颤；手探入裤腰，直接摸到臀缝，指尖沾了点随身带的润滑（酒店顺的小包），草草扩张两根指节，只够进入。</p>
+  <p class="p rise">「套。」顾喘，眼湿，「宁越，套——」</p>
+  <p class="p rise">「知道。」牧宁越咬牙撕开，滚上自己。顶端抵住，没有太多温柔，一顶到底。</p>
+  <p class="p rise">「疼？」</p>
+  <p class="p rise">「疼。」顾仰头，喉结滚动，眼尾湿，「继续。我要你进来。把别人顶出去。用力。」</p>
+  <p class="p rise">墙冷。人烫。内里又热又紧，像昨夜之后仍肿着，却死死绞住。牧宁越盯着他的脸，看疼，看爽，看那双总是守礼的眼睛终于湿、终于乱、终于只映他一个。撞击深而狠，肉体拍墙，啪、啪、啪，像要把沈屿、M 市、门轴声、那声「裴江哥」全顶出去。</p>
+  <p class="p rise">「叫我。」</p>
+  <p class="p rise">「宁越——」</p>
+  <p class="p rise">「谁是你的。」他顶到最深，停住，碾，「说。」</p>
+  <p class="p rise">「你。」顾腿缠上他腰，鞋掉了一只，脚跟磕他的背，「只有你。沈屿不是。谁都不是。啊……那里——再顶——」</p>
+  <p class="p rise">「再说。大声。这破房子听不见也要说。」</p>
+  <p class="p rise">「我爱你。」顾第一次把这三个字砸出来，带着哭音，破碎，每被顶一下就碎一次，「我爱你。当年走，不是不选你。是配不上。现在……你要是还肯要，我脏也给你。整个人。里面外面。啊——宁越——」</p>
+  <p class="p rise">牧宁越动作一顿，额抵额，汗滴进两人眼睛。随即更狠。爱意让妒意燃烧得更亮。他把人从墙上抱到床垫上，床垫咯吱，弹簧旧，像笑。压上去，抬起顾的双腿压向胸前，进得更深。顾的性器在两人小腹间甩动，顶端不断吐水，打湿腹肌。</p>
+  <p class="p rise">「摸你自己。」牧宁越喘，「摸给我看。像你一个人想我的时候那样。」</p>
+  <p class="p rise">顾伸手握住自己，上下套弄，茧摩擦铃口，喘得丢人。牧宁越盯着那只手——也曾被别人看见吗——妒意一紧，腰更凶，每一下都撞到囊袋拍臀。</p>
+  <p class="p rise">「射。」他命令，「先射。射在自己肚子上。盖掉旧痕迹。」</p>
+  <p class="p rise">顾腰弓起，白浊溅上小腹与胸，有几滴甚至溅到自己下颌。狼狈，真实，美。内壁痉挛绞紧，牧宁越被绞得眼前发黑，咬着他肩闷哼，隔着套射进最深处——跳动，久，像要把占有权射进肠壁。</p>
+  <p class="p rise">墙后若有邻居，也顾不上。空房间只剩喘息与床垫的余震。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">第一次不够。</p>
+  <p class="p rise">妒意还烧。牧宁越把套换了，润滑再补，把人翻过去，后入。顾跪在旧床垫上，脸埋进臂弯，背脊漂亮的沟在光里起伏。进入时两人都「嘶」——肿，敏，疼，却仍要。</p>
+  <p class="p rise">「慢……」顾抖。</p>
+  <p class="p rise">「慢给你。」牧宁越俯身咬他后颈，盖住自己昨夜的印，又盖新的，「沈屿见过你这样吗。」</p>
+  <p class="p rise">「……见过。」顾诚实，哭音，「但不是这样。不是你。不是爱。」</p>
+  <p class="p rise">「操。」牧宁越被这句话刺得又硬又疼，顶得更深，「再说。」</p>
+  <p class="p rise">「只有你是爱。」顾回手抓住他的大腿，「只有你让我愿意疼。愿意叫。愿意——啊——开门只给你。」</p>
+  <p class="p rise">第二次射精时牧宁越几乎站不住。他拔出来，摘套，打结，扔到角落——像扔掉一段不该存在的历史。顾还跪着，腿根发抖，精液与润滑混在腿内侧，亮。牧宁越用纸巾擦他，动作由凶转轻，擦着擦着，手抖。</p>
+  <p class="p rise">「疼吗。」他问，声哑。</p>
+  <p class="p rise">「疼。」顾翻身躺下，拉他倒下，额头相抵，「值得。再疼也比你走值得。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">事后两人坐在空房间地板上。烟——牧点了，顾没拦，只把窗推开一条缝。冷风灌入，冲淡情欲气味：精液、汗、旧灰尘、一点血丝（唇上的）。</p>
+  <p class="p rise">牧宁越看着顾身上的痕迹：颈、肩、腕、腿根内侧的指印。占有写得很丑，也很清楚。</p>
+  <p class="p rise">「房卖不卖？」他问。</p>
+  <p class="p rise">「卖。」顾嗓子哑，几乎说不出完整句，「或者砸了重建。随你。钥匙给你一把——新锁的。这张床垫……扔掉。」</p>
+  <p class="p rise">「随我的事多了。」牧宁越弹烟灰，烟灰落在地板上像细雪，「从今往后，门只能我开。号只能我存。『哥』只能我在床上叫着玩——你别让别人叫。叫了，我操到你不敢应。」</p>
+  <p class="p rise">顾「嗯」。停半秒，眼红：「你也可以叫我名字。不用哥。叫裴江。叫的时候……我更硬。」</p>
+  <p class="p rise">「偶尔。」牧宁越侧头看他，伸手抹掉他下颌未干的白浊，指腹擦过唇角，「裴江。」</p>
+  <p class="p rise">顾眼眶又红了。性器在半软里轻轻跳了一下。诚实得可恨。</p>
+  <p class="p rise">手机响。牧宁越扫一眼，脸色变了：来电显示「父亲」。</p>
+  <p class="p rise">他没接。挂断。短信随即到：</p>
+  <blockquote class="msg rise"><p>下周你母亲忌日。回来一趟。裴江若在 D 市，一起。</p></blockquote>
+  <p class="p rise">烟烫到手。他「嘶」一声，掐灭。</p>
+  <p class="p rise">顾看见屏幕，安静：「我可以不去。」</p>
+  <p class="p rise">「去。」牧宁越声音冷，却握住他的手——脏还没洗干净的那种握，精液干了的涩与汗混在一起，「正好问问他，当年送你去 M 市，是不是一盘棋。也问问你——」他盯着顾，「你跟他，到底谁更像一家人。答案我要听你的，不是听他的。床上说的『我爱你』，饭桌也要站得住。」</p>
+  <p class="p rise">顾反扣他的手，把指节送到唇边吻了一下，咸：「我跟你是。其余的，我们当面拆。忌日我站你身后。饭桌我站你身边。床上……我在你下面，也在你里面。」</p>
+  <p class="p rise">楼外风大。东郊的冰湖在远处发亮。</p>
+  <p class="p rise">开门的人走了。</p>
+  <p class="p rise">关门的人，第一次决定一起面对下一扇门——父亲的门。</p>
+  <p class="p rise">下楼时牧宁越回望那扇旧门。漆剥落。像一段可以卖掉的过去。腿间还疼，每一步都提醒：占有发生过，真的。</p>
+  <p class="p rise">「走。」他说，「回市区。洗澡。然后……再做一次。温柔的。我补偿你墙上的伤。让你知道吃醋炮之外，还有我。」</p>
+  <p class="p rise">顾笑，低，哑，走路微跛，却握紧他的手：「好。听你的。」</p>
+  <p class="p rise">车里。暖风。沉默不再是裂。顾把座椅放倒一点，闭眼，喉间还有未散的喘。牧宁越开车，红灯时侧头，伸手按了按他的腿根内侧——指印还在。</p>
+  <p class="p rise">「疼就说。」</p>
+  <p class="p rise">「说了。」顾睁眼，笑，「疼。还要。下次轻一点……或者再狠一点。你定。」</p>
+  <p class="p rise">绿灯。车驶离东郊。</p>
+  <p class="p rise">这一次，听，不是逃。是留下。</p>
+  <p class="p rise">是用身体写过的合同：门只开给一个人。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch5">← 可以不是兄弟</a><a href="#ch7">父亲的棋 →</a></nav>
+
+<section class="chapter" id="ch7" data-num="7" data-title="父亲的棋" data-anchor="ch7" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 7 章</div>
+    <h2 class="ch-title">父亲的棋</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">Z 城的冬天比 D 市干。风刮脸生疼，像细沙。</p>
+  <p class="p rise">高铁上顾裴江睡了一程，醒时窗玻璃结了薄雾。牧宁越把热咖啡塞进他手里，没说话。忌日的气氛从上车起就挂在两人肩上，沉，却不是疏离。</p>
+  <p class="p rise">「紧张？」牧宁越问。</p>
+  <p class="p rise">「有一点。」顾诚实，「怕你受伤。也怕我站错位置。」</p>
+  <p class="p rise">「站我旁边就行。」牧宁越看窗外灰白田野，「别站我爸旁边替他圆。」</p>
+  <p class="p rise">顾「嗯」了一声，拇指摩挲杯壁。</p>
+  <p class="p rise">下车后冷气灌进领口。墓地的柏树整齐，白菊在摊上成捆卖。牧宁越买了两束，分一束给顾。顾接得很稳，像接一件易碎的东西。</p>
+  <p class="p rise">骨灰盒前，照片里的苗老师在笑。牧宁越站得很直，像站在提案台后。顾在半步后，黑衣，头微低——像无数年前在厨房写作业的少年，又完全不是。他把小菊放到桌角时，指节发白。</p>
+  <p class="p rise">牧父鬓白，大衣旧而干净，目光仍锐。三炷香。烟雾升，又散。没有人哭出声。哭过太多次的人，忌日只剩仪式与骨头里的疼。</p>
+  <p class="p rise">「裴江也来了。」牧父开口像开会，「好。」</p>
+  <p class="p rise">「叔叔。」顾喊得稳。</p>
+  <p class="p rise">牧宁越没看父亲。他看母亲照片：笑，温，像还在说「教他拼音」。风把烟灰吹歪，他伸手护了一下，动作下意识。</p>
+  <p class="p rise">上香时，顾的手很稳。牧宁越忽然想起巧克力的锡纸、煤气罐、替值日的扫帚——那些被母亲缝进日常的针脚。他鼻酸，却把表情压回去。忌日不是哭给谁看的场合。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">晚饭在老宅。菜是牧父请人做的，整齐，无记忆。桌上多一副碗筷，像临时承认「多一个人」。</p>
+  <p class="p rise">酒只开了一点。牧父先夹菜给顾，动作生硬：「吃。坐火车累。」</p>
+  <p class="p rise">「谢谢叔叔。」</p>
+  <p class="p rise">话到第二巡才露刀。</p>
+  <p class="p rise">「听说你在 D 市发展不错。」牧父对顾，「宁越公司也稳。年轻人……稳定点好。」</p>
+  <p class="p rise">牧宁越放下筷子，声冷：「稳定指什么。结婚？还是别搞男人。」</p>
+  <p class="p rise">空气死。碗筷声停。厨房水龙头不知谁忘关，滴答，滴答。</p>
+  <p class="p rise">牧父看他：「我知道你的事。不至于要你改。我只问一句——裴江是你自己要的，还是你又要跟我作对。」</p>
+  <p class="p rise">「作对。」牧宁越笑，笑意不达眼底，「我这辈子最会的就是这个。您安排的人生我偏不走。大学、专业、回不回 Z 城——我偏要自己选。这次也是。」</p>
+  <p class="p rise">「宁越。」顾低声，膝在桌下轻轻碰他。</p>
+  <p class="p rise">「你别劝。」牧宁越盯父亲，「当年送他去 M 市，谁的棋？您一推荐，他就走。我算什么。旁白？观众？还是被保护得很好的既得利益者。」</p>
+  <p class="p rise">牧父沉默片刻。筷子搁下，整齐，像收一副工具。</p>
+  <p class="p rise">「我的建议。不是买卖。」他声音仍硬，却慢了，「他家断了顶梁，你要他复读，拿什么养弟养母。我同学那边缺人手，他肯干，就走了。你以为我拆你们？我是怕他拖死在 Z 城，也怕你用感情绑架一个要养家的人。你妈若在，大概会骂我手伸太长——但她也会让他先活下来。」</p>
+  <p class="p rise">「您怕的事真多。」</p>
+  <p class="p rise">「我错的部分，我不辩。」牧父看向顾，目光像审图纸，「裴江，你呢。你跟我儿子，是认真，还是报恩报错地方。报恩可以换方式，不必用身子。」</p>
+  <p class="p rise">话难听。桌下牧宁越拳头紧，指节咯吱。</p>
+  <p class="p rise">顾抬眼。第一次在牧父面前不低眉。灯光把他眼下的青照得很清楚，却衬得声音更稳：</p>
+  <p class="p rise">「认真。不是报恩。恩我会另报——钱、事、力，都可以。宁越是我想过余生的人。身子是我愿意给的，不是交易。叔叔若把我当棋，我退出棋盘；若允许我当人，我站在他身边。」</p>
+  <p class="p rise">牧父盯着他看了很久。烟雾似的沉默后，只说：「苗老师喜欢你。她若在，大概……不拦。我也不拦。但别再一声不吭消失。消失一次，他会碎一次。我看过。高考那年看过，东郊那年——我听说过。」</p>
+  <p class="p rise">不是祝福。是松动。是父亲拙劣的关心，裹在硬壳里。</p>
+  <p class="p rise">牧宁越耳膜轰鸣。他以为会有更丑的仗。仗打成这样，他反而不知把怒气往哪放——像出拳落空，拳风刮在自己脸上。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">回酒店的车里，沉默先裂开。</p>
+  <p class="p rise">「你软。」牧宁越盯着前方红灯。</p>
+  <p class="p rise">「我礼。」顾解安全带的手一顿，「礼给叔叔。硬给你。你分不清？」</p>
+  <p class="p rise">「我分得清你每次都先顾别人。顾我爸，顾场面，顾『配得上』。什么时候先顾我想听的。」</p>
+  <p class="p rise">「那你想听什么。」</p>
+  <p class="p rise">「听你说他放屁。听你说棋是他下的，你不是棋。」</p>
+  <p class="p rise">顾侧脸看他，眼底有火：「我刚才说了。你只听见软。」</p>
+  <p class="p rise">门甩上。走廊地毯吸音。房卡贴上，灯亮一半。</p>
+  <p class="p rise">冷战从玄关烧到阳台。牧宁越抽烟，缝开一条，冷风灌入。烟雾散进夜色。Z 城的天际线比 D 市矮，灯也稀。</p>
+  <p class="p rise">顾洗完澡出来，水汽未消，只围一条毛巾。他走过去，把烟抽走掐灭，指腹蹭过牧宁越的唇——烟草苦。</p>
+  <p class="p rise">「你怒你爸。」顾说，「别拿我当出气口。要骂，骂完。要做，看着我做。」</p>
+  <p class="p rise">「谁要做。」</p>
+  <p class="p rise">身体已经硬了。气头上的硬更烫，顶在西裤里诚实得可笑。</p>
+  <p class="p rise">吻带着水汽与不容拒绝。牧宁越咬他，被按在玻璃上。冷的玻璃，热的皮肤。城市灯火在背后模糊成一片。</p>
+  <p class="p rise">「看着我。」顾喘着，额抵额。</p>
+  <p class="p rise">扩张草草，润滑凉，进入时两人同时抽气。牧宁越抓着他的背，留下痕，像把白天没落下的拳换成指甲。「我站你。」顾每顶一下像宣读，声音哑，「永远站你。你爸的棋不是我。我是我。你的。」</p>
+  <p class="p rise">「再说。」</p>
+  <p class="p rise">「我爱你。」更深，「不是报恩。不是棋。是爱。」</p>
+  <p class="p rise">节奏由狠转深。气在肉体里烧完，剩诚实的喘。射精后两人滑坐在地毯上。汗。笑。一点狼狈的温柔。窗帘没拉严，夜风冷，吹在湿皮肤上起栗。</p>
+  <p class="p rise">牧宁越把脸埋进他颈窝，闷声：「忌日明年还来。你跟我。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「我爸若再试探，你别先软。」</p>
+  <p class="p rise">顾想了想，笑意低：「我软的是礼。硬的是你。你记住这句就行。别的可以再吵。」</p>
+  <p class="p rise">牧宁越踹他一脚，又靠过去。听心跳。从乱到齐。像两台仪器重新校准。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">回 D 市的飞机上，云层厚。</p>
+  <p class="p rise">顾睡着，睫毛安静。牧宁越看窗外，想起高中某个夏天——还没走到「做」，已经走到「想」。那些没说出口的欲，一直堵在「哥」这个称呼后面。忌日的白菊、父亲的松动、玻璃上的雾，叠在一起。</p>
+  <p class="p rise">他掏出手机记事，写下一行：</p>
+  <blockquote class="msg rise"><p>补完那些年。说给他听。</p></blockquote>
+  <p class="p rise">又补一行：</p>
+  <blockquote class="msg rise"><p>礼可以给世界。硬只给我。</p></blockquote>
+  <p class="p rise">落地。行李转盘缓慢。短信。庄晏艾：</p>
+  <blockquote class="msg rise"><p>听说见家长了？活着就回个消息。</p><p>詹姆士问你们要不要双人采访（开玩笑）。</p><p>认真的：别再东郊式分手。烦。</p></blockquote>
+  <p class="p rise">牧宁越回：</p>
+  <blockquote class="msg rise"><p>滚。还活着。</p></blockquote>
+  <p class="p rise">顿了顿，又发：</p>
+  <blockquote class="msg rise"><p>谢。</p></blockquote>
+  <p class="p rise">庄晏艾秒回一串呕吐表情，再加一句：</p>
+  <blockquote class="msg rise"><p>下次局带对象。我要公开展示业绩。</p></blockquote>
+  <p class="p rise">出关处人流涌。顾裴江牵住他的手。公然。不躲。掌心干燥，有力。</p>
+  <p class="p rise">牧宁越耳尖红，手却反扣紧。有人侧目，他当没看见。</p>
+  <p class="p rise">棋盘还在。</p>
+  <p class="p rise">他们决定不当棋——当两枚自己走位的子。走位可以慢，方向必须一致。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch6">← 开门的人</a><a href="#ch8">那些年补完 →</a></nav>
+
+<section class="chapter" id="ch8" data-num="8" data-title="那些年补完" data-anchor="ch8" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 8 章</div>
+    <h2 class="ch-title">那些年补完</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">雨夜。D 市的雨下得很密，公寓落地窗像一整面在哭。</p>
+  <p class="p rise">外卖盒堆在茶几，纸袋边沿油渍。综艺声音很吵，笑声罐头一样，两人都没认真看。顾裴江洗完碗出来，头发还湿，随意擦了两下，就挨着牧宁越坐下，小腿叠上来。</p>
+  <p class="p rise">广告间隙，牧宁越把声音按静。雨打玻璃，细密，像催。</p>
+  <p class="p rise">「顾裴江。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「高二暑假。你家平房。蚊香。」他盯着电视黑屏里的倒影——两人叠在一起的轮廓，「你还记得吗。」</p>
+  <p class="p rise">顾身体微顿。手还搭在他小腿上，指尖收紧，又松开：「记得。电扇坏了一个档。碟是盗版，字幕错字很多。」</p>
+  <p class="p rise">「我补完。」牧宁越说，嗓子有点干，「那些年我没敢说的。你听完再决定要不要继续跟我过——当然你拒绝我就绑你。」</p>
+  <p class="p rise">顾低笑，把下巴搁到他肩上：「听。绑也行。绳子我自备。」</p>
+  <p class="p rise">「油嘴。」</p>
+  <p class="p rise">「你先说。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">那一年他们十七。热。</p>
+  <p class="p rise">Z 城的夏夜像蒸笼。顾弟去亲戚家，顾母上夜班。平房里电扇转出悲鸣，风叶上绑着布条，被吹得啪啪响。两人挤在窄床看盗版碟，剧情记不清，只记得手臂相贴的汗，皮肤粘皮肤，像某种不被命名的亲密。</p>
+  <p class="p rise">荧幕光一闪一闪。女主角在哭。牧宁越先硬的——毫无预兆，像叛变。羞得要命，抓过练习册盖住。页角被汗浸弯，数学公式糊成一片。</p>
+  <p class="p rise">顾以为他热，赤脚去倒水。杯沿碰牙，轻响。回来看见他耳根红透，呼吸不匀，练习册挡得欲盖弥彰。</p>
+  <p class="p rise">「不舒服？」</p>
+  <p class="p rise">「没有。」</p>
+  <p class="p rise">沉默。电扇。蚊香的烟直线上升，又被窗缝的风吹断。外面有人骑自行车铃，由近及远。</p>
+  <p class="p rise">顾忽然很轻地问：「是不是……那里。」</p>
+  <p class="p rise">牧宁越要炸。想逃。腿却软。面子像纸。顾却把灯关了，只留走廊细光——那光像一条窄路，照不清表情，照得清呼吸。</p>
+  <p class="p rise">他坐回床沿，距离礼貌：大约一拳。声音哑：</p>
+  <p class="p rise">「我也会。正常。别怕。」</p>
+  <p class="p rise">「你怎么会！」牧宁越几乎是吼，又压成气音。</p>
+  <p class="p rise">「……会。」顾停半秒，像在选择要不要把下一句也交出去，「想着不该想的人，也会。」</p>
+  <p class="p rise">「谁。」</p>
+  <p class="p rise">「……不能说。」</p>
+  <p class="p rise">那晚他们谁都没碰谁。只是并排躺着，呼吸乱，裤裆各自诚实。像两头被关在「兄弟」笼子里的兽。牧宁越听见自己心跳，也听见顾的。两团乱。他想伸手，手心却全是汗，最后只抓住床单。</p>
+  <p class="p rise">次日清晨，牧宁越在公共厕所解决自己，咬着袖口，脑子里全是顾关灯时的侧脸与那句「不该想的人」。射出来的瞬间恨自己，也更清楚：不是兄弟。是爱。是欲。是结缔长成的瘤——疼，割不掉。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">高三。一次模拟考后。</p>
+  <p class="p rise">天台。风大。夕阳把水泥台面染成橘红，远处操场有人跑步，哨声尖。顾成绩稳，牧仍第一。两人分一瓶汽水，瓶口轮流，间接的吻。甜腻，气泡刺喉。</p>
+  <p class="p rise">「考上了就……」牧宁越说，脚尖碾水泥缝里的草，「同一座城。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「你别突然消失。」</p>
+  <p class="p rise">顾笑，眼弯：「消失去哪。我又不是风。」</p>
+  <p class="p rise">牧宁越盯着他的唇，忽然凑近。只差一公分。汽水甜。呼吸交缠。风把他的额发吹起来。顾没有退，也没有进。像后来无数次那样，把选择权递还——也像用礼筑墙。墙很矮，却够把少年挡住。</p>
+  <p class="p rise">「小越，」他气声，几乎贴着嘴，「再近，我就不是哥了。」</p>
+  <p class="p rise">「那你当什么。」</p>
+  <p class="p rise">「……等你成年。等我配得上。等我能养自己，再养你——如果需要。」顾闭了闭眼，「现在亲你，我会怕。怕明天在你家看见叔叔，怕自己一事无成还贪你。」</p>
+  <p class="p rise">牧宁越当时不懂「配得上」有多重。只觉得被拒绝。赌气走了。汽水瓶扔进垃圾桶，砰的一声，回声在楼梯间滚。</p>
+  <p class="p rise">后来顾父倒下。M 市。门。沈屿。一切都从「配得上」里长出畸变。他在 D 市做成牧总，顾在别处把自己活成「配得上」的形状——可中间的年，碎了，碎在东郊的门轴声里。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">现时。雨更大。雷在远处闷响。</p>
+  <p class="p rise">顾听完，眼红。把牧宁越拉进怀里，下巴搁在他发顶。手臂收得很紧，像补十七岁不敢收的紧。T 恤被雨声衬得更软。</p>
+  <p class="p rise">「十七岁的我，」顾说，嗓子涩，「想亲你，想得睡不着。不敢。怕脏了你，怕你爸，怕自己一事无成还贪你。天台那一公分，我后悔了无数次。每次梦见汽水，都是甜的。」</p>
+  <p class="p rise">「现在呢。」</p>
+  <p class="p rise">「现在贪。」顾低头吻他，深，舌缠上来，带着牙膏与一点哭过的咸，「合法的、肮脏的、你允许的贪。成年了。配不配得上由你判。我想当的不是哥，是你的人。」</p>
+  <p class="p rise">牧宁越哼笑，眼也湿，手已经去解他的裤绳：「判了。配。滚床单。利息从天台那一公分算起。」</p>
+  <p class="p rise">他们在沙发上做。慢。像把那一公分补上，再补成一寸、一掌、一整夜。扩张耐心，指节压过熟悉的点，听牧宁越骂半句又化成喘。进入时牧宁越腿挂在他臂弯，脚背绷直，笑得喘：「早这样……哪会等到现在。」</p>
+  <p class="p rise">顾动作一深，报复性的，顶得他骂出声，又顶得他笑出声：「那就补利息。本金加利息，今晚还清一点——还不清就分期。余生分期。」</p>
+  <p class="p rise">雨声盖过喘息。肉体拍合声闷在沙发里。毯子滑到地。高潮时牧宁越咬着他的肩，顾射在套里，两人缠成一团，汗把头发黏在额上。</p>
+  <p class="p rise">电视无声播放广告。光一闪一闪，照见交叠的脚踝。</p>
+  <p class="p rise">牧宁越忽然说：「庄晏艾下周五有局。朋友局。你去吗。」</p>
+  <p class="p rise">「去。」</p>
+  <p class="p rise">「可能有人起哄。有人递名片。有人问认识多久。」</p>
+  <p class="p rise">「让他们起。」顾握紧他的手，十指扣死，指腹有茧，「名片你收。问多久——从小学算，很久；从敢要算，从今晚开始也可以。我敢要。也敢让人看见我要你。」</p>
+  <p class="p rise">牧宁越心跳漏一拍。雨还在下。城市在窗外变成模糊的灯。</p>
+  <p class="p rise">那些年补完了。</p>
+  <p class="p rise">现在的年，才刚起笔。笔尖是湿的，墨是热的。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch7">← 父亲的棋</a><a href="#ch9">敢要 →</a></nav>
+
+<section class="chapter" id="ch9" data-num="9" data-title="敢要" data-anchor="ch9" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 9 章</div>
+    <h2 class="ch-title">敢要</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">包厢吵。酒香。玻璃转盘上的菜换了一轮又一轮，蒸汽把灯光熏得柔。</p>
+  <p class="p rise">出发前牧宁越在玄关换了三次表带，顾靠着门看他，笑：「紧张？」</p>
+  <p class="p rise">「谁紧张。应酬。」</p>
+  <p class="p rise">「那我紧张。」顾走近，帮他理领口，「怕我给你丢人。」</p>
+  <p class="p rise">「你丢人我负责。」牧宁越拍开他的手，又抓住，「走。」</p>
+  <p class="p rise">到场时庄晏艾已经热场完毕。他把詹姆士介绍给半桌人，笑得像庆功：「翻译了不起，对象更了不起——然后这位，」他夸张地一引，把顾裴江按到牧宁越身边，「牧总身边这位，不是助理。别发错名片。发错了也没用，他不接。」</p>
+  <p class="p rise">有人起哄：「哦——」</p>
+  <p class="p rise">牧宁越耳尖红，端杯：「少废话。喝。」</p>
+  <p class="p rise">顾倒很稳。碰杯，笑，应酬得体。有人问行业，他能接两句，不抢戏，也不缩成背景板。桌下却把脚轻轻抵住牧的脚尖。皮鞋碰皮鞋。像暗号。像十七岁电扇下不敢做的事，现在用鞋尖完成。</p>
+  <p class="p rise">席间有女客户递名片给顾，笑意分明，香水甜得像策略。顾接过，看一眼，转手递给牧，动作自然得像排练过：「我们对外统一他收。有合作找他。我——」他顿了顿，笑，「私下的。」</p>
+  <p class="p rise">女客户一愣，随即了然，礼貌点头，试探收回，转为跟牧宁越聊预算。</p>
+  <p class="p rise">牧宁越腿上的肌肉松了。又紧——紧在得意。他端杯挡嘴，怕笑得太明显。杯沿碰齿，清响。</p>
+  <p class="p rise">庄晏艾喝酒喝到眼亮，撞他肩，酒气热：「行了啊。人抢回来了就收着点狗粮。我詹姆士都看胖了——精神上的胖。」</p>
+  <p class="p rise">「你才狗。」</p>
+  <p class="p rise">「互相。」庄晏艾眨眼，被詹姆士无奈地捏了下后颈。国际式的笑。包厢里人间烟火，吵得像样。</p>
+  <p class="p rise">有人问：「认识多久了？」</p>
+  <p class="p rise">牧宁越与顾对视一秒。顾先开口，声线平，却清楚：「从小学算，很久。从认真算，不久。但够。」</p>
+  <p class="p rise">「够。」牧宁越重复，碰他杯沿。玻璃轻击。</p>
+  <p class="p rise">笑声。有人起哄接吻。牧宁越瞪庄晏艾——这孙子起的头，还举手机作势要拍。顾在桌下握紧他的手，低声：「回家。这里给眼神就行。眼神也是公开。」</p>
+  <p class="p rise">牧宁越耳根又烧。却觉得东郊的冰离得很远。像上个冬天的事。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">散场。电梯里人多，肩臂相贴。代驾在地下室等。夜风一灌，酒意更醒。</p>
+  <p class="p rise">上车后顾先扣安全带，再侧头，眼神亮：「刚才吃醋了。」</p>
+  <p class="p rise">「没有。」</p>
+  <p class="p rise">「有。」顾咬他耳垂，声只有两人听，热，「名片那下，你脚踩我了。力道不小。」</p>
+  <p class="p rise">「……习惯。结缔。」</p>
+  <p class="p rise">「我喜欢你的结缔。」顾笑，鼻尖蹭他颊，「独占我。我独占你。公平。」</p>
+  <p class="p rise">红灯。城市霓虹在挡风玻璃上流动。牧宁越忽然问：「怕吗。被起哄。」</p>
+  <p class="p rise">「怕丢人一点。」顾老实说，「但不怕承认。怕的日子过够了。」</p>
+  <p class="p rise">回家。玄关灯一亮，鞋踢掉，一只歪在鞋柜边。顾从后面抱住他，鼻尖蹭颈侧，硬意隔着布料顶上来，诚实。吻从门廊拖到沙发，磕到茶几角，两人都笑骂一声，又吻回去。</p>
+  <p class="p rise">衣服掉得随意——风衣、领带、衬衫，像脱掉白天的公开与克制。皮带扣弹在地毯上，轻响。</p>
+  <p class="p rise">这次不做满房间的标记，只是熟门熟路地扩张，进入，像回家。润滑还剩半瓶，冰凉；套在床头柜，第二格。程序熟练得像生活本身，却仍烫。</p>
+  <p class="p rise">牧宁越跨坐，自己动，懒洋洋的主导。手按在顾腹肌上借力，指腹压进沟线。「以后局上，」他喘，「你少笑那么好看。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「只准对我笑。」</p>
+  <p class="p rise">顾被顶得话说不全，喉结滚动：「专……属。啊——再深——那里——」</p>
+  <p class="p rise">「贪心。」</p>
+  <p class="p rise">「对你。只对你贪。」</p>
+  <p class="p rise">射在套里时两人笑出声——笑自己还在争小学生主权，笑身体已经比嘴诚实，笑庄晏艾若在场大概又要呕。洗完澡，挤在一张被子里刷手机。头发还湿，水滴在枕头上。顾的胸膛当枕头，心跳稳。</p>
+  <p class="p rise">牧宁越忽然截图一张双人餐（打码脸，只留杯沿与指尖），配字：</p>
+  <blockquote class="msg rise"><p>我们的那些年，后面还有年。</p></blockquote>
+  <p class="p rise">顾按住他发送键，拇指热：「要发？」</p>
+  <p class="p rise">「发。」牧宁越看他，眼里还有情欲未退的潮，「敢要，就敢让人看见一点。不是秀，是声明。声明我不是一个人过年。」</p>
+  <p class="p rise">发送成功。点赞慢慢跳。庄晏艾评论：呕。又评论：祝福。方霖也赞了——牧宁越盯了两秒，没多想，把手机扣在床头。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">凌晨。雨停了。城市只剩偶发的车笛。</p>
+  <p class="p rise">牧宁越睡不着，看顾的睡颜。腹肌在被子起伏下若隐若现。他伸手轻轻描那道线，像描边界，又像确认：这是他的。茧，疤，热。</p>
+  <p class="p rise">顾迷迷糊糊抓住他的手，放在心口，闭着眼仍准：「别想东郊。」</p>
+  <p class="p rise">「没想。」</p>
+  <p class="p rise">「想也行。」顾声音糊，像含着糖，「想完就回我这儿。门在这。钥匙你有。」</p>
+  <p class="p rise">牧宁越鼻酸。凑过去亲了亲他的嘴角，又亲眼皮。</p>
+  <p class="p rise">窗外 D 市的灯河平静。同学会、未接来电、湖冰、沈屿、父亲、天台那一公分——全变成通往此刻的路。路可以回头看，不必走回去。</p>
+  <p class="p rise">敢要。</p>
+  <p class="p rise">要到了。</p>
+  <p class="p rise">还要继续要——日常的、清晨的、吵架后的、洗车去接机的。要一起骂方案，要一起吃难吃的面，要在包厢里用鞋尖说暗号。</p>
+  <p class="p rise">他闭眼，终于睡实。顾的手臂在半梦里收紧，像一句说了一辈子的「不跑」，又像一句更普通的「晚安」。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch8">← 那些年补完</a><a href="#ch10">我们的现在 →</a></nav>
+
+<section class="chapter" id="ch10" data-num="10" data-title="我们的现在" data-anchor="ch10" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 10 章</div>
+    <h2 class="ch-title">我们的现在</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">牧总的车又洗了。</p>
+  <p class="p rise">水渍在冬阳下很快干。小刘把钥匙递上，习以为常：「今晚大事？」</p>
+  <p class="p rise">「接人。」牧宁越签完最后一份方案，笔帽咔哒一声，拿起风衣，「机场。航班若晚点，你不用等。」</p>
+  <p class="p rise">「顾总？」</p>
+  <p class="p rise">牧宁越看他一眼。小刘举手，笑得很职场：「懂。保密级别——全公司都知道那种。咖啡机旁边的八卦都比方案新。有人下注你们什么时候搬家同居。」</p>
+  <p class="p rise">「谁下注。」</p>
+  <p class="p rise">「当我没说。」小刘溜。</p>
+  <p class="p rise">他没否认。嘴角却不可控地扬。洗车仍是仪式：郑重。接机也是。像小时候洗车去接父亲——后来变成接另一个人。人换了，郑重留下。</p>
+  <p class="p rise">航站楼热。人流。广播。行李箱轮子轧过地面的声音连成片。顾裴江从到达口出来，拉杆箱，黑大衣，看见他就笑——还是那笑，心跳还是会失拍。不同的是，牧宁越现在会走上去，当众接过箱子，当众说：</p>
+  <p class="p rise">「想你了。」</p>
+  <p class="p rise">顾耳尖红，四下扫一眼，仍回，声低：「……回家说。」</p>
+  <p class="p rise">「偏要这里说。」牧宁越理直气壮，箱杆换到自己手里，「牧总特权。你异议可以打报告。」</p>
+  <p class="p rise">「报告批了。」顾侧头，笑意更深，「准予公开想。」</p>
+  <p class="p rise">旁边有人侧目。两人并肩出闸。阳光刺眼，像某种赦免。冷空气一撞，呼出的白气缠在一起。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">回家路上。高架车流缓慢。电台放着老歌，顾把音量拧低。</p>
+  <p class="p rise">「东郊的房，」他说，指尖在膝上点了点，「买家签了。尾款下周。钥匙我留了一把新的给你——纪念，不是回头。旧锁扔了。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「湖还在。要不要……最后看一眼。」</p>
+  <p class="p rise">牧宁越想了想，导航改道：「看。告别用。不是回去住。」</p>
+  <p class="p rise">车停在观景点。冰面仍灰，风仍硬，刮得眼角生疼。可两人手套相扣，温度从掌心渡过去。远处有孩子在堆雪人，胡萝卜鼻子歪了，笑得很响。</p>
+  <p class="p rise">「冰上种不活。」牧宁越重复自己的话，呼出白气，看向结冰的湖心，「所以我们在土里种。」</p>
+  <p class="p rise">顾侧头，鼻尖红：「种什么。」</p>
+  <p class="p rise">「日子。」牧宁越说，一项一项，像列项目书，又像发誓，「吵架。做爱。洗车。忌日。你煮的面很难吃，也种。公司年会你要不要以家属身份出席——也种。以后若有人问『你们怎么认识的』，就说小学。细节收费。」</p>
+  <p class="p rise">顾笑出声，笑意被风撕薄，仍暖。把他拉近，在空无一人的风里亲了亲他的眉心。唇冷，心热。</p>
+  <p class="p rise">「宁越。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「哪会等到现在——」顾额头相抵，睫毛扫他，「现在到了。利息我继续还。本金是你。分期余生。」</p>
+  <p class="p rise">牧宁越鼻酸，骂：「油嘴。跟谁学的。」</p>
+  <p class="p rise">「跟你。还有一点跟庄晏艾——不要脸的部分。」</p>
+  <p class="p rise">「滚。」</p>
+  <p class="p rise">「回家再滚。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">夜。</p>
+  <p class="p rise">公寓。灯暖。玄关鞋两双并排，一双歪一点——牧宁越的，永远歪。</p>
+  <p class="p rise">外卖换成顾试做的面。盐多了，葱花却整齐。牧宁越仍吃光，评价认真：「爱心味。盐也是爱。下次少半勺。」</p>
+  <p class="p rise">「明天点外卖。」顾无奈擦手。</p>
+  <p class="p rise">「不要。再练。我洗车，你下面。公平。」</p>
+  <p class="p rise">洗碗时水声哗哗。牧宁越从后面抱住他，下巴搁肩，手不老实地从围裙下缘探入，掌心贴小腹。「忌日明年还去。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「我爸若再试探，你别先软。」</p>
+  <p class="p rise">「软的是礼。硬的是你。」顾关水，转身，手上泡沫未净，仍捧他的脸，「这句二修也不改。」</p>
+  <p class="p rise">「油嘴。」</p>
+  <p class="p rise">「只有你。」</p>
+  <p class="p rise">他们做爱，不急。沙发太近，回卧室。床垫熟悉，凹陷熟悉。进入时牧宁越叹了口气，像卸下一年的弦，又像签收一份合同。顾顶得深而稳，吻他眼皮：「看着我。」</p>
+  <p class="p rise">「看。」</p>
+  <p class="p rise">「说你是我的。」</p>
+  <p class="p rise">「我是你的。」牧宁越喘，腿收紧，「你也是我的。门只我开。号只我存。笑——」他被顶得断句，「少给别人看。」</p>
+  <p class="p rise">「专属。」</p>
+  <p class="p rise">高潮来得安静。余韵里两人交换呼吸。床单乱。心齐。窗外有车笛，遥远，像别人的故事。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">睡前。</p>
+  <p class="p rise">牧宁越刷到一条旧同学动态：方霖结婚，照片圆满，白裙与香槟。评论区有人 cue「牧大班长近况」。他想了想，没回。把手机扔到一边，钻进顾的怀里，找那个固定的颈窝位置。</p>
+  <p class="p rise">「睡了？」顾问，手自动搂紧，拇指在他肩胛画圈。</p>
+  <p class="p rise">「还没有。」牧宁越闭着眼，「在想我们的那些年。」</p>
+  <p class="p rise">「想怎样。」</p>
+  <p class="p rise">「想——后面还有年。」他把脸埋更深，声音闷，「顾裴江，你不许再先离开。跑了我就全国追逃。洗车去追。代驾费你出。」</p>
+  <p class="p rise">「不离开。」顾收紧手臂，像立誓，又像最普通的晚安，「你跑我也不放。代驾我自己当。从 B2 开到白头。」</p>
+  <p class="p rise">暖气嗡鸣。城市远。</p>
+  <p class="p rise">记忆不再只是贱。记忆变成路：从粉笔灰到机场接机，从巧克力到难吃的面，从「滚」到「想你了」，从「哪会等到现在」到「现在到了」。</p>
+  <p class="p rise">牧宁越在睡着前最后的念头很干净：</p>
+  <p class="p rise">那些年我们错过。</p>
+  <p class="p rise">这些年，我们在。</p>
+  <p class="p rise">而明年、后年、洗车的每一个晚上——</p>
+  <p class="p rise">都还会在。</p>
+  <p class="p rise">窗外有雪，细，无声。落在 D 市的钢与玻璃上，也落在一扇不会再被陌生人打开的门上。</p>
+  <p class="end-mark rise">（全书 · 终）</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch9">← 敢要</a><span></span></nav>
+</main>
+
+<footer>
+  我们的那些年 · 重写 · 续写稿<br>  <a href="index.html">← 返回书架</a>
+</footer>
+
+<button id="top" aria-label="回到顶部">↑</button>
+<noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
+#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
+<script>
+var TK='xhw-theme';
+var root=document.documentElement;
+function readTheme(){
+  try{ var v=localStorage.getItem(TK); if(v) return v; }catch(e){}
+  return matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+}
+function paintTheme(t){
+  root.dataset.theme=t;
+  var b=document.getElementById('theme');
+  if(b) b.textContent=(t==='night'?'日间':'夜间');
+}
+paintTheme(readTheme());
+function toggleTheme(){
+  var t=root.dataset.theme==='night'?'day':'night';
+  try{ localStorage.setItem(TK,t); }catch(e){}
+  // 支持时用 View Transitions 做交叉淡化
+  if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.startViewTransition(function(){ paintTheme(t); });
+  }else{ paintTheme(t); }
+}
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
+var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+  if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
+    return showAll;
+  }
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
+})();
+
+(function(){
+  // 关掉浏览器自带的滚动位置恢复，避免和下面按「章号+比例」算出的位置打架
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  var PK='xhw-pos-'+document.body.dataset.book;
+  var tools=document.getElementById('tools'), toc=document.getElementById('toc'),
+      scrim=document.getElementById('scrim'), bar=document.getElementById('bar'),
+      now=document.getElementById('now'), top=document.getElementById('top'),
+      cover=document.getElementById('cover');
+  var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
+  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var wide=function(){return window.innerWidth>=1080};
+  var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- 偏好
+  var st={scale:1,ch:null,ratio:0};
+  try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
+  var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
+  applyScale();
+
+  document.getElementById('theme').onclick=toggleTheme;
+  var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
+  var paintFont=function(){
+    var i=STEPS.indexOf(st.scale); fontBtn.textContent='字号 '+((i<0?1:i+1))+'/'+STEPS.length;
+  };
+  paintFont();
+  fontBtn.onclick=function(){
+    var i=STEPS.indexOf(st.scale); st.scale=STEPS[(i<0?1:i+1)%STEPS.length];
+    applyScale(); paintFont(); save();
+  };
+
+  // ---- 目录
+  function setToc(open){
+    toc.classList.toggle('open',open);
+    if(wide()){
+      toc.classList.toggle('hidden',!open);
+      document.documentElement.dataset.toc=open?'on':'off';
+      scrim.classList.remove('on');
+    }else{
+      scrim.classList.toggle('on',open);
+      document.documentElement.dataset.toc='off';
+    }
+  }
+  document.getElementById('menu').onclick=function(){ setToc(!toc.classList.contains('open')); };
+  scrim.onclick=function(){ setToc(false); };
+  toc.addEventListener('click',function(e){ if(e.target.closest('a')&&!wide()) setToc(false); });
+  setToc(wide());
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!wide()) setToc(false);
+  });
+
+  // ---- 入场动画
+  reveal(document.querySelectorAll('.rise,.ch-head,.sec-mark'));
+
+  // ---- 进度 / 当前章 / 封面视差
+  var cur=-1, raf=0, vh=innerHeight;
+  function tick(){
+    raf=0;
+    var y=window.scrollY, h=document.body.scrollHeight-vh;
+    bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
+    tools.classList.toggle('lifted',y>vh*.55);
+    top.classList.toggle('on',y>vh*1.2);
+
+    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
+    if(cover && !calm){
+      if(y<vh){
+        var k=y/vh;
+        cover.style.transform='translateY('+(y*.28)+'px)';
+        cover.style.opacity=String(Math.max(0,1-k*1.35));
+      }else if(cover.style.opacity!=='0'){
+        cover.style.opacity='0';
+      }
+    }
+
+    var probe=y+vh*.3, idx=-1;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].offsetTop<=probe) idx=i;
+    if(idx!==cur){
+      cur=idx;
+      var c=chapters[idx];
+      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
+      var curAnchor=c?c.dataset.anchor:null;
+      links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
+      if(c){
+        var vol=c.dataset.volume;
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+      }else{ now.textContent=''; }
+    }
+    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
+    if(idx>=0){
+      var chTop=chapters[idx].offsetTop;
+      var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
+      st.ch=chapters[idx].dataset.anchor;
+      st.ratio=Math.min(1,Math.max(0,(y-chTop)/Math.max(1,chBottom-chTop)));
+    }
+  }
+  var onScroll=function(){ if(!raf) raf=requestAnimationFrame(tick); };
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',function(){
+    vh=innerHeight;
+    setToc(wide()?!toc.classList.contains('hidden'):false);
+    onScroll();
+  });
+
+  top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
+
+  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
+  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
+  // 变成平滑滚过全书，恢复前临时关掉。
+  if(st.ch!=null && !location.hash){
+    var target=null;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    if(target){
+      var restore=function(){
+        var chTop=target.offsetTop;
+        var chBottom=(chapters.indexOf(target)+1<chapters.length)
+          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var prevBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        scrollTo(0, chTop+st.ratio*(chBottom-chTop));
+        document.documentElement.style.scrollBehavior=prevBehavior;
+        tick();
+      };
+      addEventListener('load',restore);
+      setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  }
+  tick();
+  addEventListener('beforeunload',save);
+  addEventListener('pagehide',save);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') save();
+  });
+  setInterval(save,4000);
+
+  // ---- 左右方向键翻章
+  document.addEventListener('keydown',function(e){
+    if(e.target.closest('input,textarea')) return;
+    var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
+    if(!d) return;
+    var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
+    chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

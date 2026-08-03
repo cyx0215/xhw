@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-toc="off"
+      style="--accent:#8c6f4a;--accent-lit:#a58f72">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#8c6f4a">
+<meta name="description" content="他们并肩，半步，不牵手——雨落在玻璃上，谁都没有先走近一步。">
+<meta property="og:title" content="远观 · 第一卷">
+<meta property="og:description" content="他们并肩，半步，不牵手——雨落在玻璃上，谁都没有先走近一步。">
+<meta property="og:type" content="book">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiM4YzZmNGEiLz48L3N2Zz4=">
+<title>远观 · 第一卷</title>
+<script data-book="远观">(function(){
+var r=document.documentElement, book=document.currentScript.dataset.book;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+try{
+  var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
+  if(st.scale) r.style.setProperty('--font-scale',st.scale);
+}catch(e){}
+if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
+})();</script>
+<style>
+:root{
+  --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
+  --ink-faint:#a89e94; --rule:#ddd5c8;
+  --accent:#8c6f4a; --accent-lit:#8c6f4a;
+  --shadow:0 1px 2px rgba(43,39,36,.04),0 8px 24px -12px rgba(43,39,36,.14);
+  --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
+  --font-scale:1;
+  --ease:cubic-bezier(.4,0,.2,1);
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
+         -apple-system,"Segoe UI",sans-serif;
+}
+html[data-theme=night]{
+  --bg:#16181a; --bg-elev:#1e2124; --ink:#cfc9c0; --ink-soft:#948d84;
+  --ink-faint:#645d55; --rule:#2e3236;
+  --accent:var(--accent-lit);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
+}
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* 通用入场：加 .rise 的元素初始下沉透明，进入视口时由 JS 挂 .in */
+.rise{opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+.tbtn{border:0;background:none;color:var(--ink-soft);font-family:var(--sans);font-size:13px;
+  cursor:pointer;padding:7px 10px;border-radius:6px;line-height:1;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+.tbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.tbtn:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .rise{opacity:1!important;transform:none!important}
+}
+
+/* 顶部进度条 */
+#bar{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 55%,transparent),var(--accent));
+  transition:width .12s linear}
+
+/* 工具条 */
+#tools{position:fixed;top:0;right:0;left:0;height:46px;z-index:50;display:flex;
+  align-items:center;gap:2px;padding:0 12px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid transparent;
+  transition:border-color .4s var(--ease),background .4s var(--ease)}
+#tools.lifted{border-bottom-color:var(--rule)}
+#tools .now{flex:1;min-width:0;font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transform:translateY(3px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#tools.lifted .now{opacity:1;transform:none}
+#back{font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);text-decoration:none;
+  padding:7px 10px;border-radius:6px;white-space:nowrap;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+#back:hover{color:var(--accent);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+
+/* 侧栏目录 */
+#toc{position:fixed;top:0;left:0;bottom:0;width:238px;z-index:55;padding:58px 0 24px;
+  background:var(--bg-elev);border-right:1px solid var(--rule);overflow-y:auto;
+  transform:translateX(-100%);transition:transform .38s var(--ease)}
+#toc.open{transform:none}
+#toc h3{margin:0 0 10px;padding:0 22px;font-family:var(--sans);font-size:11px;
+  letter-spacing:.22em;color:var(--ink-faint);font-weight:400}
+#toc a{display:block;padding:9px 22px;color:var(--ink-soft);text-decoration:none;
+  font-family:var(--sans);font-size:13.5px;letter-spacing:.03em;
+  border-left:2px solid transparent;
+  transition:color .25s var(--ease),border-color .25s var(--ease),
+             background .25s var(--ease),padding-left .25s var(--ease)}
+#toc a:hover{color:var(--ink);padding-left:26px}
+#toc a.on{color:var(--accent);border-left-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent)}
+#toc a i{font-style:normal;color:var(--ink-faint);font-size:11.5px;margin-right:8px;
+  font-variant-numeric:tabular-nums}
+#toc a.on i{color:var(--accent)}
+/* 带小标题的分节符生成的二级目录项：单章多分节（如出差）时给出导航 */
+#toc a.sub-toc{padding:6px 22px 6px 40px;font-size:12px;color:var(--ink-faint)}
+#toc a.sub-toc:hover{padding-left:44px}
+/* 分卷书的卷标题：只在 章节/卷X/ 结构下出现 */
+.toc-vol{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.75}
+.toc-vol:first-child{margin-top:0}
+/* 抽屉打开时条目阶梯淡入 */
+#toc.open a{animation:tocIn .42s var(--ease) both;animation-delay:var(--d)}
+@keyframes tocIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+#scrim{position:fixed;inset:0;z-index:54;background:rgba(0,0,0,.34);opacity:0;
+  pointer-events:none;transition:opacity .38s var(--ease);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#scrim.on{opacity:1;pointer-events:auto}
+
+/* 封面 */
+#cover{min-height:100svh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:60px 24px;
+  transition:padding-left .38s var(--ease)}
+#cover>*{will-change:transform,opacity}
+#cover .rule{width:1px;height:56px;
+  background:linear-gradient(var(--rule),color-mix(in srgb,var(--accent) 40%,transparent));
+  animation:dropIn .9s var(--ease) both}
+#cover h1{margin:26px 0 0;font-size:clamp(52px,15vw,86px);font-weight:400;
+  letter-spacing:.3em;text-indent:.3em;line-height:1.15;
+  animation:titleIn 1.1s var(--ease) .1s both}
+#cover .sub{margin-top:16px;font-family:var(--sans);font-size:12px;letter-spacing:.42em;
+  text-indent:.42em;color:var(--ink-faint);animation:fadeUp .9s var(--ease) .34s both}
+#cover .epi{margin-top:46px;font-size:15px;line-height:2.1;color:var(--ink-soft);
+  letter-spacing:.06em;animation:fadeUp .9s var(--ease) .5s both}
+#cover .meta{margin-top:52px;font-family:var(--sans);font-size:11.5px;letter-spacing:.16em;
+  color:var(--ink-faint);animation:fadeUp .9s var(--ease) .64s both}
+#cover .go{margin-top:34px;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.2em;color:var(--ink-soft);
+  text-decoration:none;padding:12px 28px;border:1px solid var(--rule);border-radius:2px;
+  animation:fadeUp .9s var(--ease) .78s both;
+  transition:color .3s var(--ease),border-color .3s var(--ease),gap .3s var(--ease)}
+#cover .go:hover{color:var(--accent);border-color:var(--accent);gap:14px}
+#cover .go span{transition:transform .3s var(--ease)}
+#cover .go:hover span{transform:translateX(2px)}
+@keyframes titleIn{from{opacity:0;transform:translateY(20px);letter-spacing:.52em}
+  to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dropIn{from{opacity:0;transform:scaleY(0);transform-origin:top}
+  to{opacity:1;transform:none}}
+
+/* 正文 */
+main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
+  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em;
+  /* 避头尾：不让逗号句号右括号落在行首。中文长文必需，浏览器默认的 auto 较宽松 */
+  line-break:strict;word-break:normal;overflow-wrap:break-word}
+.chapter{padding-top:14vh}
+.ch-head{margin-bottom:9vh;text-align:center}
+.ch-num{font-family:var(--sans);font-size:11.5px;letter-spacing:.34em;text-indent:.34em;
+  color:var(--accent);opacity:.85}
+.ch-title{margin:14px 0 0;font-size:1.5em;font-weight:400;letter-spacing:.12em;
+  text-indent:.12em}
+.ch-line{width:26px;height:1px;background:var(--rule);margin:26px auto 0;
+  transform:scaleX(0);transition:transform .8s var(--ease) .2s}
+.ch-head.in .ch-line{transform:none}
+/* hanging-punctuation 目前基本只有 Safari 生效，text-wrap:pretty 主要 Chromium 生效；
+   两者都是渐进增强，不支持的浏览器忽略即可，无副作用 */
+.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end;
+  text-wrap:pretty}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic;color:var(--ink-soft)}
+
+/* 分节符 */
+.sec-mark{display:flex;align-items:center;gap:18px;margin:3.2em 0 2.4em;color:var(--accent)}
+.sec-mark::before,.sec-mark::after{content:"";flex:1;height:1px;background:var(--rule);
+  transform:scaleX(0);transition:transform .9s var(--ease)}
+.sec-mark::before{transform-origin:right}
+.sec-mark::after{transform-origin:left}
+.sec-mark.in::before,.sec-mark.in::after{transform:none}
+.sec-mark b{font-weight:400;font-size:1em;line-height:1;letter-spacing:.2em;
+  text-indent:.2em;opacity:.9;white-space:nowrap}
+.sec-mark b em{font-style:normal;color:var(--ink-soft);font-size:.86em;
+  letter-spacing:.1em;margin-left:.7em}
+/* 章首第一个分节符紧贴标题，省掉横线（隐藏后需自行居中） */
+.ch-head + .sec-mark{margin-top:0;justify-content:center}
+.ch-head + .sec-mark::before,.ch-head + .sec-mark::after{display:none}
+
+/* 手机消息 */
+.msg{margin:1.9em 0;padding:14px 18px;border-radius:3px 12px 12px 12px;
+  background:var(--bg-elev);border:1px solid var(--rule);
+  border-left:2px solid color-mix(in srgb,var(--accent) 60%,transparent);
+  box-shadow:var(--shadow)}
+.msg p{margin:0 0 .5em;font-family:var(--sans);font-size:.88em;line-height:1.85;
+  color:var(--ink-soft);text-indent:0}
+.msg p:last-child{margin-bottom:0}
+
+.end-mark{margin:4em 0 0;text-align:center;font-family:var(--sans);font-size:.8em;
+  letter-spacing:.22em;color:var(--ink-faint);text-indent:0}
+.ch-end{width:34px;height:1px;background:var(--rule);margin:4.5em auto 0}
+
+.ch-nav{max-width:34em;margin:2.4em auto 0;padding:0 26px;display:flex;
+  justify-content:space-between;gap:16px;font-family:var(--sans);font-size:12.5px;
+  letter-spacing:.05em;color:var(--ink-faint)}
+.ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+.ch-nav a:hover{color:var(--accent)}
+.ch-nav a:last-child{text-align:right}
+
+footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--ink-faint);
+  line-height:2.4}
+footer a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+footer a:hover{color:var(--accent)}
+
+/* 回顶 */
+#top{position:fixed;right:20px;bottom:24px;z-index:40;width:38px;height:38px;
+  border-radius:50%;background:var(--bg-elev);color:var(--ink-soft);
+  border:1px solid var(--rule);cursor:pointer;font-size:14px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease),color .25s var(--ease)}
+#top.on{opacity:1;transform:none;pointer-events:auto}
+#top:hover{color:var(--accent);transform:translateY(-2px)}
+
+@media (min-width:1080px){
+  #toc{transform:none;background:transparent;border-right:0}
+  #toc.hidden{transform:translateX(-100%)}
+  #scrim{display:none}
+  /* 侧栏常驻时整页让开：用 body 内缩而非 main 的 padding，
+     因为 main 是 border-box，加内边距会压缩字栏宽度 */
+  html[data-toc=on] body{padding-left:238px}
+  html[data-toc=on] #tools{left:238px}
+}
+@media (max-width:600px){
+  main{font-size:calc(17px * var(--font-scale));line-height:1.98;padding:0 20px 30vh}
+  .chapter{padding-top:9vh}
+  .ch-head{margin-bottom:6.5vh}
+  #cover h1{letter-spacing:.22em;text-indent:.22em}
+  #toc{width:76vw;padding-top:66px}
+  #top{right:14px;bottom:18px}
+  .ch-nav{padding:0 20px;font-size:12px}
+}
+@media print{
+  #tools,#toc,#scrim,#bar,#top,#cover .go,#back,.ch-nav{display:none}
+  body{background:#fff;color:#000;padding-left:0!important}
+  /* 首章紧跟封面，不需要再分页——否则会多出一张空白页 */
+  .chapter{page-break-before:always;padding-top:0}
+  .chapter:first-of-type{page-break-before:avoid}
+  .rise{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body data-book="远观">
+<div id="bar"></div>
+
+<nav id="tools">
+  <a id="back" href="index.html">← 书架</a>
+  <button class="tbtn" id="menu" aria-label="目录">目录</button>
+  <span class="now" id="now"></span>
+  <button class="tbtn" id="font" aria-label="调整字号">字号</button>
+  <button class="tbtn" id="theme" aria-label="切换日间夜间">夜间</button>
+</nav>
+
+<div id="scrim"></div>
+<aside id="toc" aria-label="章节目录">
+  <h3>目 录</h3>
+    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>传说与风</a>
+    <a href="#ch2" data-ch="ch2" style="--d:26ms"><i>02</i>雨与墙</a>
+    <a href="#ch3" data-ch="ch3" style="--d:52ms"><i>03</i>他先笑出声</a>
+    <a href="#ch4" data-ch="ch4" style="--d:78ms"><i>04</i>神遇见风</a>
+    <a href="#ch5" data-ch="ch5" style="--d:104ms"><i>05</i>远观的练习</a>
+    <a href="#ch6" data-ch="ch6" style="--d:130ms"><i>06</i>亵与界</a>
+    <a href="#ch7" data-ch="ch7" style="--d:156ms"><i>07</i>并肩</a>
+    <a href="#ch8" data-ch="ch8" style="--d:182ms"><i>08</i>终提</a>
+    <a href="#ch9" data-ch="ch9" style="--d:208ms"><i>09</i>可远观的恋人</a>
+    <a href="#ch10" data-ch="ch10" style="--d:234ms"><i>10</i>恰好（未完待续）</a>
+</aside>
+
+<header id="cover">
+  <div class="rule"></div>
+  <h1>远观</h1>
+  <div class="sub">第一卷</div>
+  <p class="epi">可远观。<br>——也只是可远观。</p>
+  <div class="meta">全 10 章 · 约 1.2 万字</div>
+  <a class="go" href="#ch1">开始阅读 <span>→</span></a>
+</header>
+
+<main>
+<section class="chapter" id="ch1" data-num="1" data-title="传说与风" data-anchor="ch1" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 1 章</div>
+    <h2 class="ch-title">传说与风</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p">早上七点二十，沈清然被一声压抑的喘醒。</p>
+  <p class="p">不是闹钟。是墙那头——方晴房间门没关严，细细的撞击一下下磕在木框上，混着男人闷哼，和方晴毫不掩饰的笑：</p>
+  <p class="p">「轻点……不行，就这样——别装深情，你又不是来求婚的。」</p>
+  <p class="p">沈清然把脸埋进被子。耳根烧得厉害。</p>
+  <p class="p">她不是第一次听。方晴的炮友像换乘线路，换得勤，偶尔还能重叠。可每一次，她仍会胸口发紧：不是厌恶，是某种可耻的、跟着发热的空白。她并拢腿，强迫自己数呼吸。数到第四下，外面忽然安静。</p>
+  <p class="p rise">门开。赤脚。水龙头。</p>
+  <p class="p rise">方晴裹着男人的衬衫出来，锁骨上一枚新鲜的红，看见沈清然睁眼，理直气壮：「吵醒你啦？抱歉抱歉——他赶飞机，急。咖啡我泡了，你那杯没糖。」</p>
+  <p class="p rise">沈清然坐起来，声音还哑：「……你能不能关严。」</p>
+  <p class="p rise">「关严我会缺氧。」方晴眨眼，随即又认真半分，「清然，你二十四了。耳朵这么贞，身体可不贞——别骗我，你听的时候腿夹那么紧。」</p>
+  <p class="p rise">沈清然把枕头砸过去。方晴笑着接住。</p>
+  <p class="p rise">卫生间里男人擦着头发出来，自然地点头：「沈小姐早。」像吃过这家无数次早饭。沈清然点头如捣蒜，直到大门咔哒关上，她才把肺里的气吐干净。</p>
+  <p class="p rise">方晴靠着橱柜喝水，喉结滚动，忽然把手机怼过来。屏幕上是一篇行业访谈，标题夸张：《她一出场，提案室的人都会下意识坐直》。</p>
+  <p class="p rise">配图只有侧脸。</p>
+  <p class="p rise">女人站在落地窗前，白衬衫袖口卷到小臂，指间一支笔。她不看镜头，目光落在某个更远的点上——像随时能从照片里走出去，留下一屋子还没反应过来的人。</p>
+  <p class="p rise">「王琪。」方晴口齿不清，「澄空那个。你们 H 市案子，会不会碰到她？碰到偷拍一张，我当壁纸。」</p>
+  <p class="p rise">沈清然接过手机，又很快推回去，耳尖却静不下来。</p>
+  <p class="p rise">「哪有那么容易。人家是……那种。」</p>
+  <p class="p rise">「哪种？」</p>
+  <p class="p rise">「可远观，不可——」</p>
+  <p class="p rise">「不可亵玩。」方晴替她补完，笑得没心没肺，「得，软文看过。我这种人看她，跟看博物馆玻璃——能看，不能摸。摸了报警。」</p>
+  <p class="p rise">沈清然没否认。</p>
+  <p class="p rise">入职一年半，王琪的版本她听过太多：改一版方案客户加预算；庆功宴只喝白水；有投资人当众叫「琪琪」，第二天项目从她工作室划走——不是她被踢，是她自己抽身，像从衣服上拈走一根线。</p>
+  <p class="p rise">沈清然从来只远观。</p>
+  <p class="p rise">她说不清羡慕的是才华，还是那种被人围着，仍把距离按在自己手心的力气。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">方晴又滑屏幕，点开另一条：「柴玉鑫。配乐的。北衡上次概念片 BGM 就是他。」</p>
+  <p class="p rise">视频里没有正脸。一双手在控制器上轻轻一推，铺满的声场忽然矮下去，细得像呼吸，画面里的人却站进了真风——会掀衣角、让人想深吸一口气的那种。</p>
+  <p class="p rise">评论：</p>
+  <p class="p rise">「活得像没上链的风。」<br>「不签死约，看缘分也看心情。」<br>「逍遥归逍遥，活干得真干净。」</p>
+  <p class="p rise">沈清然听了一会儿，肩膀松了松。「挺轻的。」</p>
+  <p class="p rise">「对啊。一个神女，一阵风。」方晴把吐司塞进嘴里，「你们这行好会造人。造完让我们隔着屏幕磕。」</p>
+  <p class="p rise">「我没有磕。」沈清然反驳，把行李箱拉链拉上，齿轨一声轻响。</p>
+  <p class="p rise">她造不了传说。她只是第一次单独出差的小专员：方案两版，签字笔两支，紧张够分一整个团队。</p>
+  <p class="p rise">方晴忽然把声音压低，像讲行业禁忌：「你第一次出去，长眼睛。陆总那种，看着禁欲，床上未必。我前公司有人跟北衡的睡过——说他干净得像做手术，做完就驱人，冷得要命。还有柴玉鑫，听说从前也乱，后来不乱了——人一有才，烂事都变谈资。你记住：传说能看，身子要自己护。想试回来找我，我教你避孕和事后，别学我那么野。」</p>
+  <p class="p rise">沈清然把脸埋进膝盖。</p>
+  <p class="p rise">她不是不想。<br>她是想了，又不知道想要的是热，还是被谁认真地看一眼。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">手机震。陈昭的语音转文字带着毛刺：</p>
+  <p class="p rise">「陆总很难搞，态度软，资料全。澄空可能空降。别社死。家里这边你先顶上。」</p>
+  <p class="p rise">第二条：「梁予说柴老师也可能来。他乱讲话你别笑场。」</p>
+  <p class="p rise">沈清然盯着「笑场」，回：好的。</p>
+  <p class="p rise">方晴吹口哨：「陆总、王老师、柴老师……你这一趟像串门。」</p>
+  <p class="p rise">「串门要带礼。我只带了方案。」</p>
+  <p class="p rise">「方案就是礼。」方晴把她往门口推，「去吧，涉世未深的沈清然。报平安就行——别报你听墙角听湿了。」</p>
+  <p class="p rise">「方晴！」</p>
+  <p class="p rise">门关上。楼道声控灯慢半拍才亮。箱轮滚过台阶，像倒计时。</p>
+  <p class="p rise">方晴靠着门板，笑意淡下去，摸了摸锁骨的痕，对空房低声：「羡慕玻璃柜里的人，又过不了玻璃柜里的日子。操。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">地铁角落。沈清然把工牌塞进包最内侧，像把「专员」暂时藏好。</p>
+  <p class="p rise">微信。备注「陆总-客户」：</p>
+  <blockquote class="msg rise"><p>陆衡：沈小姐，我已到酒店大堂。不急，你按自己的节奏。</p></blockquote>
+  <p class="p rise">她打字，仍习惯道歉：</p>
+  <blockquote class="msg rise"><p>沈清然：陆总好，我在去机场的路上，落地后大概四十分钟到。给您添麻烦了。</p></blockquote>
+  <p class="p rise">发完又恨：又在添麻烦。</p>
+  <p class="p rise">车窗上城市掠过。她默念王琪的字幕——「让作品自己站直，人就可以站远一点。」</p>
+  <p class="p rise">站直。站远。<br>她目前只会站近：近到紧张，近到呼吸浅。</p>
+  <p class="p rise">候机时她打开方案。保守版像她；激进版像她想成为却还不敢成为的样子。页码整齐——秩序是唯一的漂浮物。</p>
+  <p class="p rise">临登机，又搜「王琪」：笑起来像放晴，你却不敢上去借伞。<br>搜「柴玉鑫」：百科留白。他说，解释多了，风就变成说明书。</p>
+  <p class="p rise">邻座耳机漏出露骨的音效，有人公然看片。沈清然耳膜发烫，并拢双腿。屏幕上「站远一点」忽然像讽刺。</p>
+  <p class="p rise">涉世未深。<br>不是无欲。<br>是欲来了，她只会脸红，不会下指令。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">降落。潮气贴上来。</p>
+  <p class="p rise">梁予：</p>
+  <blockquote class="msg rise"><p>沈姐！陆总在大堂。王老师后天到。柴老师……可能今晚，他说看雨。</p><p>陆总桌上澄空提案集您别碰。</p><p>加油。他面冷，讲理。</p></blockquote>
+  <p class="p rise">「看雨」两个字她多看两秒。什么样的人把档期交给天气？</p>
+  <p class="p rise">出租车里，老歌很低。霓虹被水汽揉淡。沈清然看见自己的倒影：齐肩发，白衬衫压痕，眼睛干净，像没拆封的纸。</p>
+  <p class="p rise">纸会被雨打湿。<br>也会被手揉皱。<br>揉皱之后还能不能写字，她不知道。</p>
+  <p class="p rise">她更不知道：这座城里，传说中的神与据说留不住的风，正分别朝同一家酒店移动；而人间的嘴与身体，从来不会因为有神在场，就自动变得干净。</p>
+  <p class="p rise">酒店轮廓在雨幕里清晰。</p>
+  <blockquote class="msg rise"><p>陆衡：到了跟我说。前台有伞。</p></blockquote>
+  <p class="p rise">她回：快到了。</p>
+  <p class="p rise">推开车门。雨丝吻上手背。</p>
+  <p class="p rise">冷。真实。像一封没有署名的信——</p>
+  <p class="p rise">欢迎来到有神、有风、也有人在夜里喘气的故事。</p>
+  <p class="end-mark rise">第 1 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><span></span><a href="#ch2">雨与墙 →</a></nav>
+
+<section class="chapter" id="ch2" data-num="2" data-title="雨与墙" data-anchor="ch2" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 2 章</div>
+    <h2 class="ch-title">雨与墙</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">酒店旋转门一开，暖风带着木质香扑面。</p>
+  <p class="p rise">沈清然把湿边的箱子立好，理了理碎发。水晶灯把大理石照成浅湖。她几乎立刻看见他——深灰大衣搭臂弯，白衬衫扣到最上，比视频更高、更沉。不看手机，只微侧头，像估准了她的方向。</p>
+  <p class="p rise">「沈小姐。一路顺利？」</p>
+  <p class="p rise">「陆、陆总好。顺利……雨有点大。」</p>
+  <p class="p rise">他目光在她湿睫上停半秒，收回，接过拉杆，不容推拒。「今晚不谈公事。吃饭。」</p>
+  <p class="p rise">开房。1608，1610，一墙之隔。前台笑她年轻，她把「出差」说得很轻。</p>
+  <p class="p rise">电梯里半步。雪松味。她盯楼层，余光是他腕骨与黑表带。</p>
+  <p class="p rise">「紧张？」</p>
+  <p class="p rise">「……有一点。第一次单独见客户。」</p>
+  <p class="p rise">「我不是洪水猛兽。」他短笑，「你比线上更像你自己。」</p>
+  <p class="p rise">她耳尖红了。</p>
+  <p class="p rise">那一点红落进陆衡眼里，下腹极轻一紧——不是爱，是身体对「会红的人」的条件反射。他厌恶这反应，厌恶归厌恶，反应仍在。他在心里把表拨快一格：今晚自己解决，不碰客户方的小姑娘。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">三楼西餐厅。窗外雨密。</p>
+  <p class="p rise">他给她倒半杯红酒：「润嗓。你不像会喝的人。」</p>
+  <p class="p rise">「很明显吗？」</p>
+  <p class="p rise">「视频里你端水杯比端酒杯熟练。」</p>
+  <p class="p rise">汤暖，鱼嫩。她老实：「组长不放心。原本该她来，我顶上。」</p>
+  <p class="p rise">「她选人有眼光。你慌时不撒谎。数据错了就认。干净。」</p>
+  <p class="p rise">「干净」从他嘴里出来，连自己都讽刺。三个月前阮青在他床上说：陆总，你干净个屁，你只是做完就赶人。</p>
+  <p class="p rise">提拉米苏。她小口，甜意化开，轻轻「嗯」。</p>
+  <p class="p rise">他刀叉一顿。</p>
+  <p class="p rise">「北衡要压过林深。澄空会来。柴老师也可能来。王琪——」端杯的手指紧了，「你当标尺，别当神话。神话让人站不直。」</p>
+  <p class="p rise">也让人硬得无用。后半句没说。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">16 楼浅金灯带。</p>
+  <p class="p rise">「先洗热水澡。有事发消息。别硬扛。」</p>
+  <p class="p rise">他用指背拂去她肩上几乎看不见的水渍。克制。电流。</p>
+  <p class="p rise">「晚安，沈小姐。」</p>
+  <p class="p rise">「晚、晚安。」</p>
+  <p class="p rise">门合。沈清然背靠门滑坐。手机：</p>
+  <blockquote class="msg rise"><p>陆衡：温度可调。</p><p>陆衡：提拉米苏可再点。你刚才那口，吃得太小心了。</p></blockquote>
+  <p class="p rise">她冲进浴室，热水开到最大。水声里把手伸进内裤，生涩地、羞耻地碰自己——腕骨、雪松、半步、指背。高潮又快又小，像偷。她咬手背，眼角全是水。</p>
+  <p class="p rise">「……好脏。」她对镜子说。</p>
+  <p class="p rise">镜子不说话。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">1610。</p>
+  <p class="p rise">陆衡打开澄空提案集。扉页内侧：王琪侧脸，窗光清淡，他未入镜。三年前闭门提案，他坐末端，只看着，把「看着」活成此后审方案的尺子。</p>
+  <p class="p rise">尺子不能爱人。只能让人知道什么叫站直。</p>
+  <p class="p rise">他合上书，进浴室。握住自己，动作机械精确，像处理必须完成的文件。脑里先闪王琪——强制掐断，换成阮青张开的腿、梁予跪着的后脑、任何「可完成」的身体。射在瓷砖上时眉心皱着，没有空爽，只有空。</p>
+  <p class="p rise">第二次洗。极热。看表。</p>
+  <p class="p rise">梁予：</p>
+  <blockquote class="msg rise"><p>柴老师落地，说雨好看。何止要进局。要我上去吗？</p></blockquote>
+  <p class="p rise">「上去」双关。下腹又紧。他回：</p>
+  <blockquote class="msg rise"><p>接好柴老师。何止走商务。</p><p>你今晚休息。别上来。</p></blockquote>
+  <p class="p rise">梁予：收到。<br>一分钟后：想你。</p>
+  <p class="p rise">陆衡扣死手机。</p>
+  <p class="p rise">墙那边灯灭。一边是偷来的小小高潮，一边是精确的无爱射精。中间夹着提案集，和一张不可亵的侧脸。</p>
+  <p class="p rise">群：柴老师进大堂讲冷笑话。王老师后天到。</p>
+  <p class="p rise">陆衡对黑暗说：「别乱。」</p>
+  <p class="p rise">雨不听。</p>
+  <p class="p rise">有些体面始于——想靠近，却先把墙认认真真留下。</p>
+  <p class="end-mark rise">第 2 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch1">← 传说与风</a><a href="#ch3">他先笑出声 →</a></nav>
+
+<section class="chapter" id="ch3" data-num="3" data-title="他先笑出声" data-anchor="ch3" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 3 章</div>
+    <h2 class="ch-title">他先笑出声</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">柴玉鑫进酒店时雨披还在滴水。</p>
+  <p class="p rise">口罩扯到下巴，对前台笑：「一间就行，别太豪华。豪华了内疚，内疚睡不着，睡不着明天配乐很吵——老板恨我，陆总更恨我。」</p>
+  <p class="p rise">梁予侧翼赶来：「您非要先跟雨处对象——对象把您浇成这样。」</p>
+  <p class="p rise">「处对象哪有不淋雨的。」柴拍他肩，「陆总在哪？我守点。逍遥是性格，守点是礼貌。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">2 号小会议室。</p>
+  <p class="p rise">「陆总。沈小姐——第一次单独出差？正常。我第一次进棚腿软，腿藏桌下嘴硬撑。老师说：腿跟嘴闹分家。」</p>
+  <p class="p rise">沈清然笑出声，慌忙捂嘴。</p>
+  <p class="p rise">陆衡：「要敢安静的声。不是更响。林深会炸，我们要准。」</p>
+  <p class="p rise">柴玉鑫认真一秒，像风停：「铺满是心虚。安静才是让人站进画面的呼吸。缺的不是爆点，是敢留白。」</p>
+  <p class="p rise">小样：雨棚远声，一切矮下去，降调短句，像肩侧「没事」。</p>
+  <p class="p rise">「好不好要放到画面上才知道。人也是——单独完美，并排露馅。」</p>
+  <p class="p rise">档期：「我看雨。想逃才留下，叫专业。」</p>
+  <p class="p rise">他对沈清然：「水多喝。陆总会把人当人。你也把自己当人。别当仪器。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">走廊乱走。电梯叮。</p>
+  <p class="p rise">王琪。白衬衫，深色长裤。苏晚如盾。</p>
+  <p class="p rise">对上眼。半拍。</p>
+  <p class="p rise">柴先扬眉：「巧。神也赶雨？」</p>
+  <p class="p rise">苏晚挡半步。王琪目光礼貌不空：「澄空，王琪。请让一下。」</p>
+  <p class="p rise">「风给神让路。应该的。」</p>
+  <p class="p rise">电梯里一拳。 「柴玉鑫。哼歌吵到你，道歉提前说。」</p>
+  <p class="p rise">「配乐的那位。听作品。北衡概念片后三十秒，静得刚好。别得意。」</p>
+  <p class="p rise">他靠壁口哨：被点名了。</p>
+  <p class="p rise">沈清然安全通道探头，只见半步构图。王琪浅颔首。柴塞她冰水：「神点头比讲话贵。你赚到了。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">夜。梁予站在 1610 门口，刷了备用权限——陆衡给过，用于「文件」。</p>
+  <p class="p rise">门开一条。陆衡只穿长裤，头发湿，眼冷：「我说别上来。」</p>
+  <p class="p rise">「我说休息。」梁予进门反锁，声轻，「可我睡不着。陆总，你硬的时候从不找我以外的人……今晚呢？隔壁小姑娘？」</p>
+  <p class="p rise">「沈小姐是客户方。」</p>
+  <p class="p rise">「所以更硬？」梁予笑，刺在笑里，跪下去动作熟，「我帮你。像以前。不用负责，不用留，不用亲。你不是不爱接吻吗？」</p>
+  <p class="p rise">陆衡扣他后脑，不是温柔，是准许。</p>
+  <p class="p rise">梁予含进去，舌碾铃口，喉间湿响。陆衡靠墙看表——确认这场性仍在可控时长。梁予深喉眼角渗泪，仍抬眼，故意呕出一声再吞更深。</p>
+  <p class="p rise">「别出声。」</p>
+  <p class="p rise">梁予偏发出更多水声。陆衡抽插他的嘴，由稳到狠，射在舌面。梁予咽下去，擦嘴角，站起，腿间顶着，不求回礼。</p>
+  <p class="p rise">「够了？」</p>
+  <p class="p rise">「够。」梁予哑，「你射的时候皱眉，跟批文件一样。有病。」</p>
+  <p class="p rise">「你也有。」</p>
+  <p class="p rise">「我有病才爱上文件。」整理衣领，「柴老师 12 楼。王老师 18。你的神在 18。你的洞在我这儿。别搞混。」</p>
+  <p class="p rise">门关。陆衡第二次进浴室。极热。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">同夜。何止顶层套房。</p>
+  <p class="p rise">小唐被按在窗玻璃上，裙到腰。城市灯海在下。何止咬耳：「叫何总。」</p>
+  <p class="p rise">「何总……」</p>
+  <p class="p rise">抽送又急又浅。脑里闪王琪侧脸——硬一下又软一点，怒，干得更凶。小唐痛呼。何止骂：「别装。你不就爱这个。」</p>
+  <p class="p rise">射完扔纸巾：「洗澡。明天跟苏晚约酒局。」</p>
+  <p class="p rise">小唐浴室里给自己快速撸出来，咬牙：爱的不是这个。爱的是合同。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">沈清然听不清 1610，只觉墙后有动静。腿夹紧。</p>
+  <p class="p rise">方晴语音嘈杂：「H 市爽不爽？我这边三人……算了不污染你。睡不着就想神女——想神女你就冷静了。」</p>
+  <p class="p rise">沈清然：闭嘴。我有点怕。</p>
+  <p class="p rise">方晴：怕就对了。不怕的是畜生。畜生我睡过，不推荐。</p>
+  <p class="p rise">雨还下。</p>
+  <p class="p rise">神在 18 睡浅。风在 12 改小样。人间的嘴与洞在各自房间完成交易。</p>
+  <p class="end-mark rise">第 3 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch2">← 雨与墙</a><a href="#ch4">神遇见风 →</a></nav>
+
+<section class="chapter" id="ch4" data-num="4" data-title="神遇见风" data-anchor="ch4" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 4 章</div>
+    <h2 class="ch-title">神遇见风</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">B2。灯白得不近人情。</p>
+  <p class="p rise">沈清然投激进版，指尖凉，声稳到第三页才飘。陆衡主位不打断。梁予侧屏：林深数据全线压过。</p>
+  <p class="p rise">门开。王琪入座。苏晚退到墙边。</p>
+  <p class="p rise">「从第 4 页。你们讲功能。客户买的是进店三秒被理解。结构倒过来：先三秒，再功能。」</p>
+  <p class="p rise">沈清然愣住——听懂后发现自己把好东西埋进土里还叫稳妥。</p>
+  <p class="p rise">「改得及？」「及。数据在。别怕锋利句放最前。怕的人才埋附录。」</p>
+  <p class="p rise">「今晚骨架。字不必多。多了是心虚。」</p>
+  <p class="p rise">角落椅转半圈。柴玉鑫不知何时坐下，指节敲桌，哼极短旋律，刚好托住「三秒」。</p>
+  <p class="p rise">全场静。</p>
+  <p class="p rise">「‘被理解’落在声上别升调。升调像广告。降一点，像有人在旁边说话。」</p>
+  <p class="p rise">王琪：「你把提案唱成情歌了。」</p>
+  <p class="p rise">「那你别把简报写成判决书。人想被接住，不想被宣判。」</p>
+  <p class="p rise">苏晚：「收敛。」陆衡：「试。」</p>
+  <p class="p rise">王琪写给沈清然：<strong>先让人被接住，再让人被说服。</strong></p>
+  <p class="p rise">不是不食人间烟火。是太准确。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">午休走廊。</p>
+  <p class="p rise">何止西装妥帖：「琪琪，该喝一杯。我可加码——资源换空间，故事换你——换澄空下一步。」</p>
+  <p class="p rise">「何总。加码走商务。我走作品。」</p>
+  <p class="p rise">何止扫柴玉鑫：「找玩票的？挺潮。」</p>
+  <p class="p rise">柴抱臂笑：「玩票的优点是票玩完能走。走得干净，不留尾款。何总更懂尾款吧？」</p>
+  <p class="p rise">苏晚折请柬：「名片留我。王老师下午排满。」</p>
+  <p class="p rise">王琪走向电梯。抽身干净。</p>
+  <p class="p rise">梁予对陆衡：「您像看山。他像看能买的景。」</p>
+  <p class="p rise">山从不属于谁。风在山边转悠，只让叶子响一下。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">夜。苏晚房。</p>
+  <p class="p rise">林深靠门：「数据碾你们。你约我，公关还是操？」</p>
+  <p class="p rise">苏晚踢掉高跟鞋：「别这么丑。进来。十分钟。我还要改声明。」</p>
+  <p class="p rise">无温柔前戏。她把他按进沙发骑上去，内衣拨开，自己坐下——湿得比她愿承认的快。林深抓腰上顶：「夹这么紧，白天嘴那么硬。」</p>
+  <p class="p rise">「硬的是嘴。下面认怂。你动，少说话。」</p>
+  <p class="p rise">拍击密响。她高潮像打卡，眼盯灯：「……行了。」</p>
+  <p class="p rise">林深未射，翻她从后进更深，撞到她膝软骂出声。射在套里，打结，扔桶，精准。</p>
+  <p class="p rise">「仇人炮？」</p>
+  <p class="p rise">「情报炮。」苏晚已拿手机，「你后半段同质化，我能放给客户——当然不放。让你知道我能。」</p>
+  <p class="p rise">「你有病。」</p>
+  <p class="p rise">「全酒店有病的排队。」开门，「滚。明天不熟。」</p>
+  <p class="p rise">门关。她靠门，手进裙底，沾着自己的水愤怒再弄一次。想的不是林深——是王琪袖口干净的弧度。嫉妒那种干净。高潮时骂脏字，然后回邮件。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">沈清然改骨架到一点。隔壁水声。幻听成陆衡洗澡。手伸下去，比昨夜敢，中指进湿热，学方晴形容过的节奏。泄了，脸埋枕，哭两声。</p>
+  <p class="p rise">梁予工作号：明天提前十分钟。别太紧张。他表面冷，其实……算了。晚安。</p>
+  <p class="p rise">梁予舔下唇：其实刚被我口过。你不知道就好。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">王琪回沈：过。<br>给柴：降调可以。别即兴太长。</p>
+  <p class="p rise">柴：专业很长。晚安。<br>王琪：嗯。</p>
+  <p class="p rise">干净对话框，夹在无数湿床单之间。</p>
+  <p class="p rise">周宴电话：「你接话了。诚实点。」</p>
+  <p class="p rise">王琪挂断。看雨。</p>
+  <p class="end-mark rise">第 4 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch3">← 他先笑出声</a><a href="#ch5">远观的练习 →</a></nav>
+
+<section class="chapter" id="ch5" data-num="5" data-title="远观的练习" data-anchor="ch5" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 5 章</div>
+    <h2 class="ch-title">远观的练习</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">连轴。小样七版。林深预告片扩散。预听：沈清然把「三秒」讲完整，客户靠向椅背。陆衡：「有呼吸。」</p>
+  <p class="p rise">第三夜小会议室。外卖。王琪解最上扣——仍体面，累从锁骨漏一点。柴推热汤：「神也喝汤。纸片人做不了提案。」</p>
+  <p class="p rise">「你话很多。」</p>
+  <p class="p rise">「我紧张就贫。怕静错。怕一靠近变成绑——绑看起来亲密，其实是偷。」</p>
+  <p class="p rise">王琪握杯：「谁说我怕绑。」</p>
+  <p class="p rise">「没人。我看你走路。留位有限。有限不是冷，是活得起自己。活得起的人怕被好心做成标本。」</p>
+  <p class="p rise">耳机分一只。指尖一触即分。降调。</p>
+  <p class="p rise">「这版。」「只这版。」</p>
+  <p class="p rise">「柴玉鑫。可以远观。可以走近。走近的话——不要把我变成你的证明。我不是奖杯。」</p>
+  <p class="p rise">「同路。分岔仍敬作品。有人把你写成风景，我打断。」</p>
+  <p class="p rise">她极浅的弧度。门外沈清然听半句，酸的是干净。陆衡收提案集：够了。够了仰望。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">何止邮件：王琪个人品牌绑定。苏晚骂做梦。柴被讽玩票，回：挡路的是脏手。手脏怕镜子。</p>
+  <p class="p rise">王琪群：@柴玉鑫 明天你来。敢安静。何总条件澄空不接，北衡接则退。<br>陆衡：北衡不接。沈小姐，终稿骨架，准备讲。看人，别看地板。</p>
+  <p class="p rise">沈清然回：好的。想起：先让人被接住。她把自己接住一点。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">近午夜。电梯口。陆衡：「最后两页逻辑，回房对一下。十分钟。」</p>
+  <p class="p rise">1610。门关。</p>
+  <p class="p rise">十分钟变成她俯身，发丝落下。他替她别到耳后——指尖擦耳廓。</p>
+  <p class="p rise">僵。</p>
+  <p class="p rise">「沈小姐。你该走。」</p>
+  <p class="p rise">该走。腿不听。悬崖边问：跳下去是什么感觉。</p>
+  <p class="p rise">「陆总……我不是来……」</p>
+  <p class="p rise">「你湿了。」他残忍地准，「进门后腿并得太紧。」</p>
+  <p class="p rise">眼眶热。羞耻点燃。</p>
+  <p class="p rise">他关电脑。「说不要，送你回。说要，规则我定：套、不接吻、不做完不谈感情。你是客户方。脏的是我。」</p>
+  <p class="p rise">她抖唇：「……要。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">衬衫一颗颗解，像拆文件。胸衣推上，唇含乳尖，她惊叫。「小声。墙不厚。」</p>
+  <p class="p rise">指进内裤，湿一塌糊涂。他极低骂脏，两指并入，拇指碾阴蒂。她哭着摇头又点头。</p>
+  <p class="p rise">「第一次跟客户？」「第……第一次跟……这么……啊……」</p>
+  <p class="p rise">戴套。分开腿。一寸寸进。太紧。额筋暴起。进到根。</p>
+  <p class="p rise">「看我。」抽送稳、深、像打点，「别逃。」</p>
+  <p class="p rise">她语碎。他按腕——她泄得更狠，哭叫高潮，水湿交合处。他折起腿撞，床轻响，低喘射进套。拔出。打结。扔。</p>
+  <p class="p rise">「洗。」扔浴袍，「十分钟后回你房。明天会上不熟。」</p>
+  <p class="p rise">她腿软，又哭。「疼？」「不疼。我……好响。好丢人。」</p>
+  <p class="p rise">他抹泪，避开她的唇：「丢人的是我。你只是诚实。诚实在这行少见——在床上也是。」</p>
+  <p class="p rise">她走。门缝外梁予影子一闪。</p>
+  <p class="p rise">陆衡靠门：「操。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">1608。沈清然洗很久。镜子里仍清纯，腿间肿着、空着。</p>
+  <p class="p rise">方晴电话：「套了吗？」「套了。」「逼你了吗？」「我说要的。」</p>
+  <p class="p rise">「那就好。」方晴罕见轻声，「别爱上手术刀。手术刀切开你，不会缝。」</p>
+  <p class="p rise">她躺着，小腹还记得深度。手按上去，又可耻地热了。</p>
+  <p class="p rise">18 楼对话框：明天你来。敢安静。</p>
+  <p class="p rise">两层楼，两种人类。</p>
+  <p class="end-mark rise">第 5 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch4">← 神遇见风</a><a href="#ch6">亵与界 →</a></nav>
+
+<section class="chapter" id="ch6" data-num="6" data-title="亵与界" data-anchor="ch6" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 6 章</div>
+    <h2 class="ch-title">亵与界</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">何止酒局在顶层。玻璃外城市像冷掉的珠宝。</p>
+  <p class="p rise">苏晚想挡。王琪：「去把话说死，比躲干净。躲会让人以为可议价。」</p>
+  <p class="p rise">柴要跟。她摇头：「你来会变成男人对男人的戏。我自己站。」</p>
+  <p class="p rise">电梯外他只说：「我在一楼。早退我送。到楼下，我走。」</p>
+  <p class="p rise">「不必。」</p>
+  <p class="p rise">「我知道不必。我要。要和必须是两回事。」</p>
+  <p class="p rise">上升。苏晚：「他懂规矩。」王琪：「他懂分寸。规矩给人看，分寸给自己。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">敬第三次。何止指尖「不经意」按上她手背，滑向腕，多停一秒——像公开盖章：我碰得到。</p>
+  <p class="p rise">王琪放下杯，声线平稳如刀在鞘：「何总，商务止于桌面。」</p>
+  <p class="p rise">「琪琪，别总这么紧——大家都是成年人。」</p>
+  <p class="p rise">她起身。全桌声矮。</p>
+  <p class="p rise">「澄空退出加码谈判。今晚到此。各位慢用。」</p>
+  <p class="p rise">无解释。无提高音量。无苦情。苏晚护外侧。退席不需要批准——批准本身是另一种冒犯。</p>
+  <p class="p rise">走廊步伐仍稳。腕侧那点触感像记得一种脏。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">一楼。柴玉鑫真的在。外套搭臂。先看眼睛，再看腕。</p>
+  <p class="p rise">「走？」「走。」</p>
+  <p class="p rise">雨棚。车未到。水声乱。她呼吸在夜色里白了一下——身体比意志诚实。</p>
+  <p class="p rise">「我不是要你站台。」</p>
+  <p class="p rise">「我站的是你，不是台。」伞撑外侧，自己肩湿，「神女也有权早退。礼貌若要你受辱，就不是礼貌，是规训。」</p>
+  <p class="p rise">「……傻瓜。」</p>
+  <p class="p rise">「正式编制的傻瓜。」笑没收，认真像对最后一轨，「王琪。我申请成为被你允许走近的例外。不绑。不宣。不拿你证明我追到神。可以吗？」</p>
+  <p class="p rise">雨砸伞。久到苏晚假装看手机。</p>
+  <p class="p rise">「例外很贵。」</p>
+  <p class="p rise">「我穷。只剩时间。时间给你。誓言会过期，时间天天续。」</p>
+  <p class="p rise">「……试试并排。别宣布世界。」</p>
+  <p class="p rise">「好。」掌心向上，等她自己放——不抓不拽，「世界远观就行。」</p>
+  <p class="p rise">手指落进掌心。凉，被温度慢慢包住。无十指紧扣的戏剧。无吻。</p>
+  <p class="p rise">「柴玉鑫。」「在。」「别太得意。」</p>
+  <p class="p rise">「神女点名，我得意有理。今晚送到楼下就走。真走。你睡。我改小样。甜的事先住进明天——工作不会因为并排变软。」</p>
+  <p class="p rise">车来。护她头，自己淋。气声：「在一起了。对内。对外仍是会互损的合作方。」</p>
+  <p class="p rise">王琪：「嗯。」像盖章。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">苏晚朋友圈：两杯咖啡，无脸。文案：并排。<br>周宴：可算。<br>陆衡删「个人品牌」整段，给梁予：口径跟苏晚。北衡支持退出人身捆绑。<br>梁予：您还好吗？<br>陆衡：好。山还在。风有主了。更好。</p>
+  <p class="p rise">沈清然埋枕又笑：神女也会牵手，仍像远观干净。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">更晚。何止套房。</p>
+  <p class="p rise">苏晚抱臂：「要声明，还是要我。」</p>
+  <p class="p rise">「能不能都要？」何止松领带，眼红，「王琪那婊——」</p>
+  <p class="p rise">「闭嘴。」冷，「你碰她手腕。再脏她一个字，我让你社死。」</p>
+  <p class="p rise">「那你来干什么？」</p>
+  <p class="p rise">「让你射完闭嘴。文件你撤。我给你体面台阶。」解裙拉链像交方案，「十分钟。套你戴。别亲我嘴。」</p>
+  <p class="p rise">餐桌。进入粗。她痛，腿仍缠，内里热滑——身体有自己的政治。他骂着琪琪的名字干，她一巴掌扇脸上：「叫错人就滚。」</p>
+  <p class="p rise">改叫苏晚，更狠。她高潮咬腕，不叫，像完成恶心任务。射完她推开，冲洗到皮肤发红，妆重新画好。</p>
+  <p class="p rise">「文件今晚撤。我们不熟。」</p>
+  <p class="p rise">何止泄气：「我硬不起来的时候……她看都不过来。」</p>
+  <p class="p rise">苏晚无同情：「看医生。别来看神。」</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">1610。沈清然送 U 盘做借口。</p>
+  <p class="p rise">门关。陆衡抵她上门，手进裙底：「自己说。」</p>
+  <p class="p rise">「要……要你。」</p>
+  <p class="p rise">这次让她跪。生涩含，牙碰到，他吸气教：「收牙。用舌头。」她学得哭，津液沿嘴角，仍努力深。拉起来后入。背脊白，腰窝浅，后颈被咬出痕。</p>
+  <p class="p rise">「明天王老师在。」边干边冷声，「你看她，学站直。别学我。」</p>
+  <p class="p rise">「那你……啊……算什么……」</p>
+  <p class="p rise">「算你的错。也算我的药。」</p>
+  <p class="p rise">第二次高潮失声，只会抖。射完不亲，水递到唇边。</p>
+  <p class="p rise">梁予不该在监控室——看见她出来腿软。笑得很丑，回宿舍弄出来，射在陆衡日程打印件上。</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">柴湿肩改小样，哼「例外」。<br>王琪洗掉腕上触感，睡。<br>苏晚回邮件，手抖。<br>何止砸手机。</p>
+  <p class="p rise">亵是脏手。界是背脊。并排是两个神的选择。<br>人间的床今夜无一干净——除了 18 楼那张只睡一个人的床。</p>
+  <p class="end-mark rise">第 6 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch5">← 远观的练习</a><a href="#ch7">并肩 →</a></nav>
+
+<section class="chapter" id="ch7" data-num="7" data-title="并肩" data-anchor="ch7" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 7 章</div>
+    <h2 class="ch-title">并肩</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">上午。条款卡死。</p>
+  <p class="p rise">陆衡邮件抄法务与何止：「北衡采购作品与档期，不是人身。」何止长文。陆衡两行：另寻投资方。按期终提。</p>
+  <p class="p rise">梁予：「今天像刀。」</p>
+  <p class="p rise">「刀让该亮的人亮。也让脏手伸不进来。」</p>
+  <p class="p rise">旁人放话：无加码排期谁担。法务回：风险按合同。从不靠人身抵押换安全。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">彩排厅。</p>
+  <p class="p rise">王琪过词。沈清然补数，声细不断。柴侧台盯 cue，水递到手边恒温——试过温度。她捏掉他麦夹标签，自然像做过一百次。</p>
+  <p class="p rise">苏晚镜中警告：「对外不熟。」</p>
+  <p class="p rise">「不熟。」柴一本正经，「我连她喝几度都不知道。——四十八。差不多。」</p>
+  <p class="p rise">「……柴玉鑫。」「在。收敛。」</p>
+  <p class="p rise">王琪点沈清然：「下午讲排期。看我们，别看地板。你比你以为的更站得住。」</p>
+  <p class="p rise">林深观摩：「句眼你们的。我更响，你们更准。准活得长。」看柴：「棚里见过。烦。」</p>
+  <p class="p rise">「互相烦才叫同行。你太满，这次我们留白。」</p>
+  <p class="p rise">临走：「终提见。别翻车。翻车我笑话你们。」</p>
+  <p class="p rise">王琪：「笑话之前，先听完。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">夜。林深房。周宴靠窗抽烟：「彩排后来找我，输了？」</p>
+  <p class="p rise">「赢了数据，输了句。」解皮带，「上床。别讲艺术。」</p>
+  <p class="p rise">周宴懒躺开：「你床上比提案诚实。」</p>
+  <p class="p rise">做得很慢——周宴的节奏，林深被迫降速像被拆解。周宴骑他还点评：「这里紧，那里散，跟你片子一样。」林深怒，翻身狠顶。周宴被顶笑，笑着高潮，内里有节奏地吮。</p>
+  <p class="p rise">事后看天花板：「王琪不会上任何人的床。不是吊胃口，是物种不同。柴玉鑫若懂，能走很远。」</p>
+  <p class="p rise">林深点烟：「我只懂今晚。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">沈清然在 1610。主动脱。</p>
+  <p class="p rise">陆衡眼暗：「学坏了。」</p>
+  <p class="p rise">「方晴说……女人也能在上面。」耳赤，跨坐，生涩起伏，痛爽搅在一起。他握腰下按，每次最深。她哭叫。他捂嘴——她却在掌心舔他。他像被电到，失节奏，射得比预想早。</p>
+  <p class="p rise">静。</p>
+  <p class="p rise">「你亲我一下。」</p>
+  <p class="p rise">「不亲。亲了会乱。」</p>
+  <p class="p rise">「你跟梁予也这样？」</p>
+  <p class="p rise">脸色变。</p>
+  <p class="p rise">她笑，泪还在：「我听到过。墙。门。我不是神女，我只是会吃醋的……药。」</p>
+  <p class="p rise">他拉进怀里，仍不亲，下巴抵发顶：「药不会问。你别问。问了我会停。」</p>
+  <p class="p rise">「那就别停。」手引到自己腿间，「再来。用你的规矩。」</p>
+  <p class="p rise">后半夜第三次。趴着后入，指伸进她嘴里搅，下作地替代接吻。她呜咽着去，去得很狠。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">走廊。陆衡遇王琪。错身。影子不交叠。</p>
+  <p class="p rise">「祝终提。」<br>「谢谢卡条款。」<br>「以前远观你像要抵达的山。山不用抵达。山在，路就有方向。人不必活成登山杖。」<br>「你是好人。」<br>「好人够用。柴老师让你笑。够。笑着的人，提案会呼吸。」</p>
+  <p class="p rise">走开。从不可得叙事里抽出，放回工作位置。</p>
+  <p class="p rise">柴转角出，两瓶无糖茶：「偷听收费。」「故意给你空间。祝福我当压力。不准就配不上并排。」</p>
+  <p class="p rise">王琪：「并排别当配角。」「那我是什么？」「例外。贵的那个。」</p>
+  <p class="p rise">「睡。明天神站直。风在侧台。只托气口。」</p>
+  <p class="p rise">半步分开。像排练，像天生。</p>
+  <p class="p rise">沈清然回房，腿间黏腻，心却稳：看清手术刀；也看清自己可握刀，不必被缝。</p>
+  <p class="end-mark rise">第 7 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch6">← 亵与界</a><a href="#ch8">终提 →</a></nav>
+
+<section class="chapter" id="ch8" data-num="8" data-title="终提" data-anchor="ch8" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 8 章</div>
+    <h2 class="ch-title">终提</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">天晴。雨洗过的城市反光干净。</p>
+  <p class="p rise">后台沈清然手抖。柴路过，轻得像玩笑：「抖是油门，别当刹车。」</p>
+  <p class="p rise">她愣住，真稳住。把「对不起」捞回「我准备好了」。</p>
+  <p class="p rise">开场。陆衡控场如尺。介绍团队时目光在王琪与沈清然间均匀——均匀是尊重。</p>
+  <p class="p rise">王琪起身。不抢词，杂音让路。讲三秒被接住：进门呼吸，能带走的话，先理解再功能。无神话腔，只有准。客户侧有人点头，点完才发现已在同意。</p>
+  <p class="p rise">沈清然接排期数据。声细完整，卡一拍自己补上。梁予拇指又收回。</p>
+  <p class="p rise">cue 落。声场如呼吸。人站进真风。</p>
+  <p class="p rise">静两秒。林深眯眼。陆衡指节松。苏晚盯公关页。柴看电平如心跳。</p>
+  <p class="p rise">掌声实。林深：「输得明白。」何止「临时有会」。苏晚：很好。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">合影。媒体：「情侣角度——」</p>
+  <p class="p rise">柴站团队中，与王琪半步，无辜笑：「远观角度最佳。近了糊。糊了还要 P，P 了不真。」</p>
+  <p class="p rise">王琪耳尖红，面不改色：「按团队。谢谢。」</p>
+  <p class="p rise">半步照进梁予硬盘，文件名打趣，朋友圈不发。有些甜，发出来就脏。</p>
+  <p class="p rise">客户反复「呼吸感」「被接住」。陆衡推功：「句是澄空与拾光，声是柴老师。北衡只摆好桌子。」</p>
+  <p class="p rise">王琪极轻点头。同行对同行。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">过会快。庆功在即。王琪早退——留下会变酒桌风景。柴也早退。不同电梯，同到地库。冷白灯。</p>
+  <p class="p rise">「正式的，可以吗？对内已经是。允不允许我往后把航班改得同向。同向，不是同牢。」</p>
+  <p class="p rise">「同向，不是同牢。」她重复如盖章，「你学会说人话了。」</p>
+  <p class="p rise">「一直说。以前玩笑多，现在请求多。」</p>
+  <p class="p rise">「可以。对外仍远观。对你——恰好。」</p>
+  <p class="p rise">额抵一下即开。温度交换，承诺不靠唇齿。</p>
+  <p class="p rise">「甜的额度今天用完。再多得意到明天唱错。」</p>
+  <p class="p rise">「那你明天别错。」「不敢。侧台只托气口。」</p>
+  <p class="p rise">分开上车。仍像合作方。苏晚死角比耶，立刻恢复公关脸。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">庆功。果汁鸡尾酒。沈清然脸红。陆衡人群里看她，眼神像开会。她进卫生间，他跟入——隔间反锁。</p>
+  <p class="p rise">「这里……」</p>
+  <p class="p rise">「你硬撑一下午。」已解裤戴套，抱她上水箱，「给你奖。」</p>
+  <p class="p rise">进入咬他肩，不敢叫。外有人冲水、笑、谈奖金。他抽送短而深，专顶那点，手揉胸。她在脚步声里高潮，哭得厉害。他低喘射出，抽出，整理她裙子如刚签的文件。</p>
+  <p class="p rise">「回桌。笑。」</p>
+  <p class="p rise">「……你是不是混蛋。」</p>
+  <p class="p rise">「是。混蛋让你过会。神女让你站直。自己选学谁。」</p>
+  <p class="p rise">门外梁予补润唇膏，对视一秒：「车在下面。沈姐，耳钉歪了。」</p>
+  <p class="p rise">耳钉没歪。歪的是魂。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">苏晚回房。双神干净。她剥光，指进得又深又狠：林深的较劲、何止的脏、王琪的袖口。高潮侧脸对枕：「我护玻璃。我是泥。泥也配活。」</p>
+  <p class="p rise">回邮件。公关永不眠。</p>
+  <p class="p rise">沈清然视频陈昭：「讲完了。」「回来吃饭。别傲。」「站直了一点。」</p>
+  <p class="p rise">陆衡遥敬。杯碰。</p>
+  <p class="p rise">雨夜的墙变成门。门后不是爱。是长大，和泥。</p>
+  <p class="end-mark rise">第 8 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch7">← 并肩</a><a href="#ch9">可远观的恋人 →</a></nav>
+
+<section class="chapter" id="ch9" data-num="9" data-title="可远观的恋人" data-anchor="ch9" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 9 章</div>
+    <h2 class="ch-title">可远观的恋人</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">回程。世界恢复邮件与日程。</p>
+  <p class="p rise">王琪与柴玉鑫的恋爱不像恋爱——像同谋。</p>
+  <p class="p rise">展讯：他在侧后两米讲冷笑话，她必须偏头才不笑场。旁人当合作方拌嘴。<br>凌晨三点：二十秒音频，「第三秒试试切」。回「切」或「留」。<br>语音懒：「在。」「嗯。」把夜钉成坐标。</p>
+  <p class="p rise">情侣捆绑通告，报价漂亮。拒。<br>柴：玩票，不玩人。<br>王琪：作品可绑档期，人不可绑卖点。</p>
+  <p class="p rise">周宴约饭，看互损：「甜到牙疼，还装不熟。赢在干净。」<br>苏晚口径三页，核心一句：远观作品，勿消费私人。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">周五傍晚。王琪破例语音：「今天有点累。不是因为你。」</p>
+  <p class="p rise">柴：「知道。因为世界。靠一下——靠语音也行。我在。」</p>
+  <p class="p rise">又：「要不要改航班到你那。到楼下就走。」</p>
+  <p class="p rise">「不用。你忙你的。」</p>
+  <p class="p rise">「好。那不改。但我把『在』开着。」</p>
+  <p class="p rise">她靠椅背，嘴角极浅。</p>
+  <p class="p rise">装是给世界的礼貌。真是给彼此的恰好。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">咖啡店。阳光好。雨夜隔在记忆里。</p>
+  <p class="p rise">沈清然先开口，耳红：「雨夜……我涉世未深。会把靠近想得很重。你是标尺，也是刀。我不是替身。我是自己选的。」</p>
+  <p class="p rise">陆衡不否认：「标尺放回工作里的准。刀……收起来。我们停性。你值得被等，不该只当药。」</p>
+  <p class="p rise">她笑，泪一下干：「方晴说手术刀不会缝。你现在倒会缝了？」</p>
+  <p class="p rise">「会打补丁。」抬杯，「同事。不催的朋友。床——这段先停。」</p>
+  <p class="p rise">她点头。身体还记得，心却松了。欲完成了教育：教她要，教她停，教她不把要当成贱。</p>
+  <p class="p rise">夜。她自己弄一次，想的不是他，是终提台上自己的声音。泄了，没哭。</p>
+  <p class="p rise">停，不是死。门没上锁。只是这页先折上。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">梁予递辞呈又撤回。「不上去了。文件我继续。」</p>
+  <p class="p rise">陆衡：「好。」</p>
+  <p class="p rise">都懂「上去」是什么。结束得干净，残忍。梁予删日程私人标记。晚上约同龄人，做爱叫错名字，笑骂有病，把病过完。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">方晴来电背景乱：「昨天三人……」</p>
+  <p class="p rise">「别讲。」沈清然软，「你开心吗？」</p>
+  <p class="p rise">静一秒：「不开心。热闹。跟半步不一样。羡慕玻璃柜。又进不去。」</p>
+  <p class="p rise">「进不去就看。看也是一种过法。」</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">林深寄酒：敬准的。开瓶，半瓶煮面。「风才懂热汤。」王琪耳根热。</p>
+  <p class="p rise">美术馆错身。口型安静。眼刀带笑。并排半步。不牵。</p>
+  <p class="p rise">「世人问我们是什么？」「合作方。」「对内？」「例外。」「贵吗？」「贵。所以你付时间。」「一直付。」手插袋，免得得意去牵——大庭广众她不喜欢。他懂。</p>
+  <p class="p rise">懂也是一种爱。</p>
+  <p class="p rise">何止别的城找风景。小唐离职，睡了温柔的人，哭了。苏晚机票截图发给自己。林深「有局吗」未回未删。</p>
+  <p class="p rise">泥有泥的下文。玻璃有玻璃的光。<br>都还没写完。</p>
+  <p class="end-mark rise">第 9 章 · 完</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch8">← 终提</a><a href="#ch10">恰好（未完待续） →</a></nav>
+
+<section class="chapter" id="ch10" data-num="10" data-title="恰好（未完待续）" data-anchor="ch10" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 10 章</div>
+    <h2 class="ch-title">恰好（未完待续）</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">三月后。</p>
+  <p class="p rise">新项目启动会在另一座楼。玻璃仍亮，咖啡仍苦，人换表情，故事却没有收束的意思——只是换了会议室。</p>
+  <p class="p rise">沈清然独扛小案进门。稳不是不紧张，是紧张不再指挥四肢。陆衡主位点头，像对任何可靠合作方。点头而已。无「我们曾经」的缝。</p>
+  <p class="p rise">王琪晚三分钟。柴晚三十秒，斜对半步。</p>
+  <p class="p rise">客户要更炸。王琪：准是长期。柴：炸完耳鸣。全场笑。林深后排抬下巴，像未说完的招呼。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">走廊。晴。</p>
+  <p class="p rise">方晴：好配又好像没谈。梁予：专业亲密。我觉得故事没写完。</p>
+  <p class="p rise">「我们在谈吗？」「在。不宣布世界。」<br>「得意？」「能。别太得意。」<br>「神女点名——」「——你得意有理。」自己愣。同频。未完。</p>
+  <p class="p rise">出楼。风。外侧。胸针取下塞回口袋，一触即离。</p>
+  <p class="p rise">「下周 G 市。」<br>「改航班。同向。到楼下就走。除非你说留。」<br>「看雨。」<br>「看雨。」</p>
+  <p class="p rise">半步影子被拉长。不像句号，像省略号。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">夜。通稿猜恋情。沈清然：远观就好。我是改方案的人。</p>
+  <p class="p rise">陆衡加班到十一点。空房。热水澡。看表。睡。没叫人——不是结局，是暂时空仓。阮青未读。梁予工作汇报已读。沈清然项目群安静。</p>
+  <p class="p rise">苏晚机票订单。林深「有局吗」躺着，不回不删。<br>何止换城出没。小唐离职章已盖。周宴展览延期。方晴炮友问「能不能认真」，她回了问号。</p>
+  <p class="p rise">没有人的线被剪断。<br>这一卷只是夹了书签。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">柴：二十秒小样。下次的三秒。<br>王琪：过。在？<br>柴：在。</p>
+  <p class="p rise">像下一章的开门键。</p>
+  <p class="p rise">枕边。闭眼前仍是雨棚、外侧伞、掌心向上——以及许多未答：</p>
+  <p class="p rise">北衡下一季是否再同框；<br>林深会不会带更准的版本回来；<br>陆衡空仓能维持多久；<br>沈清然的「要」会指向谁；<br>苏晚泥与玻璃还能并行几季；<br>何止会不会换一种更体面的脏法；<br>神与风的半步，会不会在某场雨里变成一步——或退回三步。</p>
+  <p class="p rise">可远观。<br>不可亵玩。<br>却可并排。</p>
+  <p class="p rise">并排不是结局。<br>并排是还在走。</p>
+  <p class="p rise">风起时，有人仍愿意把外侧让给对方——<br>这一次够了。<br>下一次呢？</p>
+  <p class="p rise">雨声在很远的地方响了一下。<br>像预告。</p>
+  <p class="end-mark rise">（第 10 章 · 终）</p>
+  <p class="end-mark rise"><strong>《远观》第一卷 · 未完待续</strong></p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch9">← 可远观的恋人</a><span></span></nav>
+</main>
+
+<footer>
+  远观 · 第一卷<br>  <a href="index.html">← 返回书架</a>
+</footer>
+
+<button id="top" aria-label="回到顶部">↑</button>
+<noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
+#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
+<script>
+var TK='xhw-theme';
+var root=document.documentElement;
+function readTheme(){
+  try{ var v=localStorage.getItem(TK); if(v) return v; }catch(e){}
+  return matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+}
+function paintTheme(t){
+  root.dataset.theme=t;
+  var b=document.getElementById('theme');
+  if(b) b.textContent=(t==='night'?'日间':'夜间');
+}
+paintTheme(readTheme());
+function toggleTheme(){
+  var t=root.dataset.theme==='night'?'day':'night';
+  try{ localStorage.setItem(TK,t); }catch(e){}
+  // 支持时用 View Transitions 做交叉淡化
+  if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.startViewTransition(function(){ paintTheme(t); });
+  }else{ paintTheme(t); }
+}
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
+var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+  if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
+    return showAll;
+  }
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
+})();
+
+(function(){
+  // 关掉浏览器自带的滚动位置恢复，避免和下面按「章号+比例」算出的位置打架
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  var PK='xhw-pos-'+document.body.dataset.book;
+  var tools=document.getElementById('tools'), toc=document.getElementById('toc'),
+      scrim=document.getElementById('scrim'), bar=document.getElementById('bar'),
+      now=document.getElementById('now'), top=document.getElementById('top'),
+      cover=document.getElementById('cover');
+  var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
+  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var wide=function(){return window.innerWidth>=1080};
+  var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- 偏好
+  var st={scale:1,ch:null,ratio:0};
+  try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
+  var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
+  applyScale();
+
+  document.getElementById('theme').onclick=toggleTheme;
+  var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
+  var paintFont=function(){
+    var i=STEPS.indexOf(st.scale); fontBtn.textContent='字号 '+((i<0?1:i+1))+'/'+STEPS.length;
+  };
+  paintFont();
+  fontBtn.onclick=function(){
+    var i=STEPS.indexOf(st.scale); st.scale=STEPS[(i<0?1:i+1)%STEPS.length];
+    applyScale(); paintFont(); save();
+  };
+
+  // ---- 目录
+  function setToc(open){
+    toc.classList.toggle('open',open);
+    if(wide()){
+      toc.classList.toggle('hidden',!open);
+      document.documentElement.dataset.toc=open?'on':'off';
+      scrim.classList.remove('on');
+    }else{
+      scrim.classList.toggle('on',open);
+      document.documentElement.dataset.toc='off';
+    }
+  }
+  document.getElementById('menu').onclick=function(){ setToc(!toc.classList.contains('open')); };
+  scrim.onclick=function(){ setToc(false); };
+  toc.addEventListener('click',function(e){ if(e.target.closest('a')&&!wide()) setToc(false); });
+  setToc(wide());
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!wide()) setToc(false);
+  });
+
+  // ---- 入场动画
+  reveal(document.querySelectorAll('.rise,.ch-head,.sec-mark'));
+
+  // ---- 进度 / 当前章 / 封面视差
+  var cur=-1, raf=0, vh=innerHeight;
+  function tick(){
+    raf=0;
+    var y=window.scrollY, h=document.body.scrollHeight-vh;
+    bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
+    tools.classList.toggle('lifted',y>vh*.55);
+    top.classList.toggle('on',y>vh*1.2);
+
+    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
+    if(cover && !calm){
+      if(y<vh){
+        var k=y/vh;
+        cover.style.transform='translateY('+(y*.28)+'px)';
+        cover.style.opacity=String(Math.max(0,1-k*1.35));
+      }else if(cover.style.opacity!=='0'){
+        cover.style.opacity='0';
+      }
+    }
+
+    var probe=y+vh*.3, idx=-1;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].offsetTop<=probe) idx=i;
+    if(idx!==cur){
+      cur=idx;
+      var c=chapters[idx];
+      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
+      var curAnchor=c?c.dataset.anchor:null;
+      links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
+      if(c){
+        var vol=c.dataset.volume;
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+      }else{ now.textContent=''; }
+    }
+    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
+    if(idx>=0){
+      var chTop=chapters[idx].offsetTop;
+      var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
+      st.ch=chapters[idx].dataset.anchor;
+      st.ratio=Math.min(1,Math.max(0,(y-chTop)/Math.max(1,chBottom-chTop)));
+    }
+  }
+  var onScroll=function(){ if(!raf) raf=requestAnimationFrame(tick); };
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',function(){
+    vh=innerHeight;
+    setToc(wide()?!toc.classList.contains('hidden'):false);
+    onScroll();
+  });
+
+  top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
+
+  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
+  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
+  // 变成平滑滚过全书，恢复前临时关掉。
+  if(st.ch!=null && !location.hash){
+    var target=null;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    if(target){
+      var restore=function(){
+        var chTop=target.offsetTop;
+        var chBottom=(chapters.indexOf(target)+1<chapters.length)
+          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var prevBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        scrollTo(0, chTop+st.ratio*(chBottom-chTop));
+        document.documentElement.style.scrollBehavior=prevBehavior;
+        tick();
+      };
+      addEventListener('load',restore);
+      setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  }
+  tick();
+  addEventListener('beforeunload',save);
+  addEventListener('pagehide',save);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') save();
+  });
+  setInterval(save,4000);
+
+  // ---- 左右方向键翻章
+  document.addEventListener('keydown',function(e){
+    if(e.target.closest('input,textarea')) return;
+    var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
+    if(!d) return;
+    var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
+    chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
+  });
+})();
+</script>
+</body>
+</html>

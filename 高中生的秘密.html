@@ -1,0 +1,2816 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-toc="off"
+      style="--accent:#6b5b7d;--accent-lit:#8c7f9a">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#6b5b7d">
+<meta name="description" content="两个已成年的复读生，白天用成绩把自己钉在桌前，夜里却被对方一点点拆开——先克制，后爆发。">
+<meta property="og:title" content="高中生的秘密 · 试写稿">
+<meta property="og:description" content="两个已成年的复读生，白天用成绩把自己钉在桌前，夜里却被对方一点点拆开——先克制，后爆发。">
+<meta property="og:type" content="book">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTQiIGZpbGw9IiM2YjViN2QiLz48L3N2Zz4=">
+<title>高中生的秘密 · 试写稿</title>
+<script data-book="高中生的秘密">(function(){
+var r=document.documentElement, book=document.currentScript.dataset.book;
+try{
+  var t=localStorage.getItem('xhw-theme');
+  if(!t) t=matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+  r.dataset.theme=t;
+}catch(e){}
+try{
+  var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
+  if(st.scale) r.style.setProperty('--font-scale',st.scale);
+}catch(e){}
+if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
+})();</script>
+<style>
+:root{
+  --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
+  --ink-faint:#a89e94; --rule:#ddd5c8;
+  --accent:#8c6f4a; --accent-lit:#8c6f4a;
+  --shadow:0 1px 2px rgba(43,39,36,.04),0 8px 24px -12px rgba(43,39,36,.14);
+  --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
+  --font-scale:1;
+  --ease:cubic-bezier(.4,0,.2,1);
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
+         -apple-system,"Segoe UI",sans-serif;
+}
+html[data-theme=night]{
+  --bg:#16181a; --bg-elev:#1e2124; --ink:#cfc9c0; --ink-soft:#948d84;
+  --ink-faint:#645d55; --rule:#2e3236;
+  --accent:var(--accent-lit);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
+}
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-theme=night] main{letter-spacing:.015em}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* 通用入场：加 .rise 的元素初始下沉透明，进入视口时由 JS 挂 .in */
+.rise{opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+.tbtn{border:0;background:none;color:var(--ink-soft);font-family:var(--sans);font-size:13px;
+  cursor:pointer;padding:7px 10px;border-radius:6px;line-height:1;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+.tbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.tbtn:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .rise{opacity:1!important;transform:none!important}
+}
+
+/* 顶部进度条 */
+#bar{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 55%,transparent),var(--accent));
+  transition:width .12s linear}
+
+/* 工具条 */
+#tools{position:fixed;top:0;right:0;left:0;height:46px;z-index:50;display:flex;
+  align-items:center;gap:2px;padding:0 12px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);border-bottom:1px solid transparent;
+  transition:border-color .4s var(--ease),background .4s var(--ease)}
+#tools.lifted{border-bottom-color:var(--rule)}
+#tools .now{flex:1;min-width:0;font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  opacity:0;transform:translateY(3px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#tools.lifted .now{opacity:1;transform:none}
+#back{font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);text-decoration:none;
+  padding:7px 10px;border-radius:6px;white-space:nowrap;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+#back:hover{color:var(--accent);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+
+/* 侧栏目录 */
+#toc{position:fixed;top:0;left:0;bottom:0;width:238px;z-index:55;padding:58px 0 24px;
+  background:var(--bg-elev);border-right:1px solid var(--rule);overflow-y:auto;
+  transform:translateX(-100%);transition:transform .38s var(--ease)}
+#toc.open{transform:none}
+#toc h3{margin:0 0 10px;padding:0 22px;font-family:var(--sans);font-size:11px;
+  letter-spacing:.22em;color:var(--ink-faint);font-weight:400}
+#toc a{display:block;padding:9px 22px;color:var(--ink-soft);text-decoration:none;
+  font-family:var(--sans);font-size:13.5px;letter-spacing:.03em;
+  border-left:2px solid transparent;
+  transition:color .25s var(--ease),border-color .25s var(--ease),
+             background .25s var(--ease),padding-left .25s var(--ease)}
+#toc a:hover{color:var(--ink);padding-left:26px}
+#toc a.on{color:var(--accent);border-left-color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent)}
+#toc a i{font-style:normal;color:var(--ink-faint);font-size:11.5px;margin-right:8px;
+  font-variant-numeric:tabular-nums}
+#toc a.on i{color:var(--accent)}
+/* 带小标题的分节符生成的二级目录项：单章多分节（如出差）时给出导航 */
+#toc a.sub-toc{padding:6px 22px 6px 40px;font-size:12px;color:var(--ink-faint)}
+#toc a.sub-toc:hover{padding-left:44px}
+/* 分卷书的卷标题：只在 章节/卷X/ 结构下出现 */
+.toc-vol{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.75}
+.toc-vol:first-child{margin-top:0}
+/* 抽屉打开时条目阶梯淡入 */
+#toc.open a{animation:tocIn .42s var(--ease) both;animation-delay:var(--d)}
+@keyframes tocIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+#scrim{position:fixed;inset:0;z-index:54;background:rgba(0,0,0,.34);opacity:0;
+  pointer-events:none;transition:opacity .38s var(--ease);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#scrim.on{opacity:1;pointer-events:auto}
+
+/* 封面 */
+#cover{min-height:100svh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:60px 24px;
+  transition:padding-left .38s var(--ease)}
+#cover>*{will-change:transform,opacity}
+#cover .rule{width:1px;height:56px;
+  background:linear-gradient(var(--rule),color-mix(in srgb,var(--accent) 40%,transparent));
+  animation:dropIn .9s var(--ease) both}
+#cover h1{margin:26px 0 0;font-size:clamp(52px,15vw,86px);font-weight:400;
+  letter-spacing:.3em;text-indent:.3em;line-height:1.15;
+  animation:titleIn 1.1s var(--ease) .1s both}
+#cover .sub{margin-top:16px;font-family:var(--sans);font-size:12px;letter-spacing:.42em;
+  text-indent:.42em;color:var(--ink-faint);animation:fadeUp .9s var(--ease) .34s both}
+#cover .epi{margin-top:46px;font-size:15px;line-height:2.1;color:var(--ink-soft);
+  letter-spacing:.06em;animation:fadeUp .9s var(--ease) .5s both}
+#cover .meta{margin-top:52px;font-family:var(--sans);font-size:11.5px;letter-spacing:.16em;
+  color:var(--ink-faint);animation:fadeUp .9s var(--ease) .64s both}
+#cover .go{margin-top:34px;display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.2em;color:var(--ink-soft);
+  text-decoration:none;padding:12px 28px;border:1px solid var(--rule);border-radius:2px;
+  animation:fadeUp .9s var(--ease) .78s both;
+  transition:color .3s var(--ease),border-color .3s var(--ease),gap .3s var(--ease)}
+#cover .go:hover{color:var(--accent);border-color:var(--accent);gap:14px}
+#cover .go span{transition:transform .3s var(--ease)}
+#cover .go:hover span{transform:translateX(2px)}
+@keyframes titleIn{from{opacity:0;transform:translateY(20px);letter-spacing:.52em}
+  to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dropIn{from{opacity:0;transform:scaleY(0);transform-origin:top}
+  to{opacity:1;transform:none}}
+
+/* 正文 */
+main{max-width:34em;margin:0 auto;padding:0 26px 30vh;
+  font-size:calc(17.5px * var(--font-scale));line-height:2.05;letter-spacing:.02em;
+  /* 避头尾：不让逗号句号右括号落在行首。中文长文必需，浏览器默认的 auto 较宽松 */
+  line-break:strict;word-break:normal;overflow-wrap:break-word}
+.chapter{padding-top:14vh}
+.ch-head{margin-bottom:9vh;text-align:center}
+.ch-num{font-family:var(--sans);font-size:11.5px;letter-spacing:.34em;text-indent:.34em;
+  color:var(--accent);opacity:.85}
+.ch-title{margin:14px 0 0;font-size:1.5em;font-weight:400;letter-spacing:.12em;
+  text-indent:.12em}
+.ch-line{width:26px;height:1px;background:var(--rule);margin:26px auto 0;
+  transform:scaleX(0);transition:transform .8s var(--ease) .2s}
+.ch-head.in .ch-line{transform:none}
+/* hanging-punctuation 目前基本只有 Safari 生效，text-wrap:pretty 主要 Chromium 生效；
+   两者都是渐进增强，不支持的浏览器忽略即可，无副作用 */
+.p{margin:0 0 1.15em;text-indent:2em;text-align:justify;hanging-punctuation:allow-end;
+  text-wrap:pretty}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic;color:var(--ink-soft)}
+
+/* 分节符 */
+.sec-mark{display:flex;align-items:center;gap:18px;margin:3.2em 0 2.4em;color:var(--accent)}
+.sec-mark::before,.sec-mark::after{content:"";flex:1;height:1px;background:var(--rule);
+  transform:scaleX(0);transition:transform .9s var(--ease)}
+.sec-mark::before{transform-origin:right}
+.sec-mark::after{transform-origin:left}
+.sec-mark.in::before,.sec-mark.in::after{transform:none}
+.sec-mark b{font-weight:400;font-size:1em;line-height:1;letter-spacing:.2em;
+  text-indent:.2em;opacity:.9;white-space:nowrap}
+.sec-mark b em{font-style:normal;color:var(--ink-soft);font-size:.86em;
+  letter-spacing:.1em;margin-left:.7em}
+/* 章首第一个分节符紧贴标题，省掉横线（隐藏后需自行居中） */
+.ch-head + .sec-mark{margin-top:0;justify-content:center}
+.ch-head + .sec-mark::before,.ch-head + .sec-mark::after{display:none}
+
+/* 手机消息 */
+.msg{margin:1.9em 0;padding:14px 18px;border-radius:3px 12px 12px 12px;
+  background:var(--bg-elev);border:1px solid var(--rule);
+  border-left:2px solid color-mix(in srgb,var(--accent) 60%,transparent);
+  box-shadow:var(--shadow)}
+.msg p{margin:0 0 .5em;font-family:var(--sans);font-size:.88em;line-height:1.85;
+  color:var(--ink-soft);text-indent:0}
+.msg p:last-child{margin-bottom:0}
+
+.end-mark{margin:4em 0 0;text-align:center;font-family:var(--sans);font-size:.8em;
+  letter-spacing:.22em;color:var(--ink-faint);text-indent:0}
+.ch-end{width:34px;height:1px;background:var(--rule);margin:4.5em auto 0}
+
+.ch-nav{max-width:34em;margin:2.4em auto 0;padding:0 26px;display:flex;
+  justify-content:space-between;gap:16px;font-family:var(--sans);font-size:12.5px;
+  letter-spacing:.05em;color:var(--ink-faint)}
+.ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+.ch-nav a:hover{color:var(--accent)}
+.ch-nav a:last-child{text-align:right}
+
+footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;color:var(--ink-faint);
+  line-height:2.4}
+footer a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
+footer a:hover{color:var(--accent)}
+
+/* 回顶 */
+#top{position:fixed;right:20px;bottom:24px;z-index:40;width:38px;height:38px;
+  border-radius:50%;background:var(--bg-elev);color:var(--ink-soft);
+  border:1px solid var(--rule);cursor:pointer;font-size:14px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(8px) scale(.9);pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease),color .25s var(--ease)}
+#top.on{opacity:1;transform:none;pointer-events:auto}
+#top:hover{color:var(--accent);transform:translateY(-2px)}
+
+@media (min-width:1080px){
+  #toc{transform:none;background:transparent;border-right:0}
+  #toc.hidden{transform:translateX(-100%)}
+  #scrim{display:none}
+  /* 侧栏常驻时整页让开：用 body 内缩而非 main 的 padding，
+     因为 main 是 border-box，加内边距会压缩字栏宽度 */
+  html[data-toc=on] body{padding-left:238px}
+  html[data-toc=on] #tools{left:238px}
+}
+@media (max-width:600px){
+  main{font-size:calc(17px * var(--font-scale));line-height:1.98;padding:0 20px 30vh}
+  .chapter{padding-top:9vh}
+  .ch-head{margin-bottom:6.5vh}
+  #cover h1{letter-spacing:.22em;text-indent:.22em}
+  #toc{width:76vw;padding-top:66px}
+  #top{right:14px;bottom:18px}
+  .ch-nav{padding:0 20px;font-size:12px}
+}
+@media print{
+  #tools,#toc,#scrim,#bar,#top,#cover .go,#back,.ch-nav{display:none}
+  body{background:#fff;color:#000;padding-left:0!important}
+  /* 首章紧跟封面，不需要再分页——否则会多出一张空白页 */
+  .chapter{page-break-before:always;padding-top:0}
+  .chapter:first-of-type{page-break-before:avoid}
+  .rise{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body data-book="高中生的秘密">
+<div id="bar"></div>
+
+<nav id="tools">
+  <a id="back" href="index.html">← 书架</a>
+  <button class="tbtn" id="menu" aria-label="目录">目录</button>
+  <span class="now" id="now"></span>
+  <button class="tbtn" id="font" aria-label="调整字号">字号</button>
+  <button class="tbtn" id="theme" aria-label="切换日间夜间">夜间</button>
+</nav>
+
+<div id="scrim"></div>
+<aside id="toc" aria-label="章节目录">
+  <h3>目 录</h3>
+    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>邻座</a>
+    <a href="#ch2" data-ch="ch2" style="--d:26ms"><i>02</i>规矩</a>
+    <a href="#ch3" data-ch="ch3" style="--d:52ms"><i>03</i>错题本</a>
+    <a href="#ch4" data-ch="ch4" style="--d:78ms"><i>04</i>十一点</a>
+    <a href="#ch5" data-ch="ch5" style="--d:104ms"><i>05</i>纸</a>
+    <a href="#ch6" data-ch="ch6" style="--d:130ms"><i>06</i>装</a>
+    <a href="#ch7" data-ch="ch7" style="--d:156ms"><i>07</i>电话</a>
+    <a href="#ch8" data-ch="ch8" style="--d:182ms"><i>08</i>见</a>
+    <a href="#ch9" data-ch="ch9" style="--d:208ms"><i>09</i>先停</a>
+    <a href="#ch10" data-ch="ch10" style="--d:234ms"><i>10</i>点头</a>
+    <a href="#ch11" data-ch="ch11" style="--d:260ms"><i>11</i>黏</a>
+    <a href="#ch12" data-ch="ch12" style="--d:286ms"><i>12</i>坦白</a>
+    <a href="#ch13" data-ch="ch13" style="--d:312ms"><i>13</i>安抚</a>
+    <a href="#ch14" data-ch="ch14" style="--d:338ms"><i>14</i>冲刺</a>
+    <a href="#ch15" data-ch="ch15" style="--d:364ms"><i>15</i>前夜</a>
+    <a href="#ch16" data-ch="ch16" style="--d:390ms"><i>16</i>秘密</a>
+</aside>
+
+<header id="cover">
+  <div class="rule"></div>
+  <h1>高中生的秘密</h1>
+  <div class="sub">试写稿</div>
+  <p class="epi">今年只有一次。<br>——可有些事，一次就够。</p>
+  <div class="meta">全 16 章 · 约 5.6 万字</div>
+  <a class="go" href="#ch1">开始阅读 <span>→</span></a>
+</header>
+
+<main>
+<section class="chapter" id="ch1" data-num="1" data-title="邻座" data-anchor="ch1" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 1 章</div>
+    <h2 class="ch-title">邻座</h2>
+    <div class="ch-line"></div>
+  </header>
+  <p class="p">启明的教室没有窗外梧桐，也没有班级口号。</p>
+  <p class="p">只有中央空调的低鸣，和墙上那行红字：<strong>今年只有一次。</strong></p>
+  <p class="p">许昼报到的第三天，被调到靠窗倒数第二排。同桌空着，桌上贴着一张新标签：苏晚宁。</p>
+  <p class="p">他听见这名字时，正把笔袋拉链拉到一半。</p>
+  <p class="p">「苏晚宁。」他在舌尖滚了一遍，觉得清清冷冷的，像冬天刚拧开的水龙头。</p>
+  <p class="p">人是中午到的。</p>
+  <p class="p rise">卫衣帽子扣着，只露出半截下巴和一本已经翻旧的英语词汇书。她在门口站了两秒，像在确认自己没有走错房间，才走过来，把书包放在右边椅背上。</p>
+  <p class="p rise">「你好，我是许昼。」他笑，露出一点牙，声音自动调到「好相处」的档，「以后一起加油。」</p>
+  <p class="p rise">苏晚宁抬眼。</p>
+  <p class="p rise">眼神很干净，干净到几乎没有温度。</p>
+  <p class="p rise">「苏晚宁。」她说，「请多指教。」</p>
+  <p class="p rise">六个字，句号落得很整齐。</p>
+  <p class="p rise">许昼还想再找两句——食堂哪家饭多、厕所怎么走、晚自习几点最安静——她已经坐下，翻开卷子，笔尖在纸上轻轻一点，像把世界隔在外面。</p>
+  <p class="p rise">好吧。</p>
+  <p class="p rise">他想，内向。</p>
+  <p class="p rise">他见过很多种内向的人。有的是真冷，有的是装酷。苏晚宁更像第三种：把自己收得很好，不想被多认识一寸。</p>
+  <p class="p rise">许昼转回自己的题。</p>
+  <p class="p rise">物理大题第三问卡了半分钟。他用惯了的办法，在草稿纸边缘画小箭头，把受力拆开。旁边传来极轻的纸页声，她的笔停了，又动。</p>
+  <p class="p rise">他没看她。</p>
+  <p class="p rise">可空气里有一股很淡的皂角味，像宿舍公用的那种便宜牌子，洗得干净。</p>
+  <p class="p rise">许昼把箭头画重了一点。</p>
+  <p class="p rise">——</p>
+  <p class="p rise">下午第三节是自由自习。</p>
+  <p class="p rise">老师不在，教室里有人戴耳机，有人咬笔帽。许昼抬手，把窗户推开一条缝，风灌进来，吹动苏晚宁卫衣帽子上的绳。</p>
+  <p class="p rise">绳尾扫过她的腕骨。</p>
+  <p class="p rise">那截骨头很浅，皮肤薄，像稍一用力就会留下指印。</p>
+  <p class="p rise">许昼的视线只停了半秒。</p>
+  <p class="p rise">半秒已经够了。</p>
+  <p class="p rise">他立刻低头，把卷子上的字看得很凶，凶到自己都觉得假。</p>
+  <p class="p rise">「……借过。」</p>
+  <p class="p rise">她忽然开口。</p>
+  <p class="p rise">他侧身。她的手指伸过来，抽走他桌角那本《五年真题》，动作很快，指尖没有碰到他的手。</p>
+  <p class="p rise">「封面反了。」她把书转正，放回去，语气平得像在纠正一道标点，「你刚才看第 18 题答案解析，会找错页。」</p>
+  <p class="p rise">许昼一愣。</p>
+  <p class="p rise">「你盯我卷子？」他笑着问，故意把语气放轻，像玩笑。</p>
+  <p class="p rise">苏晚宁耳尖动了一下。</p>
+  <p class="p rise">只有一点点红，很快被头发遮住。</p>
+  <p class="p rise">「没有。」她说，「你翻页的声音很大。」</p>
+  <p class="p rise">「哦。」许昼点头，「那我轻点。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">对话结束。</p>
+  <p class="p rise">像两列地铁擦肩，门都没开。</p>
+  <p class="p rise">可许昼发现自己的心跳没有按剧本结束。它还在跳，跳得有点多余。</p>
+  <p class="p rise">他在心里给自己判罚：跑五公里。</p>
+  <p class="p rise">今晚。</p>
+  <p class="p rise">现在，做题。</p>
+  <p class="p rise">——</p>
+  <p class="p rise">傍晚，机构食堂。</p>
+  <p class="p rise">许昼端着餐盘找座位，被几个男生招呼：「许昼！这儿！」</p>
+  <p class="p rise">他过去，边吃边听他们吐槽数学老师的板书，笑得肩膀一耸一耸。有人随口问：「你同桌是新来的？看着挺安静。」</p>
+  <p class="p rise">「苏晚宁。」许昼夹菜，语气平常，「学习搭子。英语很好。」</p>
+  <p class="p rise">「那就行。」对方点点头，话题很快滑去下一道模拟题，「对了，第十八题你怎么选的？」</p>
+  <p class="p rise">许昼接过话，把气氛稳稳按在分数上。</p>
+  <p class="p rise">汤不烫，他却觉得喉咙发热。</p>
+  <p class="p rise">不是因为谁说了什么。</p>
+  <p class="p rise">是因为他在说出「学习搭子」四个字时，脑子里先闪过的，是她腕骨上那截被帽绳扫过的皮肤。</p>
+  <p class="p rise">夜里熄灯后，他比谁都清楚自己有多不老实——硬着，喘着，咬着自己的小臂不让声音漏出去，然后在热水里把一切冲掉，像冲掉一场不该有的罪。</p>
+  <p class="p rise">可那是夜里的事。</p>
+  <p class="p rise">白天的许昼，必须是大家的好许昼。</p>
+  <p class="p rise">——</p>
+  <p class="p rise">回教室时，苏晚宁已经在了。</p>
+  <p class="p rise">她桌上多了一杯温水，杯壁凝着雾。她把错题本摊开，写得很密，密到行距都像在省纸。</p>
+  <p class="p rise">「你吃了吗？」许昼问。</p>
+  <p class="p rise">「吃了。」</p>
+  <p class="p rise">「食堂第二窗口的鸡腿饭，今天有点咸。」</p>
+  <p class="p rise">「……我吃的面。」</p>
+  <p class="p rise">「面也好。」他坐下，把自己的物理卷推过去一点，「这题你要是闲，能看一眼吗？我卡在能量守恒。」</p>
+  <p class="p rise">苏晚宁看他。</p>
+  <p class="p rise">第一次，她的目光在他脸上多停了两秒，像在评估：这人是真问问题，还是找话题。</p>
+  <p class="p rise">「给我三分钟。」她说。</p>
+  <p class="p rise">三分钟后，她把关键步骤用铅笔在他草稿上标出来，字迹清瘦，力道却稳。</p>
+  <p class="p rise">「你不是不会。」她说，「你急。急就会跳步。」</p>
+  <p class="p rise">许昼盯着那行字。</p>
+  <p class="p rise">「谢谢。」他真心实意。</p>
+  <p class="p rise">苏晚宁「嗯」了一声，把铅笔还他。递的时候，两人指尖隔着笔身，几乎要碰上。</p>
+  <p class="p rise">她先收回手。</p>
+  <p class="p rise">像触电，又像排练过无数次的撤退。</p>
+  <p class="p rise">许昼握着那支笔，笑了笑，把笑收得恰到好处：「那我请你喝糖水？算谢礼。」</p>
+  <p class="p rise">「不用。」她立刻说，「我们是学习搭子。不用谢礼。」</p>
+  <p class="p rise">学习搭子。</p>
+  <p class="p rise">四个字，像她在两人之间钉下的钉子。</p>
+  <p class="p rise">许昼点头：「行，听你的。」</p>
+  <p class="p rise">他转回卷子，笔锋重新变得听话。</p>
+  <p class="p rise">只有他自己知道——</p>
+  <p class="p rise">桌下，他的手指把膝盖捏得很紧，紧到指节发白。</p>
+  <p class="p rise">窗外的天暗下去。红字还在墙上。</p>
+  <p class="p rise"><strong>今年只有一次。</strong></p>
+  <p class="p rise">许昼在心里默念了一遍，又默念了一遍她的名字。</p>
+  <p class="p rise">苏晚宁。</p>
+  <p class="p rise">他告诉自己：只是同桌。</p>
+  <p class="p rise">只是搭子。</p>
+  <p class="p rise">只是这一年里，无数个需要安静的夜晚中，普通的一个。</p>
+  <p class="p rise">笔尖落下，写下正确的能量守恒。</p>
+  <p class="p rise">而桌对面，苏晚宁的耳尖，在灯下，又悄悄红了一点。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><span></span><a href="#ch2">规矩 →</a></nav>
+
+<section class="chapter" id="ch2" data-num="2" data-title="规矩" data-anchor="ch2" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 2 章</div>
+    <h2 class="ch-title">规矩</h2>
+    <div class="ch-line"></div>
+  </header>
+  <p class="p rise">苏晚宁给关系定规矩，是在他们做了同桌的第七天。</p>
+  <p class="p rise">那天晚自习结束，走廊灯一盏一盏灭。许昼把外套搭在臂弯，很自然地说：「我送你下楼？顺路。」</p>
+  <p class="p rise">「不顺路。」她说。</p>
+  <p class="p rise">「……也是。」他笑，「那我送到楼梯口。」</p>
+  <p class="p rise">「也用不到。」</p>
+  <p class="p rise">她把书包带扯高一点，像把自己塞进壳里。走了两步，又停住，没有回头：</p>
+  <p class="p rise">「许昼。」</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「我们只是学习搭子。」她的声音平稳，平稳得像背诵，「讨论题可以。一起去食堂可以。别的，不要。」</p>
+  <p class="p rise">许昼站在灯影里，表情还是那副好说话的样子。</p>
+  <p class="p rise">「别的，指什么？」</p>
+  <p class="p rise">苏晚宁沉默半秒。</p>
+  <p class="p rise">「你知道。」</p>
+  <p class="p rise">他当然知道。</p>
+  <p class="p rise">暧昧。恋爱。深夜的语音。太近的距离。任何会让人分心、让人被议论、让人在考场上突然空白的东西。</p>
+  <p class="p rise">「行。」许昼说，很痛快，「搭子。我听你的。」</p>
+  <p class="p rise">她肩线松了一点。</p>
+  <p class="p rise">「还有。」她补充，像在写契约附件，「十一点后不聊天。周末各学各的。你的房间，我不去。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「你也别来找我。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">许昼把「好」说得干净。干净到她反而有点不放心，转过身看他。</p>
+  <p class="p rise">他正笑着，眼睛亮，像从不受伤。</p>
+  <p class="p rise">「苏晚宁，」他说，「我复读是来拿分的。真的。」</p>
+  <p class="p rise">她点头。</p>
+  <p class="p rise">「我也是。」</p>
+  <p class="p rise">——</p>
+  <p class="p rise">规矩生效后，世界变得「正确」。</p>
+  <p class="p rise">他们讨论题，到点就停。她讲英语长难句时，话会突然变多——主谓、插入语、作者态度——密得像打开了另一个开关。许昼听着，偶尔插一句，她会皱眉：「你别打岔，我讲完。」</p>
+  <p class="p rise">讲完，又恢复成那个只回「嗯」的人。</p>
+  <p class="p rise">许昼发现，自己开始贪她「讲完」之前的那几分钟。</p>
+  <p class="p rise">贪得不明显。</p>
+  <p class="p rise">他只会把草稿往她那边推近一厘米，或者问：「这题你再讲一遍？我没听清。」</p>
+  <p class="p rise">其实听清了。</p>
+  <p class="p rise">苏晚宁有时会看他一眼，像看穿，又像没看穿。然后真的再讲一遍，讲得更细。</p>
+  <p class="p rise">——</p>
+  <p class="p rise">周五，模考前最后一次限时训练。</p>
+  <p class="p rise">交卷时，许昼看见她把笔帽扣上，指尖有一点抖。很轻。像怕卷子会咬人。</p>
+  <p class="p rise">「紧张？」他压低声音。</p>
+  <p class="p rise">「没有。」她说。</p>
+  <p class="p rise">「那你手冷。」</p>
+  <p class="p rise">苏晚宁把双手收回袖子里：「空调。」</p>
+  <p class="p rise">许昼没再问。</p>
+  <p class="p rise">他懂得退。退是他的日课——像收敛目光，像把不该有的念头折进跑步的步频里。</p>
+  <p class="p rise">可夜里，他躺在合租的窄床上，天花板的裂纹像一道不规矩的题。</p>
+  <p class="p rise">他想起她腕骨上扫过的帽绳。</p>
+  <p class="p rise">想起她说「你知道」时，嘴唇轻轻抿紧的弧度。</p>
+  <p class="p rise">硬了。</p>
+  <p class="p rise">许昼闭眼，骂了自己一声，进浴室。水声盖过一切。他撑着瓷砖，额头顶着冰凉，手上却诚实得可怕。快到的时候，他咬住自己的小臂，脑子里全是不该出现的画面——不是技巧，不是片子，只是她低头写字的侧脸，和那句「别的，不要」。</p>
+  <p class="p rise">射出来的瞬间，他腿软了一下。</p>
+  <p class="p rise">水继续冲。</p>
+  <p class="p rise">他看着镜子里的自己，笑不出来，却还是挤出一个白天的表情练习：阳光，正常，好同学。</p>
+  <p class="p rise">「许昼，」他对镜子说得很轻，「你有病。」</p>
+  <p class="p rise">镜子不回答。</p>
+  <p class="p rise">——</p>
+  <p class="p rise">模考成绩出来那天，教室像被盐腌过，每个人表情都咸。</p>
+  <p class="p rise">苏晚宁总分第一。</p>
+  <p class="p rise">许昼第二，差她六分。</p>
+  <p class="p rise">邻桌有人探头：「许昼第二？可以啊。」</p>
+  <p class="p rise">「她第一。」许昼抬下巴示意同桌，笑得干净，「该的。」</p>
+  <p class="p rise">苏晚宁耳尖红了。</p>
+  <p class="p rise">她把成绩单折好，塞进书里，对他说：「六分是两道选择。你粗心。」</p>
+  <p class="p rise">「嗯，我检讨。」</p>
+  <p class="p rise">「……不是骂你。」她小声补，「你已经很好了。」</p>
+  <p class="p rise">许昼的心像被什么不轻不重地撞了一下。</p>
+  <p class="p rise">「那我请你喝糖水。」他说，然后抢在她拒绝前举起手，「不是谢礼。是搭子之间的——庆祝。庆祝你第一。行不行？」</p>
+  <p class="p rise">苏晚宁看了他很久。</p>
+  <p class="p rise">久到他以为要被否决。</p>
+  <p class="p rise">「五分钟。」她说，「喝完回教室。」</p>
+  <p class="p rise">——</p>
+  <p class="p rise">机构门口的糖水铺只剩两张折叠椅。</p>
+  <p class="p rise">红豆沙很甜。许昼把自己那杯的糖少要了一半，苏晚宁的全糖。</p>
+  <p class="p rise">「你怎么知道我要全糖？」她问。</p>
+  <p class="p rise">「猜的。」他耸肩，「你写字那么狠，大概需要甜的。」</p>
+  <p class="p rise">苏晚宁低头搅勺子，搅出细小的漩涡。</p>
+  <p class="p rise">「许昼。」</p>
+  <p class="p rise">「嗯？」</p>
+  <p class="p rise">「你是不是对谁都这样？」</p>
+  <p class="p rise">「哪样？」</p>
+  <p class="p rise">「笑，说话，请人喝东西。」她的声音很平，「好像很容易亲近。」</p>
+  <p class="p rise">许昼停了一秒。</p>
+  <p class="p rise">这一秒里，他本可以继续用阳光挡过去：对啊，我人缘好。</p>
+  <p class="p rise">他没有。</p>
+  <p class="p rise">「不是。」他说，很轻，「对别人，我不会问能不能请糖水问得这么小心。」</p>
+  <p class="p rise">苏晚宁的勺子停住。</p>
+  <p class="p rise">风吹过来，她卫衣帽子的绳又晃。许昼的目光不争气地跟着绳走，落到她唇边一点红豆沙的颜色。</p>
+  <p class="p rise">好近。</p>
+  <p class="p rise">近到他能数清她下睫毛。</p>
+  <p class="p rise">「你……」苏晚宁开口，声音发干。</p>
+  <p class="p rise">许昼身体前倾了半寸——不是亲，是像被某种重力拽了一下。理智在喊停：规矩，搭子，今年只有一次。</p>
+  <p class="p rise">可他的呼吸已经乱了。</p>
+  <p class="p rise">苏晚宁的眼睛里闪过惊慌，随即是更深的东西——不是拒绝的尖刺，是一种「我还没准备好」的退。</p>
+  <p class="p rise">可她没有立刻躲开。</p>
+  <p class="p rise">那半秒里，她甚至前倾了一点点。像身体比脑子诚实，像她也想知道嘴唇贴上去是什么感觉。糖水的甜还糊在呼吸里，许昼的影子压过来，近得她能听见自己乱掉的心跳声。</p>
+  <p class="p rise">不行。</p>
+  <p class="p rise">她偏头。</p>
+  <p class="p rise">他的嘴唇擦过她的发丝，像一场未遂。</p>
+  <p class="p rise">糖水杯磕在桌上，响了一声。</p>
+  <p class="p rise">「我回去了。」苏晚宁站起来，椅子腿刮过地面。腿心发软，她假装是椅子太矮。</p>
+  <p class="p rise">「晚宁——」</p>
+  <p class="p rise">「苏晚宁。」她纠正，背影绷直，「十一点了。不聊天。」</p>
+  <p class="p rise">天色其实才刚擦黑。</p>
+  <p class="p rise">许昼坐在原处，看她走进灯火，看她没有回头。</p>
+  <p class="p rise">他抬手，摸了摸自己的嘴唇。</p>
+  <p class="p rise">什么都没碰到。</p>
+  <p class="p rise">却像被烫过。</p>
+  <p class="p rise">他不知道的是：她走进楼道拐角，才敢停下来，指尖按住自己发烫的耳朵，在心里骂了一句很轻的脏话。</p>
+  <p class="p rise">不是骂他。</p>
+  <p class="p rise">是骂自己——刚才，她竟然也想要。</p>
+  <p class="p rise">——</p>
+  <p class="p rise">当晚 22:58。</p>
+  <p class="p rise">许昼的手机亮了。</p>
+  <p class="p rise">不是语音。是一条消息，来自苏晚宁：</p>
+  <p class="p rise">「第 18 题你跳步了。我把正确步骤拍你。看完睡。」</p>
+  <p class="p rise">紧接着一张清晰的草稿照片。</p>
+  <p class="p rise">22:59，他又收到一条：</p>
+  <p class="p rise">「刚才的事，当没发生。我们还是搭子。」</p>
+  <p class="p rise">许昼盯着屏幕，笑了一下，笑意里全是疼。</p>
+  <p class="p rise">他回：</p>
+  <p class="p rise">「好。谢谢步骤。」</p>
+  <p class="p rise">停顿，又删掉一句「我想亲你」。</p>
+  <p class="p rise">最后只加了一句：</p>
+  <p class="p rise">「今晚糖水我请的。下次你第一，还是我请。」</p>
+  <p class="p rise">对方显示「正在输入」很久。</p>
+  <p class="p rise">苏晚宁删掉了「其实我……」，删掉了「别再靠近」，又删掉了「你再近一点试试」。</p>
+  <p class="p rise">最后只剩：</p>
+  <p class="p rise">「……随便。」</p>
+  <p class="p rise">她把手机扣在枕边，脸埋进被子。黑暗里，身体比白天诚实：想要被碰到的地方发紧，呼吸乱得像刚跑完操。</p>
+  <p class="p rise">「不许。」她对着枕头无声说。</p>
+  <p class="p rise">枕头不回答。</p>
+  <p class="p rise">——</p>
+  <p class="p rise">许昼把手机扣在胸口，躺下。</p>
+  <p class="p rise">窗外有车灯扫过，像一道没答完的选择。</p>
+  <p class="p rise">他硬着，没有再去浴室。</p>
+  <p class="p rise">他想把这份饿留着。</p>
+  <p class="p rise">留到下一次——她肯让他靠近的时候。</p>
+  <p class="p rise">如果会有下次。</p>
+  <p class="p rise">他以为只有自己脏。</p>
+  <p class="p rise">而楼的另一侧，苏晚宁睁着眼，把「我也想要」四个字，一口一口咽回去，咽到天亮。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch1">← 邻座</a><a href="#ch3">错题本 →</a></nav>
+
+<section class="chapter" id="ch3" data-num="3" data-title="错题本" data-anchor="ch3" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 3 章</div>
+    <h2 class="ch-title">错题本</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">糖水铺那晚之后，苏晚宁连续三天把座位往右挪了一寸。</p>
+  <p class="p rise">不显眼。</p>
+  <p class="p rise">桌脚还在原线，卷子还在原位，只有手肘到他手肘的距离，像被谁悄悄加了一条不可见的尺。</p>
+  <p class="p rise">许昼看在眼里，什么也没说。</p>
+  <p class="p rise">他比谁都懂「退」的含义。退是她的盔甲，也是他的日课。于是他也退——问问题先写在纸上推过去，递笔时指尖缩在笔尾，连笑都收成恰到好处的弧度，像什么都没发生过。</p>
+  <p class="p rise">可夜里不是这么回事。</p>
+  <p class="p rise">他躺在床上，天花板裂纹还在。赵屿在外间打游戏，耳机线拖得很长，偶尔骂一句「坑」。声音隔着薄墙，像另一个世界。</p>
+  <p class="p rise">许昼盯着手机。</p>
+  <p class="p rise">对话框停在「随便」两个字上。</p>
+  <p class="p rise">他点开，又退出，退出，又点开。最后只发了一张物理压轴的草稿，附一句：「这步我还是绕。有空看一眼就行。没空当我没发。」</p>
+  <p class="p rise">已读。</p>
+  <p class="p rise">过了七分钟，回复来了。不是语音，是分步骤的拍照，光影冷白，像她台灯下的手很稳。</p>
+  <p class="p rise">末尾多了一行字：</p>
+  <p class="p rise">「你没有绕。你急。」</p>
+  <p class="p rise">许昼把屏幕按在心口。</p>
+  <p class="p rise">心跳一下下顶着玻璃。</p>
+  <p class="p rise">他回：「谢谢。」</p>
+  <p class="p rise">想了想，又补：「明天我把英语错题本带给你。你上次说长难句可以一起拆。」</p>
+  <p class="p rise">发送。</p>
+  <p class="p rise">这次她回得很快：</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">只有一个字。</p>
+  <p class="p rise">许昼却看着那个「好」，看到眼眶发热。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">合租房里，灯灭了。</p>
+  <p class="p rise">赵屿忽然开口，声音压得很低，像怕惊动什么：</p>
+  <p class="p rise">「许昼。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「你最近……状态有点不对。」停顿，「不是说分。分挺好。」</p>
+  <p class="p rise">许昼看着黑暗：「困了就睡。」</p>
+  <p class="p rise">赵屿「哦」了一声，翻了个身。床板轻响。过了很久，他又补半句，像把话扔进枕头里：</p>
+  <p class="p rise">「需要我装睡的时候，说一声。」</p>
+  <p class="p rise">许昼没接。</p>
+  <p class="p rise">过了十几秒，外间传来均匀的呼吸。</p>
+  <p class="p rise">他才松开拳头。掌心全是汗。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">同一栋楼的另一侧，唐果洗完脸，看见苏晚宁还坐在桌前。</p>
+  <p class="p rise">「还不睡？」唐果用毛巾擦脖子，「明天早读。」</p>
+  <p class="p rise">「再十分钟。」</p>
+  <p class="p rise">唐果没走。她在床沿坐下，声音忽然轻了，像怕隔墙有耳：</p>
+  <p class="p rise">「晚宁。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「我不是要管你。」唐果抠着毛巾边，「就是……你看他的时候，不太像看同桌。」</p>
+  <p class="p rise">苏晚宁的笔尖在纸上顿住。</p>
+  <p class="p rise">墨点洇开一小团。</p>
+  <p class="p rise">「没有。」她说。</p>
+  <p class="p rise">唐果看着她耳尖，没再追。只把水杯往她手边推了推：「累了就靠一下。我听着，不往外说。」</p>
+  <p class="p rise">苏晚宁「嗯」了一声。</p>
+  <p class="p rise">等唐果上了床，呼吸渐渐沉下去，她才慢慢把脸埋进臂弯。</p>
+  <p class="p rise">台灯还亮着。</p>
+  <p class="p rise">光圈里，她的错题本摊开到某一页——那页本该是数学，她却在空白处写过一行又狠狠涂掉的字。</p>
+  <p class="p rise">涂痕很重。</p>
+  <p class="p rise">重到像羞耻本身。</p>
+  <p class="p rise">她想起糖水桌上，自己竟然前倾过。</p>
+  <p class="p rise">那半秒里，她想要的不是分数，不是第一，不是「证明自己不会崩」。</p>
+  <p class="p rise">她想要近一点。</p>
+  <p class="p rise">再近一点。</p>
+  <p class="p rise">「不许。」她无声说。</p>
+  <p class="p rise">身体却诚实地发热：小腹发紧，腿心发软，连呼吸都像从很深的地方返上来。她把膝盖并拢，把额头顶着桌面，像把自己折进规矩里。</p>
+  <p class="p rise">十一点到了。</p>
+  <p class="p rise">她没有给许昼发消息。</p>
+  <p class="p rise">她打开错题本，从第一页重新抄。</p>
+  <p class="p rise">抄到手腕酸，才敢睡。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">第四天早上，苏晚宁把座位挪回了原位。</p>
+  <p class="p rise">许昼进教室时，看见那一寸空白消失了。桌沿重新贴近桌沿，像什么裂口被悄悄缝上。</p>
+  <p class="p rise">他脚步顿了顿，很快恢复成平常的笑：「早。」</p>
+  <p class="p rise">「早。」她应。</p>
+  <p class="p rise">声音有点哑，像没睡好。</p>
+  <p class="p rise">许昼把英语错题本放在两人中间的缝上：「说好的。」</p>
+  <p class="p rise">苏晚宁看了那本本子一眼。</p>
+  <p class="p rise">封面旧了，边角翻起，里面夹着不同颜色的便签——有的写「主谓」，有的写「态度题别脑补」。很乱，也很认真。</p>
+  <p class="p rise">她伸手，指尖碰到封面，又收回来半分，像被烫到。</p>
+  <p class="p rise">然后她还是拿起来了。</p>
+  <p class="p rise">「我中午还你。」她说。</p>
+  <p class="p rise">「不急。」许昼坐下，拉开椅子的动作放轻，「你用着。」</p>
+  <p class="p rise">上午的课像被拉长的弦。</p>
+  <p class="p rise">老师在讲圆锥曲线，粉笔灰细细落。许昼听见自己的笔在响，也听见她翻页的声音。偶尔，她会用铅笔在他的错题旁批一行极小的字：</p>
+  <p class="p rise">「这里不是不会，是选项陷阱。」</p>
+  <p class="p rise">字迹清瘦。</p>
+  <p class="p rise">像贴着他耳边说话。</p>
+  <p class="p rise">下课时，何予川从过道经过，停了一下。礼貌，不远不近：</p>
+  <p class="p rise">「苏晚宁，这套阅读你有空的话，我们可以对一下。」</p>
+  <p class="p rise">苏晚宁抬眼，点头：「周末吧。我把时间发给你。」</p>
+  <p class="p rise">「好。」何予川也对许昼一点头，「许昼。」</p>
+  <p class="p rise">「何予川。」许昼笑着回。</p>
+  <p class="p rise">笑得很标准。</p>
+  <p class="p rise">标准到他自己都嫌假。</p>
+  <p class="p rise">何予川走后，教室重新嘈杂起来。苏晚宁把那套阅读收进袋里，没有立刻解释什么。许昼也不问。</p>
+  <p class="p rise">可桌下，他的手指把膝盖捏白了。</p>
+  <p class="p rise">苏晚宁看见了。</p>
+  <p class="p rise">她没说话。只是把英语错题本往他那边推回一点，露出自己夹在里面的一张纸——不是答案，是她重新拆过的长难句结构图，画得很细。</p>
+  <p class="p rise">「这个你先看。」她说，「比我口头讲清楚。」</p>
+  <p class="p rise">许昼「嗯」了一声。</p>
+  <p class="p rise">喉咙发紧。</p>
+  <p class="p rise">他听懂了：她在用学习，把他从某种发酸的情绪里轻轻拽回来。</p>
+  <p class="p rise">也把自己拽回来。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">中午，食堂人多。</p>
+  <p class="p rise">他们没有并排坐。苏晚宁隔了两个位置，唐果坐在她对面，叽叽喳喳讲一道历史时间轴。许昼坐在另一桌，跟男生对答案。</p>
+  <p class="p rise">远远看，完全是两个世界。</p>
+  <p class="p rise">可打饭时，两个人在窗口相遇了。</p>
+  <p class="p rise">「面？」他问。</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「鸡腿饭今天不咸。」他像汇报天气。</p>
+  <p class="p rise">「……知道了。」</p>
+  <p class="p rise">她端走。</p>
+  <p class="p rise">袖口擦过他的手背。极短。像意外。</p>
+  <p class="p rise">许昼站在原处，手心里那点温热散得很慢。</p>
+  <p class="p rise">他低头盛汤，听见身后有人叫「许昼」，是林夏，抱着两本资料，神色利落：「你同桌英语真好。有空让她带带我？我完形老扣分。」</p>
+  <p class="p rise">「她忙。」许昼说，随即觉得自己太快，又补，「我帮你问。」</p>
+  <p class="p rise">「行。」林夏点头，「你们别太拼，黑眼圈都连片了。」</p>
+  <p class="p rise">她说完就走，没有多余的笑，也没有勾肩搭背。像一句正常的关心，落在复读生的日常里，干净。</p>
+  <p class="p rise">许昼却因为「你们」两个字，耳朵发热。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">下午自习，苏晚宁忽然把一本新的错题本推过来。</p>
+  <p class="p rise">封面空白，只有她在角落写的两个字：共用。</p>
+  <p class="p rise">「什么？」许昼低声。</p>
+  <p class="p rise">「物理你强，英语我强。」她眼睛看着卷子，耳尖却红，「一人写一半。省得……来回借。」</p>
+  <p class="p rise">省得来回借。</p>
+  <p class="p rise">也省得总找理由靠近。</p>
+  <p class="p rise">许昼盯着那两个字，看了很久。</p>
+  <p class="p rise">「行。」他说。</p>
+  <p class="p rise">他打开第一页，工工整整写下日期，又写下：「第 1 页，约定：只写题，不写别的。」</p>
+  <p class="p rise">苏晚宁瞥见，嘴角几乎不可察地动了一下。</p>
+  <p class="p rise">像想笑，又不许自己笑。</p>
+  <p class="p rise">她拿过笔，在他那行字下面接了一句：</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">笔锋顿了顿，又补：</p>
+  <p class="p rise">「十一点后，本子也不许传消息。」</p>
+  <p class="p rise">许昼低头，肩线轻轻震了一下。</p>
+  <p class="p rise">「听你的。」他写。</p>
+  <p class="p rise">写完，他的小指在桌面上伸直，离她的手背只有半指宽。</p>
+  <p class="p rise">没有碰。</p>
+  <p class="p rise">风从窗缝进来，吹动她卫衣帽子的绳。绳尾扫过她的腕骨——又是那截骨头。许昼把视线拽回方程，数字却在眼前发虚。</p>
+  <p class="p rise">苏晚宁也在发虚。</p>
+  <p class="p rise">她的腿在桌下交叠，又松开，像怎么坐都不对。共用的本子还带着他掌心的温度，烫得她想把整本书按进抽屉，又想整晚抱着。</p>
+  <p class="p rise">她在心里把「我想要」按下去。</p>
+  <p class="p rise">按到笔尖发抖。</p>
+  <p class="p rise">然后她开口，声音却意外地稳——一旦进入题目，她就变成另一个人：</p>
+  <p class="p rise">「许昼，你听。这句不是在夸，是在让步。作者先退一步，是为了后面反驳……」</p>
+  <p class="p rise">话密起来。</p>
+  <p class="p rise">像闸门开了。</p>
+  <p class="p rise">许昼侧耳听着，看她睫毛在光下投出浅影，看她讲到关键处会无意识地用指节敲桌沿。他一句也不插。</p>
+  <p class="p rise">他贪这一刻。</p>
+  <p class="p rise">贪得几乎要喘不过气。</p>
+  <p class="p rise">讲完，苏晚宁像突然意识到自己说太多，迅速合上嘴，把笔放下：「……你懂了吗。」</p>
+  <p class="p rise">「懂了。」许昼说。</p>
+  <p class="p rise">他其实还想说：再讲一遍。</p>
+  <p class="p rise">他没说。</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">晚自习结束，楼道灯一盏盏灭。</p>
+  <p class="p rise">许昼把外套搭在臂弯，站在座位边，没有提「送」。</p>
+  <p class="p rise">苏晚宁收拾书包，拉链声很轻。她背好带子，抬头，看见他还在，愣了一下。</p>
+  <p class="p rise">「你……」</p>
+  <p class="p rise">「我等电梯。」他说，「顺路到一楼。」</p>
+  <p class="p rise">「电梯不同向。」</p>
+  <p class="p rise">「那我等楼梯。」他笑，笑意很浅，「你先走，我后面。」</p>
+  <p class="p rise">苏晚宁看他两秒，点头。</p>
+  <p class="p rise">下楼时，两人隔着三四级台阶。鞋底声一前一后，像故意保持的节拍。到了一楼大厅，她停住，没有立刻推门。</p>
+  <p class="p rise">外面在下雨。</p>
+  <p class="p rise">不是暴雨，是细密的、会把衣摆打湿的那种。</p>
+  <p class="p rise">许昼「啧」了一声，把外套递过去：「披着。我跑两步没事。」</p>
+  <p class="p rise">「你会感冒。」</p>
+  <p class="p rise">「我皮厚。」</p>
+  <p class="p rise">苏晚宁没接。她从书包侧袋抽出一把折叠伞，伞面旧了，边缘有线头。她打开，伞骨轻轻响。</p>
+  <p class="p rise">然后她站在门口，没有动。</p>
+  <p class="p rise">雨丝斜斜地切过灯光。</p>
+  <p class="p rise">「一起。」她说，声音小得像怕自己反悔，「到路口就行。你合租……那边。」</p>
+  <p class="p rise">许昼的呼吸停了半拍。</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">伞不大。</p>
+  <p class="p rise">两个人挤在下面，肩与肩之间只剩布料的厚度。雨打在伞上，细密，连成一片。许昼侧过身，尽量把更多伞面让给她。苏晚宁却因为躲积水，下意识往他这边靠了一下。</p>
+  <p class="p rise">臂膀相贴。</p>
+  <p class="p rise">热意立刻透过袖口爬上来。</p>
+  <p class="p rise">两人都僵了。</p>
+  <p class="p rise">谁也没有先拉开。</p>
+  <p class="p rise">走了十几米，许昼开口，声音被雨声洗得很低：「错题本……明天还带吗。」</p>
+  <p class="p rise">「带。」她说。</p>
+  <p class="p rise">「那页约定还算数吗。」</p>
+  <p class="p rise">「算。」</p>
+  <p class="p rise">停顿。</p>
+  <p class="p rise">「……也可以，」她几乎是咬着字，「多写一点题。」</p>
+  <p class="p rise">许昼侧脸看她。</p>
+  <p class="p rise">水珠从伞骨滴落，落在他鞋尖。苏晚宁的侧脸被路灯切出一条亮线，唇色被冻得有点浅，呼吸却白茫茫地散在两人之间。</p>
+  <p class="p rise">他想亲她。</p>
+  <p class="p rise">想得发疯。</p>
+  <p class="p rise">可他只是把伞又往她那边倾了倾，说：「听你的。」</p>
+  <p class="p rise">路口到了。</p>
+  <p class="p rise">雨还没停。苏晚宁把伞塞进他手里：「你拿着。我冲进去就行，我们楼很近。」</p>
+  <p class="p rise">「那你——」</p>
+  <p class="p rise">「许昼。」她叫他全名，像重新钉回规矩，「回去睡觉。十一点了。」</p>
+  <p class="p rise">表上才九点四十。</p>
+  <p class="p rise">许昼看着她。</p>
+  <p class="p rise">她也看着他。雨水把世界洗得很干净，干净到所有秘密都无处可藏。苏晚宁的眼睛里有退，也有不肯退的亮。那亮转瞬即逝，像她把自己重新锁好。</p>
+  <p class="p rise">「晚安。」她说。</p>
+  <p class="p rise">「晚安。」</p>
+  <p class="p rise">她冲进雨里，跑进单元门。</p>
+  <p class="p rise">许昼站在伞下，看她的背影消失。外套肩头已经湿了一片。他没有动，只是把伞握紧，掌心全是她留下的、还不散的温度。</p>
+  <p class="p rise">手机震了一下。</p>
+  <p class="p rise">共用错题本的照片——她不知什么时候拍的第一页。</p>
+  <p class="p rise">约定下面，多了一行新字，笔迹微微乱：</p>
+  <p class="p rise">「今天的雨，不算破例。」</p>
+  <p class="p rise">许昼低头，笑了一下。</p>
+  <p class="p rise">笑意里有疼，有饿，也有一种几乎要把人撕裂的珍惜。</p>
+  <p class="p rise">他打字，删掉，再打，最后只回：</p>
+  <p class="p rise">「好。不算。」</p>
+  <p class="p rise">发送。</p>
+  <p class="p rise">然后他撑着伞，走进雨里。</p>
+  <p class="p rise">水声很大。</p>
+  <p class="p rise">大到盖住他喉咙里那句没有发出的话——</p>
+  <p class="p rise">苏晚宁，我好想你。</p>
+  <p class="p rise">也大到盖不住另一栋楼里，苏晚宁靠在门板上，闭着眼，把额头抵着冰凉的漆面，轻轻骂自己：</p>
+  <p class="p rise">「骗子。」</p>
+  <p class="p rise">她骗的是规矩。</p>
+  <p class="p rise">也是自己那颗明明想要、却偏要说「不算破例」的心。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch2">← 规矩</a><a href="#ch4">十一点 →</a></nav>
+
+<section class="chapter" id="ch4" data-num="4" data-title="十一点" data-anchor="ch4" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 4 章</div>
+    <h2 class="ch-title">十一点</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">雨过之后的几天，天空干净得过分。</p>
+  <p class="p rise">共用错题本在两人桌缝里变厚。第一页的约定还在，下面陆续多了日期、题号、红笔批注。没有情话。一个字也没有。</p>
+  <p class="p rise">可许昼每次打开，都能闻见一点很淡的皂角味——像她的袖口在纸页上停留过。</p>
+  <p class="p rise">苏晚宁也是。</p>
+  <p class="p rise">她低头写物理时，会看见他在英语页留下的箭头，粗细不均，像心情的起伏。有一回他写：「这句我读三遍还是不懂作者在得意什么。」她差点笑出声，又把笑吞回去，认认真真拆给他看。</p>
+  <p class="p rise">话一开闸，就停不住。</p>
+  <p class="p rise">「你看，这里先让步，是为了后面抬自己。不是夸，是刀。你把‘似乎’圈起来——」</p>
+  <p class="p rise">「圈了。」</p>
+  <p class="p rise">「还有这空，别填情感词，填态度词。出题人要的是冷静，不是你的感动。」</p>
+  <p class="p rise">许昼应着，笔尖跟着她的指尖走。她讲到兴起，会无意识地把本子转成两人都能看的角度，肩线朝他倾半寸。讲完又像被自己吓到，迅速坐直，耳尖红一片。</p>
+  <p class="p rise">「……懂了吗。」</p>
+  <p class="p rise">「懂了。」许昼说，声音稳，「再来一句。」</p>
+  <p class="p rise">「贪。」她低声骂，不知道在骂他还是骂自己。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">周六下午，自习室只开一半灯。</p>
+  <p class="p rise">何予川如约而来。桌面整齐：两套阅读，一支黑笔，一支蓝笔。苏晚宁坐他对面，卫衣帽子没戴，头发干净地别在耳后。</p>
+  <p class="p rise">许昼不在约定里。</p>
+  <p class="p rise">他给自己安排了图书馆三楼的角落，美其名曰「换环境」。其实那扇窗正好能看见自习室侧门。人影进出，他一概清楚。</p>
+  <p class="p rise">他告诉自己：看门，不是看人。</p>
+  <p class="p rise">五十四分钟后，苏晚宁出来，何予川跟在后面，两人隔着礼貌的半步。何予川说了句什么，她点头，接过一张纸，塞进书包。</p>
+  <p class="p rise">许昼低头，把一道题的答案涂黑，又擦掉，纸面起毛。</p>
+  <p class="p rise">手机震。</p>
+  <p class="p rise">苏晚宁：「对完了。他给的方法比我细。你要看吗。」</p>
+  <p class="p rise">许昼盯着「他」字。</p>
+  <p class="p rise">回：「要。」</p>
+  <p class="p rise">停两秒，又发：「我在图书馆。你方便的话，把纸放你座位上就行。我不耽误你。」</p>
+  <p class="p rise">「……你上来。」</p>
+  <p class="p rise">三个字。</p>
+  <p class="p rise">许昼的耳膜像被轻轻敲了一下。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">图书馆三楼更静。</p>
+  <p class="p rise">苏晚宁把那张纸铺开，开始讲。一旦进入题目，她又变成话多的人：哪里是干扰项，哪里是定位句，作者的冷到底冷在哪一层。许昼听着，偶尔应一声，目光却反复落在她说话时微微动的唇上。</p>
+  <p class="p rise">讲到一半，她忽然停住。</p>
+  <p class="p rise">「你没在听。」</p>
+  <p class="p rise">「在听。」</p>
+  <p class="p rise">「你在看我。」她说得很轻，像陈述一道证明题。</p>
+  <p class="p rise">许昼没有否认。</p>
+  <p class="p rise">空气细细地绷着。邻桌有人翻书，声响遥远。苏晚宁的手指按在纸缘，指节发白。她想退，想把话题拽回选项 A 和 B，身体却先热起来——不是害羞那么简单，是一种更深的、她不许命名的想要。</p>
+  <p class="p rise">「许昼。」她叫他。</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「规矩还在。」</p>
+  <p class="p rise">「我知道。」</p>
+  <p class="p rise">「那你别这样看我。」</p>
+  <p class="p rise">许昼把视线移回卷子，喉结滚了一下：「好。」</p>
+  <p class="p rise">可不到十秒，他又抬眼。像忍不住。像饿久的人闻到温度。</p>
+  <p class="p rise">苏晚宁闭上眼，深吸一口气，把那张纸折好，塞进共用错题本：「拿回去自己看。我讲过了。」</p>
+  <p class="p rise">「晚宁——」</p>
+  <p class="p rise">「苏晚宁。」她纠正，站起来，椅子轻响，「我回去睡觉。今天周末，也十一点前熄灯。」</p>
+  <p class="p rise">表上才四点半。</p>
+  <p class="p rise">许昼看着她的背影消失在书架尽头，低声笑了一下，笑意全是苦。</p>
+  <p class="p rise">他把额头抵在书脊上，硬着，疼着，一动不敢动。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">夜里，合租房。</p>
+  <p class="p rise">赵屿洗完澡出来，擦着头发，看许昼对着手机发呆。</p>
+  <p class="p rise">「还刷题？」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">赵屿没再问。走到自己房间门口，像想起什么，声音压低：「明天我早出。你要是……需要安静，门我带上。」</p>
+  <p class="p rise">许昼抬头。</p>
+  <p class="p rise">两人对视一秒。赵屿先别开眼，进了屋。没有玩笑，没有刺。像一句多余的体贴，轻放到地上。</p>
+  <p class="p rise">许昼回看屏幕。</p>
+  <p class="p rise">共用相册里多了她新拍的一页：英语长难句，拆得很漂亮。备注只有时间——22:17。</p>
+  <p class="p rise">他打字：「这句我会了。你睡了吗。」</p>
+  <p class="p rise">「没有。」</p>
+  <p class="p rise">「那……我念给你听？我按你的拆法读一遍，你听我哪里还跳。」</p>
+  <p class="p rise">很长的正在输入。</p>
+  <p class="p rise">「语音。」她回，「两分钟。超时挂。」</p>
+  <p class="p rise">许昼的拇指发烫。</p>
+  <p class="p rise">他走到阳台，夜风冷，城市的灯像散开的分数。点开语音，深吸一口气，开始读。尽量稳，尽量把她教的停顿读准。读到第二句，他听见自己声音里有一点哑。</p>
+  <p class="p rise">发送。</p>
+  <p class="p rise">对方很快回了一段更短的语音。</p>
+  <p class="p rise">是她的声音。带着一点枕边的闷，像侧躺着说话：</p>
+  <p class="p rise">「第二处，‘however’后面要停。你连太快。再来。」</p>
+  <p class="p rise">许昼再读。</p>
+  <p class="p rise">她再纠。</p>
+  <p class="p rise">来回三条，五条。时间爬到 22:41，22:53，22:59。</p>
+  <p class="p rise">最后一条，她的声音更轻：</p>
+  <p class="p rise">「行了。会了。睡。」</p>
+  <p class="p rise">许昼看了一眼时间：23:01。</p>
+  <p class="p rise">破了。</p>
+  <p class="p rise">他没有点破。回文字：「好。晚安。」</p>
+  <p class="p rise">对面过了很久，才回：</p>
+  <p class="p rise">「……今晚不算。」</p>
+  <p class="p rise">许昼把手机贴在嘴唇上，闭眼。</p>
+  <p class="p rise">他想说：苏晚宁，你的「不算」越来越多了。</p>
+  <p class="p rise">他只回了一个字：「好。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">苏晚宁把手机扣在枕下，脸埋进被子。</p>
+  <p class="p rise">唐果在对面床上翻了个身，迷迷糊糊：「还说话呢？」</p>
+  <p class="p rise">「听题。」苏晚宁说。</p>
+  <p class="p rise">「哦。」唐果应了一声，又安静了。半分钟后，忽然极轻地补了一句，像说梦话，「声音挺好听的。」</p>
+  <p class="p rise">苏晚宁没接。</p>
+  <p class="p rise">被子里，她的腿交叠着，心口跳得厉害。语音里他的呼吸近得不像隔着网线。她想起图书馆里那句「你在看我」，想起自己明明可以立刻走，却多站了两秒。</p>
+  <p class="p rise">想要。</p>
+  <p class="p rise">想得牙关发紧。</p>
+  <p class="p rise">她把手按在小腹上，像按住什么不该醒的东西，强迫自己数题号：一、二、三……数到二十，热意还在。数到五十，才勉强散一点。</p>
+  <p class="p rise">「骗子。」她又骂自己。</p>
+  <p class="p rise">骂完，把共用本子的照片又看了一遍。</p>
+  <p class="p rise">约定还在。</p>
+  <p class="p rise">她在心里加了一条只有自己知道的附则：</p>
+  <p class="p rise">可以听他的声音。</p>
+  <p class="p rise">但不许说想。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">周一，周慎言老师把许昼叫到办公室。</p>
+  <p class="p rise">不是训话。是很短的一次「看看状态」。</p>
+  <p class="p rise">「最近排名稳。」周慎言翻成绩表，语调平，「同桌也稳。挺好。」</p>
+  <p class="p rise">「谢谢老师。」</p>
+  <p class="p rise">「我不是来夸你。」周慎言抬眼，目光清，「稳的时候最容易松。松不一定是玩，也可能是……心里多了东西。」</p>
+  <p class="p rise">许昼背脊微微绷直。</p>
+  <p class="p rise">「老师，我没有。」</p>
+  <p class="p rise">周慎言看了他两秒，把表合上：「有没有，你自己清楚。我只要结果。今年只有一次。」</p>
+  <p class="p rise">「我知道。」</p>
+  <p class="p rise">「去吧。」</p>
+  <p class="p rise">许昼走到门口，又被叫住。</p>
+  <p class="p rise">「对了。」周慎言说，「苏晚宁要是状态掉，你提醒她。你们同桌，互相看着点——用学习的方式。」</p>
+  <p class="p rise">「是。」</p>
+  <p class="p rise">走出办公室，走廊风凉。许昼靠着墙站了几秒，才发现掌心全是汗。</p>
+  <p class="p rise">用学习的方式互相看着点。</p>
+  <p class="p rise">他简直想苦笑：他们最危险的东西，偏偏都裹在学习里。</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">回教室时，苏晚宁正在擦一块橡皮屑，动作很专注。见他回来，只抬眼：「叫你干什么。」</p>
+  <p class="p rise">「问问排名。」许昼坐下，笑得平常，「让我们互相监督。」</p>
+  <p class="p rise">苏晚宁「哦」了一声，把橡皮屑撮走。</p>
+  <p class="p rise">桌缝上的共用本打开着。她忽然把笔递给他，指尖在笔身上停了一下——没有碰他，却像碰了。</p>
+  <p class="p rise">「今天物理你讲。」她说，「我听。你也贪一次。」</p>
+  <p class="p rise">许昼接笔。</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">他讲题。讲受力，讲能量，讲她上次说他「急」的地方。讲着讲着，声音不自觉放低，像怕惊动什么。苏晚宁听得很认真，偶尔打断，问得很细。两人的头在某一刻靠得很近，近到他能看见她发旋里细小的绒毛。</p>
+  <p class="p rise">笔掉了。</p>
+  <p class="p rise">两人同时去捡。</p>
+  <p class="p rise">手指在桌下的阴影里撞在一起。</p>
+  <p class="p rise">不是擦过。</p>
+  <p class="p rise">是结结实实、热热地叠了两秒。</p>
+  <p class="p rise">苏晚宁先颤了一下，却没有立刻抽走。像那两秒里，她把所有规矩都拿去换这一丁点真实。许昼的呼吸沉下来，拇指极轻地、几乎不敢承认地，在她指侧蹭过一寸。</p>
+  <p class="p rise">她抽手。</p>
+  <p class="p rise">太快。</p>
+  <p class="p rise">像被烫到。</p>
+  <p class="p rise">笔捡起来，放回桌面。两人坐直，齐齐看向黑板——黑板上什么也没有。</p>
+  <p class="p rise">「……继续。」她说，声音有点飘。</p>
+  <p class="p rise">「继续。」他应，声音有点哑。</p>
+  <p class="p rise">后面的题，他讲得磕绊。她听得心不在焉。共用本上那行「只写题，不写别的」被腕骨压着，字迹歪在视野边缘，像一句正在失效的誓言。</p>
+  <div class="sec-mark"><b>八</b></div>
+  <p class="p rise">放学。</p>
+  <p class="p rise">没有雨。</p>
+  <p class="p rise">苏晚宁走到楼梯口，忽然停住。许昼在她身后两级，也停住。</p>
+  <p class="p rise">「许昼。」</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「昨晚……」她背对着他，耳朵红到颈侧，「破了。我知道。」</p>
+  <p class="p rise">「我没说。」</p>
+  <p class="p rise">「不用你说。」她吸了口气，「今晚十一点前，手机静音。真的。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「还有。」她转过身，眼神清得发狠，像跟自己打架，「桌下的事，也算破例。下不为例。」</p>
+  <p class="p rise">许昼看着她。</p>
+  <p class="p rise">看了很久。久到楼道声控灯灭了一次，又被远处脚步点亮。</p>
+  <p class="p rise">「苏晚宁。」他叫她全名，很轻，「你每次说下不为例，我都信。」</p>
+  <p class="p rise">「那就对了。」</p>
+  <p class="p rise">「可我更信，」他喉咙动了动，把后半句咽回去，换成更安全的版本，「……信你想把分考好。」</p>
+  <p class="p rise">苏晚宁盯着他。</p>
+  <p class="p rise">像听出他没说完的那截。</p>
+  <p class="p rise">她没有追问。只点头：「互相看着点。用学习的方式。」</p>
+  <p class="p rise">「用学习的方式。」他重复。</p>
+  <p class="p rise">她下楼。</p>
+  <p class="p rise">许昼站在原处，直到她的身影被门框切走，才抬手，看自己的指侧。</p>
+  <p class="p rise">那里什么痕迹也没有。</p>
+  <p class="p rise">却像被她的温度烫出一块秘密的印。</p>
+  <div class="sec-mark"><b>九</b></div>
+  <p class="p rise">23:00。</p>
+  <p class="p rise">许昼的手机静音。</p>
+  <p class="p rise">屏幕却亮了。</p>
+  <p class="p rise">不是语音。是一张照片：共用错题本的新页。上面只有一道题，解到一半。空白处，她写：</p>
+  <p class="p rise">「这步我卡了。明天问你。」</p>
+  <p class="p rise">没有越界的话。</p>
+  <p class="p rise">时间戳却是 23:00 整。</p>
+  <p class="p rise">像卡着线，把脚尖探出去，又收回来。</p>
+  <p class="p rise">许昼躺在黑暗里，回了一张自己的草稿，步骤写满，末尾只落一个字：</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">发送。</p>
+  <p class="p rise">他没有说想她。</p>
+  <p class="p rise">她没有说想他。</p>
+  <p class="p rise">可两个人都知道：十一点这条线，已经不是线了。</p>
+  <p class="p rise">是一层纸。</p>
+  <p class="p rise">纸还在。</p>
+  <p class="p rise">风一来，就会破。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch3">← 错题本</a><a href="#ch5">纸 →</a></nav>
+
+<section class="chapter" id="ch5" data-num="5" data-title="纸" data-anchor="ch5" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 5 章</div>
+    <h2 class="ch-title">纸</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">纸破的那天，没有预兆。</p>
+  <p class="p rise">至少表面上没有。</p>
+  <p class="p rise">早读照常，默写照常，课间有人讨论周末模考范围。许昼把默写本推到中间，苏晚宁扫一眼，用铅笔点了两个错字。动作熟练得像从未破过任何例。</p>
+  <p class="p rise">只有他自己知道：从昨晚那张 23:00 的照片起，他几乎没怎么睡着。</p>
+  <p class="p rise">硬着，忍着，数呼吸，数到后来连数字都像她的声音。</p>
+  <p class="p rise">苏晚宁也没睡好。</p>
+  <p class="p rise">眼下很浅的青，被她用低头遮住。唐果早上只看了她一眼，没问，把温水放到她手边，轻声说：「今天别硬撑。」</p>
+  <p class="p rise">「没有。」苏晚宁说。</p>
+  <p class="p rise">唐果「嗯」了一下，没拆穿。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">下午最后一节是自由自习。</p>
+  <p class="p rise">周慎言在走廊巡了一圈，提醒「模考前两天，收心」。人走后，教室渐渐空了。有人去打印，有人回合租补觉。到五点四十，靠窗这一片只剩他们两个。</p>
+  <p class="p rise">灯没有全开。</p>
+  <p class="p rise">暮色从窗外漫进来，把桌面切成半明半暗。</p>
+  <p class="p rise">共用错题本摊着。许昼在解一道电学题，写到一半，笔尖停住。</p>
+  <p class="p rise">「卡住了？」苏晚宁问。</p>
+  <p class="p rise">「没有。」他低声，「在想别的。」</p>
+  <p class="p rise">苏晚宁的睫毛动了动：「想什么。」</p>
+  <p class="p rise">许昼抬眼。</p>
+  <p class="p rise">四目相对的瞬间，两人都知道：这不是一个适合在教室里回答的问题。</p>
+  <p class="p rise">「想你昨天说的，『下不为例』。」他很慢地说，「我在想，例是什么。题，还是……别的。」</p>
+  <p class="p rise">苏晚宁的呼吸乱了一拍。</p>
+  <p class="p rise">她本该立刻把话题拽回电路。她张了张嘴，吐出来的却是更危险的诚实：</p>
+  <p class="p rise">「别的也不行。」</p>
+  <p class="p rise">「我知道。」</p>
+  <p class="p rise">「你知道还问。」</p>
+  <p class="p rise">「因为，」许昼的声音发紧，「我怕我一个人知道不够。」</p>
+  <p class="p rise">教室很静。</p>
+  <p class="p rise">静到能听见中央空调细微的嘶声，能听见彼此的心跳像两道不合拍的鼓。苏晚宁的手指蜷在膝上，指节发白。她想要。想得小腹发紧，想得耳鸣。她也怕——怕自己一旦点头，就再也装不成那个只在意分数的人。</p>
+  <p class="p rise">「许昼。」她叫他。</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「我们是学习搭子。」</p>
+  <p class="p rise">「是。」</p>
+  <p class="p rise">「十一点后不聊天。」</p>
+  <p class="p rise">「……好。」</p>
+  <p class="p rise">「不去对方房间。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">她每立一条，他应一条。像重新签字。可她的眼睛却一点点红了，不是哭，是忍到极限的血色。</p>
+  <p class="p rise">「还有最后一条。」她说，嗓子发干。</p>
+  <p class="p rise">「你说。」</p>
+  <p class="p rise">「不能……」她顿住，嘴唇轻轻碰在一起，像把那个字含化，「不能先承认自己想要。」</p>
+  <p class="p rise">许昼看着她。</p>
+  <p class="p rise">看了很久。</p>
+  <p class="p rise">然后他极轻地问：「那如果，不是先承认呢。如果只是……发生了。」</p>
+  <p class="p rise">苏晚宁没有答。</p>
+  <p class="p rise">她只是没有退。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">许昼站起来的动作很慢，像给她无数次逃走的机会。</p>
+  <p class="p rise">椅子轻响。他绕过桌角，在她身侧停下。距离近到她能闻见他身上干净的皂味，和一丝久坐后的温热。苏晚宁仰头看他，卫衣帽子滑落在肩，锁骨的弧线在暮色里淡淡一条。</p>
+  <p class="p rise">「我可以走。」他说，「你让我走，我现在就走。」</p>
+  <p class="p rise">苏晚宁的手抓紧了椅沿。</p>
+  <p class="p rise">她听见自己说：「……别走。」</p>
+  <p class="p rise">声音小得像错觉。</p>
+  <p class="p rise">许昼俯身。</p>
+  <p class="p rise">不是扑。是问询式的靠近。鼻尖几乎相贴时，他停住，呼吸洒在她唇上，烫。</p>
+  <p class="p rise">「晚宁。」他第一次这样叫她，哑得不像白天的好许昼，「我好想你。」</p>
+  <p class="p rise">苏晚宁的眼睛颤了一下。</p>
+  <p class="p rise">下一秒，是她先抬了下巴。</p>
+  <p class="p rise">像身体比脑子先签字。</p>
+  <p class="p rise">唇碰上的刹那，两人都僵了。生涩，干燥，牙齿差点磕到。谁也不是会的人。可热意来得太凶，凶到许昼的手悬在半空，不敢抱，只敢轻轻托住她的后颈——像托一件易碎的东西。</p>
+  <p class="p rise">苏晚宁「唔」了一声。</p>
+  <p class="p rise">那声音软，短，像泄露。</p>
+  <p class="p rise">许昼脑子里有什么断了。</p>
+  <p class="p rise">他加深这个吻。不再只是贴着，而是偏头，小心，却急切地含住她的下唇。苏晚宁的手指揪住他胸前的衣服，先是推，推到一半变成攥。呼吸乱成一团。她不会换气，被亲得轻轻后仰，椅背吱呀一声。</p>
+  <p class="p rise">舌尖碰见时，她浑身一颤。</p>
+  <p class="p rise">不是技巧。</p>
+  <p class="p rise">是太超过她给自己画的所有线。</p>
+  <p class="p rise">想要。</p>
+  <p class="p rise">太想要了。腿心发软，胸口发麻，连指尖都在发麻。她发出一点近似呜咽的鼻音，许昼立刻缓半分，额头抵着她，喘着问：</p>
+  <p class="p rise">「疼？」</p>
+  <p class="p rise">「没……」她眼睛湿湿的，不是泪，是生理性的雾，「你……重。」</p>
+  <p class="p rise">许昼低低笑了一下，笑意全散在她唇边，又吻下去。这次轻一点，却更深。手仍只敢放在后颈与肩侧，像把自己整个人的饿都堵在喉咙里，只许这一处泄露。</p>
+  <p class="p rise">不知过了多久。</p>
+  <p class="p rise">也许一分钟。也许更长。</p>
+  <p class="p rise">楼道里忽然传来脚步声，远远的，又远去。</p>
+  <p class="p rise">两人猛地分开。</p>
+  <p class="p rise">呼吸灼热，唇都是肿的。苏晚宁抬手背挡住自己的嘴，眼睛睁得很大，像不敢相信刚才是真的。许昼退开半步，背脊撞到邻桌边缘，手撑着桌面，指节青白——他在压自己。</p>
+  <p class="p rise">硬得发疼。</p>
+  <p class="p rise">他偏过脸，喉结剧烈滚动：「对不起。」</p>
+  <p class="p rise">苏晚宁摇头。</p>
+  <p class="p rise">又点头。</p>
+  <p class="p rise">又摇头。</p>
+  <p class="p rise">乱了。</p>
+  <p class="p rise">「不算。」她终于吐出两个字，声音抖，「这不算。」</p>
+  <p class="p rise">许昼闭了闭眼。</p>
+  <p class="p rise">「……好。不算。」</p>
+  <p class="p rise">「学习搭子。」她强调，像抓住浮木。</p>
+  <p class="p rise">「是。」</p>
+  <p class="p rise">「明天还坐这儿。」</p>
+  <p class="p rise">「坐。」</p>
+  <p class="p rise">「别跟我说这件事。」</p>
+  <p class="p rise">「我不说。」</p>
+  <p class="p rise">苏晚宁站起来，腿有些软。她去抓书包，拉链拉了两次才拉上。走到门口，又停住，没有回头：</p>
+  <p class="p rise">「许昼。」</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「你刚才……」她停很久，「也不是只有你想要。」</p>
+  <p class="p rise">门被她轻轻带上。</p>
+  <p class="p rise">教室里只剩许昼一个人。</p>
+  <p class="p rise">他慢慢坐回自己的位置，把额头抵在臂弯里，肩线绷得很紧。过了很久，才发出一声极低的、像受伤的笑。</p>
+  <p class="p rise">纸破了。</p>
+  <p class="p rise">她还说不算。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">苏晚宁一路走回合租，像踩在别人的腿上。</p>
+  <p class="p rise">开门。换鞋。唐果在煮面，转头看见她，筷子停住。</p>
+  <p class="p rise">「怎么了？」唐果问得很轻，「脸这么红。是不是跑回来的？」</p>
+  <p class="p rise">「……热。」苏晚宁进卫生间，反锁。</p>
+  <p class="p rise">水龙头开到最大。</p>
+  <p class="p rise">她撑着洗手台，看见镜子里的自己：唇色深了，下唇有一点细小的破皮，眼睛亮得吓人。她用冷水拍脸，拍到皮肤发疼，那点亮还在。</p>
+  <p class="p rise">「骗子。」她对着镜子说。</p>
+  <p class="p rise">镜子里的人嘴唇动了动，像还想被亲。</p>
+  <p class="p rise">她把脸埋进毛巾，发出一声闷在布料里的、几乎像哭的呼吸。不是后悔那么简单。是太清楚自己有多想要——想要他再近一点，想要他的手不只停在后颈，想要自己不必再说「不算」。</p>
+  <p class="p rise">可她更清楚：一说出口，今年就会变。</p>
+  <p class="p rise">变成分心，变成议论，变成她最怕的失控。</p>
+  <p class="p rise">她擦干脸出去。唐果把面放在桌上，多加了个蛋。</p>
+  <p class="p rise">「吃。」唐果只说一个字。</p>
+  <p class="p rise">苏晚宁坐下，吃了两口，忽然低声：「果果。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「如果有件事，你明知道不该，可身体先动了……」</p>
+  <p class="p rise">唐果看她，眼神很静：「那你现在，是想听劝，还是想听懂。」</p>
+  <p class="p rise">苏晚宁沉默。</p>
+  <p class="p rise">「想听懂。」她说。</p>
+  <p class="p rise">唐果点头，声音仍只够两人听见：「那就别急着把自己骂成坏人。先分清楚——你怕的是他，还是怕你自己。」</p>
+  <p class="p rise">苏晚宁握着筷子的手紧了紧。</p>
+  <p class="p rise">「怕我自己。」</p>
+  <p class="p rise">「那就更要慢慢来。」唐果把辣椒罐推远一点，「慢慢来不是不允许。是允许你，别被吓跑。」</p>
+  <p class="p rise">苏晚宁眼眶发热。</p>
+  <p class="p rise">她「嗯」了一声，把蛋黄戳破，黄液慢慢漫开，像某种藏不住的东西。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">夜里，许昼跑步。</p>
+  <p class="p rise">跑了比平时多两公里。回到合租，衬衫贴在背上。赵屿看他一眼，把拧好的毛巾扔过来，没多话。</p>
+  <p class="p rise">许昼冲了很久的凉水。</p>
+  <p class="p rise">水声里，他反复回放那个吻：她先抬的下巴，她揪住衣服的手指，她说「也不是只有你想要」。</p>
+  <p class="p rise">硬了又软，软了又硬。</p>
+  <p class="p rise">他撑着瓷砖，额头顶着冰凉，终于低骂了一句自己的名字。不是骂欲望。是骂他明明答应「不算」，身体却记得清清楚楚。</p>
+  <p class="p rise">出浴室时，手机亮着。</p>
+  <p class="p rise">苏晚宁：22:48。</p>
+  <p class="p rise">「明天默写，第三页古诗我容易混。你早读前提醒我。」</p>
+  <p class="p rise">只有学习。</p>
+  <p class="p rise">像什么都没发生。</p>
+  <p class="p rise">许昼盯着那行字，拇指悬在语音键上，很久，换成文字：</p>
+  <p class="p rise">「好。我提醒。」</p>
+  <p class="p rise">发送。</p>
+  <p class="p rise">又补：</p>
+  <p class="p rise">「今天的题，我写完了。本子我带着。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">对话到此为止。</p>
+  <p class="p rise">23:10，他又收到一条。没有字。是一张照片——共用本的边角，被什么液体晕开一点点，像不小心滴到的水。</p>
+  <p class="p rise">也可能是别的。</p>
+  <p class="p rise">许昼放大，看不清。</p>
+  <p class="p rise">他回：「本子湿了？」</p>
+  <p class="p rise">对面过了很久：</p>
+  <p class="p rise">「墨水。我重抄了。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">他关掉屏幕，躺下。黑暗中，唇上的触感还在。他抬手，指腹轻轻碰自己的下唇，像碰她留下的温度。</p>
+  <p class="p rise">「不算。」他低声重复她的话。</p>
+  <p class="p rise">重复完，笑了一下。</p>
+  <p class="p rise">笑意里全是认命的疼：</p>
+  <p class="p rise">那他明天，还是会坐回她旁边。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">第二天早读。</p>
+  <p class="p rise">苏晚宁进教室时，许昼已经在了。默写本打开，笔搁在第三页。见她来，他只说：「静夜思和秋思别混。你上次把『霜』写成『露』。」</p>
+  <p class="p rise">「知道。」她坐下。</p>
+  <p class="p rise">距离恢复成「合宜」的一拳。</p>
+  <p class="p rise">像从未有过黄昏的教室，从未有过椅背的吱呀，从未有过她说「别走」。</p>
+  <p class="p rise">课间，何予川路过，把一份整理好的阅读错因表放到她桌角：「周末那套的补充。你看不看都行。」</p>
+  <p class="p rise">「谢谢。」苏晚宁点头。</p>
+  <p class="p rise">许昼在旁边写字，笔锋平稳。只有苏晚宁看见：他写到一半的那个「力」字，多了一横。</p>
+  <p class="p rise">她把何予川的资料收进袋里，把共用错题本推到两人中间。打开。第一页约定还在。</p>
+  <p class="p rise">她盯着那行「只写题，不写别的」，忽然拿笔，在最下面极轻极轻地加了一句，字小到几乎要贴着纸面才看得见：</p>
+  <p class="p rise">「有些事，装没发生。座位还在。」</p>
+  <p class="p rise">写完，她把本子转到他那边。</p>
+  <p class="p rise">许昼看见了。</p>
+  <p class="p rise">他没有抬头，只是在那行字旁，点了一个很小的勾。</p>
+  <p class="p rise">像答应。</p>
+  <p class="p rise">像共谋。</p>
+  <p class="p rise">像两个人一起，把破掉的纸重新贴好——明知道粘不回原样，也要假装还能挡风。</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">晚自习结束。</p>
+  <p class="p rise">两人下楼，仍隔着几级台阶。到大厅时，苏晚宁忽然说：「许昼。」</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「昨天……」她停住，换了词，「下午的自习，我状态不好。以后教室里，灯要开全。」</p>
+  <p class="p rise">许昼听懂了。</p>
+  <p class="p rise">灯要开全。</p>
+  <p class="p rise">人要在光里。</p>
+  <p class="p rise">秘密要藏回阴影。</p>
+  <p class="p rise">「好。」他说。</p>
+  <p class="p rise">苏晚宁点头，推门出去。风吹起她的帽绳，扫过腕骨。许昼的目光只停半秒，就收回来。</p>
+  <p class="p rise">他跟上，并肩，却不碰。</p>
+  <p class="p rise">走了十几米，他低声说：「晚宁。」</p>
+  <p class="p rise">她身体微微一僵，没有纠正全名。</p>
+  <p class="p rise">「我装得住。」他说，「分，我也不会掉。」</p>
+  <p class="p rise">苏晚宁侧脸，暮色里看不清表情。只听见她回：</p>
+  <p class="p rise">「那就好。」</p>
+  <p class="p rise">停半秒，更轻的一句，像吹散在风里：</p>
+  <p class="p rise">「我也装得住。」</p>
+  <p class="p rise">两个人向前走。</p>
+  <p class="p rise">影子有时并在一起，有时分开。</p>
+  <p class="p rise">纸已经破了。</p>
+  <p class="p rise">他们还用手按着，按到指尖发白，按到心里发烫——</p>
+  <p class="p rise">假装它仍是一张完整的、能把欲望隔在外面的纸。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch4">← 十一点</a><a href="#ch6">装 →</a></nav>
+
+<section class="chapter" id="ch6" data-num="6" data-title="装" data-anchor="ch6" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 6 章</div>
+    <h2 class="ch-title">装</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">装，比接吻更累。</p>
+  <p class="p rise">苏晚宁把「装」做成一门功课：进教室先看黑板，坐下先开卷子，问问题先写在纸上。许昼配合得天衣无缝——笑仍是阳光的，借笔仍隔着安全距离，连「晚宁」两个字都收回去，重新叫「苏晚宁」。</p>
+  <p class="p rise">只有共用错题本知道真相。</p>
+  <p class="p rise">本子更厚了。批注更密了。偶尔，某一页空白会出现极短的停顿：钢笔尖在纸上洇开一点，像有人写到一半把什么吞回去。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">模考前夜，机构统一加自习到十点半。</p>
+  <p class="p rise">教室人多，灯全开。苏晚宁写到几何，辅助线怎么也画不顺。许昼侧过头，低声讲了两句。讲着讲着，两人的膝盖在桌下轻轻碰上。</p>
+  <p class="p rise">谁也没有挪开。</p>
+  <p class="p rise">热意像细小的电流，从相触的布料爬上去。苏晚宁的字开始飘。许昼的声音也开始哑。前面有人回头借涂改液，他们立刻分开，齐齐坐好，像两台被重新校准的仪器。</p>
+  <p class="p rise">下自习时，林夏在门口把一份英语限时训练塞给许昼：「帮我看看出错集中在哪类？你同桌要是有空，也行——我不是催。」</p>
+  <p class="p rise">「我先看。」许昼接过，「明天给你。」</p>
+  <p class="p rise">苏晚宁在他身后经过，目光只扫了一眼资料封面，没什么表情。可回合租的路上，她把步子走得很快。</p>
+  <p class="p rise">许昼跟上：「你生气了？」</p>
+  <p class="p rise">「没有。」</p>
+  <p class="p rise">「你走这么快。」</p>
+  <p class="p rise">苏晚宁停在路灯下，风把帽绳吹起来。她看着他，忽然很轻地说：「我没有资格生气。我们什么都不是。」</p>
+  <p class="p rise">许昼的心像被那句话拧了一下。</p>
+  <p class="p rise">「苏晚宁。」</p>
+  <p class="p rise">「别说。」她打断，眼睛却红了，「一说就真了。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">合租楼道里，唐果下楼扔垃圾，正撞见苏晚宁回来。两人并排上楼，唐果把声音压得很低：</p>
+  <p class="p rise">「今天眼睛不对。」</p>
+  <p class="p rise">「累。」</p>
+  <p class="p rise">「累和心事，长得不一样。」唐果顿了顿，「我不问是谁。你要是需要门从里面反锁……我耳机开很大。」</p>
+  <p class="p rise">苏晚宁脚步一顿。</p>
+  <p class="p rise">「不用。」她说，随即更轻，「……谢谢。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">周五晚，许昼的物理卷掉了关键一步，越补越乱。他在对话框打：「我卡死了。能不能语音。就三分钟。」</p>
+  <p class="p rise">22:36。</p>
+  <p class="p rise">苏晚宁回：「开。」</p>
+  <p class="p rise">语音里，她的声音带着一点洗过澡的潮意。讲题时仍密、仍准。讲到第二分钟，许昼忽然听不进去——他只听见她呼吸，听见布料摩擦话筒的细响。</p>
+  <p class="p rise">「许昼，你在吗。」</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「你又没听。」</p>
+  <p class="p rise">「我在听你。」他说漏了。</p>
+  <p class="p rise">电话那头静了两秒。</p>
+  <p class="p rise">「……把题读一遍。」她试图把线拉回安全区。</p>
+  <p class="p rise">许昼读。读到一半，声音哑下去：「晚宁，我装不住了。」</p>
+  <p class="p rise">「别。」</p>
+  <p class="p rise">「我不是要你答应什么。」他闭着眼，额头顶着阳台玻璃，「我就是……想听你在。像这样。」</p>
+  <p class="p rise">苏晚宁没有挂。</p>
+  <p class="p rise">很久，她才说：「那你别说话。听我把这题讲完。讲完就睡。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">她讲完了。超时很多。</p>
+  <p class="p rise">挂断前，她极轻地加了一句，像怕被自己听见：</p>
+  <p class="p rise">「我也不太装得住。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">周日，启明组织「错题面对面」——自由配对，教室不锁。</p>
+  <p class="p rise">傍晚人散得快。许昼去打印室取卷，回来时看见苏晚宁独自站在窗边，晚霞把她的侧脸染成浅金色。他走过去，把卷子放下。</p>
+  <p class="p rise">「何予川找你了。」他尽量语气平常，「在楼下。说有套新题。」</p>
+  <p class="p rise">「我回了。明天。」苏晚宁转过身，「你不高兴。」</p>
+  <p class="p rise">「我没有资格。」他重复她的句式，苦笑，「我们什么都不是。」</p>
+  <p class="p rise">苏晚宁看着他。</p>
+  <p class="p rise">看着看着，眼眶又红了。她伸手，不是推开，是抓住他的袖口——很紧，像抓住会沉的船。</p>
+  <p class="p rise">「许昼。」她说，「去没人的地方。一分钟。就一分钟。」</p>
+  <p class="p rise">空教室后面的资料室门虚掩。里面只有旧卷子和纸箱味。门一关，暮色被隔在外面。</p>
+  <p class="p rise">许昼刚要开口，苏晚宁已经踮脚吻上来。</p>
+  <p class="p rise">比上次凶。</p>
+  <p class="p rise">像忍了太久的人终于允许自己偷一分钟。许昼被她亲得后退半步，背抵着铁皮柜，发出闷响。他回吻，手扣住她的腰，又强迫自己松一点，怕捏疼她。苏晚宁的呼吸全乱了，手指插进他的头发，细细发抖。</p>
+  <p class="p rise">一分钟早就过了。</p>
+  <p class="p rise">他们仍贴着。唇齿交缠，生涩里生出一点熟练——不是技巧，是太想。许昼的大腿顶到她，硬热隔着布料，两人都颤了一下。苏晚宁「唔」出声，没有逃，反而把脸埋进他颈窝，喘着说：</p>
+  <p class="p rise">「我知道……你想要。」</p>
+  <p class="p rise">「你也是。」他哑声。</p>
+  <p class="p rise">「……是。」她承认了，像用尽全身力气，「可现在不行。这里不行。」</p>
+  <p class="p rise">许昼额头抵着她：「那哪里行。」</p>
+  <p class="p rise">苏晚宁闭眼。</p>
+  <p class="p rise">「我不知道。」她说，「我只知道，再装下去，我会疯。」</p>
+  <p class="p rise">门外隐约有说话声。两人立刻分开。苏晚宁整理帽绳，许昼整理领口。门开一条缝，是赵屿经过，目光扫进来，又迅速移开，像什么都没看见。只丢下一句很轻的：</p>
+  <p class="p rise">「门锁不严。你们……注意点。」</p>
+  <p class="p rise">脚步远了。</p>
+  <p class="p rise">资料室里安静得可怕。苏晚宁的耳尖红透。许昼低声说：「他不会说。」</p>
+  <p class="p rise">「我知道。」</p>
+  <p class="p rise">「晚宁。」</p>
+  <p class="p rise">「回教室。」她先一步出去，背影绷直，「还有卷子。」</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">当晚，共用本多了一行字，是许昼写的：</p>
+  <p class="p rise">「一分钟，不够。」</p>
+  <p class="p rise">下面，苏晚宁用极淡的铅笔回：</p>
+  <p class="p rise">「那就多做题。把时间抢回来。」</p>
+  <p class="p rise">再下面，她又加了一句，几乎看不见：</p>
+  <p class="p rise">「别在我装得好的时候，太看我。」</p>
+  <p class="p rise">许昼点了个勾。</p>
+  <p class="p rise">勾得很重。</p>
+  <p class="p rise">纸边微微皱起来，像两个人共同按住的，那张名为「装」的薄壳。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch5">← 纸</a><a href="#ch7">电话 →</a></nav>
+
+<section class="chapter" id="ch7" data-num="7" data-title="电话" data-anchor="ch7" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 7 章</div>
+    <h2 class="ch-title">电话</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">苏清的电话打来时，苏晚宁正在抄错题。</p>
+  <p class="p rise">「妈。」她走到走廊，声音自动调成平稳。</p>
+  <p class="p rise">「瘦了没有？吃饭了吗？模拟考怎么样？」问题连珠。苏清停了停，又问：「同桌还是那个男生？」</p>
+  <p class="p rise">苏晚宁指尖收紧：「嗯。学习搭子。」</p>
+  <p class="p rise">「好好学习就行。」苏清的语气软下来，却更沉，「妈不是封建。妈是怕你……再崩一次。你上次考场那种空白，妈想起来就后怕。」</p>
+  <p class="p rise">「不会了。」</p>
+  <p class="p rise">「有喜欢的人吗？」</p>
+  <p class="p rise">走廊灯管细细响。苏晚宁闭了闭眼：「没有。」</p>
+  <p class="p rise">撒谎的味道像铁锈。</p>
+  <p class="p rise">苏清叹了口气：「没有最好。等考完。考完你做什么妈都支持。」</p>
+  <p class="p rise">挂断后，苏晚宁靠着墙站了很久。唐果下楼看见，只把热牛奶塞进她手里，什么也没问。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">许桂芳的电话则温和得多。</p>
+  <p class="p rise">「妈相信你。」她对许昼说，「你从小就让人省心。今年再咬咬牙，就出头了。」</p>
+  <p class="p rise">许昼「嗯」着，笑着，把所有裂缝都捂好。</p>
+  <p class="p rise">挂了电话，他坐在床边，忽然很想听苏晚宁的声音。不是讲题。只是声音。</p>
+  <p class="p rise">他没有拨。</p>
+  <p class="p rise">他去跑步。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">二模前的周测，苏晚宁英语第一，数学掉了十二分。</p>
+  <p class="p rise">排名仍靠前，可周慎言还是把她和许昼一起叫进了办公室。</p>
+  <p class="p rise">「我不是要你们解释。」周慎言把两张曲线图并排放，「我要你们看。稳，靠的是心。心一斜，题就飘。」</p>
+  <p class="p rise">许昼站得很直：「老师，我们会调整。」</p>
+  <p class="p rise">「怎么调整？」周慎言看着他们，「座位要不要调开？」</p>
+  <p class="p rise">空气瞬间冷了。</p>
+  <p class="p rise">苏晚宁的指尖在袖口里掐进掌心。她听见自己说：「不用。我们自己能管住。」</p>
+  <p class="p rise">周慎言看了她两秒，又看许昼：「行。再观察一次周测。再掉，别怪我手狠。」</p>
+  <p class="p rise">「是。」</p>
+  <p class="p rise">出办公室，两个人并排走，谁也不说话。到楼梯转角，许昼低声：「如果调开……」</p>
+  <p class="p rise">「那就调开。」苏晚宁说得很快，像先把自己刺伤，「分更重要。」</p>
+  <p class="p rise">许昼停下。</p>
+  <p class="p rise">「对我来说，」他看着她，「你也重要。我不会拿这话压你。我只是说实话。」</p>
+  <p class="p rise">苏晚宁眼圈红了。她别过脸：「别在楼道说。」</p>
+  <p class="p rise">「那在哪说。」</p>
+  <p class="p rise">「……错题本上。」她几乎是逃进教室。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">当晚共用本多了半页，不是题。</p>
+  <p class="p rise">许昼写：</p>
+  <p class="p rise">「如果调开，我仍会把英语问你。用正当的方式。」</p>
+  <p class="p rise">苏晚宁写：</p>
+  <p class="p rise">「如果调开，我会把物理问你。也正当。」</p>
+  <p class="p rise">空一行。</p>
+  <p class="p rise">她又写：</p>
+  <p class="p rise">「妈打电话了。我骗她说没有喜欢的人。」</p>
+  <p class="p rise">许昼的笔停很久。写下：</p>
+  <p class="p rise">「我也骗了。我说我省心。」</p>
+  <p class="p rise">再空一行。</p>
+  <p class="p rise">苏晚宁的字开始抖：</p>
+  <p class="p rise">「许昼，我怕。我不是怕你。我怕我想要你，比我想要分还凶。」</p>
+  <p class="p rise">许昼看那行字，看到眼眶发热。他写：</p>
+  <p class="p rise">「那我们一起怕。一起把分拿住。别的……等你点头。」</p>
+  <p class="p rise">苏晚宁盯着「等你点头」四个字，把脸埋进臂弯。</p>
+  <p class="p rise">唐果关了灯，只留她台灯。黑暗里，唐果的声音像从很远的地方来，其实只隔一张床：</p>
+  <p class="p rise">「你要是真想通了，别把自己逼成圣人。圣人考不出你这种分，也过不好你这种心。」</p>
+  <p class="p rise">苏晚宁没应。</p>
+  <p class="p rise">她把那半页小心撕下，折好，塞进笔袋最深处——不敢留在共用本里，又舍不得丢。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">何予川在周测后找到苏晚宁，仍是礼貌距离。</p>
+  <p class="p rise">「数学那块，我整理了易错模型。你要是觉得有用，拿走。」他把U盘放在桌角，「我下周末回家，不在。」</p>
+  <p class="p rise">「谢谢。」</p>
+  <p class="p rise">何予川看了她一眼，又看了旁边空着的许昼座位，忽然说：「有些东西，越瞒越重。我不管你们是什么。我只提醒——别用掉分证明自己清醒。」</p>
+  <p class="p rise">苏晚宁一震。</p>
+  <p class="p rise">何予川点点头，走了。像一把很干净的刀，割开一层自欺。</p>
+  <p class="p rise">许昼回来时，看见U盘，只问：「何予川？」</p>
+  <p class="p rise">「嗯。模型。」</p>
+  <p class="p rise">「好。」许昼坐下，语气平，「有用就看。」</p>
+  <p class="p rise">苏晚宁侧脸看他：「你真的不酸了？」</p>
+  <p class="p rise">「酸。」许昼诚实，「可我更怕你一个人扛。」</p>
+  <p class="p rise">苏晚宁的手指在桌下轻轻碰了碰他的手背。一下，就收。</p>
+  <p class="p rise">像偷。</p>
+  <p class="p rise">像救。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">模考前夜，宋辞的视频拨来。</p>
+  <p class="p rise">苏晚宁戴耳机，缩在阳台。宋辞看着她，开门见山：「你瘦了。是复习，还是人。」</p>
+  <p class="p rise">「……都有。」</p>
+  <p class="p rise">「那个人呢。」</p>
+  <p class="p rise">苏晚宁沉默很久：「在。很近。近到我没法假装不想。」</p>
+  <p class="p rise">宋辞叹了口气：「你十八了，不是小孩。你要的不是许可，是你敢不敢对自己诚实。」</p>
+  <p class="p rise">「我怕重演。」</p>
+  <p class="p rise">「那你就选一个不会在群里阴阳你的人。」宋辞说，「他会吗。」</p>
+  <p class="p rise">苏晚宁想起许昼的克制，想起他说「等你点头」。</p>
+  <p class="p rise">「不会。」</p>
+  <p class="p rise">「那就别把自己活成禁令。」宋辞顿了顿，「我下个月可能来你们市。我想看看他。」</p>
+  <p class="p rise">「……别吓他。」</p>
+  <p class="p rise">「我吓的是不合适的人。」宋辞笑了一下，随即认真，「晚宁，想要不是罪。崩才是你该防的。而崩，往往来自憋。」</p>
+  <p class="p rise">挂断后，苏晚宁站在风里，把「想要不是罪」五个字反复嚼。</p>
+  <p class="p rise">嚼到嘴唇发疼，她给许昼发了一条消息——22:59：</p>
+  <p class="p rise">「周测我会把数学补回来。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「还有。」她删了三次，终于发出，「等模考完。我想见你。不是在教室。」</p>
+  <p class="p rise">许昼几乎秒回：</p>
+  <p class="p rise">「好。你定地方。我听你的。」</p>
+  <p class="p rise">苏晚宁把手机贴在心口。</p>
+  <p class="p rise">纸还在装。</p>
+  <p class="p rise">可风，已经从电话那头，从何予川那句提醒里，从她自己写下的怕里，一点点灌进来了。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch6">← 装</a><a href="#ch8">见 →</a></nav>
+
+<section class="chapter" id="ch8" data-num="8" data-title="见" data-anchor="ch8" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 8 章</div>
+    <h2 class="ch-title">见</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">模考结束的傍晚，天很干净。</p>
+  <p class="p rise">成绩要两天后才出。整座机构像被突然松开的弦，有人哭，有人笑，有人倒头就睡。苏晚宁给许昼发定位：城南一间二十四小时自习咖啡馆，靠窗卡座，人不多，灯暖。</p>
+  <p class="p rise">「七点。只待一小时。」她写。</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">她先到。卫衣换成薄外套，头发松松扎着。许昼推门进来时，她的手指在杯壁上停了一下，又若无其事地松开。</p>
+  <p class="p rise">他仍是干净的样子。T 恤，帆布包，笑意收敛着。</p>
+  <p class="p rise">「紧张？」他坐下。</p>
+  <p class="p rise">「……有点。」她捧着杯子，「像赴约。可我们不是。」</p>
+  <p class="p rise">「可以是。」许昼看着她，「你点头的话。」</p>
+  <p class="p rise">苏晚宁没有立刻点头。她把共用错题本放在桌上，翻到空白页，写下：</p>
+  <p class="p rise">「规则临时修订：一小时内，可以说实话。」</p>
+  <p class="p rise">许昼接笔，写：「好。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">实话比题目难。</p>
+  <p class="p rise">「我每天都想你。」许昼先说，耳朵红，「想你讲题的样子。也想亲你。这两样……经常混在一起。」</p>
+  <p class="p rise">苏晚宁手指收紧。她没有接「我也是」，只低声：「洗澡的时候会……走神。然后骂自己。」</p>
+  <p class="p rise">「你不脏。」</p>
+  <p class="p rise">她点了下头，又摇头：「怕。怕一靠近，就停不下来。」</p>
+  <p class="p rise">「那今天定边界。」许昼深吸一口气，「你说停，我立刻停。」</p>
+  <p class="p rise">苏晚宁「嗯」了一声。</p>
+  <p class="p rise">灯下，两个人的呼吸都浅。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">一小时到了。</p>
+  <p class="p rise">苏晚宁走到门口又停下：「唐果今晚回老家。钥匙……只有我。你要是来，讲题。然后走。」</p>
+  <p class="p rise">「你确定？」</p>
+  <p class="p rise">「不确定。」她看着地面，「……来一下。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">女生合租是一室一厅。干净，窗帘拉着，桌上仍是卷子。</p>
+  <p class="p rise">门关上的声音很轻。</p>
+  <p class="p rise">苏晚宁把水递给他，自己坐得远远的。他们真的讲了二十分钟题——物理压轴，英语改错。讲着讲着，声音都低了。他的膝盖离她的膝盖只有一拳；她讲到关键句时，笔杆无意识点着他的草稿边缘，点完又收回去。</p>
+  <p class="p rise">题讲完了。</p>
+  <p class="p rise">空白涌上来。</p>
+  <p class="p rise">苏晚宁先站起来，走到他面前。台灯在她身后，脸看不真切：</p>
+  <p class="p rise">「可以……再亲一下吗。像资料室那样。」</p>
+  <p class="p rise">许昼放下笔，双手轻轻握住她的手腕：「可以。你随时说停。」</p>
+  <p class="p rise">吻落下时，两人都颤了。</p>
+  <p class="p rise">不再只是唇贴唇。许昼偏头，下唇含住她的，轻轻吮。苏晚宁起初不会换气，鼻息乱喷在他脸上；他退半分让她吸气，再覆上去。舌尖碰见时，她指尖蜷进他肩肉，身体却往前送了半寸。口腔里有糖水残留的甜，和长时间没说话的干燥。</p>
+  <p class="p rise">他的手滑到她后腰，隔着薄外套与里面那层棉，掌心全是热。苏晚宁攀住他肩，后腰那一点被熨贴的触感让她腿软，膝盖轻轻磕到他的腿。细细的鼻音漏出来，她立刻咬唇，咬出一小圈白印。</p>
+  <p class="p rise">「晚宁……」</p>
+  <p class="p rise">「……慢一点。」她喘，没说别停，也没说继续——只把额头抵着他的下巴，像把自己挂在那里。</p>
+  <p class="p rise">许昼把她抱到沙发边缘坐下，自己半跪在地毯上，平视她。这个姿势让他更像在征求。他吻她的唇角，下颌线，侧颈。颈侧皮肤薄，他能感觉到脉搏乱跳。吻到耳后时，苏晚宁肩一缩，领口滑开一点，露出锁骨和浅浅的窝。</p>
+  <p class="p rise">「可以碰这里吗。」他的手停在她腰侧。</p>
+  <p class="p rise">「……可以。」</p>
+  <p class="p rise">掌心贴上腰线，隔着衣服仍能摸到她薄薄的皮肉和一截肋骨的起伏。她轻轻一抖。许昼向上，停在胸下缘，不敢越。苏晚宁闭着眼，呼吸明显乱了；过了好几秒，她才抓住他的手，往上带了一点——带到乳下，停住。脸红得厉害。</p>
+  <p class="p rise">「就……这里。」声音碎，「隔着。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">他隔着外套、薄衣、旧内衣，极轻地托住那一小团软。不大。掌心能包住大半。乳尖却很快顶起来，隔着几层布料戳在他指腹上。他用拇指缓缓画圈，苏晚宁整个人往后靠进沙发背，唇张开又合上，像有声音要出来，被她自己咽回去。</p>
+  <p class="p rise">另一侧也覆上。两边同时被托着时，她腰软了一下，双腿下意识并拢，又因为并拢后腿心更明显，而轻轻颤开一点缝。</p>
+  <p class="p rise">许昼额头抵着她：「我硬了。有点疼。我可以自己……你不用管我。」</p>
+  <p class="p rise">苏晚宁睁开眼。目光扫过他跪着的姿势、绷紧的肩、裤裆那处明显的顶起。她没说话，只是把并拢的膝松开一点，拉过他的手，犹豫了很久，才放到自己腿根上方。</p>
+  <p class="p rise">「隔着……衣服。」她耳尖红透，说不全，「你……帮我。轻。」</p>
+  <p class="p rise">许昼的喉结重重一滚。</p>
+  <p class="p rise">「痛了就拍我。」</p>
+  <p class="p rise">「嗯。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">他吻她，手从膝滑到大腿外侧，布料下的肌肉绷得很紧。再往内，到腿心——隔着运动裤与内裤，掌心先只是覆上，不磨。</p>
+  <p class="p rise">苏晚宁整个人弹了一下。</p>
+  <p class="p rise">那地方已经热了，甚至有一点潮意透过布料沾到他掌心。他停着，等她呼吸从陡峭的吸气变成勉强均匀的吐气。她把脸埋进他肩，手指揪他后背的衣料。</p>
+  <p class="p rise">「……动一下。」闷声。</p>
+  <p class="p rise">他动了。</p>
+  <p class="p rise">不是乱蹭。中指与无名指并拢，隔着两层布，沿着缝的走向缓慢上下。布料与皮肉摩擦，发出极轻的细响。运动裤面料粗一点，内裤细一点，两层错开时，她腿根会轻轻抽一下。许昼用掌根抵住上方那一点最敏感的位置，打着极小的圈。</p>
+  <p class="p rise">苏晚宁起初死死咬唇，唇色被咬得发白。后来咬不住，细碎的「嗯」「啊」漏出来，尾音发颤，像怕被邻居听见，又实在压不住。她的髋不自觉轻轻顶向他的手，顶一下就僵住，像被自己的反应吓到，又顶一下。</p>
+  <p class="p rise">「还好吗。」</p>
+  <p class="p rise">「……热。」她喘，「里面……也。」</p>
+  <p class="p rise">许昼把运动裤的松紧往下褪了半寸，停住看她。苏晚宁没有拉回去，只把脸埋得更深。他再褪，连同内裤边缘一起——没有完全脱掉，只褪到大腿中段，让腿被迫微微分开。</p>
+  <p class="p rise">灯光下，她腿心完全暴露出来。</p>
+  <p class="p rise">耻丘上是一丛偏深的阴毛，完全没修理过：耻骨上方稍密，往下到缝两侧渐渐稀疏，边缘不齐，有的卷，有的直，有的被刚才的湿意一缕缕贴在白皮肤上。拨开那层毛，才能看全——</p>
+  <p class="p rise">外阴薄而软，颜色偏浅，中央一条细缝被他隔着布磨得微微张开，缝里近乎浅粉，情动后透出玫瑰似的深。最上端那颗核小小的、圆的，被薄皮半掩，稍一暴露就亮晶晶地立着。再往下，入口紧成一点湿润的圆，呼吸间轻轻收缩，不断往外吐透明的水，湿痕顺着漫到股沟。大腿根细白，衬得中间那丛深色毛发与粉缝更加分明。</p>
+  <p class="p rise">苏晚宁抬臂想挡脸，腋下那一小片浅浅的腋毛也暴露在灯下——没刮，不长，清晰。她察觉了，手臂夹紧，声音发紧：「别看……」</p>
+  <p class="p rise">「我不嫌。」许昼哑声，低头在她大腿内侧亲了一下，目光却仍黏在那处，「是你。毛，缝，都是你。」</p>
+  <p class="p rise">指腹直接贴上那条缝时，两人都颤了。滑，热，比隔着布料诚实一百倍。他先上下抹开那些水，让指腹熟悉她的形状：核的硬、瓣的软、缝的热、入口那一圈紧致的吸力。轻轻一碰核，她腰就弹，缝里又涌出一股水，沾满他指节。</p>
+  <p class="p rise">「疼？」</p>
+  <p class="p rise">她摇头，发丝蹭他脖子。</p>
+  <p class="p rise">他用中指在核上打圈，极轻。苏晚宁的呼吸断成一截一截，小腹起伏，阴毛随着动作被他指节拨乱。圈加快一点，她腿突然夹紧他的手臂，又被迫松开——他另一只手按着她膝，不强迫打开，只稳住。</p>
+  <p class="p rise">偶尔指尖滑到入口，浅浅没入一个指节，她会「嘶」一声，内壁紧紧咬住。他立刻退出，只在外面打转，等她肩松下来，再试。第二回进得深一点，屈起指节，缓慢抽送，拇指仍按在上方的核上。水声变得清晰，黏腻，在安静房间里羞人得要命。</p>
+  <p class="p rise">苏晚宁的脚趾蜷进地毯。腰一下下轻轻抬，又落下。汗沿颈侧滑进领口，胸口那两团软随着呼吸轻颤，乳尖把薄衣顶出两点。</p>
+  <p class="p rise">「许昼……我……好像……」</p>
+  <p class="p rise">话没说完。她抓紧他后背，腰弓起来，脚背绷直。身体内部一阵一阵收缩，绞着他的手指，水液涌得更多，沾湿他整个掌心，也沾湿周围的毛发，让那丛天然的阴毛一缕缕贴在白皮肤上。她咬着他肩上的布料，把声音闷成连续的呜咽，抖了很久才软下去。</p>
+  <p class="p rise">许昼亲她的头发，自己仍硬着，顶在裤里发疼，没有再要。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">苏晚宁缓了好一会儿，才从他肩上抬起脸。眼睛湿，眼神却还没完全回笼。她的目光往下移，停在他腿间那处鼓胀上，喉结轻轻动了动。</p>
+  <p class="p rise">手伸过去，在半空停了两秒，才落下。</p>
+  <p class="p rise">隔着裤子，掌心覆上那根硬东西。</p>
+  <p class="p rise">许昼倒抽一口气，腹肌瞬间绷紧。</p>
+  <p class="p rise">苏晚宁的手指僵着，隔着布料摸出大概的轮廓：长，烫，顶端已经把布料顶出一小块深色的湿。她上下试着挪了一点，听见他齿间泄出的气音，自己耳尖烧得厉害。</p>
+  <p class="p rise">「……可以，拿出来吗。」她问得很轻。</p>
+  <p class="p rise">「你不用——」</p>
+  <p class="p rise">她没等他说完，去解他的扣子。手抖，解了两次。拉链拉下时，那东西在内裤里弹动一下。她把边缘往下褪，它弹出来，打在她手腕内侧，又热又沉。</p>
+  <p class="p rise">灯光下，青筋浅浅浮着，顶端湿亮，颜色比周围深一点。根部有同样未经修理的毛，比她浓些。苏晚宁看了好几秒，像在确认这是真的，不是想象。</p>
+  <p class="p rise">然后她握住了。</p>
+  <p class="p rise">五指合拢。先太轻，像碰什么会碎的东西；许昼腰眼一麻，她又下意识收紧。掌心立刻被那温度烫满，中指勉强能碰到拇指——比她预想的粗。她轻轻滑动，指腹蹭过顶端时，黏液拉出极细的丝，沾在她指纹上。</p>
+  <p class="p rise">「这样……」她不敢抬头，「对吗。」</p>
+  <p class="p rise">「对。」许昼额头顶着她肩，声音发抖，「慢一点……晚宁，你手……」</p>
+  <p class="p rise">她依言放慢。上下时，掌心发出细小的水声。偶尔太紧，他闷哼；她立刻松开半分，又怕不够，重新握妥。拇指无意识抹过顶端的小孔，许昼整个人一抖，手扣住她后颈，却不敢用力。</p>
+  <p class="p rise">「要到了就……告诉我。」她小声，像背题。</p>
+  <p class="p rise">「快了——你别停——也别……太快——」</p>
+  <p class="p rise">她听得耳热，却照做：保持那个让他呼吸最乱的节奏，掌心收紧又松开。许昼的腰轻轻顶进她手里，像控制不住。最后几下，他低低喘着她的名字，那根东西在她掌心跳得更凶，随即一股一股地射出来——白浊溅在她手指间、他小腹上，也沾到她卫衣下摆一点。</p>
+  <p class="p rise">苏晚宁愣住。</p>
+  <p class="p rise">手还握着，感觉它在掌心一点点软下去，却仍有余韵般跳动。空气里有很淡的腥。她看着自己湿漉漉的手指，脸红得要滴血，却没有立刻甩开。</p>
+  <p class="p rise">许昼喘着，抓过纸巾，先擦她的手，再擦自己。擦到她指缝时，动作轻得过分。</p>
+  <p class="p rise">「对不起……溅到你了。」</p>
+  <p class="p rise">苏晚宁摇头，把擦过的手藏进袖子里。过了很久，才闷声：「……你刚才，脸好奇怪。」</p>
+  <p class="p rise">「哪里怪。」</p>
+  <p class="p rise">「像……很疼。又像……」她说不下去，把整张脸重新埋回他肩窝。</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">安静很久。只有两人未平的呼吸，和窗外偶尔的车声。</p>
+  <p class="p rise">苏晚宁的运动裤还褪在腿上。她想拉，手指软，许昼帮她拉好，指节不可避免地又擦过腿根那些湿掉的毛发。她颤了一下，没有骂他。</p>
+  <p class="p rise">「这算什么。」她声音哑。</p>
+  <p class="p rise">「算你点头的一小时。」许昼说，「也算我第一次……真的碰到你。」</p>
+  <p class="p rise">「别说。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">她顿了顿，闷声：「我不是冷。我是怕。今晚之后……可能更怕。」</p>
+  <p class="p rise">许昼抱紧她：「那就一起怕。你说停，我停。」</p>
+  <p class="p rise">时钟指向九点四十。</p>
+  <p class="p rise">苏晚宁轻轻推他：「你该走了。唐果明天回来。」</p>
+  <p class="p rise">许昼去卫生间整理自己，出来时恢复成那个干净的好同学。走到门口，又停住：</p>
+  <p class="p rise">「晚宁。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「分，我们还是要。」他认真，「不是拿你换这个。」</p>
+  <p class="p rise">苏晚宁眼眶又红了。踮脚，很快地亲了亲他的唇角：「走。」</p>
+  <p class="p rise">门关上。</p>
+  <p class="p rise">她靠着门板滑坐到地上，把发烫的脸埋进膝盖。腿心还残留着被手指撑开又离开的空——内壁像还记着他指节的形状，一张一合地发空；上方那颗核被磨过后仍轻轻跳着，裤子一蹭就麻。掌心则记得那根东西：有多粗、有多烫、射的时候怎样在手里一跳一跳地吐出来。</p>
+  <p class="p rise">秘密，从嘴唇，走到了身体。</p>
+  <p class="p rise">而她发现自己，腿还软着，心却已经不像刚刚那么想逃。</p>
+  <div class="sec-mark"><b>八</b></div>
+  <p class="p rise">第二天傍晚，唐果拖着箱子回来。</p>
+  <p class="p rise">合租门一开，她先嗅了嗅，又看看苏晚宁——后者坐在桌前抄题，耳尖却红着，像刚被点名。</p>
+  <p class="p rise">唐果没当众说什么。洗完澡，关灯，只留两盏床头小灯。声音压得很低，像怕隔墙有耳：</p>
+  <p class="p rise">「昨晚谁来过。」</p>
+  <p class="p rise">苏晚宁笔尖一顿：「……同学。」</p>
+  <p class="p rise">「男的。」唐果陈述，不是问，「沙发垫我坐着偏了。别装。」</p>
+  <p class="p rise">沉默很长。</p>
+  <p class="p rise">苏晚宁把脸埋进臂弯，闷声：「你别往外说。」</p>
+  <p class="p rise">「废话。」唐果翻了个身，面对她，声音更轻，「做到哪一步了。亲？摸？还是……进了。」</p>
+  <p class="p rise">「……没进。」苏晚宁耳尖烧透，「手。」</p>
+  <p class="p rise">「谁的手。」</p>
+  <p class="p rise">「……他的。在我那儿。」她说得艰难，像背最难的词，「隔着衣服先。后来……脱掉一点。他用手指。上面那点，还有……里面。」</p>
+  <p class="p rise">唐果「哦」了一声，没有起哄的笑，只认真得像对答案：「疼吗。」</p>
+  <p class="p rise">「涨。有一点点。他停了很久。」苏晚宁的声音越来越小，「后来不疼了。就……酸。然后整个人……抖。水很多。我……去了。」</p>
+  <p class="p rise">「第一次用手就去了，说明你身体认他。」唐果顿了顿，「你帮他了吗。」</p>
+  <p class="p rise">苏晚宁把被子拉过鼻尖，只露出眼睛：「……握了。隔着裤子先。后来拿出来。好硬。比我手能圈的……粗一点。顶端一直流水。他教我慢一点。最后射在我手上。」</p>
+  <p class="p rise">唐果低低吹了口气：「细节你倒是记得清楚。」</p>
+  <p class="p rise">「闭眼都是。」苏晚宁承认，像泄气，「果果，他下面的毛……也没刮。我的也没有。他看的时候我特别想死。他说不嫌。」</p>
+  <p class="p rise">「正常。」唐果说得干脆，「你们又不是去拍片。毛在那儿，比假光滑真实。他要是嫌，你才该跑。」</p>
+  <p class="p rise">苏晚宁把脸埋回去：「我到现在走路都……那里还记得。夹一下就热。」</p>
+  <p class="p rise">「那就对了。」唐果伸手，在黑暗里碰了碰她的手背，「下次如果要进，记住三件事：套、润滑如果太干、疼了立刻说。别学那些硬撑的。」</p>
+  <p class="p rise">「……嗯。」</p>
+  <p class="p rise">「还有。」唐果补得很轻，「爽不是脏。你写题那么狠的人，身体有反应，才正常。」</p>
+  <p class="p rise">苏晚宁没接话。</p>
+  <p class="p rise">被子里，她的腿不自觉并了并。腿心那一点空虚又泛上来，像他的手指还停在记忆里，进进出出，把水声留在耳膜上。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch7">← 电话</a><a href="#ch9">先停 →</a></nav>
+
+<section class="chapter" id="ch9" data-num="9" data-title="先停" data-anchor="ch9" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 9 章</div>
+    <h2 class="ch-title">先停</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">模考成绩出来那天，教室比考场更静。</p>
+  <p class="p rise">苏晚宁总分第二。许昼第三。六分之差换成两分，数学她补回来了，英语他把阅读提了。</p>
+  <p class="p rise">周慎言在讲台上看着曲线，点了点头：「比上次像话。继续。」</p>
+  <p class="p rise">没有调座位。</p>
+  <p class="p rise">像某种缓刑。</p>
+  <p class="p rise">下课后，许昼把糖水放到她桌角——全糖。苏晚宁看了看，低声：「谢礼？」</p>
+  <p class="p rise">「庆祝。」他笑，「庆祝我们都还在。」</p>
+  <p class="p rise">她「嗯」了一声，喝了一口。甜意漫上来时，身体却先记得另一晚——沙发，他的手，她的声音。耳尖立刻红了。</p>
+  <p class="p rise">许昼移开视线，喉结滚动。他也记得。记得得太清楚，夜里更难睡。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">「先停」不是谁先提出的。</p>
+  <p class="p rise">是两个人同时怕。</p>
+  <p class="p rise">怕的契机很具体：赵屿某天很晚回房，看见许昼盯着手机发呆，只说：「你要是状态要掉，我帮你盯起床。别的我不管。」另一边，唐果把苏晚宁拉到厨房，轻声：「你最近眼神太亮。亮不是坏事，但周测要是再飘，老师会动手。」</p>
+  <p class="p rise">苏晚宁当晚在共用本写：</p>
+  <p class="p rise">「我们先停身体。保留搭子。保留……喜欢。可以吗。」</p>
+  <p class="p rise">许昼看了很久，写：</p>
+  <p class="p rise">「可以。我听你的。」</p>
+  <p class="p rise">空一行。</p>
+  <p class="p rise">他又写：</p>
+  <p class="p rise">「可我要说实话：停，会很难。我会更想。」</p>
+  <p class="p rise">苏晚宁回：</p>
+  <p class="p rise">「我也是。所以才要停。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">停的第一周，像戒断。</p>
+  <p class="p rise">桌下不再碰。语音严格卡在十点五十。资料室的门经过也不看。只有讲题时，两个人的声音还会靠近——靠近本身变成新的瘾。</p>
+  <p class="p rise">许昼跑步公里数暴涨。苏晚宁洗澡时间变长，出来眼眶红，像刚和自己吵完架。</p>
+  <p class="p rise">周五晚，许昼还是破了一次：23:02，发来一张题。</p>
+  <p class="p rise">苏晚宁盯着，回：「超时。」</p>
+  <p class="p rise">「知道。删了。」</p>
+  <p class="p rise">「别删。」她又发，「我看完了。答案在你第三步。睡。」</p>
+  <p class="p rise">许昼：「你呢。」</p>
+  <p class="p rise">苏晚宁：「也睡。」</p>
+  <p class="p rise">谁也没睡实。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">第二周，周测。</p>
+  <p class="p rise">两人分数都稳。周慎言只在许昼卷子上写了句「保持」。像松了一口气。</p>
+  <p class="p rise">可人心不是分数。</p>
+  <p class="p rise">苏晚宁发现自己开始躲他的眼睛。一撞上，身体就热，热完就恨自己不争气。许昼则把自己的笑练得更无懈可击，无懈到赵屿关灯后低声说：</p>
+  <p class="p rise">「你要是再这样装，我会以为你出家了。」</p>
+  <p class="p rise">「睡你的。」</p>
+  <p class="p rise">「……行。」赵屿翻身，「门我照旧。你要崩溃，别砸墙，砸醒我。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">真正把「先停」撕开一条缝的，是一次意外。</p>
+  <p class="p rise">晚自习停电。</p>
+  <p class="p rise">应急灯惨白，走廊乱了一分钟，又迅速恢复秩序。老师让大家安静等。教室里，苏晚宁的手在黑暗里碰掉橡皮，弯腰去捡——许昼也弯。</p>
+  <p class="p rise">两个人的额发在桌下轻轻撞到一起。</p>
+  <p class="p rise">呼吸交缠。</p>
+  <p class="p rise">黑里，谁也看不见谁的脸，于是更敢。苏晚宁的手碰到他的手，没有缩。许昼反握住，紧，像溺水。</p>
+  <p class="p rise">「晚宁。」他无声。</p>
+  <p class="p rise">「……别在这里。」她也无声，手指却扣进他指缝。</p>
+  <p class="p rise">电来了。</p>
+  <p class="p rise">灯亮。</p>
+  <p class="p rise">两个人迅速分开，坐直，像什么都没有。前面同学回头笑：「刚才吓死，还以为要考听力。」</p>
+  <p class="p rise">他们也笑。</p>
+  <p class="p rise">笑完，苏晚宁的掌心全是汗。许昼把笔握到指节发白。</p>
+  <p class="p rise">当晚，共用本只有一行：</p>
+  <p class="p rise">「先停，好难。」——许昼</p>
+  <p class="p rise">「难也要。」——苏晚宁</p>
+  <p class="p rise">「那你点头的时候告诉我。」——许昼</p>
+  <p class="p rise">很久，铅笔字：</p>
+  <p class="p rise">「快了。我快装不住了。」——苏晚宁</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">宋辞到市里的那天是周日。</p>
+  <p class="p rise">咖啡馆，三人。宋辞打量许昼的方式很直接，不刻薄，像量一件关乎朋友命的东西。</p>
+  <p class="p rise">「你对她，是认真，还是新鲜。」</p>
+  <p class="p rise">「认真。」许昼说，「认真到我愿意先停。也认真到她一点头，我会负责。」</p>
+  <p class="p rise">「负责什么。」</p>
+  <p class="p rise">「她的分，她的名，她的怕。」许昼看着苏晚宁，又看回宋辞，「我不会拿她在任何地方炫耀。秘密是她要的壳，我帮她守。」</p>
+  <p class="p rise">宋辞沉默片刻，对苏晚宁说：「比我想象中像人。」</p>
+  <p class="p rise">苏晚宁耳尖红：「你别……」</p>
+  <p class="p rise">「我走了。」宋辞起身，临走拍了拍她的肩，「别把自己停死。停是为了走得稳，不是为了假装没心。」</p>
+  <p class="p rise">留下两人相对。</p>
+  <p class="p rise">咖啡凉了。苏晚宁低声：「她凶。」</p>
+  <p class="p rise">「她护你。」许昼笑，「我喜欢。」</p>
+  <p class="p rise">苏晚宁抬眼：「许昼，再撑一阵。等下一次大测。稳了……我点头。」</p>
+  <p class="p rise">许昼点头。</p>
+  <p class="p rise">指尖在桌下极轻地碰了碰她的指尖——一下，遵守边界的偷。</p>
+  <p class="p rise">「我等。」他说。</p>
+  <p class="p rise">可两个人都知道：等，有时比碰，更磨人。</p>
+  <p class="p rise">磨到某一天，壳会自己裂开。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch8">← 见</a><a href="#ch10">点头 →</a></nav>
+
+<section class="chapter" id="ch10" data-num="10" data-title="点头" data-anchor="ch10" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 10 章</div>
+    <h2 class="ch-title">点头</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">大测那周，雨下了三天。</p>
+  <p class="p rise">成绩出炉的下午，苏晚宁第一，许昼第二。分差三。</p>
+  <p class="p rise">周慎言难得说了句重的：「这才叫互相看着点。」</p>
+  <p class="p rise">教室里有短暂的松。像整座弹簧被允许喘一口气。</p>
+  <p class="p rise">苏晚宁把成绩单折好，塞进书里。手指在纸边停了停，又若无其事地收回袖口。晚自习她写题，写到一半会走神，笔尖在同一处洇开淡墨。</p>
+  <p class="p rise">十点二十，她给许昼发：</p>
+  <p class="p rise">「下来。楼梯转角。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">转角只有应急灯。</p>
+  <p class="p rise">苏晚宁站在阴影里，卫衣帽子扣着。许昼跑下来，喘未定，先停住，给她空间。</p>
+  <p class="p rise">「测完了。」她说。</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「我第一。」</p>
+  <p class="p rise">「我知道。恭喜。」</p>
+  <p class="p rise">苏晚宁点了下头，目光落在他胸口的衣料上，又移开。沉默拉长。</p>
+  <p class="p rise">「……今晚。」她终于开口，声音轻，「去你那儿。可以吗。」</p>
+  <p class="p rise">许昼的呼吸沉了一下。</p>
+  <p class="p rise">「去，是坐一会儿，还是……」</p>
+  <p class="p rise">苏晚宁的耳尖红了。她没有把话说满，只极轻地点了下头。</p>
+  <p class="p rise">「你随时可以走。」许昼哑声，「每一步你说停，我停。」</p>
+  <p class="p rise">她「嗯」了一声。手伸进他掌心时是冷的。握紧了，才有一点热度渗出来。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">合租单间不大。床，桌，椅，窗。</p>
+  <p class="p rise">门关上。</p>
+  <p class="p rise">苏晚宁站在门口，没脱鞋。许昼蹲下给她换拖鞋，动作轻。她看着他的发顶，喉结滚了滚。</p>
+  <p class="p rise">「先喝水。」他把杯子塞进她手里，「三件事。套，我准备了。疼了说，我停。做完要是难受，你可以走，可以骂，我都受着。」</p>
+  <p class="p rise">苏晚宁捧着杯子，低声：「……你像签协议。」</p>
+  <p class="p rise">「因为是你。」</p>
+  <p class="p rise">她把水喝完。杯子放下时指尖碰了一下他的指尖，又缩回。下一秒她踮脚吻他——吻得很短，像试探，又像把自己推过那条线。</p>
+  <p class="p rise">许昼回吻，手只托在她后腰。苏晚宁的呼吸乱了，肩却仍绷着。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">灯调暗了一档。</p>
+  <p class="p rise">衣服一件一件解开。许昼拉她卫衣拉链时，金属齿轻轻响。里面是旧的浅灰内衣，肩带有点松，洗得发白，不是为谁准备的款式。</p>
+  <p class="p rise">T 恤脱掉后，她下意识抱臂。许昼问：「冷吗。」</p>
+  <p class="p rise">「……没有。」</p>
+  <p class="p rise">她慢慢放下手臂。</p>
+  <p class="p rise">灯光里，身体露出来。偏瘦，锁骨清楚，胸不大，形状偏青涩，乳晕浅淡，几乎是浅褐里透着粉。腰细，小腹平坦，侧腰有一点常年久坐留下的软肉。皮肤是室内白，肘尖、膝盖略糙。呼吸时，肋骨浅浅起伏，像一只受惊却没逃的小动物。</p>
+  <p class="p rise">许昼先吻她的肩，再吻锁骨窝。舌尖点进那一小片凹陷，她肩胛骨立刻收紧。手绕到背后解内衣，生涩，解了两次。钩子弹开时，带子松垂，胸前那两团软失去支撑，轻轻颤着落出来。</p>
+  <p class="p rise">不大。一手可覆。乳尖却在凉空气里很快立起，颜色比乳晕更深一点。许昼掌心托住，拇指缓缓蹭过尖端，苏晚宁整个人一僵，随即软下去半分，仰头，极细的鼻音从齿缝漏出，又被她咬回去。</p>
+  <p class="p rise">他换侧。用嘴唇含住左边那一点，轻轻吮。口腔湿热裹上来时，苏晚宁的手指插进他头发，力道乱，像推又像按。唾液把乳尖沾得发亮，离开时拉出极短的银丝。他吹一口气，那一点立刻更硬。</p>
+  <p class="p rise">「别……吹。」她喘，耳尖红到脖子。</p>
+  <p class="p rise">「疼？」</p>
+  <p class="p rise">她摇头。</p>
+  <p class="p rise">吻往下。经过肋骨，经过肚脐旁那一小片细软的绒毛——浅得几乎看不见，只有嘴唇贴上去才感觉得到。运动裤褪到膝弯时，她把脸偏向枕头。</p>
+  <p class="p rise">「可以吗。」</p>
+  <p class="p rise">枕头里闷出一声：「……嗯。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">最后一层布料剥落。</p>
+  <p class="p rise">空气凉，羞耻热。</p>
+  <p class="p rise">许昼看见她时，呼吸明显乱了。</p>
+  <p class="p rise">耻丘上是一丛偏深的阴毛，不算浓密到遮死一切，却完全没修理过：边缘不齐，有的卷，有的直，有的贴着皮肤，带着洗过澡后未完全干的潮意。耻骨上方更密一点，往下到缝两侧渐渐稀疏。拨开，才能看全——</p>
+  <p class="p rise">外阴饱满得恰到好处，薄薄的肉瓣颜色偏浅；中央细缝因紧张而微微闭合，缝里近乎浅粉。最上端那颗核小小的、圆的，被包皮半掩，尚未完全立起，却已在呼吸里轻轻发亮。再往下，入口缩成一点湿润的圆，像从未被真正打开过。大腿根细白，衬得这丛天然的毛发与粉缝真实得让人心口发紧——不是「准备好被看」的身体，是一个会做题、会脸红、会把一切藏进卫衣里的人。</p>
+  <p class="p rise">她侧过手臂挡脸时，腋下同样有一小片浅浅的腋毛。不长，清晰，没有刮过的青茬，只是存在着。</p>
+  <p class="p rise">苏晚宁察觉视线，手臂猛地回收：「别……看那里。」</p>
+  <p class="p rise">「不是脏。」许昼嗓子哑，「是你。我想看清楚。」</p>
+  <p class="p rise">她把脸埋进枕头更深，腿并了一下，又松开一点——缝因此轻轻张开一线，露出更嫩的内里。</p>
+  <p class="p rise">许昼低头，先吻小腹，再吻耻骨上方那丛毛发。嘴唇触到毛与皮肤交界时，苏晚宁腰弹起来，又落回去，床单被她揪出两道皱。他用鼻尖轻轻蹭开阴毛，让那条粉缝完全暴露在灯光下：核、瓣、入口，一览无余。然后伸出舌尖，极轻地舔过那颗小小的核。</p>
+  <p class="p rise">苏晚宁整个人像触电。</p>
+  <p class="p rise">「啊——」尾音被她死死咬断，变成呜咽。双腿想夹，被他掌心稳住膝侧：「拍我我就停。」</p>
+  <p class="p rise">她没有拍。</p>
+  <p class="p rise">只把小臂压在眼睛上，胸膛剧烈起伏。乳尖随着呼吸轻颤，腋下那点天然的毛在臂弯阴影里若隐若现。</p>
+  <p class="p rise">许昼把这当成一件必须做对的事。舌面先整片贴上核，缓慢上下磨，磨到那一点肿起、发亮；再改成舌尖点弄，又快又密；然后用唇包住，轻轻吮，吮出细小的水声。苏晚宁的髋轻轻顶向他的嘴，自己却死死咬着手背。</p>
+  <p class="p rise">他的舌从核慢慢往下，沿着整条缝舔开。味道淡，偏腥甜，混着皂角与体温。毛发刮过他嘴唇，有点痒，他不躲——反而把脸埋深，鼻尖抵着耻骨，舌头往更里面探。舔到入口时，舌尖顶开那圈紧闭的软肉，浅浅伸进去搅了一下，立刻有更多水涌出来，沾湿他下巴、鼻梁，也把周围阴毛浸成一缕一缕。他发出极轻的、满足的鼻音，震动直接打在她最敏感的地方。</p>
+  <p class="p rise">「别……出声……」她喘得语无伦次，其实是怕自己出声。</p>
+  <p class="p rise">他抬头，唇亮，下颌全湿：「疼吗。」</p>
+  <p class="p rise">她摇头，耳尖红透。</p>
+  <p class="p rise">他再次埋下去，边舔核边把中指推进入口，舌头与手指同时动作——这是第一次用嘴把她送上边缘。苏晚宁抖得厉害，内壁绞紧他的指，水液一股股往外涌，他都用舌接住、舔净，像舍不得浪费。</p>
+  <p class="p rise">直到她按他的肩，细细发颤：「可以了……别只……嘴……」</p>
+  <p class="p rise">他这才抬起头，换更完整的手指扩张。中指在缝上抹了两圈，确认足够滑，才浅浅推进一个指节。</p>
+  <p class="p rise">太紧。</p>
+  <p class="p rise">内壁吸住他，像拒绝，又像挽留。苏晚宁眉心拧着，小腹绷成一块。</p>
+  <p class="p rise">「疼？」</p>
+  <p class="p rise">「……涨。」她从臂弯里挤出字，「慢。」</p>
+  <p class="p rise">他停在那里，拇指在核上轻轻打圈，等她内壁从死死绞紧变成一阵阵不规律的收缩。再进，到第二指节；再进，整根中指没入。抽送时，水声黏腻，阴毛被带得东倒西歪，贴在白得反光的皮肤上。</p>
+  <p class="p rise">加进第二指时，她明显痛了一下，脚背绷直。许昼立刻停，只吻她膝内侧，吻她手背，等。半分钟后，她自己把腿分开了一点点——很小，却足够他继续。</p>
+  <p class="p rise">两指并拢，缓慢旋转、抽送，指腹寻找让她呼吸变乱的角度。找到时，苏晚宁的腰会轻轻跟着他的手走，乳尖红得更深，嘴张开，却只漏出破碎的气音。</p>
+  <p class="p rise">「可以了……吧。」她终于说，声音飘，「你……进来。」</p>
+  <p class="p rise">不是「我想要」。是把下一步交出去。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">许昼去拿套，包装撕了两次。</p>
+  <p class="p rise">苏晚宁从臂弯里露出一只眼，看见他裤腰褪下后的轮廓——硬着，把内裤顶出清楚的弧度，顶端已经湿出深色。她的目光顿住，喉咙动了动。</p>
+  <p class="p rise">「……可以帮你吗。」极轻。</p>
+  <p class="p rise">「你不用。你要是——」</p>
+  <p class="p rise">「不是怕。」她纠正，耳尖红透，「是……第一次。这样。」</p>
+  <p class="p rise">她坐起来一点。头发散在肩上，胸完全暴露，乳尖还湿着他刚才的唾液。手伸过去，先碰到他小腹，热，腹肌一跳；再往下，隔着布料，掌心覆上那根硬烫的东西。</p>
+  <p class="p rise">两人都颤了。</p>
+  <p class="p rise">隔着棉，她仍摸得到跳动。粗，热，像有自己的生命。她咽了下口水，小声：「……好硬。」</p>
+  <p class="p rise">许昼额头顶着她肩：「晚宁……你动一下，或者别动——」</p>
+  <p class="p rise">她把边缘往下褪。那根东西弹出来，打在她手腕侧，烫得她指尖一缩。灯光下，青筋浅浅，顶端湿亮，铃口不断吐出透明的液。根部阴毛比她浓，同样没修理，被汗贴在皮肤上。没有被「设计」过的色情，只有一个同样未经人事的男孩，把所有忍耐都顶到她手里。</p>
+  <p class="p rise">苏晚宁看着，看了好几秒。</p>
+  <p class="p rise">然后真正握住了。</p>
+  <p class="p rise">五指合拢。先太轻；他吸气，她收紧一点。掌心被烫满，中指勉强碰到拇指。她能感觉到皮下的筋在跳，顶端的湿把她掌纹涂亮。上下滑动时，皮肤与皮肤发出细小的黏声。她的拇指无意识抹过铃口，黏液拉丝，连到她指腹。</p>
+  <p class="p rise">「这样对吗。」眼睛不敢抬。</p>
+  <p class="p rise">「对。」他几乎从牙缝里挤字，「手好软——别太快——我会……」</p>
+  <p class="p rise">她放慢。每一次从根滑到顶，他的腰就轻轻一耸。偶尔她握得太紧，他闷哼，她立刻慌，松开，又被他按住手背：「不是让你停……就是……轻一点。」</p>
+  <p class="p rise">她依言。生涩，却认真，像在学一道必须亲手做的题。他的东西在她掌心涨得更凶，青筋更明显，顶端红得近乎危险。</p>
+  <p class="p rise">「够了。」他忽然按住她，额头全是汗，「再这样进不去。套……」</p>
+  <p class="p rise">苏晚宁松开。掌心里还留着形状、热、和一圈亮晶晶的湿。她把自己的手藏到身侧，指尖无意识互相蹭了蹭，像还没从「握着他」这件事里出来。</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">戴套时，橡胶的涩味很淡。他套到底，头部抵上她入口，两人都屏住呼吸。</p>
+  <p class="p rise">阴毛与阴毛先碰到一起，痒，羞。他的顶端挤开她外缘一点点，撑开的感觉清晰得残酷。</p>
+  <p class="p rise">「我怕弄疼你。」</p>
+  <p class="p rise">苏晚宁抓住他前臂，指节发白。看着他，眼睛湿，点了下头。</p>
+  <p class="p rise">进入。</p>
+  <p class="p rise">太紧。</p>
+  <p class="p rise">头部刚没入，她痛得眉心死死拧起，指甲掐进他后背。内壁像有自己的意志，又推又绞。许昼整个人僵住，汗顺着下颌滴在她锁骨上：「对不起。不动。我不动。」</p>
+  <p class="p rise">「……等。」她喘，小腹起伏。耻骨相贴处，她的毛发和他的皮肤蹭在一起，真实得让她眼眶发热。</p>
+  <p class="p rise">半分钟。一分钟。她内壁稍松一点。</p>
+  <p class="p rise">「好了。」声音发飘，「慢。」</p>
+  <p class="p rise">他进。一寸，停；再一寸，停。每进一寸，套外的褶皱都被她的紧致撑开，水被挤出来，发出极轻的水声。她能清楚感觉到那根东西的形状：头部圆钝，棱缘擦过内壁时会带起一阵细细的酸麻；柱身更粗，把她一点一点撑开，连最里面那圈软肉都被迫让路。全部没入时，两个人都出了一身汗。苏晚宁觉得小腹深处被顶住了，涨，满，连呼吸都被迫改道——吸气时内壁会无意识咬他一下，咬得许昼额筋直跳。</p>
+  <p class="p rise">「还可以吗。」</p>
+  <p class="p rise">「……可以。」只两个字。耳尖红得要滴血。</p>
+  <p class="p rise">他抽出来半截——抽离时，内壁被带着外翻一点又缩回，空虚感鲜明得吓人——再缓缓送入，一插到底。摩擦带起的热从交合处漫开。起初仍疼，像被撑开的边缘在抗议；疼里渐渐夹进别的东西：每一次龟头擦过某一点，她腰就会软；每一次耻骨撞上耻骨，阴毛纠缠拉扯，痒意直窜尾椎；每一次顶到最深，她喉间就会漏出短促的哼。</p>
+  <p class="p rise">许昼低头看交合的地方——她白，他深：外阴的肉瓣被撑开，中间那圈软肉粉红发亮，紧紧箍着套的边缘；核孤零零露在上面，随着顶弄轻晃；进出间带出亮晶晶的水，把周围深色阴毛浸成一缕一缕。还能看见他自己的阴毛蹭在她小腹上，留下浅浅的红痕。这一眼让他头皮发麻。他仍死死按着节奏：退出到只剩头部含在里面，再整根没入；有时浅浅磨十几下，只让头部在入口那圈软肉里进出，听她呼吸乱掉，再深顶进去。</p>
+  <p class="p rise">苏晚宁的腿环上他的腰。不是自觉邀请，是疼过去之后，身体自己找支点。胸随着顶弄轻轻晃，乳尖擦过他胸口。她抬臂遮眼时，腋下那点天然的毛被汗浸深。内壁开始不听使唤地吸他、绞他，像有自己的节奏。</p>
+  <p class="p rise">「许昼……」她叫他，后面散成气音。</p>
+  <p class="p rise">「我在。」他哑，「抓我。」</p>
+  <p class="p rise">节奏渐起。床板轻轻响。水声变得连续——不是夸张的拍打，是肉体紧密相贴时挤出的黏声，一下一下，羞人得清晰。他每一下都又深又稳，偶尔把她一条腿抬高，架在臂弯，角度一变，龟头正好反复碾过那一点。</p>
+  <p class="p rise">苏晚宁突然夹紧，内壁剧烈收缩，脚背绷成一条线。</p>
+  <p class="p rise">「那里——」她咬住自己的手背，眼角全是水，「别换……就那里……」</p>
+  <p class="p rise">他守着那一点，又快半分。抽插带得她整个人轻轻上移，又被他掐着腰拖回来。乳尖在空气里晃，小腹一次次被顶出浅浅的弧。她的声音终于压不住，细碎呜咽连成片。高潮来时，她绞得他进退两难，内壁一阵阵痉挛，像要把他往更深处吞；水液喷涌般浇在套上，连交合处的毛发都湿透，顺着股缝往床单洇开一小片深色。</p>
+  <p class="p rise">许昼被绞得头皮发炸，低喘着她的名字，又顶了七八下，每一下都又深又沉，最后深深埋进去，在套里一股一股释放——她甚至能隔着套感觉到那东西在体内跳动、喷涌的节奏。他手臂撑着，死活不敢压垮她，额头的汗滴在她锁骨上。</p>
+  <p class="p rise">房间里只剩喘息。</p>
+  <p class="p rise">雨还在下。</p>
+  <p class="p rise">交合处还连着。他稍微一动，两人都颤。退出时，她轻轻「嘶」了一声——那根东西拔出的瞬间，被撑开太久的入口一时合不拢，带出一声极轻的、黏腻的响。空虚感立刻涌上。套上浊白与她的水混在一起，他打结丢掉，用温毛巾先敷在她红肿的缝上。外阴被磨得发烫，微微张开，阴毛全湿，贴成一缕一缕。</p>
+  <p class="p rise">「让我做完。」他按住她想并的膝。</p>
+  <p class="p rise">毛巾仔细擦过毛发间的湿、腿根的白痕、被磨红的外缘，甚至轻轻按了按入口——她抖了一下，又渗出一点透明的水。擦完，他才躺下，从后面抱住她，掌心覆在她小腹上。那里还在细细发抖，像身体还在回味被填满时的形状。</p>
+  <p class="p rise">很久，苏晚宁开口：「疼。」</p>
+  <p class="p rise">「哪里。」</p>
+  <p class="p rise">「……下面。里面。像被撑过。」她顿了顿，「还有心里。好像回不去了。」</p>
+  <p class="p rise">许昼收紧手臂：「那就别回。往前走。带着我。」</p>
+  <p class="p rise">「分呢。」</p>
+  <p class="p rise">「分也要。」他吻她肩，「明天还是同桌。秘密我守。」</p>
+  <p class="p rise">苏晚宁转过身，脸埋进他胸口。嘴唇贴在他心口。</p>
+  <p class="p rise">「手……刚才。」她耳尖又红，「握的时候……我没弄错吧。」</p>
+  <p class="p rise">许昼低低笑，笑意全是哑的：「没弄错。你握着的时候，我差点交待在你手里。后来进去……你里面好紧。好热。我差点秒。」</p>
+  <p class="p rise">「别说。」她捂他的嘴，掌心却被他握住，吻了吻——那里还残留着握过他鸡巴时的记忆：热，湿，筋的跳动。</p>
+  <p class="p rise">窗外雨声细密。</p>
+  <div class="sec-mark"><b>九</b></div>
+  <p class="p rise">第二天下午，苏晚宁回合租洗澡，出来时走路仍小心。唐果坐在床上看她，把耳机摘了，拍拍自己床沿。</p>
+  <p class="p rise">「过来。」声音只有两人能听见，「门锁了。说。」</p>
+  <p class="p rise">苏晚宁坐过去，隔着一拳。头发还在滴水。</p>
+  <p class="p rise">「进了。」她先给结论，耳尖红。</p>
+  <p class="p rise">唐果点头：「套了？」</p>
+  <p class="p rise">「套了。他准备的。」</p>
+  <p class="p rise">「疼吗。具体点。」</p>
+  <p class="p rise">苏晚宁沉默很久，像在组织一道大题：「头部进去最疼。像被撕开一点。他整个人僵住，一直说对不起。等了大概……一分钟？后来一寸一寸进。全部进去的时候，肚子里涨得要命，能感觉到他的形状。青筋……好像都能隔着感觉到。」</p>
+  <p class="p rise">唐果听得很静：「动的时候呢。」</p>
+  <p class="p rise">「开始还疼。抽出来半截再进去，会有声音。」苏晚宁把脸埋进膝盖，「水声。很清楚。他有时候只在外面磨，磨我上面那点，有时候整根进来。后来他换了个角度……顶到一个地方，我整个人就……」</p>
+  <p class="p rise">「去了？」</p>
+  <p class="p rise">「……嗯。夹得很紧。他也被我夹得……在里面射了。隔着套都能感觉到他在跳。」苏晚宁的声音闷到被子里，「射完他不马上出来。出来的时候，那里一时合不上。有点空。还有点……想再被填上。我是不是很奇怪。」</p>
+  <p class="p rise">「不奇怪。」唐果说得干脆，「第一次能爽到，说明他肯慢，也说明你身体吃得消。毛呢？你不是最介意这个。」</p>
+  <p class="p rise">苏晚宁耳尖更红：「都没刮。他的比我浓一点。贴在一起会痒。他低头看交合的地方……我羞耻死了。可他看的时候，里面会自己咬他。」</p>
+  <p class="p rise">唐果低低笑了一下，不是损，是懂：「晚宁，你这是身体很诚实。」</p>
+  <p class="p rise">「他还……用嘴。在进之前。」苏晚宁更小声，「舔上面。毛也舔湿了。我挡不住。」</p>
+  <p class="p rise">「那他算会。」唐果把水杯推给她，「听着。事后有没有血。」</p>
+  <p class="p rise">「一点点。纸巾上。不严重。」</p>
+  <p class="p rise">「走路还坠吗。」</p>
+  <p class="p rise">「……有一点。坐下也能感觉到。像还记得他的粗细。」苏晚宁喝了口水，嗓子发干，「握的时候我第一次真的握住。好烫。我手都圈不全。顶端一直流水。他教我别太快。后来戴套，我帮他往下捋……指尖碰到柱身，他又硬了一圈。」</p>
+  <p class="p rise">唐果听完，伸手揉了揉她的头发，动作很轻：</p>
+  <p class="p rise">「细节你记这么清，说明你在场，不是被吓傻。那就好。以后还做，记住：疼了喊停；他要是只顾自己冲，你就踹；分掉了，先停身体。别的——爽就爽，别自己判刑。」</p>
+  <p class="p rise">苏晚宁「嗯」了一声。</p>
+  <p class="p rise">夜里关灯后，她躺着，腿心仍有轻微的肿胀与记忆。闭眼就是他一寸寸进来时的满，就是水声，就是自己咬着手背叫「那里」。她没有说想要——身体却诚实地发热，夹紧，又松开。</p>
+  <p class="p rise">唐果在对面床忽然又丢来一句极轻的话：</p>
+  <p class="p rise">「对了。他要是下次还想看你下面……你别死挡。真实比假干净好看。真的。」</p>
+  <p class="p rise">苏晚宁把枕头压在耳朵上，耳根却烫了一整夜。</p>
+  <p class="p rise">秘密变成她未经修饰的身体，变成她第一次握住他时发颤的手指，变成被撑开、被填满、被闺蜜拆开讲清之后仍并不后悔的夜晚——</p>
+  <p class="p rise">两个好学生，把最真实的自己，交给了对方。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch9">← 先停</a><a href="#ch11">黏 →</a></nav>
+
+<section class="chapter" id="ch11" data-num="11" data-title="黏" data-anchor="ch11" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 11 章</div>
+    <h2 class="ch-title">黏</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">第二天坐回教室，世界表面完好。</p>
+  <p class="p rise">苏晚宁迟到两分钟，耳尖红，走路仍稳——只有她自己知道，坐下时腿心还残留着轻微的肿胀，像身体在迟到地汇报昨夜。许昼给她留了座位内侧，默写本打开到该背的页。两人交换一个极短的眼神，像接头暗号：还好吗。还好。</p>
+  <p class="p rise">课间有人讨论大测排名。许昼被点起来讲一道受力分析，声音清楚，板书工整，老师点头：「许昼这思路可以，大家学着点。」</p>
+  <p class="p rise">他转身回座位时，指节还有一点白。</p>
+  <p class="p rise">只有苏晚宁看见：他坐下的瞬间，喉结滚了一下，目光极快地扫过她的唇——昨夜含过他的地方，此刻正抿着，认真抄板书。</p>
+  <p class="p rise">好学生。</p>
+  <p class="p rise">好同桌。</p>
+  <p class="p rise">好得像什么都没发生过。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">黏，是从缝隙里长出来的。</p>
+  <p class="p rise">课间他给她递水，指尖在瓶身多停半秒。她讲英语长难句，话密得像开闸，讲到一半忽然卡壳——因为他在桌下用膝盖轻轻碰了她一下，一下就够，她腿心立刻发热，后半句差点把「定语从句」说成别的。</p>
+  <p class="p rise">「苏晚宁，你继续。」老师抬眼。</p>
+  <p class="p rise">「……是。」她耳尖红，把句子补完，字字正确。</p>
+  <p class="p rise">全班没人觉得异常。</p>
+  <p class="p rise">只有许昼低着头，嘴角极浅地抽了一下，像笑，又像忍。他的物理卷摊着，正确答案写得干净；桌下，裤裆已经微微顶起，被他用书包挡着，姿势端正得像军训。</p>
+  <p class="p rise">中午食堂，有人夸：「许昼跟苏晚宁，真是学习搭子典范。一个物理一个英语，绝了。」</p>
+  <p class="p rise">许昼笑，阳光标准：「互相监督。」</p>
+  <p class="p rise">苏晚宁点头：「嗯。分最重要。」</p>
+  <p class="p rise">勺子碰碗沿，轻响。</p>
+  <p class="p rise">她夹菜的手指还记得昨夜握过的形状。他喝汤时，舌尖抵着上颚，忽然想起她腿心的味道——下一秒他把汤喝完，站起来收拾餐盘，步子稳，像从未肮脏过。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">真正破例发生在周三晚自习后。</p>
+  <p class="p rise">教室人散得快。墙上红字仍在：<strong>今年只有一次。</strong> 许昼抱着卷子去资料室还答题卡，苏晚宁跟在后面，像只是对答案。楼道声控灯一盏盏亮，又灭。</p>
+  <p class="p rise">资料室门虚掩。灯没全开，只有靠里一盏。纸箱与旧卷的气味。</p>
+  <p class="p rise">门在身后合上时，两个人都喘了一下——不是累，是从「好学生」的壳里掉出来的那一秒。</p>
+  <p class="p rise">「十分钟。」苏晚宁先开口，声音低，「锁了吗。」</p>
+  <p class="p rise">「锁了。」许昼嗓子哑，「你要是后悔——」</p>
+  <p class="p rise">她没让他说完。伸手拉他的衣摆，把自己抵进铁皮柜与他胸膛之间，踮脚吻他。吻里全是白天憋住的东西：课堂上的正经、食堂的互相监督、默写时不能碰的手。</p>
+  <p class="p rise">许昼回吻，手从卫衣下摆探入，掌心贴上她的腰，再上，隔着内衣揉那一小团软。乳尖很快立起，顶着他指腹。苏晚宁「唔」了一声，随即自己咬住，怕声音漏出门外。</p>
+  <p class="p rise">「这里不能……进。」她喘着，额头顶他下巴，「分。还有门。」</p>
+  <p class="p rise">「知道。」许昼低声，「用手。或者……嘴。你点头才算。」</p>
+  <p class="p rise">苏晚宁沉默两秒。耳尖红透。白天唐果那句「或者嘴」像刺一样扎回来。她没有说「想要」，只是慢慢地、慢慢地，顺着他的胸口跪下去——膝盖抵着粗糙的水泥地面，疼，却让她清醒。</p>
+  <p class="p rise">许昼整个人绷紧：「晚宁，你不用——」</p>
+  <p class="p rise">她解开他的皮带。金属扣轻响，在寂静里大得吓人。拉链拉下。那根东西已经半硬，被她隔着内裤握住时，立刻涨满掌心，热度隔着棉布烫人。她把脸贴上去，隔着布料用嘴唇轻轻蹭过轮廓，感觉它在唇下又跳又胀。许昼倒抽一口气，后脑勺轻轻磕上铁柜。</p>
+  <p class="p rise">她咬住内裤边缘往下褪。它弹出来，打在她唇峰上，留下一点湿。灯光昏黄。好学生苏晚宁跪在资料室里，面前是好学生许昼的鸡巴——比记忆里又硬一圈，青筋浅浅鼓起，顶端红润，铃口不断吐出透明的前液，顺着棱缘往下滑，滴在她没来得及躲开的下唇上。</p>
+  <p class="p rise">她看了两秒。像在确认这是真的。</p>
+  <p class="p rise">然后伸出舌尖，极轻地、仔细地，从根部外侧往上舔。舌面宽宽地贴着柱身，一路舔到顶端，把那滴前液卷走。咸，热，淡淡的腥，混着他皮肤上的皂味。她舔第二遍时更稳一点，舌尖专门绕铃口打圈，再轻轻戳进小孔——许昼腰猛地一紧，手插进她头发，又强迫自己松开，只虚虚托着她后脑。</p>
+  <p class="p rise">「牙齿……收。」他哑得不像白天讲题的人，「对……就这样……」</p>
+  <p class="p rise">苏晚宁把嘴唇收成软软的圈，含住头部。口腔湿热裹上来的瞬间，两个人都颤了。她进得不深，只能含住前三分之一，腮帮轻轻凹陷，吮出极轻的水声。舌头在嘴里的那一截下面来回磨，有时平，有时卷。唾液分泌得很快，来不及咽，从嘴角溢出来，把整根柱身涂得发亮，顺着流进他耻骨那丛没修理过的毛里，把毛浸成一缕一缕。</p>
+  <p class="p rise">她试着再吞深一点——顶到舌根，立刻想呕，眼眶发热，连忙退出到只含住头部，用手握住下半截补上。五指收紧，上下滑动，与嘴里的节奏错开半拍：嘴慢，手快；嘴吮，拇指碾过下面的筋。许昼的呼吸全乱了，小腹绷成一块，鸡巴在她嘴里又涨大一圈，撑得她唇角发酸。</p>
+  <p class="p rise">「晚宁……我……」他低头看她。</p>
+  <p class="p rise">那一眼毁了所有好学生的伪装。苏晚宁抬眼回望：眼里有羞，有慌，嘴却仍含着他，唇被撑成浅浅的圆形，下巴全是水光。她没有吐出来说话，只「嗯」了一声，震动从喉头传到他顶端——许昼差点当场交待。</p>
+  <p class="p rise">门外远处有脚步。</p>
+  <p class="p rise">两个人同时僵住。她嘴里还含着，不敢动；他手指死死扣着柜沿。脚步近了又远。声控灯灭。</p>
+  <p class="p rise">苏晚宁这才慢慢吐出，唇边拉出一线银丝，连到湿亮的顶端，断在空气里。她喘，小声：「会射的话……告诉我。」</p>
+  <p class="p rise">「快了。」他坦白，声音发抖，「你要是不想吞……就用手。」</p>
+  <p class="p rise">她点头。再次含住，这次专注吮头部，手在根部快速套弄，掌心全是唾液，水声在安静的资料室里清晰得可怕——像某种不该出现在「安静自习」标语下的声音。许昼的腰轻轻顶，又死死忍住深度。她感觉到嘴里的东西突然跳得更凶，筋一阵阵鼓，便立刻吐出，改用双手上下套弄，脸偏开一点——</p>
+  <p class="p rise">他射了。</p>
+  <p class="p rise">白浊一股股溅在她锁骨、卫衣领口内侧，也溅到她下唇和下巴。有一滴顺着唇角要进嘴里，她下意识用舌尖挡了一下，味道更浓，腥，她皱眉，却没有嫌恶到躲开。许昼射的时候整个人弓着，咬着自己的小臂，把声音吞掉，鸡巴在她手里一跳一跳地吐干净。</p>
+  <p class="p rise">安静几秒。</p>
+  <p class="p rise">他慌忙抽纸，擦她的脸，擦锁骨，手都在抖：「对不起……溅到你嘴了……」</p>
+  <p class="p rise">苏晚宁摇头，自己用拇指抹掉唇边，抹完愣了一下，把指腹上那点白浊看了看，耳尖烧透，最终只低声：「……味道好重。」</p>
+  <p class="p rise">「对不起。」</p>
+  <p class="p rise">「不是怪你。」她喘匀一点，「轮到你……也。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">许昼把她拉起来，反转，让她靠着柜门。他蹲下，膝盖抵地，解开她运动裤，连同内裤褪到膝弯。</p>
+  <p class="p rise">灯光虽暗，贴这么近仍看得清。耻丘那丛偏深的阴毛已经湿了，一缕缕贴在白皮肤上；拨开，外阴薄软，颜色浅粉，中央细缝微微张开，缝里被情动染成玫瑰。核小小的，已经肿起、发亮，立在毛发之间；入口一张一合，水光一直漫到股沟。好学生苏晚宁的身体就这样敞在资料室的柜门前——与讲台上的她判若两人。</p>
+  <p class="p rise">他没有急着上嘴。先用鼻子蹭开阴毛，深深吸了一口气——皂角、体温、情欲的腥甜。苏晚宁羞耻得想并腿，被他掌心稳住膝侧。</p>
+  <p class="p rise">「别看……」</p>
+  <p class="p rise">「要看。」他哑，「也要用嘴。你的毛，你的缝，我白天讲题时都在想。」</p>
+  <p class="p rise">舌尖先点在大腿内侧，留下湿痕，再慢慢移到缝的外侧，沿着毛与皮肤的交界舔上去。毛发刮过他嘴唇，痒，真实。他用拇指拨开两片软肉，让核完全露出，再改成扁平的舌面，整片贴上那颗小小的、已经肿起的点，缓慢地上下磨。</p>
+  <p class="p rise">苏晚宁整个人弹了一下。</p>
+  <p class="p rise">「啊——」尾音被她死死咬进卫衣领口。柜门在背后轻响。腿软，脚尖点地。</p>
+  <p class="p rise">许昼变着法子：有时只舔核，又快又密，像在解题时找最优解；有时用唇包住那一点轻轻吮，吮出细小的水声；有时把整条缝从下往上长长地舔开，舌尖最后在入口打转，浅浅顶进去，再退出。她的水越来越多，糊在他下巴、鼻尖，也把阴毛浸得透湿。味道淡，偏腥甜，他不躲，反而把脸埋得更深。</p>
+  <p class="p rise">手指加入。一根，弯曲，顶她内壁那一点；舌头仍守在核上。苏晚宁的髋不受控制地轻轻顶向他的嘴，顶一下就僵，像被自己吓到，又顶一下。好学生的身体在资料室里诚实地浪起来，只有咬着领口的牙关还在维持最后一点体面。</p>
+  <p class="p rise">「外面……是教室……」她哭腔碎，「我今天还……被老师夸……」</p>
+  <p class="p rise">「我知道。」他唇贴着她腿心，声音含糊，震动直接打在核上，「我今天下午还上讲台……现在在吃你。」</p>
+  <p class="p rise">反差像电流。苏晚宁猛地夹紧他的头，又强迫自己松开。内壁绞着他的手指一阵阵痉挛，水涌出来，浇在他舌面上。她去的时候几乎站不住，腰软下去，被他托住；嘴里只能溢出断续的呜咽，像把白天所有标准发音都弄丢了。</p>
+  <p class="p rise">许昼没有立刻起来。</p>
+  <p class="p rise">他继续用舌轻轻舔过还在跳的核，把高潮的余水舔干净，直到她抖着按他的肩：「别……太过了……受不了……」</p>
+  <p class="p rise">他这才站起，下巴全湿，唇亮。苏晚宁看见那张白天讲题的脸此刻这副样子，耳尖红到脖子，伸手用袖子给他擦，擦到一半自己先乱了呼吸。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">她还没完全回神，又慢慢跪下去——不是要再做全套口，是把没做完的收尾做完。她握住他刚刚射过、又半硬起来的东西，用舌头把残留的白浊从柱身舔干净，一下，两下，生涩，却认真。许昼倒抽气：「会再硬……晚宁……」</p>
+  <p class="p rise">「那就……用手。」她小声，把脸偏开，只让舌尖再绕铃口一圈，然后改成手活，上下套弄。他站着，她跪着，腾不出「从后面抱」的姿势，便俯身，一只手插进她衣内揉胸，捏乳尖；她另一只手伸进自己腿心，两指并拢，模仿他舌头的节奏揉自己的核。</p>
+  <p class="p rise">资料室里只剩压抑的呼吸和黏腻的水声。墙上「安静自习」的旧标语角都卷了。标语下，两个刚被老师点名表扬的复读生：一个跪着口过他、正用手把他再次送上边缘；一个刚把脸埋在她腿心吃到她去，此刻又硬在她掌心里。</p>
+  <p class="p rise">许昼第二次射得比第一次少，仍溅在她指缝。她自己也在手指下第二次发抖，额头抵着他大腿，把声音闷死。</p>
+  <p class="p rise">安静。</p>
+  <p class="p rise">久到能听见中央空调的管道声。</p>
+  <p class="p rise">许昼抽纸，先擦她的嘴角、下巴，再擦她的手、腿心，最后擦自己。动作轻，像在收一份要上交的卷子。苏晚宁拉好裤子，整理帽绳。唇肿着，舌尖还有残留的腥；他伸手用拇指擦掉她嘴角一点亮痕。</p>
+  <p class="p rise">「像……刚吃过糖。」他低声。</p>
+  <p class="p rise">「闭嘴。」她耳尖红，「是你的味道。」</p>
+  <p class="p rise">门开之前，两个人同时深呼吸，把表情调回「正常」。唇色却仍深一点，眼睛仍亮一点——像刚激烈辩论过一道题。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">走廊灯亮。</p>
+  <p class="p rise">周慎言提着保温壶从办公室出来，正撞见他们。</p>
+  <p class="p rise">「这么晚？」老师眉一挑，「对完了？」</p>
+  <p class="p rise">「对完了。」许昼笑，标准、干净，「苏晚宁英语那道我还是弱，她给讲了。」</p>
+  <p class="p rise">苏晚宁点头，语速平稳：「他物理压轴步骤给我补了。我们回去了。」</p>
+  <p class="p rise">周慎言看了他们两秒——两个眼睛清，站姿正，怀里抱着卷子，活像海报上的「勤奋青年」。</p>
+  <p class="p rise">「行。早睡。别熬。」</p>
+  <p class="p rise">「是。」</p>
+  <p class="p rise">并排走过楼道时，两个人的影子合在一起，又分开。袖口几乎相碰，没有真碰。</p>
+  <p class="p rise">下到一楼，苏晚宁忽然极轻地说：「我嘴里……还有味道。」</p>
+  <p class="p rise">许昼脚步一顿，耳根红了：「对不起。下次我——」</p>
+  <p class="p rise">「不是怪你。」她打断，声音更轻，「是……明明刚在上面讲题。好奇怪。」</p>
+  <p class="p rise">「我硬着讲完受力分析的。」他坦白，苦笑，「书包挡的。好学生。」</p>
+  <p class="p rise">苏晚宁侧脸看他，眼里有一点复杂的亮：羞，怕，还有隐秘的兴奋。</p>
+  <p class="p rise">「回家。」她说，「十一点前。真的。」</p>
+  <p class="p rise">「真的。」</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">合租关灯后，唐果听完只「啧」了一声——不是鄙夷，是懂事的惊。</p>
+  <p class="p rise">「资料室？」她压低声音，「你们胆子挺大。口了？」</p>
+  <p class="p rise">苏晚宁把脸埋进被子，只露出耳朵：「……嗯。我先跪的。先舔了一整根，再含头部。牙齿差点碰到，后来收唇了。含不深，顶到舌根会恶心。他快射的时候我吐出来……还是溅到嘴和下巴了。味道好重。」</p>
+  <p class="p rise">「你吞了？」</p>
+  <p class="p rise">「没有。舌尖碰了一点。」她更闷，「后来他又硬了。我又舔干净……再用手。」</p>
+  <p class="p rise">「他给你口呢。」</p>
+  <p class="p rise">「蹲着。把毛拨开。舔上面那点，又吮，又把舌头……伸进去一点。」苏晚宁耳尖烧透，「水很多。他下巴全是。我站着就去了。去了他还舔。我说受不了才停。外面是楼道。」</p>
+  <p class="p rise">「然后呢。出来撞谁了。」</p>
+  <p class="p rise">「周老师。」苏晚宁闷声，「问我们在干嘛。我说对答案。许昼笑得特别……标准。」</p>
+  <p class="p rise">唐果沉默两秒：「这就是反差。外面满分脸，里面全是水。你怕的其实不是脏，是你自己会爽。」</p>
+  <p class="p rise">「……闭嘴。」</p>
+  <p class="p rise">「听着。」唐果伸手在被子上拍了拍，「学校可以擦边，别真在教室做全套。门、人、监控，你想清楚。口和手也别太勤——分掉了，什么反差都变事故。」</p>
+  <p class="p rise">苏晚宁「嗯」了一声。</p>
+  <p class="p rise">被子里，她把白天两幅画面叠在一起：讲台上的他，与资料室里撑着铁柜、眉头紧拧、射在她手里的他；被老师夸奖的自己，与跪在地上、唇边拉丝、腿心被舔到发抖的自己。</p>
+  <p class="p rise">好学生。</p>
+  <p class="p rise">坏秘密。</p>
+  <p class="p rise">两者叠在同一具身体里，白天用分数压住，夜里用身体诚实。</p>
+  <div class="sec-mark"><b>八</b></div>
+  <p class="p rise">那之后第三天，苏晚宁晚自习被老师留堂对卷，比平时晚回四十分钟。</p>
+  <p class="p rise">合租门虚掩。屋里没开大灯，只有唐果床那边一点暖黄——台灯用衣服罩着，光漏得很窄。</p>
+  <p class="p rise">苏晚宁换鞋时习惯性喊：「我回——」</p>
+  <p class="p rise">声音卡在一半。</p>
+  <p class="p rise">被子里有细碎的、压抑的喘息。布料摩擦。床板极轻地响了一下，又死死停住。像有人被门声冻住。</p>
+  <p class="p rise">苏晚宁站在玄关，心跳忽然很快。她不该懂。可她做过之后，太懂那种声音意味着什么。</p>
+  <p class="p rise">「……果果？」</p>
+  <p class="p rise">被子猛地一动。台灯被肘到，罩衣滑开，光亮了一瞬——苏晚宁看见唐果侧躺着，运动裤褪到膝弯，一只手还僵在自己腿心，指尖亮晶晶的；另一只手死死捂着自己的嘴。马尾散了，耳尖红得吓人，眼睛里全是被撞破的慌。</p>
+  <p class="p rise">两个人对视三秒。</p>
+  <p class="p rise">唐果先崩：「你不是……九点半才回——」</p>
+  <p class="p rise">「老师留堂。」苏晚宁把门反锁，声音发干，「我……没看见。」</p>
+  <p class="p rise">「你看见了。」唐果把裤子提上，动作乱，拉链卡住。她把脸埋进枕头，肩膀抖——不像哭，像羞耻把人烧穿，「出去。或者把我杀了。别站着。」</p>
+  <p class="p rise">苏晚宁没出去。</p>
+  <p class="p rise">她走到自己床边坐下，隔着一条窄窄的过道。灯重新被衣服罩暗。黑暗让说话容易一点。</p>
+  <p class="p rise">「对不起。」苏晚宁先说，「我应该敲门。」</p>
+  <p class="p rise">「门本来就没锁严。」唐果闷声，「是我想着你晚回……」</p>
+  <p class="p rise">话没说完，更羞。</p>
+  <p class="p rise">沉默很久。</p>
+  <p class="p rise">苏晚宁低声：「你……经常这样吗。」</p>
+  <p class="p rise">「以前很少。」唐果的声音从枕头里挤出来，发涩，「自从你开始讲……那些。手、嘴、他怎么顶、水声、隔着套跳……我听的时候装很懂。关灯之后脑子自己播。越播越……」</p>
+  <p class="p rise">她骂了自己一句很轻的脏话。</p>
+  <p class="p rise">「我是处女。」唐果忽然说得很清楚，像把一块石头扔下，「一句真的都没有做过。书上看的，论坛拼的。你问我，我怕你一个人吓到，就装成什么都知道。结果听多了，轮到我夹着被子……像个——」</p>
+  <p class="p rise">「别骂自己。」苏晚宁打断，耳尖也红，「我懂。」</p>
+  <p class="p rise">「你懂什么。你有人。」唐果侧过脸，眼睛红红的，不是单纯的哭，是燥和空混在一起，「我护你的时候是真心的。可听到后面，我会羡慕。也会空。空完又觉得自己下流——听闺蜜做爱听湿了，还动手。五味陈杂，跟喝了过期糖水一样。」</p>
+  <p class="p rise">苏晚宁握紧自己的手指。</p>
+  <p class="p rise">她想起唐果每次锁门、递水、说「爽不是脏」。原来那层老练的壳后面，也是一个什么都还没发生过的人。</p>
+  <p class="p rise">「那你……刚才，在想什么。」苏晚宁问得很轻，不是逼，是给她台阶。</p>
+  <p class="p rise">唐果把脸重新埋回去，过了很久才答：「没有具体的脸。就是……你讲过的画面。含着。被舔。被撑开。我把自己的手指当成……不知道当成谁。做题做到一半会湿，我恨死了。」</p>
+  <p class="p rise">苏晚宁沉默。</p>
+  <p class="p rise">然后她说：「我不会告诉别人。包括许昼。」</p>
+  <p class="p rise">「……谢谢。」</p>
+  <p class="p rise">「还有。」苏晚宁顿了顿，自己也羞，「你不是下流。我讲那么细，是我把火递到你床上的。你有反应，正常。」</p>
+  <p class="p rise">唐果短促地笑了一下，笑意全是苦：「苏晚宁，你谈完恋爱怎么还会安慰人。」</p>
+  <p class="p rise">「因为你也听我讲。」苏晚宁把水杯放到她床头，「下次……你要是想自己来，把门反锁。耳机我也可以戴。」</p>
+  <p class="p rise">「滚。」唐果把枕头砸过来，力道软，「再锁。真锁。」</p>
+  <p class="p rise">枕头落在苏晚宁怀里。两个人都耳尖红着，却忽然轻松了一点——像秘密又多了一层，不是脏的，是并排的。</p>
+  <p class="p rise">关灯后，唐果又极轻地问：「晚宁。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「被你看见之后，我会不会……更不敢跟你讲那些了。」</p>
+  <p class="p rise">「讲。」苏晚宁看着天花板，「你讲安全，我讲感受。你要是空，也可以说空。别只让我一个人把身体的事摊开。」</p>
+  <p class="p rise">唐果「嗯」了一声。</p>
+  <p class="p rise">被子里，她的手指仍有一点残留的湿意。她没有再动。只是把脸埋进枕套，把刚才那阵没做完的热，一点点熬成困意。</p>
+  <p class="p rise">过道对面，苏晚宁也没有立刻睡着。</p>
+  <p class="p rise">她第一次清楚看见：闺蜜不是无波的树洞，是会被自己的故事点燃的、同样未经人事的人。护短的壳、老练的词、锁门后的手——全都真实。</p>
+  <div class="sec-mark"><b>九</b></div>
+  <p class="p rise">周末，机构放半天。</p>
+  <p class="p rise">苏晚宁从便利店拎回两罐低度预调酒，铝罐还挂着冷气。唐果坐在床上刷题，抬头看见，眉毛一挑：</p>
+  <p class="p rise">「苏晚宁，你叛变了？」</p>
+  <p class="p rise">「就一点。」晚宁把一罐塞给她，自己也开了，「听你讲空，我也……有点空。喝完早睡。不算熬夜。」</p>
+  <p class="p rise">酒甜，气泡冲鼻。两人盘腿对坐，中间隔着一张矮桌，像还在守什么礼。第一罐见底时，耳朵都热了；第二罐只分着喝了半罐，唐果已经笑得比平时懒，苏晚宁话也比平时多——仍是短句，只是短句之间少了刹车。</p>
+  <p class="p rise">「说真的。」唐果用指尖敲罐壁，「你跟他在资料室口的时候，膝盖疼不疼。」</p>
+  <p class="p rise">「疼。」苏晚宁老实说，「地面糙。可顾不上。」</p>
+  <p class="p rise">「含着抬头看他……你自己讲的时候耳尖红，我听的时候……」唐果把后半句咽下去，灌了一口酒，「算了。」</p>
+  <p class="p rise">苏晚宁看着她。灯罩着，光暖。撞见自慰之后，她们之间多了一层心知肚明，却一直没再戳破。酒让那层纸变得薄。</p>
+  <p class="p rise">「果果。」晚宁忽然用一种很轻的、几乎像玩笑的口吻说，「你要是……好奇手指什么样。我可以……教你。」</p>
+  <p class="p rise">唐果呛了一下：「苏晚宁你喝多了？」</p>
+  <p class="p rise">「半开玩笑。」晚宁耳尖红透，眼睛却亮，「半认真。你听我讲那么多，自己又不敢进太深。我……比较懂一点。就当对答案。」</p>
+  <p class="p rise">空气静了两秒。</p>
+  <p class="p rise">唐果把空罐捏出一声轻响。脸红，嘴却抬了抬：「对答案。行啊。谁先谁后。」</p>
+  <p class="p rise">「你先摸我。」晚宁声音小，「我指挥。你照做。然后……我再……」</p>
+  <p class="p rise">「再狠狠报复我是吧。」唐果笑，笑意抖，「半开玩笑半同意。门——」</p>
+  <p class="p rise">「反锁了。」晚宁先一步把门扣上，拉窗帘，把台灯拧到最暗。</p>
+  <div class="sec-mark"><b>十</b></div>
+  <p class="p rise">她们没脱光。</p>
+  <p class="p rise">只把睡裤和内裤褪到膝弯，上衣还在——像留一层「我们还在开玩笑」的壳。并排靠着床头，肩碰肩，都烫。</p>
+  <p class="p rise">「先……看。」晚宁自己把膝打开，比平时在许昼面前更大胆一点——酒让羞耻慢半拍。大腿根细白，内侧有一点久坐留下的软。她拉过唐果的手腕，先按在小腹，再慢慢往下带。</p>
+  <p class="p rise">灯虽暗，贴这么近仍看得清。</p>
+  <p class="p rise">苏晚宁的私处生着一丛偏深的阴毛，不算浓密到遮死一切，却完全没修理过：边缘不齐，有的卷，有的直，耻骨上方更密一点，往下到缝的两侧渐渐稀疏。毛根干净，带着洗过澡后的淡皂味。拨开那层毛，才能看全里面——</p>
+  <p class="p rise">外阴饱满得恰到好处，不是肥厚，是薄薄的、颜色偏浅的肉瓣，中央一条细缝此刻已经微微张开。缝里更嫩，近乎浅粉，被情动染成更深一点的玫瑰。最上端那颗核小小的，圆，被包皮半掩着，稍一碰就会从软里硬起来，亮晶晶地立在毛发之间。再往下，入口紧闭成一点小小的、湿润的圆，呼吸间轻轻收缩，像也在紧张。</p>
+  <p class="p rise">唐果的手指触到那丛毛时，整个人僵住：「……你也没刮。」</p>
+  <p class="p rise">「嗯。你知道的。」晚宁喘已经有点乱，「你……看清楚。分开毛。中指，找上面那点。别急着进。」</p>
+  <p class="p rise">唐果照做。指腹生涩地拨开湿意，两片软肉贴着她的指侧，热得吓人。她看见晚宁的核在自己指下完全露出来——比想象中更小、更敏感，颜色比周围深一号，顶端一小点亮。轻轻一碰，晚宁腰就弹了，缝里立刻又吐出一股透明的水，顺着指缝淌到掌心。</p>
+  <p class="p rise">「轻……画圈。对。再慢一点。」晚宁咬唇指挥，声音仍像讲题，「两边的肉……也可以夹着揉。别只用一个点。」</p>
+  <p class="p rise">唐果眼眶都热了。掌下不再是抽象的「那里」，而是具体的形状：核的硬、瓣的软、缝的滑、入口那一圈紧致的吸力。她听过无数次「他怎么弄」，此刻自己的手指正取代那些叙述，把苏晚宁的逼摸得水声细细响。</p>
+  <p class="p rise">「可以……进一根。」晚宁说，「慢。我湿了就好进。你看……入口在动。」</p>
+  <p class="p rise">真的在动。那一点小小的圆随着呼吸一张一合，水光把它涂得发亮。唐果中指抵上去，浅浅一挤就没入一个指节——内壁又热又软，层层叠叠地裹上来，比任何想象都紧。整根没入时，她甚至能感觉到晚宁体内细微的脉搏。</p>
+  <p class="p rise">「弯一点。前面……对。就是那里。」晚宁握住她的手背带节奏。每一次指腹刮过那块微微粗糙的内壁，晚宁的核就更硬一点，外阴的肉瓣也更肿、更红，像被情欲催熟。</p>
+  <p class="p rise">没多久，晚宁就去了一次——短，压着声，逼里剧烈收缩，一夹一夹地咬唐果的手指；水涌出来，比刚才更稠一点，沾湿整个掌心，也把周围深色的阴毛浸成一缕一缕，贴在白得反光的腿根上。唐果慌得想抽手，被晚宁按住：</p>
+  <p class="p rise">「别怕。正常。你看……它还在跳。」</p>
+  <p class="p rise">唐果低头，看见那颗小小的核确实在细细跳动，入口一时合不拢，粉红的内里微微外翻又缩回。她自己腿心已经湿透，夹着布料发酸。小声：「轮到我了吗。」</p>
+  <p class="p rise">「嗯。」晚宁把她按倒一点，自己撑起来，酒意让她少了平日的退，多了一点狠——不是凶，是懂了身体之后的准。</p>
+  <div class="sec-mark"><b>十一</b></div>
+  <p class="p rise">轮到唐果时，晚宁先把她的膝分开，自己也看——认真看，像对一套从没做过的真题。</p>
+  <p class="p rise">唐果的私处与晚宁不一样。阴毛颜色略浅，偏褐，更软，更服帖，耻骨上那一层像薄薄的绒，往下到缝两侧仍乱，同样从没刮过，边缘毛茬长短不一。整体比晚宁更「紧闭」：外阴更薄、更秀气，两片肉瓣颜色浅淡，几乎是嫩白里透粉，中央那条缝闭得很死，只在最中间露出一点点湿。</p>
+  <p class="p rise">晚宁用拇指轻轻拨开——</p>
+  <p class="p rise">里面骤然暴露。核比晚宁的还要小一圈，藏得深，被薄薄的皮裹着，需拨开才完全露出；颜色是娇嫩的浅粉。缝很窄，内里粉得均匀，入口小得惊人，像一颗没被使用过的点，紧张地收缩着。水已经从缝里渗出来，把浅色的毛根沾湿，反光细碎。</p>
+  <p class="p rise">「好紧……」晚宁不自觉出声，耳尖红，「比我……看起来还没被进过。」</p>
+  <p class="p rise">「我……自己最多进一根。」唐果承认，声音发飘，想并腿又被晚宁按住膝，「两根就疼。不敢。别……看太久……」</p>
+  <p class="p rise">「要看。」晚宁俯身，吻了吻她的眉心——像安抚，又像宣战，「你听我讲那么多，连我的逼长什么样都知道了。我也要……记住你的。先外面。你说停就停。」</p>
+  <p class="p rise">她先用指腹在那颗小核上打圈。核很快从软变硬，从浅粉变得水红，肿起来，顶着她的指腹发抖。水越来越多，顺着窄缝往下淌，漫过那一点紧闭的入口，把整个外阴涂得亮晶晶。浅褐的阴毛一缕缕贴在腿根，衬得中间那条粉缝更加刺眼、更加色情。唐果死死抓床单，脚背绷直：「晚宁……好奇怪……那里……立起来了……」</p>
+  <p class="p rise">「嗯。正常。」晚宁低声，中指在入口试探。入口小，吸力却大，浅浅进一个指节就绞住，「疼就拍我。」</p>
+  <p class="p rise">一根。停。等内壁从绞死变成一阵阵吸。再进。整根。唐果哼出声，眉心拧着，却没有拍。晚宁低头看着自己的手指没入那一点粉圆——外阴被撑开一点点，颜色从嫩粉被摩擦成更深的红，核孤零零地露在上面，随着抽送轻轻晃。</p>
+  <p class="p rise">「两根。」晚宁说，不是问，是预告。她把食指并上，蘸着那些亮晶晶的水，极慢地挤进去。</p>
+  <p class="p rise">太紧。入口被撑成薄薄的一圈，颜色发白又转红。唐果痛得吸气，眼角立刻湿了：「疼——里面……涨……」</p>
+  <p class="p rise">「我知道。忍三秒。或者停。」</p>
+  <p class="p rise">唐果咬唇，三秒后，自己把腿又分开了一点点——这个动作让她的逼完全敞在灯下：外瓣张开，内核肿着，两指根部的交界处水光淋漓。「……继续。你……你不是说要狠狠的吗。半开玩笑的。」</p>
+  <p class="p rise">晚宁耳尖红了。酒让玩笑落地成真。</p>
+  <p class="p rise">她开始动。两指并拢，先浅浅抽送，再一点点加深，指腹弯曲。唐果体内比晚宁更窄、更咬人，内壁层层裹紧，像无数湿热的软肉在挽留。找到那块会让她呼吸骤乱的地方时，唐果整个人弹起来；晚宁看见她的核猛地一跳，入口边缘被带得微微外翻，又缩回去，粉得几乎透明。</p>
+  <p class="p rise">「就是这里。」晚宁盯着那处私处的变化，像对答案，「外面也要。」拇指按上那颗小核，与里面的抽送同频——核被压扁、揉圆，缝被两指反复撑开又合上，水声黏腻。</p>
+  <p class="p rise">疼还在，可疼里很快绞进别的东西。唐果摇头，又点头，嘴里漏出破碎的「啊」「慢」「别停」。晚宁没有停。她把节奏加到唐果自己从不敢用的程度：每次都进到指根，每次抽出都能看见两指被水涂亮、带出一线银丝，连接着那张被玩得红肿的小逼。</p>
+  <p class="p rise">「三根……试试。」晚宁喘，自己也湿着，腿心的缝同样在流水，「你说不行我立刻拔。」</p>
+  <p class="p rise">唐果睁大眼。恐惧和期待搅在一起。她点头，幅度很小。</p>
+  <p class="p rise">三指挤入的瞬间，唐果痛得哭出声。入口被撑到极限，粉白的边缘绷紧，内壁死死绞住。晚宁停在最深处，拇指仍在那颗肿核上极轻地磨，吻她的眼角：「呼吸。疼是真的。你也可以爽。两样可以一起。」</p>
+  <p class="p rise">她低头看自己的手：三指根部没入唐果腿心，浅褐的毛发贴在自己手背上，外阴红肿发亮，核完全立着，入口被撑成圆形，里面的嫩肉随着脉搏轻轻吸吮指节——这幅画面比任何口头描述都更让人口干。</p>
+  <p class="p rise">唐果抽着气，眼角全是水，忽然从牙缝里挤出半句带哭腔的抱怨：「你……手指……好细……还这么涨……我里面……全是你……」</p>
+  <p class="p rise">晚宁耳尖红透，酒意却把玩笑顶到舌尖上。她一边极轻地转动指节——能感觉到内壁每一寸褶皱被撑开——一边用那种讲题时的、故意欠揍的口吻说：</p>
+  <p class="p rise">「嫌细啊。」停半秒，气息不稳，却仍笑，「那……要是你嫌我手指细，我可以把男主借给你玩玩。许昼。真的。比手指粗多了——你这点小缝，要不要他来撑。」</p>
+  <p class="p rise">唐果整个人一僵，逼里下意识绞紧，两人都抽了口气。</p>
+  <p class="p rise">「苏晚宁——！」唐果又羞又慌，抬脚想踹，腿软得只蹭到她腰侧，「你疯了……他把我杀了……你也……啊……别在这个时候说他……别说撑……呜……」</p>
+  <p class="p rise">「半开玩笑。」晚宁低声，却把三指又缓缓抽到只剩指节——入口暂时合不拢，红肿的圆洞里还能看见一点嫩肉——再整根送回去，语气黏在喘息里，「半认真也没有。他是我的。就是——你夹这么紧，我随口贫一句。放松。让我看清楚你怎么吃手指。」</p>
+  <p class="p rise">唐果把脸埋进枕头，骂了一句很脏的、破了音的：「……你贫也……选时候……呜……别看……」</p>
+  <p class="p rise">晚宁偏要看。半分钟后，唐果的绞紧变成痉挛式的吸。晚宁开始狠狠地、又仍算有分寸地抽送——她知道多深会炸，多快会崩。唐果的腰自己顶上来，迎着那三根手指；每一次顶入，外阴的肉瓣都被撞得轻颤，核在拇指下乱跳，水液飞溅在毛发与床单上。浅粉被磨成深粉，深粉被磨成水红，整朵私处像被彻底打开的、湿淋淋的花。</p>
+  <p class="p rise">「晚宁——我不行——要……」</p>
+  <p class="p rise">「去。」晚宁哑声，「夹我。夹手指就行……人我不真借。可你这张逼……夹得比我还诚实。」</p>
+  <p class="p rise">唐果高潮时整个人弓起来，三指被绞得几乎抽不动，内壁一阵阵痉挛，像无数湿热的软环在收紧；水液一股股涌出，有的甚至带一点喷溅，顺着晚宁手腕往下淌，滴在唐果自己浅褐的阴毛上。她哭着叫晚宁的名字，不是恋爱的叫法，是被身体第一次完整打开时的慌。疼还在余韵里跳，爽却把疼盖过去一层。那颗小核在高潮中一跳一跳，入口抽搐着，怎么也合不拢。</p>
+  <p class="p rise">晚宁没有立刻抽出。等她抖完，才慢慢退出。三指离开时，带出一声极轻的、黏腻的响；入口一时合不拢，微微外翻，红肿，带着水光，能清楚看见被撑过的形状——比手指圆，比缝原来的点大一圈。唐果捂住脸，腿还在抖，逼口却还在空气里轻轻收缩，像在回味。</p>
+  <p class="p rise">「……全部进去了。」她闷声，像报告实验失败又成功，「好疼。可是……去了。我自己从来……不敢。你看……还张着……好羞……」</p>
+  <p class="p rise">「嗯。」晚宁用纸巾给她擦，动作轻，却擦得很仔细：从肿核到外瓣，从湿透的毛发到还在渗水的入口，像许昼给自己擦时那样，「你不是装懂。你现在……真的知道一点了。你的……比我更粉。更紧。」</p>
+  <p class="p rise">唐果从指缝里看她，眼睛红，忽然短促地笑，笑完又骂：「苏晚宁，你比他还会指挥。还敢……拿他开玩笑。你要是真敢借，我……我报警。」</p>
+  <p class="p rise">「报警什么。」晚宁耳尖烧透，「我说了半开玩笑。人是我的。」顿了顿，声音更小，「手指……借你就够了。他那根……只给我。」</p>
+  <p class="p rise">「……闭嘴。」唐果把枕头砸她，力道软。晚宁把自己的手也擦干净，却发现自己腿心同样湿得一塌糊涂——深色的毛发贴着，粉缝亮着，核还硬着，水把腿根涂出一道痕。</p>
+  <p class="p rise">唐果看见了。目光黏在那处，哑着嗓子：「要我……还你吗。你的……也张着。」</p>
+  <p class="p rise">晚宁沉默两秒，把她的手拉过来，按在自己腿心，让她指尖陷进那条湿缝：「轻。我刚……看你去，也……里面还热。」</p>
+  <p class="p rise">唐果学着刚才的节奏，两指进入——晚宁的逼比她好进一点，内壁软热会吸，核更大一点、更好找。拇指揉核，有样学样，生涩，却足够。晚宁把脸埋进她肩窝，去得很快，咬着她的睡衣，把声音闷死；高潮时那丛深色的毛发全湿透，入口绞着唐果的手指一收一放，像把「好学生」的最后一点体面也绞碎了。</p>
+  <div class="sec-mark"><b>十二</b></div>
+  <p class="p rise">事后两人缩在同一张床上，被子拉到下巴。酒意还在，羞耻后知后觉地涨上来。可闭眼时，脑子里都是对方腿心的画面：一个毛深、缝粉、被玩熟一点的；一个毛浅、瓣薄、刚被三指撑开还合不拢的——清晰得让人睡不着，也幻想不完。</p>
+  <p class="p rise">「我们算什么。」唐果盯着天花板。</p>
+  <p class="p rise">「闺蜜。」晚宁说，「加……对过一次答案。不是要抢谁。」</p>
+  <p class="p rise">「我知道。」唐果顿了顿，「许昼呢。」</p>
+  <p class="p rise">「可以说，也可以先不说。」晚宁想了想，「我会说。我们没越界到……替代。就是……身体。和你空。」</p>
+  <p class="p rise">唐果「嗯」了一声，把脸埋进她肩，闷闷的：「下次酒少喝点。喝多了我会答应更狠的。」</p>
+  <p class="p rise">「那就少喝。」晚宁低声，「可你要是再夹被子……可以敲门。我在。」</p>
+  <p class="p rise">「滚。」唐果踢她一脚，力道软，「脚还疼。里面也……坠。像还含着你的手指。」</p>
+  <p class="p rise">晚宁没接话。只在黑暗里轻轻回握她的手。</p>
+  <p class="p rise">窗外有车灯扫过。</p>
+  <p class="p rise">两个好学生，一个有秘密情人，一个刚被三根手指打开——都还没对世界公开任何一种身体，却已经在合租的小床上，把「装懂」与「真懂」交换了一遍。</p>
+  <div class="sec-mark"><b>十三</b></div>
+  <p class="p rise">黏的代价是注意力。</p>
+  <p class="p rise">一次小测，许昼物理掉了不该掉的题——不是不会，是她低头时他想起她含着自己的样子。苏晚宁数学把符号写反——不是不会，是坐下时腿心一热，脑中闪过柜门的凉。</p>
+  <p class="p rise">当晚咖啡馆，错题重做三遍。做到后来，苏晚宁哭了。</p>
+  <p class="p rise">「我讨厌这样。」她说，「讨厌自己一边……在学校里那样，一边还要分。」</p>
+  <p class="p rise">许昼握住她的手：「那我们定规则。」</p>
+  <p class="p rise">「什么。」</p>
+  <p class="p rise">「全套一周最多一次。学校里……」他顿了顿，耳根红，「手和口，考试周禁止。平时也限。不是惩罚。是保护好学生的壳——壳要在，我们才能把分拿住。」</p>
+  <p class="p rise">苏晚宁点头，泪还挂着：「特殊情况另说。」</p>
+  <p class="p rise">「什么叫特殊。」</p>
+  <p class="p rise">她瞪他，耳尖红：「你别贫。资料室……也算特殊。别太勤。」</p>
+  <p class="p rise">许昼把她的手放到唇边轻轻一碰——嘴唇还记得她的味道，此刻只碰手背。</p>
+  <p class="p rise">「听你的。」他说，「明天早读，我还是好许昼。」</p>
+  <p class="p rise">「我还是好苏晚宁。」她低声。</p>
+  <p class="p rise">两个人对视一眼，都看见对方眼里那点没熄灭的暗火。</p>
+  <p class="p rise">壳要在。</p>
+  <p class="p rise">火也在。</p>
+  <p class="p rise">秘密之所以刺激，正是因为他们仍要在红字底下，把卷子写满——</p>
+  <p class="p rise"><strong>今年只有一次。</strong></p>
+  <p class="p rise">而他们的身体，已经偷偷要过许多次。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch10">← 点头</a><a href="#ch12">坦白 →</a></nav>
+
+<section class="chapter" id="ch12" data-num="12" data-title="坦白" data-anchor="ch12" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 12 章</div>
+    <h2 class="ch-title">坦白</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">冲突来得比他们预想的快。</p>
+  <p class="p rise">导火索很小：许昼为了帮林夏看一份限时训练，晚走了二十分钟。苏晚宁在楼下等，风大，她把帽绳扯紧，越等越冷——冷的是心。</p>
+  <p class="p rise">许昼下来时小跑：「对不起，资料多了两页。」</p>
+  <p class="p rise">「没事。」苏晚宁说。</p>
+  <p class="p rise">语气太平，反而假。</p>
+  <p class="p rise">回合租分路时，她没有让他送。许昼站在路口，看着她的背影，隐约觉得哪里不对，却没追上——他怕逼。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">夜里，苏晚宁把「没事」两个字反复咀嚼，越嚼越委屈。</p>
+  <p class="p rise">不是因为林夏。林夏一直正常。是因为她发现自己会怕：怕许昼的好是分给所有人的，怕破冰后的黏只是身体惯性，怕自己把命交出去后，对方其实很从容。</p>
+  <p class="p rise">她给宋辞发语音，说得颠三倒四。宋辞听完，只回一句：</p>
+  <p class="p rise">「你问他。别自己判死刑。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">第二天，苏晚宁把许昼约到初见的那家糖水铺。</p>
+  <p class="p rise">红豆沙。全糖。折叠椅。</p>
+  <p class="p rise">「我有话问你。」她开门见山，手指抠着杯壁，「你是不是……更在意身体。」</p>
+  <p class="p rise">许昼一愣。</p>
+  <p class="p rise">「为什么这么问。」</p>
+  <p class="p rise">「因为你破冰后很凶。很黏。我喜欢，也怕。」她抬眼，直视他，「我怕我只是你的出口。你对人都可以阳光，对我也可以只是饿。」</p>
+  <p class="p rise">许昼沉默几秒。</p>
+  <p class="p rise">沉默里，他没有急着辩解，像先把痛咽下去。</p>
+  <p class="p rise">「苏晚宁。」他叫全名，「我阳光，是壳。我饿，是真的。可我对你的饿，不是谁都能替。」</p>
+  <p class="p rise">「说说看。」</p>
+  <p class="p rise">「我可以对自己解决。我解决过很多次。」他耳朵红，却不躲，「但我忍着去找你，是因为我想要的是你这个人——你讲题时的认真，你立规矩时的硬，你点头时的抖，你说『也不是只有你想要』时的诚实。身体是其中一部分。不是全部。」</p>
+  <p class="p rise">苏晚宁的眼眶红了。</p>
+  <p class="p rise">「那林夏。」</p>
+  <p class="p rise">「同学。资料。我晚了二十分钟，是我的错。我该提前跟你说。」许昼认真，「以后我晚，一定消息。你也可以生气。生气比『没事』好。」</p>
+  <p class="p rise">苏晚宁低头，泪掉进糖水里。</p>
+  <p class="p rise">「我讨厌我这样。」她说，「又要你，又审你。」</p>
+  <p class="p rise">「那是因为你在意。」许昼把纸巾推过去，「我也审自己。我怕我的想要吓到你。所以我们才定规则。」</p>
+  <p class="p rise">苏晚宁擦眼，吸了吸鼻子：「你还要我吗。不是身体。」</p>
+  <p class="p rise">许昼看着她，一字一句：</p>
+  <p class="p rise">「要。谈恋爱那种要。一起走那种要。考完如果还在，我想让你见我妈——当然，你点头才算。」</p>
+  <p class="p rise">苏晚宁哭着笑了一下。</p>
+  <p class="p rise">「谁要见家长……」</p>
+  <p class="p rise">「我先报备。」他笑，笑意软，「你慢慢点头。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">坦白后，空气清了。</p>
+  <p class="p rise">他们在糖水铺又坐了十分钟，像把委屈都泡进甜里。离开时，苏晚宁主动伸手，和他十指相扣——在路灯阴影里，短短一段，到机构路口分开。</p>
+  <p class="p rise">「许昼。」</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「我吃醋了。以后我会说。」</p>
+  <p class="p rise">「好。我晚了会报。以后也会说。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">当晚共用本多了一页「条约补丁」：</p>
+  <p class="p rise">1. 身体有限次，心不限次。<br>2. 吃醋要说，迟到要报。<br>3. 吵架不许用「我们什么都不是」当刀子。<br>4. 说「没事」之前，先问自己是不是真的没事。</p>
+  <p class="p rise">许昼在下面画了个很丑的勾。</p>
+  <p class="p rise">苏晚宁写：「字丑。」</p>
+  <p class="p rise">许昼：「人帅。」</p>
+  <p class="p rise">苏晚宁：「贫。」</p>
+  <p class="p rise">写到这里，两个人隔着屏幕都能感觉到对方在笑。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">周慎言那天晚上加班，从办公室出来，隐约看见两个并排的身影在路口分开。他停了一下，没出声。</p>
+  <p class="p rise">回到办公室，他把两人的成绩曲线又看了一眼——稳。</p>
+  <p class="p rise">他在工作笔记上写了半句，又划掉。</p>
+  <p class="p rise">划掉的是：「别谈。」</p>
+  <p class="p rise">留下的是：「看分。」</p>
+  <p class="p rise">人到中年，他见过太多因噎废食，也见过太多因欲废学。这两个孩子，至少还知道把分按住。</p>
+  <p class="p rise">他关灯。</p>
+  <p class="p rise">走廊很暗。</p>
+  <p class="p rise">像某种默许，沉默地立在那里。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch11">← 黏</a><a href="#ch13">安抚 →</a></nav>
+
+<section class="chapter" id="ch13" data-num="13" data-title="安抚" data-anchor="ch13" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 13 章</div>
+    <h2 class="ch-title">安抚</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">坦白之后，亲密变了味道。</p>
+  <p class="p rise">不再只是饿的碰撞，多了确认：我在，你在。</p>
+  <p class="p rise">考试周降级执行得很严。许昼有时硬着走回合租，冲凉，自己解决，解决完给她发：「今天守住了。」苏晚宁回：「收到。」像两个人在黑暗里击掌。</p>
+  <p class="p rise">可有一夜，苏晚宁数学加练被批得全是红叉。她越看越慌，慌到呼吸短。唐果发现卫生间反锁，水声开到最大。</p>
+  <p class="p rise">「晚宁，开门。我不问题。」</p>
+  <p class="p rise">门开一条缝。苏晚宁眼睛红，头发湿。</p>
+  <p class="p rise">「我怕。」她说，「我怕又空白。」</p>
+  <p class="p rise">唐果把她塞进被子，坐在床沿：「打电话。打给他。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">许昼二十分钟到楼下。</p>
+  <p class="p rise">热牛奶塞进她手里，带到二十四小时咖啡馆最角落。卷子一道一道拆，拆到凌晨一点。灯暖，笔尖沙沙。苏晚宁起初手抖，后来渐渐稳。</p>
+  <p class="p rise">拆完最后一道，她忽然抓住他的手指，力气大得不像她。</p>
+  <p class="p rise">「别走。」她说，目光落在桌面，「今晚……别只是讲题。」</p>
+  <p class="p rise">许昼看着她：「抱，还是……更多。」</p>
+  <p class="p rise">苏晚宁沉默几秒。耳尖红了。没有说「我想要」，只极轻地点了下头，又补两个字：「慢的。」</p>
+  <p class="p rise">许昼把她的手包进掌心：「回我那里。赵屿不在。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">灯只开床头。</p>
+  <p class="p rise">许昼让她坐在自己腿上，先抱。手掌从她后背一路抚到发尾，一下一下，像把她从卷子的红叉里捞出来。苏晚宁起初僵，后来把脸埋进他颈窝，呼吸从乱变长。他的锁骨抵着她的唇，她无意识用嘴唇蹭了蹭，又停住，像做了不该做的事。</p>
+  <p class="p rise">「可以亲。」他低声。</p>
+  <p class="p rise">吻慢。不像抢，像安抚。唇瓣相贴，辗转，舌尖一点一点试探。苏晚宁不会技巧，只会跟着他的节奏张嘴、换气。亲到后来，她的手自己插进他发间，身体往他怀里嵌得更深——腿分开，跪坐在他大腿两侧，运动裤下的腿心隔着布料蹭到他已经硬起的部位。</p>
+  <p class="p rise">两人都顿了一下。</p>
+  <p class="p rise">苏晚宁想退，被他轻轻按住腰：「没事。你主导。你停我就停。」</p>
+  <p class="p rise">她没有退。也没有立刻往下做。只是额头抵着他，轻轻地、试探地用腿心蹭了两下。布料摩擦，热意鲜明。她耳尖烧红，却把脸埋得更死，像只要看不见，就不算自己主动。</p>
+  <p class="p rise">许昼的呼吸沉下去。手从她衣摆伸进去，掌心贴上她的腰——皮肤凉，微微起鸡皮。向上，托住胸。今晚没穿那么紧的内衣，手很容易探入罩杯，直接握住那团软。乳尖在指间迅速立起，他用指腹夹着轻轻揉，苏晚宁腰立刻软了，整个人往他身上塌。</p>
+  <p class="p rise">「衣服……」她闷声。</p>
+  <p class="p rise">「脱？」</p>
+  <p class="p rise">她点头。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">衣服一件件落在椅背上。</p>
+  <p class="p rise">灯下，她的身体比第一次时他记忆里更清楚些：仍瘦，锁骨深，胸小而软，乳晕在情动后颜色深了一点。侧腰那点软肉被他掌心反复摩挲，她会轻轻躲，又自己送回来。抬臂脱衣时，腋下浅浅的毛再次暴露——仍是自然的，没处理。她想夹臂，被他低头在腋下边缘极轻地吻了一下。</p>
+  <p class="p rise">苏晚宁整个人一颤：「那里……」</p>
+  <p class="p rise">「是你。」他只说这两个字。</p>
+  <p class="p rise">内裤褪下时，耻丘那丛偏深的阴毛比上次更乱一点，像刚刚慌乱洗过澡、没仔细吹干。毛发间已经有水光。许昼让她躺下，自己跪在她腿间，先没有进，只用手指把缝分开，低头看——</p>
+  <p class="p rise">外阴比第一次时更熟一点：肉瓣微肿，浅粉里透着被使用过的玫瑰；核完全露着，硬而亮；入口不再死死闭成一点，而是微微张开，呼吸间轻轻收缩，像也会记得上一次被撑开的形状。水从缝里渗出，把深色的毛根浸湿，反光细碎。</p>
+  <p class="p rise">他含住上方的核，轻轻吮。</p>
+  <p class="p rise">苏晚宁「唔」出声，腿想并，被他肩挡住。舌面宽宽地舔过整条缝，把阴毛舔得一缕缕贴在皮肤上；两片软肉被舌拨开，内里更嫩的粉完全暴露。水越来越多，顺着他下巴滴到床单。他加进手指，两指，比第一次顺利——入口仍紧，却会主动吸他，内壁随着他的屈伸轻轻痉挛，像熟识的软热。</p>
+  <p class="p rise">「可以了……」她喘，手臂压着眼睛，「你……进来。」</p>
+  <p class="p rise">许昼戴套。她看着，喉结滚动；手伸过去，帮他把套口向下捋——指尖碰到他滚烫的柱身时，两人都抖了一下。她没有像第一次那样长长地握，只短短地圈了一下，像确认，又像给自己壮胆，然后松开，抓住床单。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">进入时仍有一点不适，更多是熟悉的胀满。</p>
+  <p class="p rise">头部挤开她时，两个人同时吸气。阴毛交叠，湿漉漉地贴在一起。他一寸寸没入，看她表情：眉心微皱，唇张开，胸膛起伏，乳尖红硬。全部进去后，他停着，低头吻她眼角。</p>
+  <p class="p rise">「还好吗。」</p>
+  <p class="p rise">她点头，腿环上他的腰。</p>
+  <p class="p rise">他动。极慢。九浅一深都算。每一次抽出，都能看见套上带出的水光和被带得凌乱的毛发；每一次送入，她小腹就轻轻鼓起一点弧度。床头灯把交合的阴影投在墙上，羞人，却让人移不开眼。</p>
+  <p class="p rise">苏晚宁被这种认真弄红了眼。她不说「想要你」，只把腿收得更紧，髋轻轻迎上去——迎一下，停一下，像不好意思，又停不住。内壁一次次绞紧，像在无声催。</p>
+  <p class="p rise">许昼俯身，胸贴着她的胸，乳尖被压扁在两人之间。他咬她耳垂，问：「可以快一点吗。」</p>
+  <p class="p rise">她把脸埋进他颈窝，短短地「嗯」了一声。</p>
+  <p class="p rise">那一点凶终于被放出来半分。</p>
+  <p class="p rise">床板有节奏地响。水声连续。他撞得深，却仍避开最野蛮的那一档，每一下都又稳又沉。苏晚宁咬他的肩，咬出浅痕，声音从齿间漏成细碎呜咽。汗把她额发粘在脸上，腋下、腿根、耻骨上的毛发全湿透，散发着体温与情欲混合的味道。</p>
+  <p class="p rise">他忽然把她翻过来——侧躺，从后面进入。这个姿势进得更深。苏晚宁抓紧枕头，背脊靠在他胸口，能清楚感觉到他每一次顶弄如何顶开自己。他的手绕到前面，指腹按在核上，随着抽插打圈。</p>
+  <p class="p rise">「太……」她喘不全，「一起……别只……上面。」</p>
+  <p class="p rise">许昼听懂了。手指与下身同频。苏晚宁很快绷紧，内壁剧烈痉挛，绞得他进退不得。她哭出来，不是悲伤，是身体决堤——水液涌出，顺着腿根淌，打湿他的手和他的耻毛。许昼咬着牙又顶十几下，深深埋进去，在套里释放，手臂死死箍着她的腰，像怕她在余韵里飘走。</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">事后他没有立刻退。</p>
+  <p class="p rise">两个人侧躺着连在一起，喘。他的掌心覆在她小腹，能感觉到高潮后的细颤。过了很久，才退出、处理、用温毛巾擦她。擦到腿心时，她仍会轻轻并腿，却不再像第一次那样整个人躲进枕头——只是耳尖红着，由他去。</p>
+  <p class="p rise">清理完，他把她蜷进怀里，胸口贴着她后背。</p>
+  <p class="p rise">「还怕空白吗。」他问。</p>
+  <p class="p rise">苏晚宁把耳朵贴向能听见他心跳的方向：「怕。但没那么怕了。」</p>
+  <p class="p rise">「为什么。」</p>
+  <p class="p rise">她沉默一会儿，手指在他手背上划了划：「因为空白的时候……有人会来。用题。」顿了顿，「也用……这样。」</p>
+  <p class="p rise">没有说「我想要你」。身体却诚实地往他怀里又缩了缩。</p>
+  <p class="p rise">许昼吻她头发：「得意可以。轻视你不行。我分得清。」</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">清晨五点，他送她回合租楼下。</p>
+  <p class="p rise">天青灰。苏晚宁走路仍有一点别扭，步幅比平时小。许昼看在眼里，没点破，只把她的书包带子往上扶了扶。</p>
+  <p class="p rise">「今天的加练，我陪你重做。」</p>
+  <p class="p rise">她点头。踮脚，亲了亲他的下巴——很快，像盖章。</p>
+  <p class="p rise">「你破冰后……」她顿住，换了个说法，「你忍得挺辛苦。」</p>
+  <p class="p rise">许昼低笑：「你才知道。」</p>
+  <p class="p rise">苏晚宁没接「我也是」。只看着他，眼底有水光，也有稳下来的东西。风吹起她帽绳，扫过腕骨。她把手插进他掌心，握了一下，松开，上楼。</p>
+  <div class="sec-mark"><b>八</b></div>
+  <p class="p rise">当晚，苏晚宁回合租已近六点。唐果看她步幅仍小，锁了门，把人按在自己床沿，声音压低：</p>
+  <p class="p rise">「又做了。」</p>
+  <p class="p rise">不是问句。</p>
+  <p class="p rise">苏晚宁点头，耳尖红：「……安抚。我先点的头。」</p>
+  <p class="p rise">「姿势。」唐果直接，「别跟我打太极。你现在需要的是把身体的事说清楚，才不会一个人吓自己。」</p>
+  <p class="p rise">苏晚宁握着杯沿，说得很慢，像报实验步骤：</p>
+  <p class="p rise">「先抱了很久。亲。他手伸进衣服摸胸，直接摸，指腹夹……尖。后来脱光。他先用嘴，舔上面那点，也舔下面整条。手指两根，比第一次顺。我帮他戴套，手碰到……柱身，他马上又硬一圈。」</p>
+  <p class="p rise">唐果「嗯」：「然后。」</p>
+  <p class="p rise">「正面进的。慢。能看见他进出……那里被撑开，水很多，毛全湿了。后来他让我侧躺，从后面进来。更深。顶到肚子里一块，又酸又麻。他手绕到前面揉上面，下面同时动。我很快就……去了。水淌到他手上。他射在套里。还是能感觉到跳。」</p>
+  <p class="p rise">唐果听完，点点头：「比第一次会了。后面进更深，正常。你有没有不舒服。」</p>
+  <p class="p rise">「出来之后有点空。走路坠。不疼，就是……记得。」苏晚宁把脸偏开，「果果，我发现一件事。」</p>
+  <p class="p rise">「说。」</p>
+  <p class="p rise">「我不太会说‘想要’。」她耳尖红透，「可身体会。会夹他。会自己把腿环上去。会在他顶对地方的时候，把‘那里’两个字漏出来。你说，这样算不算……很色。」</p>
+  <p class="p rise">「算诚实。」唐果纠正，「色给外人看才叫低俗。你跟喜欢的人把细节搞清楚，叫负责。包括：他喜欢你怎么握，你喜欢他顶哪，套有没有滑，毛会不会磨得你痒——这些都该知道。」</p>
+  <p class="p rise">苏晚宁把脸埋进她肩，闷了很久：「后面进的时候，他的毛一直蹭我屁股。痒。可又……更清楚他在里面。」</p>
+  <p class="p rise">「下次你可以让他稍微抬你一条腿，角度更好，毛少磨一点。」唐果说得像在讲错题模型，「或者垫个枕头在腰下。正面也能深。」</p>
+  <p class="p rise">「……你怎么什么都知道。」</p>
+  <p class="p rise">唐果顿了顿。嘴上的老练忽然裂开一条缝，眼神飘向墙角：「书上。网上。……我也没做过。就是听你讲多了，像把别人的题做进脑子里。」</p>
+  <p class="p rise">苏晚宁一怔。</p>
+  <p class="p rise">「你……」</p>
+  <p class="p rise">「别用那种眼神。」唐果耳朵红了，很快又把壳捡回来，「不重要。重要的是你。分稳了吗。」</p>
+  <p class="p rise">「稳了。」</p>
+  <p class="p rise">「那就行。」唐果拍拍她的背，力道虚了一点，「睡吧。被子里要是还热，就夹枕头。哭了喊我。」</p>
+  <p class="p rise">苏晚宁「嗯」了一声。</p>
+  <p class="p rise">关灯后，她躺着，身体把今晚的细节又过了一遍：侧后入时被顶开的深度，前面指腹打圈的节奏，高潮时水淌出来的感觉，以及他射精时隔着套在体内的跳动。她没有把「想要」说出口——腿心却又湿了一点，诚实地贴着睡裤。</p>
+  <div class="sec-mark"><b>九</b></div>
+  <p class="p rise">那一周，两人分数回稳。</p>
+  <p class="p rise">周慎言在许昼作文旁批了个「可」。在苏晚宁数学旁批了个「回神了」。</p>
+  <p class="p rise">唐果早上看她一眼，只说：「人色好看点了。」——当着第三人，点到为止。</p>
+  <p class="p rise">赵屿看许昼不再半夜砸墙，把游戏音量开大了一点。</p>
+  <p class="p rise">世界仍秘密。</p>
+  <p class="p rise">秘密里，情欲与安抚平等地坐在一起；而在另一张床上，闺蜜把那些说不出口的细节，拆成可以呼吸的句子——</p>
+  <p class="p rise">身体先发生，嘴在私下补全，分寸留在门外。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch12">← 坦白</a><a href="#ch14">冲刺 →</a></nav>
+
+<section class="chapter" id="ch14" data-num="14" data-title="冲刺" data-anchor="ch14" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 14 章</div>
+    <h2 class="ch-title">冲刺</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">离高考四十五天，启明进入封闭强化。</p>
+  <p class="p rise">作息表精确到分钟。手机上交两小时，再发还。走廊禁止闲聊超过三句。墙上的红字仍在：<strong>今年只有一次。</strong></p>
+  <p class="p rise">秘密变得更难，也更甜。</p>
+  <p class="p rise">难的是见面时间碎。甜的是碎里每一次对视，都像偷来的糖。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">许昼把「限次」执行成铁律。考试周为零。平时最多牵手、额贴额、短吻。苏晚宁有时主动凑近，被他轻轻按住肩：「先分。你点的头，我记着，考完加倍。」</p>
+  <p class="p rise">「谁要加倍……」她骂，耳尖红。</p>
+  <p class="p rise">夜里共用本变成「战报」：</p>
+  <p class="p rise">- 许昼：英语阅读错2，可恨。想你。已跑步。<br>- 苏晚宁：数学压轴拿下。想你。已早睡（失败）。<br>- 许昼：那我语音读题，十分钟。十点五十挂。<br>- 苏晚宁：……准点。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">差点暴露发生在一次突查。</p>
+  <p class="p rise">晚自习，周慎言临时收手机。苏晚宁的聊天界面停在「想你」两个字上——还好屏幕朝下。收的时候，她指尖冰凉。发还时，许昼在桌下用指节敲了两下桌板：没事。</p>
+  <p class="p rise">出教室，两个人都出了一身汗。</p>
+  <p class="p rise">到楼梯转角，苏晚宁低声：「删了吧。战报改成题号。」</p>
+  <p class="p rise">「好。」许昼应，「想你改写成：第18题。」</p>
+  <p class="p rise">苏晚宁瞪他：「油。」</p>
+  <p class="p rise">「只对你油。」他收敛笑，「真删。安全第一。」</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">何予川在冲刺阶段排名仍顶。有人私下把他和许昼比，他把话挡回去：「比自己。」</p>
+  <p class="p rise">某次对答案，他对苏晚宁说：「你们状态我看在眼里。挺好。别因为别人的嘴，乱阵脚。」</p>
+  <p class="p rise">「别人的嘴？」</p>
+  <p class="p rise">「有人说同桌太熟。」何予川平淡，「熟不是罪。掉分才是。你们没掉，就行。」</p>
+  <p class="p rise">苏晚宁点头：「谢谢。」</p>
+  <p class="p rise">何予川看了她一眼，又看远处的许昼，像把一句未说的「保重」咽回去，转身走进题海里。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">苏清来市里送汤的那天，苏晚宁差点露馅。</p>
+  <p class="p rise">母亲站在合租楼下，看着女儿，又看看旁边「刚好路过」的许昼——阳光，有礼，帮忙提保温袋。</p>
+  <p class="p rise">「同学？」</p>
+  <p class="p rise">「同桌。许昼。」苏晚宁介绍，声音稳。</p>
+  <p class="p rise">「阿姨好。」许昼鞠躬，分寸极准。</p>
+  <p class="p rise">苏清看他两秒，对女儿说：「上来坐坐。」</p>
+  <p class="p rise">许昼识趣告别。苏清进门后，把汤摆好，忽然问：「那个男孩，看着正。」</p>
+  <p class="p rise">「……学习好。」</p>
+  <p class="p rise">「眼睛也正。」苏清叹气，「妈不逼你现在解释。妈只求你，别在最关键的时候把自己赔进去。赔感情可以，赔分不行。分是你的退路。」</p>
+  <p class="p rise">苏晚宁眼眶热：「我知道。」</p>
+  <p class="p rise">「知道就好。」苏清抱了她一下，「考完，带他来家里吃饭——如果他还在，如果你还愿意。」</p>
+  <p class="p rise">苏晚宁把脸埋进母亲肩：「妈。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「我会考好。」</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">许桂芳则在电话里说：「听周老师说你稳。妈高兴。有没有好好吃饭。」</p>
+  <p class="p rise">「有。」</p>
+  <p class="p rise">「有没有心事。」</p>
+  <p class="p rise">许昼看了一眼窗外，晚宁的窗灯亮着。</p>
+  <p class="p rise">「有。」他诚实一半，「好事。不耽误分。」</p>
+  <p class="p rise">许桂芳笑：「那就行。你从小让人省心。省心也别硬扛，累了跟妈说。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">挂断，他给苏晚宁发：第18题（想你）。</p>
+  <p class="p rise">苏晚宁回：已订正（我也是）。</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">冲刺的夜晚很长。</p>
+  <p class="p rise">有一次模拟练到十点，两人在打印室相遇。四下无人。苏晚宁把打印好的卷子抱在胸前，忽然说：「许昼，如果我考砸了。」</p>
+  <p class="p rise">「不会。」</p>
+  <p class="p rise">「如果。」</p>
+  <p class="p rise">「那我陪你复盘。再来。或者换路。我都在。」他认真，「我喜欢你，不是喜欢你的分。」</p>
+  <p class="p rise">苏晚宁盯着他，忽然把卷子放下，快速抱了他一下。一下就分开。</p>
+  <p class="p rise">「回去。」她说，「还有三套。」</p>
+  <p class="p rise">「三套。」他应。</p>
+  <p class="p rise">分开走时，两个人的影子在走廊两端拉长，像箭，射向同一个日子——</p>
+  <p class="p rise">六月。</p>
+  <p class="p rise">那张决定命运的纸。</p>
+  <p class="p rise">以及纸背后，他们能否把自己的秘密，安然带过终考。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch13">← 安抚</a><a href="#ch15">前夜 →</a></nav>
+
+<section class="chapter" id="ch15" data-num="15" data-title="前夜" data-anchor="ch15" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 15 章</div>
+    <h2 class="ch-title">前夜</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">高考前夜，启明放人早回。</p>
+  <p class="p rise">「睡。」周慎言只说一个字，「谁熬夜，我瞧不起谁。」</p>
+  <p class="p rise">教室散得很快。有人笑，有人发呆，有人把桌肚掏空。墙上红字仍在：<strong>今年只有一次。</strong></p>
+  <p class="p rise">苏晚宁收拾书包，动作很慢。许昼站在座位边等她，指节轻轻敲了敲桌沿——他们的暗号：还好吗。</p>
+  <p class="p rise">她抬眼。</p>
+  <p class="p rise">耳尖红了。不是怕考。是怕自己接下来要说的那句话。</p>
+  <p class="p rise">「许昼。」声音低到只有他听见，「别走。等大家……走干净。」</p>
+  <p class="p rise">许昼的喉结滚动。</p>
+  <p class="p rise">「考试周，规则是零。」他提醒，声音也哑，「全套更不行。这里是教室。」</p>
+  <p class="p rise">苏晚宁把最后一支笔插进笔袋，拉链拉上。她没有说「我想要」。只把准考证夹进书里，又拿出来，再夹进去，像手需要一件事做。</p>
+  <p class="p rise">「我知道。」她说，「可明天开始，就是考场了。我想……在这里。最后一次。用我们最装的地方。」</p>
+  <p class="p rise">最装的地方：默写全对的地方，被老师夸奖的地方，桌下碰一下都要立刻分开的地方。</p>
+  <p class="p rise">许昼闭了闭眼。再睁开时，阳光壳裂开一条缝，里面全是饿，也全是怕。</p>
+  <p class="p rise">「锁门。窗帘。套我有。」他极低，「你随时说停。有脚步就停。」</p>
+  <p class="p rise">苏晚宁点头。</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">最后一批脚步声消失在楼梯口。声控灯灭。整层楼只剩中央空调的低鸣，和某间厕所未关紧的滴水。</p>
+  <p class="p rise">许昼走到后门，反锁。前门虚掩一指宽——留退路，也留听声。窗帘拉严，教室陷入一种不该出现在白天的昏暗。黑板上还留着周慎言最后的板书：时间分配，涂改液，准考证。粉笔灰细细落在槽里。</p>
+  <p class="p rise">苏晚宁站在他们并排坐了一年的座位旁。桌面有她写下的浅痕，有他滴过的墨点。她把书包放在邻桌，手指抓紧桌沿。</p>
+  <p class="p rise">许昼走过来，先没有解衣服。额头抵着她的额头：「再说一次。是你点头。」</p>
+  <p class="p rise">她点头。短，重。</p>
+  <p class="p rise">吻落下时，两个人都像从壳里摔出来。不再是前夜的克制甜，是考前最后的、带着亡命感的深吻。舌缠在一起，牙差点磕上。许昼的手从卫衣下摆探入，掌心贴上她的腰，再上，直接托住胸——乳尖已经硬了，隔着薄内衣戳他掌心。苏晚宁「唔」出声，随即自己咬住，怕声音撞上走廊。</p>
+  <p class="p rise">「桌上……」她喘，「别在地上。脏。」</p>
+  <p class="p rise">他把她的外套铺在两张并在一起的课桌上——他们的桌，与邻座的桌，拼成一条窄窄的床。苏晚宁坐上去，桌沿抵着膝弯。许昼站在她两腿之间，解自己的皮带，金属扣轻响，在空教室里大得吓人。</p>
+  <p class="p rise">她伸手帮他。手抖。拉链拉下，那根东西弹出来，又硬又热，顶端已经湿了。她握住，生涩地上下滑动两下，拇指抹过铃口。许昼吸气，按住她的手：「别。我会太快。先……让我。」</p>
+  <p class="p rise">他褪下她的运动裤与内裤，只褪到膝弯——来不及全脱，也更像偷。腿被迫分开。昏光里，耻丘那丛偏深的阴毛乱着；拨开，外阴薄软，缝已经亮了——浅粉的肉瓣微张，核立着，入口一张一合，水光漫到股沟。就在写过无数题的课桌上，好学生苏晚宁的身体完全敞着。他蹲下，先用嘴——拇指拨开软肉，舌面贴上核，快速而密地舔，像把时间压缩。苏晚宁仰头，咬住自己的小臂，脚尖绷紧，脚跟磕在桌腿上，发出极轻的响。</p>
+  <p class="p rise">「别出声……」她对自己说，又像对空气说。</p>
+  <p class="p rise">水很快涌出来。他伸进两指，弯曲，抽送几下，确认够湿，才起身，撕开套。橡胶涩味在粉笔灰气味里格格不入。她帮他把套往下捋，指尖碰到柱身，他又硬一圈。</p>
+  <p class="p rise">「进来。」她只给这两个字，眼睛湿，耳尖红。</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">头部抵上入口时，两人都屏住呼吸。</p>
+  <p class="p rise">教室。黑板。红字。他们的名字还在墙上的光荣榜复印件边角——「许昼」「苏晚宁」与一串分数。而现在，那根东西正抵着她那点湿润的粉圆，一寸寸挤开。</p>
+  <p class="p rise">太紧。考前紧绷的身体连这里都绷着。入口被撑成薄薄一圈，颜色从粉白转到深红。她痛得眉心拧起，指甲掐进他小臂。许昼僵住：「对不起。不动。」</p>
+  <p class="p rise">「……等。」她喘，适应，小腹起伏。她的深色阴毛与他的阴毛蹭在一起，痒，羞，真实；外阴的软肉紧紧箍着套的边缘，核孤零零地露在上面，随着脉搏轻跳。</p>
+  <p class="p rise">半分钟后，她自己把腿环上他的腰——运动裤卡在小腿，勒出浅痕。「慢。全……进来。」</p>
+  <p class="p rise">他进。一寸，停；再一寸。课桌在身下轻轻晃。全部没入时，她觉得自己被钉在这张写过无数题的桌上，涨，满，连呼吸都被迫改道。许昼低头看交合处：她白，他深，中间那圈被撑开的软肉粉红发亮，套上全是她的水，周围毛发湿乱贴肤；再抬头，能看见黑板上的「时间分配」四个字。</p>
+  <p class="p rise">反差狠得他眼眶发热。</p>
+  <p class="p rise">「我在教室里……肏你。」他哑声，像认罪，又像确认。</p>
+  <p class="p rise">苏晚宁捂他的嘴，眼角却红了：「别说。动。」</p>
+  <p class="p rise">他动。</p>
+  <p class="p rise">起初慢。抽出半截，再整根没入。水声在空教室里清晰得可怕——黏腻，规律，一下一下，像某种不该出现在「安静自习」里的节拍。桌腿与地面轻磨。她的背脊贴着桌面，肩胛骨抵着硬木，胸随着顶弄轻轻晃，乳尖把上衣顶出两点。他伸手推高她的衣摆，含住一边，边顶边吮。</p>
+  <p class="p rise">苏晚宁咬着自己的腕，把呻吟咬成鼻音。内壁却诚实得要命，一下下绞他、吸他。每一次他顶到最深，她小腹就轻轻鼓起一点；每一次他退出到只剩头部，她就空虚得脚背绷直。</p>
+  <p class="p rise">「快……一点。」她漏出两个字，随即羞耻地闭眼。</p>
+  <p class="p rise">许昼腰眼一麻。守了整年的好学生壳彻底裂开。他掐着她的腰，把她往自己身上拖，一下比一下深，课桌剧烈轻晃。粉笔灰似的光里，她的腿大开，膝弯挂着他的臂，运动裤歪在一脚的脚踝上；他的衬衫还在，只解开两颗扣，领带——他没有领带——只有领口被她扯歪。</p>
+  <p class="p rise">门外，隐约有保洁的桶轮声，远，又远。</p>
+  <p class="p rise">两个人同时僵住。连着。他埋在她里面，硬得发疼，不敢动。她内壁无意识一绞，两人都闷哼出声。</p>
+  <p class="p rise">轮声消失。</p>
+  <p class="p rise">「继续。」她喘，眼睛亮得吓人，「别停。」</p>
+  <p class="p rise">他继续。把她一条腿抬得更高，角度一变，龟头反复碾过那一点。苏晚宁突然夹紧，手胡乱抓住桌沿，指节发白——那里还刻着某人无聊时留下的浅痕。</p>
+  <p class="p rise">「那里——」</p>
+  <p class="p rise">他守着那一点狠顶。她去的时候几乎无声，只张着嘴，泪挤出来，内壁痉挛着吞他；水液涌出，顺着交合处淌到桌沿，滴在地面。一滴。两滴。像把秘密写在教室的地上。</p>
+  <p class="p rise">许昼被绞得头皮发炸，又抽送十几下，深深埋进去，在套里一股一股释放。射的时候他俯身压住她，额头抵着她锁骨，把喘息全闷进她的衣服里。她能隔着套清楚感觉到跳动——一下，一下，像他的心也射进了她身体最深处。</p>
+  <p class="p rise">教室里只剩空调声，和两人未平的呼吸。</p>
+  <p class="p rise">墙上的红字无声看着他们。</p>
+  <p class="p rise"><strong>今年只有一次。</strong></p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">他退出时，她轻轻「嘶」了一声。入口一时合不拢，微微红肿，阴毛湿成一缕。套上浊白与她的水混在一起。许昼打结，用纸巾仔细擦她腿心、桌沿、地面那两滴水痕——像擦掉罪证，也像温柔的善后。</p>
+  <p class="p rise">苏晚宁坐起来，腿还软。拉裤子时手抖，他帮她拉好，指节擦过腿根，她又颤了一下。</p>
+  <p class="p rise">「还能走吗。」他问。</p>
+  <p class="p rise">「能。」她整理帽绳，声音哑，「像……刚跑完操。」</p>
+  <p class="p rise">「不像。」许昼低声，替她把衣摆拉平，「像刚在教室里被我——」</p>
+  <p class="p rise">「闭嘴。」她捂他的嘴，耳尖红透，眼睛却亮。</p>
+  <p class="p rise">门开之前，两个人同时做了同一件事：深呼吸，把表情调回「好学生」。</p>
+  <p class="p rise">窗帘拉开一条缝。光漏进来。黑板上的字还在。座位归位。像什么都没发生过。</p>
+  <p class="p rise">只有她走路时步幅小了一点，只有他指节还留着掐她腰的记忆。</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">下楼时，撞见锁门的保安大爷。</p>
+  <p class="p rise">「还没走？」大爷看表。</p>
+  <p class="p rise">「对最后一套卷。」许昼笑，标准、干净，「这就走。」</p>
+  <p class="p rise">苏晚宁点头，语速平稳：「明天考试。早睡。」</p>
+  <p class="p rise">大爷挥手：「行，小伙子小姑娘真用功。出分了请我喝饮料啊。」</p>
+  <p class="p rise">「好。」两人齐声。</p>
+  <p class="p rise">并排走出大门。六月的风已经有夏天的味道。晚霞把他们的影子拉得很长。袖口几乎相碰，没有真碰。</p>
+  <p class="p rise">走到分路口，苏晚宁忽然极轻地说：「我里面……还记得。走路会……坠。」</p>
+  <p class="p rise">许昼耳根红了：「对不起。太深了。教室里我……没忍住。」</p>
+  <p class="p rise">「不是怪你。」她看着地面，「是……明明桌肚里还有错题本。好奇怪。」</p>
+  <p class="p rise">「我明天进考场，」他坦白，苦笑，「可能会想起你躺在桌上的样子。然后强迫自己只想题。」</p>
+  <p class="p rise">苏晚宁侧脸看他，眼里有羞，有怕，也有一种把命豁出去的稳。</p>
+  <p class="p rise">「那就想题。」她说，「想完。来找我。」</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">他的合租。没有再做。</p>
+  <p class="p rise">准考证，证件，文具，手表——并排放在桌上，像出征前的装备。苏晚宁坐在床沿，腿仍有一点不适，却坚持把清单对完。</p>
+  <p class="p rise">「我们好怪。」她低声，「刚在教室……现在对这个。」</p>
+  <p class="p rise">「也可以是。」许昼握住她的手，「以后。」</p>
+  <p class="p rise">她靠进他肩。他吻她发心，只抱，不游走。身体还热着，规则却重新立起来：前夜，睡。</p>
+  <p class="p rise">「怕吗。」他问。</p>
+  <p class="p rise">「怕。」她说，「怕空白。也怕……考完发现我们只是靠压力才靠近。」</p>
+  <p class="p rise">「那就考完验证。」许昼说，「我赌我们不是。刚才在教室里的，也不是只靠压力。」</p>
+  <p class="p rise">苏晚宁抬脸，吻他。吻很深，却止于吻。</p>
+  <p class="p rise">到点，他送她下楼。</p>
+  <p class="p rise">「明天第一科，别赶。你急。」</p>
+  <p class="p rise">「好。你别空。空了就写我名字泄愤，写完涂掉。」</p>
+  <p class="p rise">她笑，眼眶湿：「贫。」</p>
+  <p class="p rise">「对你贫。」他碰了碰她的手指，「去。睡。我爱你。」</p>
+  <p class="p rise">空气顿住。</p>
+  <p class="p rise">苏晚宁看着他，踮脚，唇贴上他的唇，极轻：</p>
+  <p class="p rise">「我知道。我也是。考完……再说完整的。」</p>
+  <p class="p rise">停半秒，更轻的一句，像吹散在风里：</p>
+  <p class="p rise">「教室里的事……别写进忏悔。写进我们。」</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">唐果已经睡了，台灯留着。苏晚宁钻进被窝，腿心仍有被撑开后的余韵，像身体在默默报时：你还活着，你被要过，你明天要去打仗。</p>
+  <p class="p rise">她把脸埋进枕头，没有叫唐果。</p>
+  <p class="p rise">这一次，细节她想先自己含着。</p>
+  <p class="p rise">赵屿见许昼回来，丢了句：「早睡。别装酷。」</p>
+  <p class="p rise">「知道。」</p>
+  <p class="p rise">许昼躺下，盯着天花板裂纹。脑子里交替闪过两张纸：试卷，与课桌上她潮红的脸。他强迫自己数呼吸，数到平稳。</p>
+  <p class="p rise">「苏晚宁。」他无声叫她的名字。</p>
+  <p class="p rise">关机。睡觉。</p>
+  <p class="p rise">急会跳步。今晚，不许跳步。</p>
+  <div class="sec-mark"><b>八</b></div>
+  <p class="p rise">高考日。晴。</p>
+  <p class="p rise">考点外人山人海。两人不同考点。六点四十分，同时消息：</p>
+  <p class="p rise">「到了。」</p>
+  <p class="p rise">「到了。」</p>
+  <p class="p rise">「别急。」</p>
+  <p class="p rise">「不空。」</p>
+  <p class="p rise">「去吧。」</p>
+  <p class="p rise">「去。」</p>
+  <p class="p rise">进门前，苏晚宁回头看一眼天空。很蓝。她忽然想起糖水、雨伞、资料室、合租的床，以及——</p>
+  <p class="p rise">昏暗教室里，并在一起的两张课桌，黑板上的时间分配，和他埋在她身体最深处时那句几乎像忏悔的话。</p>
+  <p class="p rise">约定早破了。</p>
+  <p class="p rise">破成了更硬的东西：要一起走完这几天。</p>
+  <p class="p rise">她握紧准考证，走进安检。步幅已经恢复正常。只有她自己知道，坐下时身体还隐隐记得昨夜的形状。</p>
+  <p class="p rise">另一边，许昼深吸一口气，把「好许昼」的笑收成专注，走进考场。</p>
+  <p class="p rise">笔落下。</p>
+  <p class="p rise">世界只剩题。</p>
+  <p class="p rise">以及题与题之间，偶尔闪过的——</p>
+  <p class="p rise">一个名字，一张课桌，一声被咬碎的喘。</p>
+  <p class="p rise">像秘密的灯，亮在胸腔最深处，不干扰作答，只提醒他：答完，还有人要见面。</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch14">← 冲刺</a><a href="#ch16">秘密 →</a></nav>
+
+<section class="chapter" id="ch16" data-num="16" data-title="秘密" data-anchor="ch16" data-volume="">
+  <header class="ch-head">
+    <div class="ch-num">第 16 章</div>
+    <h2 class="ch-title">秘密</h2>
+    <div class="ch-line"></div>
+  </header>
+  <div class="sec-mark"><b>一</b></div>
+  <p class="p rise">出分日，雨后又晴。</p>
+  <p class="p rise">启明允许回看，教室却坐不满。有人已离开这座城市，有人不敢来。苏晚宁到得很早，卫衣帽子扣着，手指冰凉。许昼后到一分钟，坐到她旁边——座位标签早撤了，他们仍习惯并排。</p>
+  <p class="p rise">「查了吗。」他问。</p>
+  <p class="p rise">「等你。」她说。</p>
+  <p class="p rise">两人同时点开。</p>
+  <p class="p rise">加载的几秒里，苏晚宁的耳尖红了，不是情欲，是命运的热。许昼握住她的手，在桌下，十指相扣。</p>
+  <p class="p rise">数字跳出。</p>
+  <p class="p rise">沉默。</p>
+  <p class="p rise">然后苏晚宁的眼睛亮了，亮得像要滴水。许昼也笑，笑意从眼角漫到整张脸——不再是给人看的阳光，是真的松。</p>
+  <p class="p rise">「过了。」她说。</p>
+  <p class="p rise">「都过了。」他把额头轻轻抵上她的额头，「A 大。你。我。分够。」</p>
+  <p class="p rise">苏晚宁「嗯」了一声，泪掉下来。她用袖子乱擦，擦不干净。许昼把纸巾递给她，自己眼眶也红。</p>
+  <p class="p rise">教室角落，周慎言看见这一幕，推了推眼镜，什么也没说。只在心里把那句「看分」划掉，换成：「行了。」</p>
+  <div class="sec-mark"><b>二</b></div>
+  <p class="p rise">唐果从门外探头，看见两人的表情，扬起笑，又识趣退开。路过时只丢一句很轻的：「晚饭我请。你俩……慢慢看。」</p>
+  <p class="p rise">赵屿发来消息：「兄弟，行不行啊。」</p>
+  <p class="p rise">许昼回：「行。」</p>
+  <p class="p rise">赵屿：「分，还是人。」</p>
+  <p class="p rise">许昼：「都。」</p>
+  <p class="p rise">赵屿：「行。我装瞎结束了。恭喜。」</p>
+  <div class="sec-mark"><b>三</b></div>
+  <p class="p rise">何予川在走廊遇见他们，点头：「都好？」</p>
+  <p class="p rise">「好。」苏晚宁说。</p>
+  <p class="p rise">「那就好。」何予川把一本用旧的词汇书塞给她，「送你。我走了。去另一座城。」</p>
+  <p class="p rise">「保重。」</p>
+  <p class="p rise">何予川看了许昼一眼，伸出手。两人握了握，干净，像一场无声的交接。</p>
+  <p class="p rise">林夏从楼梯上下来，抱着资料：「听说了，牛。暑假聚吗。」</p>
+  <p class="p rise">「聚。」许昼说。</p>
+  <p class="p rise">「你同桌也来。」林夏对苏晚宁笑，正常，利落，「英语真的该谢你——许昼说你教得细。」</p>
+  <p class="p rise">苏晚宁点头：「互相。」</p>
+  <p class="p rise">没有醋。没有刺。像所有误会都在分的阳光里，自动蒸发。</p>
+  <div class="sec-mark"><b>四</b></div>
+  <p class="p rise">下午，糖水铺。</p>
+  <p class="p rise">还是全糖。还是折叠椅。苏晚宁喝了一口，忽然说：「许昼。」</p>
+  <p class="p rise">「在。」</p>
+  <p class="p rise">「考前你说爱我。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「现在我说完整的。」她放下杯子，看着他，耳朵红，眼睛稳，「我爱你。想和你在一起。公开也可以。秘密也可以。你选——不对，我们选。」</p>
+  <p class="p rise">许昼的喉结滚动。</p>
+  <p class="p rise">「我想公开。」他说，「不是昭告天下。是不再装成『什么都不是』。对在乎的人，说实话。」</p>
+  <p class="p rise">苏晚宁点头：「先妈。再……朋友。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">「还有。」她声音更轻，「身体的事，也别再当见不得人的脏。它是我们的。我们自己珍惜就行。」</p>
+  <p class="p rise">许昼握住她的手，放在唇边碰了碰：「听你的。」</p>
+  <div class="sec-mark"><b>五</b></div>
+  <p class="p rise">电话先打给苏清。</p>
+  <p class="p rise">苏晚宁报分。苏清在那头哭，又笑，又叮嘱吃饭。末了，苏晚宁说：「妈，同桌……是我男朋友。考前就定了。分没掉。他很好。」</p>
+  <p class="p rise">电话静了三秒。</p>
+  <p class="p rise">苏清说：「……让他听。」</p>
+  <p class="p rise">许昼接过，背脊挺直：「阿姨好。我是许昼。」</p>
+  <p class="p rise">「分我听说了。」苏清的声音复杂，最终落成一句，「人，你自己看着办。她要是哭，你先检讨自己。」</p>
+  <p class="p rise">「是。」</p>
+  <p class="p rise">「暑假来家里吃饭。」</p>
+  <p class="p rise">「好。」</p>
+  <p class="p rise">挂断，两人对视，像刚打完一场更难的仗。</p>
+  <p class="p rise">许桂芳那边更简单。听完分数，再听完「我有喜欢的人，叫苏晚宁」，她只「啊」了一声，随即笑：「我说你怎么今年格外稳。原来有人盯着。带来给我看看。」</p>
+  <p class="p rise">「好。」</p>
+  <div class="sec-mark"><b>六</b></div>
+  <p class="p rise">傍晚，两人走回机构取最后的东西。</p>
+  <p class="p rise">墙上红字还在。<strong>今年只有一次。</strong></p>
+  <p class="p rise">苏晚宁看着那行字，忽然说：「其实不止一次。」</p>
+  <p class="p rise">「什么。」</p>
+  <p class="p rise">「想你，有很多次。」她侧脸，暮色温柔，「亲你，很多次。怕，很多次。点头，也有很多次。高考只有一次。我们……会有很多年。」</p>
+  <p class="p rise">许昼停下，在无人的走廊里，轻轻吻她。</p>
+  <p class="p rise">不深。</p>
+  <p class="p rise">足够真。</p>
+  <p class="p rise">吻开后，他把共用错题本从书包里取出。第一页约定还在：「只写题，不写别的。」下面密密麻麻全是破例。</p>
+  <p class="p rise">他翻到最后一页空白，写下：</p>
+  <p class="p rise">「毕业附则：可以写别的了。」</p>
+  <p class="p rise">苏晚宁接笔，写：</p>
+  <p class="p rise">「写什么。」</p>
+  <p class="p rise">许昼写：</p>
+  <p class="p rise">「写我们。写秘密结束。写明天开始。」</p>
+  <p class="p rise">苏晚宁盯着那行字，笑了，泪又掉下来。她写：</p>
+  <p class="p rise">「好。署名——学习搭子（退役）。」</p>
+  <p class="p rise">许昼在旁边加：</p>
+  <p class="p rise">「恋人（在役）。」</p>
+  <div class="sec-mark"><b>七</b></div>
+  <p class="p rise">他们走出启明大门。</p>
+  <p class="p rise">夏日的风把帽绳吹起，扫过苏晚宁的腕骨。许昼的目光仍会停半秒——习惯了。停完，他牵起她的手，不再藏进阴影。</p>
+  <p class="p rise">路上有人经过，或许看见，或许没有。</p>
+  <p class="p rise">他们不再反复确认「算不算破例」。</p>
+  <p class="p rise">因为秘密的意义已经变了。</p>
+  <p class="p rise">它不再是见不得人的错。</p>
+  <p class="p rise">它是两个人在最难的一年里，彼此成了对方的光——克制过，爆发过，怕过，要过，最后把自己交到同一条路上。</p>
+  <p class="p rise">手机震了一下。宋辞：「分呢。」</p>
+  <p class="p rise">苏晚宁打字：「过了。人也过了。」</p>
+  <p class="p rise">宋辞：「行。别虐他。也不许被虐。」</p>
+  <p class="p rise">苏晚宁把屏幕给许昼看。许昼笑：「我尽量。」</p>
+  <p class="p rise">夕阳把两个人的影子拉得很长，并在一起。</p>
+  <p class="p rise">许昼低声说：「晚宁。」</p>
+  <p class="p rise">「嗯。」</p>
+  <p class="p rise">「回家。」</p>
+  <p class="p rise">苏晚宁应「好」，手指在他掌心里收紧。</p>
+  <p class="p rise">今年只有一次。</p>
+  <p class="p rise">而他们的以后，才刚翻页。</p>
+  <p class="p rise">——全文完——</p>
+</section>
+<div class="ch-end"></div>
+<nav class="ch-nav"><a href="#ch15">← 前夜</a><span></span></nav>
+</main>
+
+<footer>
+  高中生的秘密 · 试写稿<br>  <a href="index.html">← 返回书架</a>
+</footer>
+
+<button id="top" aria-label="回到顶部">↑</button>
+<noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
+#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
+<script>
+var TK='xhw-theme';
+var root=document.documentElement;
+function readTheme(){
+  try{ var v=localStorage.getItem(TK); if(v) return v; }catch(e){}
+  return matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';
+}
+function paintTheme(t){
+  root.dataset.theme=t;
+  var b=document.getElementById('theme');
+  if(b) b.textContent=(t==='night'?'日间':'夜间');
+}
+paintTheme(readTheme());
+function toggleTheme(){
+  var t=root.dataset.theme==='night'?'day':'night';
+  try{ localStorage.setItem(TK,t); }catch(e){}
+  // 支持时用 View Transitions 做交叉淡化
+  if(document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.startViewTransition(function(){ paintTheme(t); });
+  }else{ paintTheme(t); }
+}
+// 观察器：元素进入视口后加 .in，一次性触发不回退。
+// 构造或调用失败（旧浏览器 polyfill 缺陷等）时退化为直接全部显示，
+// 避免因为动画层出错而导致正文停留在 opacity:0 的不可见状态。
+var reveal=(function(){
+  var showAll=function(els){ [].forEach.call(els,function(e){ e.classList.add('in'); }); };
+  if(!window.IntersectionObserver || matchMedia('(prefers-reduced-motion: reduce)').matches){
+    return showAll;
+  }
+  try{
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'0px 0px -12% 0px',threshold:.02});
+    return function(els){
+      try{ [].forEach.call(els,function(e){ io.observe(e); }); }
+      catch(e){ showAll(els); }
+    };
+  }catch(e){ return showAll; }
+})();
+
+(function(){
+  // 关掉浏览器自带的滚动位置恢复，避免和下面按「章号+比例」算出的位置打架
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+  var PK='xhw-pos-'+document.body.dataset.book;
+  var tools=document.getElementById('tools'), toc=document.getElementById('toc'),
+      scrim=document.getElementById('scrim'), bar=document.getElementById('bar'),
+      now=document.getElementById('now'), top=document.getElementById('top'),
+      cover=document.getElementById('cover');
+  var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
+  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var wide=function(){return window.innerWidth>=1080};
+  var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- 偏好
+  var st={scale:1,ch:null,ratio:0};
+  try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
+  var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
+  applyScale();
+
+  document.getElementById('theme').onclick=toggleTheme;
+  var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
+  var paintFont=function(){
+    var i=STEPS.indexOf(st.scale); fontBtn.textContent='字号 '+((i<0?1:i+1))+'/'+STEPS.length;
+  };
+  paintFont();
+  fontBtn.onclick=function(){
+    var i=STEPS.indexOf(st.scale); st.scale=STEPS[(i<0?1:i+1)%STEPS.length];
+    applyScale(); paintFont(); save();
+  };
+
+  // ---- 目录
+  function setToc(open){
+    toc.classList.toggle('open',open);
+    if(wide()){
+      toc.classList.toggle('hidden',!open);
+      document.documentElement.dataset.toc=open?'on':'off';
+      scrim.classList.remove('on');
+    }else{
+      scrim.classList.toggle('on',open);
+      document.documentElement.dataset.toc='off';
+    }
+  }
+  document.getElementById('menu').onclick=function(){ setToc(!toc.classList.contains('open')); };
+  scrim.onclick=function(){ setToc(false); };
+  toc.addEventListener('click',function(e){ if(e.target.closest('a')&&!wide()) setToc(false); });
+  setToc(wide());
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!wide()) setToc(false);
+  });
+
+  // ---- 入场动画
+  reveal(document.querySelectorAll('.rise,.ch-head,.sec-mark'));
+
+  // ---- 进度 / 当前章 / 封面视差
+  var cur=-1, raf=0, vh=innerHeight;
+  function tick(){
+    raf=0;
+    var y=window.scrollY, h=document.body.scrollHeight-vh;
+    bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
+    tools.classList.toggle('lifted',y>vh*.55);
+    top.classList.toggle('on',y>vh*1.2);
+
+    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
+    if(cover && !calm){
+      if(y<vh){
+        var k=y/vh;
+        cover.style.transform='translateY('+(y*.28)+'px)';
+        cover.style.opacity=String(Math.max(0,1-k*1.35));
+      }else if(cover.style.opacity!=='0'){
+        cover.style.opacity='0';
+      }
+    }
+
+    var probe=y+vh*.3, idx=-1;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].offsetTop<=probe) idx=i;
+    if(idx!==cur){
+      cur=idx;
+      var c=chapters[idx];
+      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
+      var curAnchor=c?c.dataset.anchor:null;
+      links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
+      if(c){
+        var vol=c.dataset.volume;
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+      }else{ now.textContent=''; }
+    }
+    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
+    if(idx>=0){
+      var chTop=chapters[idx].offsetTop;
+      var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
+      st.ch=chapters[idx].dataset.anchor;
+      st.ratio=Math.min(1,Math.max(0,(y-chTop)/Math.max(1,chBottom-chTop)));
+    }
+  }
+  var onScroll=function(){ if(!raf) raf=requestAnimationFrame(tick); };
+  addEventListener('scroll',onScroll,{passive:true});
+  addEventListener('resize',function(){
+    vh=innerHeight;
+    setToc(wide()?!toc.classList.contains('hidden'):false);
+    onScroll();
+  });
+
+  top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
+
+  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
+  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
+  // 变成平滑滚过全书，恢复前临时关掉。
+  if(st.ch!=null && !location.hash){
+    var target=null;
+    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    if(target){
+      var restore=function(){
+        var chTop=target.offsetTop;
+        var chBottom=(chapters.indexOf(target)+1<chapters.length)
+          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var prevBehavior=document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior='auto';
+        scrollTo(0, chTop+st.ratio*(chBottom-chTop));
+        document.documentElement.style.scrollBehavior=prevBehavior;
+        tick();
+      };
+      addEventListener('load',restore);
+      setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  }
+  tick();
+  addEventListener('beforeunload',save);
+  addEventListener('pagehide',save);
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='hidden') save();
+  });
+  setInterval(save,4000);
+
+  // ---- 左右方向键翻章
+  document.addEventListener('keydown',function(e){
+    if(e.target.closest('input,textarea')) return;
+    var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
+    if(!d) return;
+    var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
+    chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
+  });
+})();
+</script>
+</body>
+</html>
