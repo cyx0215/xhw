@@ -22,6 +22,9 @@ try{
 try{
   var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
   if(st.scale) r.style.setProperty('--font-scale',st.scale);
+  // body 尚未解析时把 path 记到 html，body 标签的 data-path 仍作默认；
+  // 真正生效在 READER_JS 的 setPath。这里只避免主题闪烁。
+  if(st.path==='mei'||st.path==='dao') r.dataset.pathPref=st.path;
 }catch(e){}
 if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
 })();</script>
@@ -222,6 +225,55 @@ em{font-style:italic;color:var(--ink-soft)}
   letter-spacing:.05em;color:var(--ink-faint)}
 .ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
 .ch-nav a:hover{color:var(--accent)}
+
+/* 顶峰双线：非当前线的章节隐藏；目录分叉与选线卡 */
+.chapter[data-branch]{display:none}
+body[data-path=mei] .chapter[data-branch=mei],
+body[data-path=dao] .chapter[data-branch=dao]{display:block}
+#toc a[data-branch]{display:none}
+body[data-path=mei] #toc a[data-branch=mei],
+body[data-path=dao] #toc a[data-branch=dao]{display:block}
+.toc-fork{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.85}
+.toc-fork:first-child{margin-top:0}
+#toc a .br{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;
+  font-size:10px;letter-spacing:.08em;border:1px solid var(--rule);color:var(--ink-faint);
+  vertical-align:1px}
+#toc a.on .br{border-color:color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent)}
+.ch-num .br{display:inline-block;margin-left:.55em;padding:2px 8px;border-radius:999px;
+  font-size:10px;letter-spacing:.12em;text-indent:0;border:1px solid
+  color-mix(in srgb,var(--accent) 40%,transparent);opacity:.95}
+.path-pick{max-width:34em;margin:8vh auto 2vh;padding:28px 26px 30px;
+  background:var(--bg-elev);border:1px solid var(--rule);border-radius:4px;
+  box-shadow:var(--shadow);font-family:var(--sans)}
+.path-pick .kicker{margin:0 0 10px;font-size:11px;letter-spacing:.28em;color:var(--accent);
+  text-indent:.28em}
+.path-pick .desc{margin:0 0 22px;font-size:13.5px;line-height:1.75;color:var(--ink-soft);
+  letter-spacing:.04em}
+.path-pick .btns{display:flex;flex-direction:column;gap:12px}
+@media (min-width:560px){
+  .path-pick .btns{flex-direction:row}
+  .path-pick .btns .path-btn{flex:1}
+}
+.path-btn{display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  padding:16px 18px;border:1px solid var(--rule);border-radius:3px;background:var(--bg);
+  color:var(--ink);cursor:pointer;text-align:left;font-family:var(--sans);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .2s var(--ease)}
+.path-btn:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--rule));
+  box-shadow:var(--shadow)}
+.path-btn:active{transform:scale(.99)}
+.path-btn b{font-weight:500;font-size:15px;letter-spacing:.14em}
+.path-btn span{font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em;line-height:1.55}
+body[data-path=mei] .path-btn[data-path=mei],
+body[data-path=dao] .path-btn[data-path=dao]{
+  border-color:color-mix(in srgb,var(--accent) 55%,var(--rule));
+  background:color-mix(in srgb,var(--accent) 8%,var(--bg))}
+.path-switch{position:fixed;right:14px;bottom:72px;z-index:40;display:none;
+  font-family:var(--sans);font-size:12px;letter-spacing:.08em;padding:8px 12px;
+  border-radius:999px;border:1px solid var(--rule);background:var(--bg-elev);
+  color:var(--ink-soft);cursor:pointer;box-shadow:var(--shadow)}
+body.has-fork .path-switch{display:inline-flex;align-items:center;gap:6px}
+.path-switch:hover{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,var(--rule))}
 .ch-nav a:last-child{text-align:right}
 
 footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
@@ -267,7 +319,7 @@ footer a:hover{color:var(--accent)}
 }
 </style>
 </head>
-<body data-book="远观">
+<body class="" data-book="远观" data-path="mei">
 <div id="bar"></div>
 
 <nav id="tools">
@@ -281,16 +333,16 @@ footer a:hover{color:var(--accent)}
 <div id="scrim"></div>
 <aside id="toc" aria-label="章节目录">
   <h3>目 录</h3>
-    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>传说与风</a>
-    <a href="#ch2" data-ch="ch2" style="--d:26ms"><i>02</i>雨与墙</a>
-    <a href="#ch3" data-ch="ch3" style="--d:52ms"><i>03</i>他先笑出声</a>
-    <a href="#ch4" data-ch="ch4" style="--d:78ms"><i>04</i>神遇见风</a>
-    <a href="#ch5" data-ch="ch5" style="--d:104ms"><i>05</i>远观的练习</a>
-    <a href="#ch6" data-ch="ch6" style="--d:130ms"><i>06</i>亵与界</a>
-    <a href="#ch7" data-ch="ch7" style="--d:156ms"><i>07</i>并肩</a>
-    <a href="#ch8" data-ch="ch8" style="--d:182ms"><i>08</i>终提</a>
-    <a href="#ch9" data-ch="ch9" style="--d:208ms"><i>09</i>可远观的恋人</a>
-    <a href="#ch10" data-ch="ch10" style="--d:234ms"><i>10</i>恰好（未完待续）</a>
+    <a href="#ch-1" data-ch="ch-1" style="--d:0ms"><i>01</i>传说与风</a>
+    <a href="#ch-2" data-ch="ch-2" style="--d:26ms"><i>02</i>雨与墙</a>
+    <a href="#ch-3" data-ch="ch-3" style="--d:52ms"><i>03</i>他先笑出声</a>
+    <a href="#ch-4" data-ch="ch-4" style="--d:78ms"><i>04</i>神遇见风</a>
+    <a href="#ch-5" data-ch="ch-5" style="--d:104ms"><i>05</i>远观的练习</a>
+    <a href="#ch-6" data-ch="ch-6" style="--d:130ms"><i>06</i>亵与界</a>
+    <a href="#ch-7" data-ch="ch-7" style="--d:156ms"><i>07</i>并肩</a>
+    <a href="#ch-8" data-ch="ch-8" style="--d:182ms"><i>08</i>终提</a>
+    <a href="#ch-9" data-ch="ch-9" style="--d:208ms"><i>09</i>可远观的恋人</a>
+    <a href="#ch-10" data-ch="ch-10" style="--d:234ms"><i>10</i>恰好（未完待续）</a>
 </aside>
 
 <header id="cover">
@@ -299,11 +351,11 @@ footer a:hover{color:var(--accent)}
   <div class="sub">第一卷</div>
   <p class="epi">可远观。<br>——也只是可远观。</p>
   <div class="meta">全 10 章 · 约 1.2 万字</div>
-  <a class="go" href="#ch1">开始阅读 <span>→</span></a>
+  <a class="go" href="#ch-1">开始阅读 <span>→</span></a>
 </header>
 
 <main>
-<section class="chapter" id="ch1" data-num="1" data-title="传说与风" data-anchor="ch1" data-volume="">
+<section class="chapter" id="ch-1" data-num="1" data-title="传说与风" data-anchor="ch-1" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 1 章</div>
     <h2 class="ch-title">传说与风</h2>
@@ -387,9 +439,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 1 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><span></span><a href="#ch2">雨与墙 →</a></nav>
+<nav class="ch-nav"><span></span><a href="#ch-2">雨与墙 →</a></nav>
 
-<section class="chapter" id="ch2" data-num="2" data-title="雨与墙" data-anchor="ch2" data-volume="">
+<section class="chapter" id="ch-2" data-num="2" data-title="雨与墙" data-anchor="ch-2" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 2 章</div>
     <h2 class="ch-title">雨与墙</h2>
@@ -451,9 +503,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 2 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch1">← 传说与风</a><a href="#ch3">他先笑出声 →</a></nav>
+<nav class="ch-nav"><a href="#ch-1">← 传说与风</a><a href="#ch-3">他先笑出声 →</a></nav>
 
-<section class="chapter" id="ch3" data-num="3" data-title="他先笑出声" data-anchor="ch3" data-volume="">
+<section class="chapter" id="ch-3" data-num="3" data-title="他先笑出声" data-anchor="ch-3" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 3 章</div>
     <h2 class="ch-title">他先笑出声</h2>
@@ -517,9 +569,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 3 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch2">← 雨与墙</a><a href="#ch4">神遇见风 →</a></nav>
+<nav class="ch-nav"><a href="#ch-2">← 雨与墙</a><a href="#ch-4">神遇见风 →</a></nav>
 
-<section class="chapter" id="ch4" data-num="4" data-title="神遇见风" data-anchor="ch4" data-volume="">
+<section class="chapter" id="ch-4" data-num="4" data-title="神遇见风" data-anchor="ch-4" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 4 章</div>
     <h2 class="ch-title">神遇见风</h2>
@@ -577,9 +629,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 4 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch3">← 他先笑出声</a><a href="#ch5">远观的练习 →</a></nav>
+<nav class="ch-nav"><a href="#ch-3">← 他先笑出声</a><a href="#ch-5">远观的练习 →</a></nav>
 
-<section class="chapter" id="ch5" data-num="5" data-title="远观的练习" data-anchor="ch5" data-volume="">
+<section class="chapter" id="ch-5" data-num="5" data-title="远观的练习" data-anchor="ch-5" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 5 章</div>
     <h2 class="ch-title">远观的练习</h2>
@@ -635,9 +687,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 5 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch4">← 神遇见风</a><a href="#ch6">亵与界 →</a></nav>
+<nav class="ch-nav"><a href="#ch-4">← 神遇见风</a><a href="#ch-6">亵与界 →</a></nav>
 
-<section class="chapter" id="ch6" data-num="6" data-title="亵与界" data-anchor="ch6" data-volume="">
+<section class="chapter" id="ch-6" data-num="6" data-title="亵与界" data-anchor="ch-6" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 6 章</div>
     <h2 class="ch-title">亵与界</h2>
@@ -708,9 +760,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 6 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch5">← 远观的练习</a><a href="#ch7">并肩 →</a></nav>
+<nav class="ch-nav"><a href="#ch-5">← 远观的练习</a><a href="#ch-7">并肩 →</a></nav>
 
-<section class="chapter" id="ch7" data-num="7" data-title="并肩" data-anchor="ch7" data-volume="">
+<section class="chapter" id="ch-7" data-num="7" data-title="并肩" data-anchor="ch-7" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 7 章</div>
     <h2 class="ch-title">并肩</h2>
@@ -765,9 +817,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 7 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch6">← 亵与界</a><a href="#ch8">终提 →</a></nav>
+<nav class="ch-nav"><a href="#ch-6">← 亵与界</a><a href="#ch-8">终提 →</a></nav>
 
-<section class="chapter" id="ch8" data-num="8" data-title="终提" data-anchor="ch8" data-volume="">
+<section class="chapter" id="ch-8" data-num="8" data-title="终提" data-anchor="ch-8" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 8 章</div>
     <h2 class="ch-title">终提</h2>
@@ -819,9 +871,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 8 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch7">← 并肩</a><a href="#ch9">可远观的恋人 →</a></nav>
+<nav class="ch-nav"><a href="#ch-7">← 并肩</a><a href="#ch-9">可远观的恋人 →</a></nav>
 
-<section class="chapter" id="ch9" data-num="9" data-title="可远观的恋人" data-anchor="ch9" data-volume="">
+<section class="chapter" id="ch-9" data-num="9" data-title="可远观的恋人" data-anchor="ch-9" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 9 章</div>
     <h2 class="ch-title">可远观的恋人</h2>
@@ -869,9 +921,9 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise">第 9 章 · 完</p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch8">← 终提</a><a href="#ch10">恰好（未完待续） →</a></nav>
+<nav class="ch-nav"><a href="#ch-8">← 终提</a><a href="#ch-10">恰好（未完待续） →</a></nav>
 
-<section class="chapter" id="ch10" data-num="10" data-title="恰好（未完待续）" data-anchor="ch10" data-volume="">
+<section class="chapter" id="ch-10" data-num="10" data-title="恰好（未完待续）" data-anchor="ch-10" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 10 章</div>
     <h2 class="ch-title">恰好（未完待续）</h2>
@@ -908,7 +960,7 @@ footer a:hover{color:var(--accent)}
   <p class="end-mark rise"><strong>《远观》第一卷 · 未完待续</strong></p>
 </section>
 <div class="ch-end"></div>
-<nav class="ch-nav"><a href="#ch9">← 可远观的恋人</a><span></span></nav>
+<nav class="ch-nav"><a href="#ch-9">← 可远观的恋人</a><span></span></nav>
 </main>
 
 <footer>
@@ -917,7 +969,9 @@ footer a:hover{color:var(--accent)}
 
 <button id="top" aria-label="回到顶部">↑</button>
 <noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
-#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
+#toc{transform:none!important}#scrim{display:none!important}
+.chapter[data-branch]{display:block!important}
+#toc a[data-branch]{display:block!important}</style></noscript>
 <script>
 var TK='xhw-theme';
 var root=document.documentElement;
@@ -969,16 +1023,87 @@ var reveal=(function(){
       now=document.getElementById('now'), top=document.getElementById('top'),
       cover=document.getElementById('cover');
   var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
-  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var allChapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var hasFork=document.body.classList.contains('has-fork');
   var wide=function(){return window.innerWidth>=1080};
   var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---- 偏好
-  var st={scale:1,ch:null,ratio:0};
+  function visibleChapters(){
+    var path=document.body.dataset.path||'mei';
+    return allChapters.filter(function(c){
+      var b=c.dataset.branch;
+      return !b || b===path;
+    });
+  }
+
+  // ---- 偏好（含双线 path）
+  var st={scale:1,ch:null,ratio:0,path:'mei'};
   try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  if(st.path!=='mei' && st.path!=='dao') st.path='mei';
   var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
   var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
   applyScale();
+
+  function setPath(path, opts){
+    opts=opts||{};
+    if(path!=='mei' && path!=='dao') path='mei';
+    var prev=document.body.dataset.path;
+    document.body.dataset.path=path;
+    st.path=path;
+    var sw=document.getElementById('path-switch');
+    if(sw) sw.textContent='线 · '+(path==='dao'?'刀':'美');
+    [].slice.call(document.querySelectorAll('.path-btn')).forEach(function(btn){
+      btn.setAttribute('aria-pressed', btn.dataset.path===path ? 'true' : 'false');
+    });
+    // 若当前锚在另一条线的分叉章，跳到同章号本线
+    if(opts.jumpSameNum && prev && prev!==path){
+      var curEl=null;
+      for(var i=0;i<allChapters.length;i++){
+        if(allChapters[i].dataset.anchor===st.ch){ curEl=allChapters[i]; break; }
+      }
+      if(curEl && curEl.dataset.branch && curEl.dataset.branch!==path){
+        var num=curEl.dataset.num;
+        var alt=allChapters.filter(function(c){
+          return c.dataset.num===num && c.dataset.branch===path;
+        })[0];
+        if(alt){
+          st.ch=alt.dataset.anchor;
+          if(opts.scroll!==false){
+            var prevB=document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior='auto';
+            alt.scrollIntoView();
+            document.documentElement.style.scrollBehavior=prevB;
+          }
+        }
+      }
+    }
+    if(opts.go){
+      var t=document.getElementById(opts.go);
+      if(t) t.scrollIntoView({behavior:calm?'auto':'smooth'});
+    }
+    save();
+    if(typeof tick==='function') tick();
+  }
+  setPath(st.path||'mei');
+
+  // 选线卡 / 浮动切换
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('.path-btn');
+    if(btn && btn.dataset.path){
+      setPath(btn.dataset.path, {go: btn.dataset.go, jumpSameNum:false});
+      return;
+    }
+    if(e.target.closest('#path-switch')){
+      var next=(document.body.dataset.path==='dao')?'mei':'dao';
+      setPath(next, {jumpSameNum:true, scroll:true});
+    }
+  });
+  // 点目录里某线的章 → 自动切到该线
+  toc.addEventListener('click',function(e){
+    var a=e.target.closest('a[data-ch]');
+    if(!a) return;
+    if(a.dataset.branch) setPath(a.dataset.branch, {jumpSameNum:false});
+  });
 
   document.getElementById('theme').onclick=toggleTheme;
   var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
@@ -1018,12 +1143,12 @@ var reveal=(function(){
   var cur=-1, raf=0, vh=innerHeight;
   function tick(){
     raf=0;
+    var chapters=visibleChapters();
     var y=window.scrollY, h=document.body.scrollHeight-vh;
     bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
     tools.classList.toggle('lifted',y>vh*.55);
     top.classList.toggle('on',y>vh*1.2);
 
-    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
     if(cover && !calm){
       if(y<vh){
         var k=y/vh;
@@ -1039,15 +1164,15 @@ var reveal=(function(){
     if(idx!==cur){
       cur=idx;
       var c=chapters[idx];
-      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
       var curAnchor=c?c.dataset.anchor:null;
       links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
       if(c){
         var vol=c.dataset.volume;
-        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+        var br=c.dataset.branch;
+        var brTxt=br==='dao'?' · 刀':(br==='mei'?' · 美':'');
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章'+brTxt+' · '+c.dataset.title;
       }else{ now.textContent=''; }
     }
-    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
     if(idx>=0){
       var chTop=chapters[idx].offsetTop;
       var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
@@ -1065,17 +1190,29 @@ var reveal=(function(){
 
   top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
 
-  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
-  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
-  // 变成平滑滚过全书，恢复前临时关掉。
+  // ---- 恢复进度
   if(st.ch!=null && !location.hash){
+    // 若存档在分叉章，先对齐 path
+    var restoreTarget=null;
+    for(var i=0;i<allChapters.length;i++){
+      if(allChapters[i].dataset.anchor===String(st.ch)){ restoreTarget=allChapters[i]; break; }
+    }
+    if(restoreTarget && restoreTarget.dataset.branch){
+      setPath(restoreTarget.dataset.branch);
+    }
     var target=null;
-    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    var chapters0=visibleChapters();
+    for(var j=0;j<chapters0.length;j++){
+      if(chapters0[j].dataset.anchor===String(st.ch)){ target=chapters0[j]; break; }
+    }
+    if(!target && restoreTarget) target=restoreTarget;
     if(target){
       var restore=function(){
+        var chapters=visibleChapters();
+        var ix=chapters.indexOf(target);
         var chTop=target.offsetTop;
-        var chBottom=(chapters.indexOf(target)+1<chapters.length)
-          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var chBottom=(ix>=0 && ix+1<chapters.length)
+          ? chapters[ix+1].offsetTop : document.body.scrollHeight;
         var prevBehavior=document.documentElement.style.scrollBehavior;
         document.documentElement.style.scrollBehavior='auto';
         scrollTo(0, chTop+st.ratio*(chBottom-chTop));
@@ -1084,6 +1221,12 @@ var reveal=(function(){
       };
       addEventListener('load',restore);
       setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  } else if(location.hash){
+    var hashId=location.hash.slice(1);
+    var hashEl=document.getElementById(hashId);
+    if(hashEl && hashEl.dataset && hashEl.dataset.branch){
+      setPath(hashEl.dataset.branch);
     }
   }
   tick();
@@ -1094,11 +1237,12 @@ var reveal=(function(){
   });
   setInterval(save,4000);
 
-  // ---- 左右方向键翻章
+  // ---- 左右方向键翻章（只在当前线可见章之间）
   document.addEventListener('keydown',function(e){
-    if(e.target.closest('input,textarea')) return;
+    if(e.target.closest('input,textarea,button')) return;
     var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
     if(!d) return;
+    var chapters=visibleChapters();
     var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
     chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
   });

@@ -22,6 +22,9 @@ try{
 try{
   var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
   if(st.scale) r.style.setProperty('--font-scale',st.scale);
+  // body 尚未解析时把 path 记到 html，body 标签的 data-path 仍作默认；
+  // 真正生效在 READER_JS 的 setPath。这里只避免主题闪烁。
+  if(st.path==='mei'||st.path==='dao') r.dataset.pathPref=st.path;
 }catch(e){}
 if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
 })();</script>
@@ -222,6 +225,55 @@ em{font-style:italic;color:var(--ink-soft)}
   letter-spacing:.05em;color:var(--ink-faint)}
 .ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
 .ch-nav a:hover{color:var(--accent)}
+
+/* 顶峰双线：非当前线的章节隐藏；目录分叉与选线卡 */
+.chapter[data-branch]{display:none}
+body[data-path=mei] .chapter[data-branch=mei],
+body[data-path=dao] .chapter[data-branch=dao]{display:block}
+#toc a[data-branch]{display:none}
+body[data-path=mei] #toc a[data-branch=mei],
+body[data-path=dao] #toc a[data-branch=dao]{display:block}
+.toc-fork{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.85}
+.toc-fork:first-child{margin-top:0}
+#toc a .br{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;
+  font-size:10px;letter-spacing:.08em;border:1px solid var(--rule);color:var(--ink-faint);
+  vertical-align:1px}
+#toc a.on .br{border-color:color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent)}
+.ch-num .br{display:inline-block;margin-left:.55em;padding:2px 8px;border-radius:999px;
+  font-size:10px;letter-spacing:.12em;text-indent:0;border:1px solid
+  color-mix(in srgb,var(--accent) 40%,transparent);opacity:.95}
+.path-pick{max-width:34em;margin:8vh auto 2vh;padding:28px 26px 30px;
+  background:var(--bg-elev);border:1px solid var(--rule);border-radius:4px;
+  box-shadow:var(--shadow);font-family:var(--sans)}
+.path-pick .kicker{margin:0 0 10px;font-size:11px;letter-spacing:.28em;color:var(--accent);
+  text-indent:.28em}
+.path-pick .desc{margin:0 0 22px;font-size:13.5px;line-height:1.75;color:var(--ink-soft);
+  letter-spacing:.04em}
+.path-pick .btns{display:flex;flex-direction:column;gap:12px}
+@media (min-width:560px){
+  .path-pick .btns{flex-direction:row}
+  .path-pick .btns .path-btn{flex:1}
+}
+.path-btn{display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  padding:16px 18px;border:1px solid var(--rule);border-radius:3px;background:var(--bg);
+  color:var(--ink);cursor:pointer;text-align:left;font-family:var(--sans);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .2s var(--ease)}
+.path-btn:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--rule));
+  box-shadow:var(--shadow)}
+.path-btn:active{transform:scale(.99)}
+.path-btn b{font-weight:500;font-size:15px;letter-spacing:.14em}
+.path-btn span{font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em;line-height:1.55}
+body[data-path=mei] .path-btn[data-path=mei],
+body[data-path=dao] .path-btn[data-path=dao]{
+  border-color:color-mix(in srgb,var(--accent) 55%,var(--rule));
+  background:color-mix(in srgb,var(--accent) 8%,var(--bg))}
+.path-switch{position:fixed;right:14px;bottom:72px;z-index:40;display:none;
+  font-family:var(--sans);font-size:12px;letter-spacing:.08em;padding:8px 12px;
+  border-radius:999px;border:1px solid var(--rule);background:var(--bg-elev);
+  color:var(--ink-soft);cursor:pointer;box-shadow:var(--shadow)}
+body.has-fork .path-switch{display:inline-flex;align-items:center;gap:6px}
+.path-switch:hover{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,var(--rule))}
 .ch-nav a:last-child{text-align:right}
 
 footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
@@ -267,7 +319,7 @@ footer a:hover{color:var(--accent)}
 }
 </style>
 </head>
-<body data-book="出差">
+<body class="" data-book="出差" data-path="mei">
 <div id="bar"></div>
 
 <nav id="tools">
@@ -281,15 +333,15 @@ footer a:hover{color:var(--accent)}
 <div id="scrim"></div>
 <aside id="toc" aria-label="章节目录">
   <h3>目 录</h3>
-    <a href="#ch1" data-ch="ch1" style="--d:0ms"><i>01</i>雨夜</a>
-    <a href="#ch1-sec1" class="sub-toc">落地</a>
-    <a href="#ch1-sec2" class="sub-toc">大堂</a>
-    <a href="#ch1-sec3" class="sub-toc">晚餐</a>
-    <a href="#ch1-sec4" class="sub-toc">夜访</a>
-    <a href="#ch1-sec5" class="sub-toc">雨声里</a>
-    <a href="#ch1-sec6" class="sub-toc">水声</a>
-    <a href="#ch1-sec7" class="sub-toc">第二次</a>
-    <a href="#ch1-sec8" class="sub-toc">清晨</a>
+    <a href="#ch-1" data-ch="ch-1" style="--d:0ms"><i>01</i>雨夜</a>
+    <a href="#ch-1-sec1" class="sub-toc">落地</a>
+    <a href="#ch-1-sec2" class="sub-toc">大堂</a>
+    <a href="#ch-1-sec3" class="sub-toc">晚餐</a>
+    <a href="#ch-1-sec4" class="sub-toc">夜访</a>
+    <a href="#ch-1-sec5" class="sub-toc">雨声里</a>
+    <a href="#ch-1-sec6" class="sub-toc">水声</a>
+    <a href="#ch-1-sec7" class="sub-toc">第二次</a>
+    <a href="#ch-1-sec8" class="sub-toc">清晨</a>
 </aside>
 
 <header id="cover">
@@ -298,17 +350,17 @@ footer a:hover{color:var(--accent)}
   <div class="sub">短篇</div>
   <p class="epi">那一夜的雨，<br>下得比谁都耐心。</p>
   <div class="meta">全 1 章 · 约 1.2 万字</div>
-  <a class="go" href="#ch1">开始阅读 <span>→</span></a>
+  <a class="go" href="#ch-1">开始阅读 <span>→</span></a>
 </header>
 
 <main>
-<section class="chapter" id="ch1" data-num="1" data-title="雨夜" data-anchor="ch1" data-volume="">
+<section class="chapter" id="ch-1" data-num="1" data-title="雨夜" data-anchor="ch-1" data-volume="">
   <header class="ch-head">
     <div class="ch-num">第 1 章</div>
     <h2 class="ch-title">雨夜</h2>
     <div class="ch-line"></div>
   </header>
-  <div class="sec-mark" id="ch1-sec1"><b>一<em>落地</em></b></div>
+  <div class="sec-mark" id="ch-1-sec1"><b>一<em>落地</em></b></div>
   <p class="p">沈清然把工牌从领口摘下来的时候，手指尖还带着一点凉。</p>
   <p class="p">落地之后天就阴了。H 市的风比她想象中湿，像有人把一整块海绵按在了空气里。她拖着那只浅米色的登机箱，跟着指示牌往出口走，箱轮在地面上滚出细细的声响，和周围匆忙的脚步叠在一起。</p>
   <p class="p">这是她第一次单独出差。</p>
@@ -331,7 +383,7 @@ footer a:hover{color:var(--accent)}
   <p class="p rise">车窗外的霓虹被雨丝拉成淡色的光带。司机开着收音机，低声放着一首她叫不出名的老歌。沈清然侧脸贴着微凉的玻璃，看见自己的倒影：齐肩发被发夹松松别着，领口的白衬衫被安全带压出一道浅痕，眼睛里还残留着飞机上没睡够的疲惫，却仍干净得像一页刚拆封的纸。</p>
   <p class="p rise">她并不知道，四十分钟后，在那间灯火通明的酒店大堂里，会有一双更深的眼睛，把这页纸慢慢掀开。</p>
   <p class="p rise">雨越下越大。</p>
-  <div class="sec-mark" id="ch1-sec2"><b>二<em>大堂</em></b></div>
+  <div class="sec-mark" id="ch-1-sec2"><b>二<em>大堂</em></b></div>
   <p class="p rise">酒店旋转门一开，暖风带着淡淡的木质香扑面而来。沈清然把湿了边的行李箱立好，下意识抬手理了理被风吹乱的碎发。大堂水晶灯亮得过分，把大理石地面照得像一面浅浅的湖。</p>
   <p class="p rise">她几乎是立刻就看见了他。</p>
   <p class="p rise">陆衡站在接待台侧面，深灰色大衣搭在臂弯，里面仍是那件扣到最上面的白衬衫。比视频里更高，肩线更沉。他并没有看手机，只是微微侧头，像是早就估准了她会从哪个方向进来。</p>
@@ -354,7 +406,7 @@ footer a:hover{color:var(--accent)}
   <p class="p rise">「我不是什么洪水猛兽。」他低声笑了一下，很短，「而且你比线上看起来……更像你自己。」</p>
   <p class="p rise">沈清然没听懂后半句的意思，只觉得耳朵又热了。电梯叮地一声开，她几乎是逃也似的先迈了出去。</p>
   <p class="p rise">把箱子推进 1608 时，她多看了一眼门卡套上的楼层示意：1610 就在左侧。一墙之隔四个字在心里一闪，她赶紧把门关上，像把什么不该有的念头也关在了外面。</p>
-  <div class="sec-mark" id="ch1-sec3"><b>三<em>晚餐</em></b></div>
+  <div class="sec-mark" id="ch-1-sec3"><b>三<em>晚餐</em></b></div>
   <p class="p rise">晚餐定在酒店三楼的西餐厅。落地窗外雨线密集，室内灯光偏暖，把一切棱角都揉软了。</p>
   <p class="p rise">陆衡点菜时问她忌口，她说「都可以」，声音小得像怕给人添麻烦。他便没再追问，只替她要了清淡的奶油蘑菇汤和一份煎鱼，自己则是牛排。红酒来了，他给她倒了半杯。</p>
   <p class="p rise">「不用勉强。」他把杯柄转向她，「润嗓就行。你不像会喝酒的人。」</p>
@@ -402,7 +454,7 @@ footer a:hover{color:var(--accent)}
   <p class="p rise">沈清然盯着最后一句，把屏幕按暗，又按亮，耳朵红了整整一路，红到浴室的灯打开为止。</p>
   <p class="p rise">热水淋下来的时候，她才发觉，自己在笑——很轻，很羞，像做了什么不该被人知道的梦。</p>
   <p class="p rise">而梦，显然还没有结束。</p>
-  <div class="sec-mark" id="ch1-sec4"><b>四<em>夜访</em></b></div>
+  <div class="sec-mark" id="ch-1-sec4"><b>四<em>夜访</em></b></div>
   <p class="p rise">十一点四十。</p>
   <p class="p rise">沈清然换上带过来的浅粉睡裙，发梢还滴着水，坐在床沿把方案又翻了一遍。字在眼前过，意思却进不去。隔壁偶尔传来极轻的动静——水杯搁下，脚步走过，然后是长久的安静。</p>
   <p class="p rise">她把手机电量看了三次：27%。充电线……她翻遍化妆包和电脑包，才想起来，那根线被她落在公司抽屉里了。</p>
@@ -461,7 +513,7 @@ footer a:hover{color:var(--accent)}
   <p class="p rise">「听懂了。」</p>
   <p class="p rise">「还有——」他额头抵着她，「你生涩也好，慢半拍也好，都不用跟谁比。今晚的节奏，只以你为准。」</p>
   <p class="p rise">沈清然点头，泪意却忽然涌上来。不是委屈，是被认真对待时，那种酸软的、想把整个人交出去的冲动。</p>
-  <div class="sec-mark" id="ch1-sec5"><b>五<em>雨声里</em></b></div>
+  <div class="sec-mark" id="ch-1-sec5"><b>五<em>雨声里</em></b></div>
   <p class="p rise">他把她放倒在床上时动作并不粗暴，甚至垫了掌心护住她的后脑。床垫下陷，两人的重量叠在一起。台灯把她的皮肤照成温润的瓷色——肩、锁骨、睡裙堆起后露出的小腹，都干净得让人不敢太用力。</p>
   <p class="p rise">陆衡解开自己剩余的扣子，一件件，不急。沈清然的目光无处安放，最后落在他小腹紧实的线条上，又慌忙闭上眼。</p>
   <p class="p rise">「看着我。」他握住她的手腕，引她的手掌贴上自己的胸口，「不是客户。是想要你的人。也是——会负责把你平安送到早晨的人。」</p>
@@ -524,7 +576,7 @@ footer a:hover{color:var(--accent)}
   <p class="p rise">「别躲。」他吻她的后颈，声音低而稳，「很好看。是你愿意把节奏交给我的样子。我珍惜。」</p>
   <p class="p rise">「……你别说了。」她闷声，鼻音还红着，「再说我会哭。」</p>
   <p class="p rise">「哭也可以。」他把她整个人捞进怀里，「对你，我流氓得有限。今晚剩下的，都是温柔。」</p>
-  <div class="sec-mark" id="ch1-sec6"><b>六<em>水声</em></b></div>
+  <div class="sec-mark" id="ch-1-sec6"><b>六<em>水声</em></b></div>
   <p class="p rise">他去浴室放热水，调到偏温的程度，又折回来——沈清然还侧躺着，睡裙歪在腰上，腿间的黏腻让她不敢轻易并拢。陆衡没让她自己走，直接用被子裹住她，横抱起来。</p>
   <p class="p rise">「我可以自己——」</p>
   <p class="p rise">「事后，不归你自己硬撑。」他语气平得像在布置会场，「你负责靠着。我负责洗干净。」</p>
@@ -555,7 +607,7 @@ footer a:hover{color:var(--accent)}
   <p class="p rise">陆衡的呼吸明显乱了一拍。他撑起半身，借着窗边透进的城市光看她：眼睛亮着，唇瓣还肿着一点，锁骨上有他留下的浅痕——清纯与情欲叠在同一张脸上，比任何技巧都致命。</p>
   <p class="p rise">「贪可以。」他拇指摩挲她的下唇，「但第二次更要听身体的话。还酸得厉害，就只抱着。想要，才准继续。成交？」</p>
   <p class="p rise">「成交。」</p>
-  <div class="sec-mark" id="ch1-sec7"><b>七<em>第二次</em></b></div>
+  <div class="sec-mark" id="ch-1-sec7"><b>七<em>第二次</em></b></div>
   <p class="p rise">这一次少了试探的紧绷，却更缠。</p>
   <p class="p rise">陆衡让她跨坐在自己腰上，只托着她的腰，不急着进入。「你主导。」他说，「多深、多快，你说了算。我的手只负责别让你跪不稳。」</p>
   <p class="p rise">沈清然羞得想逃，却在他目光里慢慢沉下腰。抵上入口时，她自己先抖——那里仍残留着细细的酸意，却比刚才更懂迎接。她咬着唇，一点一点坐下去，每下一分就停一秒，像在把自己重新交给同一个人。</p>
@@ -578,7 +630,7 @@ footer a:hover{color:var(--accent)}
   <p class="p rise">他沉默片刻，把她搂得更紧，紧到肋骨相抵。</p>
   <p class="p rise">「不是亏。」他一字一顿，「是存。存在我这儿。以后慢慢取。」</p>
   <p class="p rise">窗外雨小了。城市的光透过纱帘，落在交叠的身体上，像一层薄金。这一次，他们真的睡了过去——手指仍扣着，像怕梦把人拆走。</p>
-  <div class="sec-mark" id="ch1-sec8"><b>八<em>清晨</em></b></div>
+  <div class="sec-mark" id="ch-1-sec8"><b>八<em>清晨</em></b></div>
   <p class="p rise">五点五十。雨停了。</p>
   <p class="p rise">沈清然比闹钟先醒。腰酸得明显，腿心残留的胀意提醒她昨夜不是梦；小腹干净，床单干净，空气里却还留着雪松与情欲混合后的淡味。她小心动了动，男人的手臂立刻收紧，下巴搁上她的发顶。</p>
   <p class="p rise">「再睡四十分钟。」他声音沙哑，「闹钟我定了七点。早餐我让人送到 1608——你的房间。我会先回 1610 换衣服，大堂见。看起来，要像什么都没发生。」</p>
@@ -629,7 +681,9 @@ footer a:hover{color:var(--accent)}
 
 <button id="top" aria-label="回到顶部">↑</button>
 <noscript><style>.rise,.ch-head,.sec-mark{opacity:1!important;transform:none!important}
-#toc{transform:none!important}#scrim{display:none!important}</style></noscript>
+#toc{transform:none!important}#scrim{display:none!important}
+.chapter[data-branch]{display:block!important}
+#toc a[data-branch]{display:block!important}</style></noscript>
 <script>
 var TK='xhw-theme';
 var root=document.documentElement;
@@ -681,16 +735,87 @@ var reveal=(function(){
       now=document.getElementById('now'), top=document.getElementById('top'),
       cover=document.getElementById('cover');
   var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
-  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var allChapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var hasFork=document.body.classList.contains('has-fork');
   var wide=function(){return window.innerWidth>=1080};
   var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---- 偏好
-  var st={scale:1,ch:null,ratio:0};
+  function visibleChapters(){
+    var path=document.body.dataset.path||'mei';
+    return allChapters.filter(function(c){
+      var b=c.dataset.branch;
+      return !b || b===path;
+    });
+  }
+
+  // ---- 偏好（含双线 path）
+  var st={scale:1,ch:null,ratio:0,path:'mei'};
   try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  if(st.path!=='mei' && st.path!=='dao') st.path='mei';
   var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
   var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
   applyScale();
+
+  function setPath(path, opts){
+    opts=opts||{};
+    if(path!=='mei' && path!=='dao') path='mei';
+    var prev=document.body.dataset.path;
+    document.body.dataset.path=path;
+    st.path=path;
+    var sw=document.getElementById('path-switch');
+    if(sw) sw.textContent='线 · '+(path==='dao'?'刀':'美');
+    [].slice.call(document.querySelectorAll('.path-btn')).forEach(function(btn){
+      btn.setAttribute('aria-pressed', btn.dataset.path===path ? 'true' : 'false');
+    });
+    // 若当前锚在另一条线的分叉章，跳到同章号本线
+    if(opts.jumpSameNum && prev && prev!==path){
+      var curEl=null;
+      for(var i=0;i<allChapters.length;i++){
+        if(allChapters[i].dataset.anchor===st.ch){ curEl=allChapters[i]; break; }
+      }
+      if(curEl && curEl.dataset.branch && curEl.dataset.branch!==path){
+        var num=curEl.dataset.num;
+        var alt=allChapters.filter(function(c){
+          return c.dataset.num===num && c.dataset.branch===path;
+        })[0];
+        if(alt){
+          st.ch=alt.dataset.anchor;
+          if(opts.scroll!==false){
+            var prevB=document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior='auto';
+            alt.scrollIntoView();
+            document.documentElement.style.scrollBehavior=prevB;
+          }
+        }
+      }
+    }
+    if(opts.go){
+      var t=document.getElementById(opts.go);
+      if(t) t.scrollIntoView({behavior:calm?'auto':'smooth'});
+    }
+    save();
+    if(typeof tick==='function') tick();
+  }
+  setPath(st.path||'mei');
+
+  // 选线卡 / 浮动切换
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('.path-btn');
+    if(btn && btn.dataset.path){
+      setPath(btn.dataset.path, {go: btn.dataset.go, jumpSameNum:false});
+      return;
+    }
+    if(e.target.closest('#path-switch')){
+      var next=(document.body.dataset.path==='dao')?'mei':'dao';
+      setPath(next, {jumpSameNum:true, scroll:true});
+    }
+  });
+  // 点目录里某线的章 → 自动切到该线
+  toc.addEventListener('click',function(e){
+    var a=e.target.closest('a[data-ch]');
+    if(!a) return;
+    if(a.dataset.branch) setPath(a.dataset.branch, {jumpSameNum:false});
+  });
 
   document.getElementById('theme').onclick=toggleTheme;
   var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
@@ -730,12 +855,12 @@ var reveal=(function(){
   var cur=-1, raf=0, vh=innerHeight;
   function tick(){
     raf=0;
+    var chapters=visibleChapters();
     var y=window.scrollY, h=document.body.scrollHeight-vh;
     bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
     tools.classList.toggle('lifted',y>vh*.55);
     top.classList.toggle('on',y>vh*1.2);
 
-    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
     if(cover && !calm){
       if(y<vh){
         var k=y/vh;
@@ -751,15 +876,15 @@ var reveal=(function(){
     if(idx!==cur){
       cur=idx;
       var c=chapters[idx];
-      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
       var curAnchor=c?c.dataset.anchor:null;
       links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
       if(c){
         var vol=c.dataset.volume;
-        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+        var br=c.dataset.branch;
+        var brTxt=br==='dao'?' · 刀':(br==='mei'?' · 美':'');
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章'+brTxt+' · '+c.dataset.title;
       }else{ now.textContent=''; }
     }
-    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
     if(idx>=0){
       var chTop=chapters[idx].offsetTop;
       var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
@@ -777,17 +902,29 @@ var reveal=(function(){
 
   top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
 
-  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
-  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
-  // 变成平滑滚过全书，恢复前临时关掉。
+  // ---- 恢复进度
   if(st.ch!=null && !location.hash){
+    // 若存档在分叉章，先对齐 path
+    var restoreTarget=null;
+    for(var i=0;i<allChapters.length;i++){
+      if(allChapters[i].dataset.anchor===String(st.ch)){ restoreTarget=allChapters[i]; break; }
+    }
+    if(restoreTarget && restoreTarget.dataset.branch){
+      setPath(restoreTarget.dataset.branch);
+    }
     var target=null;
-    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    var chapters0=visibleChapters();
+    for(var j=0;j<chapters0.length;j++){
+      if(chapters0[j].dataset.anchor===String(st.ch)){ target=chapters0[j]; break; }
+    }
+    if(!target && restoreTarget) target=restoreTarget;
     if(target){
       var restore=function(){
+        var chapters=visibleChapters();
+        var ix=chapters.indexOf(target);
         var chTop=target.offsetTop;
-        var chBottom=(chapters.indexOf(target)+1<chapters.length)
-          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var chBottom=(ix>=0 && ix+1<chapters.length)
+          ? chapters[ix+1].offsetTop : document.body.scrollHeight;
         var prevBehavior=document.documentElement.style.scrollBehavior;
         document.documentElement.style.scrollBehavior='auto';
         scrollTo(0, chTop+st.ratio*(chBottom-chTop));
@@ -796,6 +933,12 @@ var reveal=(function(){
       };
       addEventListener('load',restore);
       setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  } else if(location.hash){
+    var hashId=location.hash.slice(1);
+    var hashEl=document.getElementById(hashId);
+    if(hashEl && hashEl.dataset && hashEl.dataset.branch){
+      setPath(hashEl.dataset.branch);
     }
   }
   tick();
@@ -806,11 +949,12 @@ var reveal=(function(){
   });
   setInterval(save,4000);
 
-  // ---- 左右方向键翻章
+  // ---- 左右方向键翻章（只在当前线可见章之间）
   document.addEventListener('keydown',function(e){
-    if(e.target.closest('input,textarea')) return;
+    if(e.target.closest('input,textarea,button')) return;
     var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
     if(!d) return;
+    var chapters=visibleChapters();
     var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
     chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
   });

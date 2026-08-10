@@ -242,51 +242,147 @@ def volume_order(dir_name):
     return cn_num(m.group(1)) if m else 9999
 
 
+# 同章多版本：ch014.md / ch014-刀版.md / ch014-美版.md
+# key 写入 data-branch，与阅读页 body[data-path] 对应
+BRANCH_TAGS = {
+    "": ("mei", "美"),
+    "美": ("mei", "美"),
+    "美版": ("mei", "美"),
+    "原版": ("mei", "美"),
+    "刀": ("dao", "刀"),
+    "刀版": ("dao", "刀"),
+}
+DEFAULT_PATH = "mei"
+BRANCH_SORT = {"mei": 0, "dao": 1}
+
+
+def parse_chapter_stem(stem):
+    """ch014 / ch014-刀版 / ch1-2 → (章序号, 版本标签或 \"\")。"""
+    m = re.match(r"^ch(\d+)(?:-(.+))?$", stem, re.I)
+    if m:
+        return int(m.group(1)), (m.group(2) or "").strip()
+    nums = re.findall(r"\d+", stem)
+    if not nums:
+        return 0, ""
+    return (int(nums[-1]) if len(nums) > 1 else int(nums[0])), ""
+
+
+def branch_of_tag(tag):
+    """版本标签 → (branch_key, 短标签)。未知标签原样用作 key。"""
+    if tag in BRANCH_TAGS:
+        return BRANCH_TAGS[tag]
+    if not tag:
+        return BRANCH_TAGS[""]
+    return (re.sub(r"[^\w\u4e00-\u9fff]+", "", tag) or "alt", tag)
+
+
+def clean_display_title(title):
+    """去掉章名里的（原版·美）（刀版）等作者标注，网页只显示故事标题。"""
+    t = re.sub(
+        r"[（(]\s*(原版|刀版|美版)?\s*[·・]?\s*(美|刀)?\s*[）)]",
+        "",
+        title or "",
+    )
+    return re.sub(r"\s+", " ", t).strip() or title
+
+
 def iter_chapter_files(book_dir):
     """收集一本书的章节文件，返回 [(排序键, 卷名, 路径), ...]。
 
-    支持两种结构，可混用：
+    支持：
       章节/ch001.md                直接放章节（卷名为 ""）
+      章节/ch014-刀版.md           同章双线版本
       章节/卷一/ch001.md           分卷；卷序取目录名里的数字
-    卷内章号相同的不同卷不会相撞，因为排序键是 (卷序, 章号)。
+    排序键 (卷序, 章号, 版本序)：美线在前，刀线在后。
     """
     ch_dir = book_dir / "章节"
     items = []
     for p in ch_dir.glob("ch*.md"):
-        items.append(((0, chapter_seq(p)), "", p))
+        seq, tag = parse_chapter_stem(p.stem)
+        key, _ = branch_of_tag(tag)
+        items.append(((0, seq, BRANCH_SORT.get(key, 9)), "", p))
     for sub in ch_dir.iterdir():
         if not sub.is_dir():
             continue
         vo = volume_order(sub.name)
         for p in sub.glob("ch*.md"):
-            items.append(((vo, chapter_seq(p)), sub.name, p))
+            seq, tag = parse_chapter_stem(p.stem)
+            key, _ = branch_of_tag(tag)
+            items.append(((vo, seq, BRANCH_SORT.get(key, 9)), sub.name, p))
     items.sort(key=lambda t: t[0])
     return items
 
 
 def chapter_seq(path):
-    """章节文件名 → 章内序号。ch001 → 1；ch1-2（卷内第2章）→ 2。"""
-    nums = re.findall(r"\d+", path.stem)
-    if not nums:
-        return 0
-    # 有两段数字时（如 ch1-2）后一段才是章号，前一段是卷号
-    return int(nums[-1]) if len(nums) > 1 else int(nums[0])
+    """章节文件名 → 章内序号。ch001 → 1；ch014-刀版 → 14。"""
+    return parse_chapter_stem(path.stem)[0]
+
+
+def path_chapters(chapters, path=DEFAULT_PATH):
+    """当前阅读线下的章节序列（共用章 + 该线专属章）。"""
+    return [c for c in chapters if not c.get("branch") or c["branch"] == path]
 
 
 def load_book(book_dir):
-    """读一本书：元信息 + 全部章节 + 字数统计。"""
+    """读一本书：元信息 + 全部章节（含双线版本）+ 字数统计。"""
     meta = load_meta(book_dir)
     entries = iter_chapter_files(book_dir)
-    chapters = []
-    for i, (_, vol, path) in enumerate(entries, 1):
+
+    # 先解析，再按章号判断是否分叉
+    parsed = []
+    for _, vol, path in entries:
         ch = parse_chapter(path)
+        seq, tag = parse_chapter_stem(path.stem)
+        # 文件名序优先保证 ch014-刀版 归到 14；标题里的章号作校验
+        if ch.get("num") is None:
+            ch["num"] = seq
+        elif ch["num"] != seq and seq:
+            # 标题与文件名不一致时以文件名为准（避免刀版标题干扰）
+            ch["num"] = seq
         ch["volume"] = vol
-        # 锚点用全书序号而非章号：分卷时各卷章号会重复（卷一/卷二都有 ch001），
-        # 直接用 num 做 id 会撞。num 仍用于显示「第 N 章」。
-        ch["anchor"] = f"ch{i}"
-        chapters.append(ch)
+        ch["file_tag"] = tag
+        ch["title"] = clean_display_title(ch.get("title") or f"第 {ch['num']} 章")
+        parsed.append(ch)
+
+    from collections import defaultdict
+    by_num = defaultdict(list)
+    for ch in parsed:
+        by_num[ch["num"]].append(ch)
+
+    chapters = []
+    for num in sorted(by_num):
+        group = by_num[num]
+        forked = len(group) > 1
+        for ch in group:
+            tag = ch.pop("file_tag", "")
+            if forked:
+                key, label = branch_of_tag(tag)
+                ch["branch"] = key
+                ch["branch_label"] = label
+                ch["anchor"] = f"ch-{num}-{key}"
+            else:
+                ch["branch"] = None
+                ch["branch_label"] = ""
+                # 锚点用章号，避免双线书插入版本后共用章 id 漂移
+                ch["anchor"] = f"ch-{num}"
+            chapters.append(ch)
+
+    chapters.sort(
+        key=lambda c: (
+            c["num"],
+            BRANCH_SORT.get(c["branch"], -1) if c["branch"] else -1,
+        )
+    )
+
     meta["chapters"] = chapters
-    meta["chars"] = sum(chapter_chars(c) for c in chapters)
+    meta["has_fork"] = any(c.get("branch") for c in chapters)
+    meta["chapter_count"] = len({c["num"] for c in chapters})  # 逻辑章数（双线不重复计）
+    # 字数按默认线（美）统计，避免美+刀重复灌水
+    meta["chars"] = sum(chapter_chars(c) for c in path_chapters(chapters, DEFAULT_PATH))
+    if meta["has_fork"]:
+        meta["chars_dao"] = sum(
+            chapter_chars(c) for c in path_chapters(chapters, "dao")
+        )
     check_author_leak(meta)
     return meta
 
@@ -577,6 +673,55 @@ em{font-style:italic;color:var(--ink-soft)}
   letter-spacing:.05em;color:var(--ink-faint)}
 .ch-nav a{color:var(--ink-soft);text-decoration:none;transition:color .25s var(--ease)}
 .ch-nav a:hover{color:var(--accent)}
+
+/* 顶峰双线：非当前线的章节隐藏；目录分叉与选线卡 */
+.chapter[data-branch]{display:none}
+body[data-path=mei] .chapter[data-branch=mei],
+body[data-path=dao] .chapter[data-branch=dao]{display:block}
+#toc a[data-branch]{display:none}
+body[data-path=mei] #toc a[data-branch=mei],
+body[data-path=dao] #toc a[data-branch=dao]{display:block}
+.toc-fork{margin:18px 0 6px;padding:0 22px;font-family:var(--sans);font-size:10.5px;
+  letter-spacing:.2em;color:var(--ink-faint);opacity:.85}
+.toc-fork:first-child{margin-top:0}
+#toc a .br{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;
+  font-size:10px;letter-spacing:.08em;border:1px solid var(--rule);color:var(--ink-faint);
+  vertical-align:1px}
+#toc a.on .br{border-color:color-mix(in srgb,var(--accent) 45%,transparent);color:var(--accent)}
+.ch-num .br{display:inline-block;margin-left:.55em;padding:2px 8px;border-radius:999px;
+  font-size:10px;letter-spacing:.12em;text-indent:0;border:1px solid
+  color-mix(in srgb,var(--accent) 40%,transparent);opacity:.95}
+.path-pick{max-width:34em;margin:8vh auto 2vh;padding:28px 26px 30px;
+  background:var(--bg-elev);border:1px solid var(--rule);border-radius:4px;
+  box-shadow:var(--shadow);font-family:var(--sans)}
+.path-pick .kicker{margin:0 0 10px;font-size:11px;letter-spacing:.28em;color:var(--accent);
+  text-indent:.28em}
+.path-pick .desc{margin:0 0 22px;font-size:13.5px;line-height:1.75;color:var(--ink-soft);
+  letter-spacing:.04em}
+.path-pick .btns{display:flex;flex-direction:column;gap:12px}
+@media (min-width:560px){
+  .path-pick .btns{flex-direction:row}
+  .path-pick .btns .path-btn{flex:1}
+}
+.path-btn{display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  padding:16px 18px;border:1px solid var(--rule);border-radius:3px;background:var(--bg);
+  color:var(--ink);cursor:pointer;text-align:left;font-family:var(--sans);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease),transform .2s var(--ease)}
+.path-btn:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--rule));
+  box-shadow:var(--shadow)}
+.path-btn:active{transform:scale(.99)}
+.path-btn b{font-weight:500;font-size:15px;letter-spacing:.14em}
+.path-btn span{font-size:12.5px;color:var(--ink-soft);letter-spacing:.04em;line-height:1.55}
+body[data-path=mei] .path-btn[data-path=mei],
+body[data-path=dao] .path-btn[data-path=dao]{
+  border-color:color-mix(in srgb,var(--accent) 55%,var(--rule));
+  background:color-mix(in srgb,var(--accent) 8%,var(--bg))}
+.path-switch{position:fixed;right:14px;bottom:72px;z-index:40;display:none;
+  font-family:var(--sans);font-size:12px;letter-spacing:.08em;padding:8px 12px;
+  border-radius:999px;border:1px solid var(--rule);background:var(--bg-elev);
+  color:var(--ink-soft);cursor:pointer;box-shadow:var(--shadow)}
+body.has-fork .path-switch{display:inline-flex;align-items:center;gap:6px}
+.path-switch:hover{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 40%,var(--rule))}
 .ch-nav a:last-child{text-align:right}
 
 footer{max-width:34em;margin:0 auto;padding:16vh 26px 12vh;text-align:center;
@@ -789,16 +934,87 @@ READER_JS = r"""
       now=document.getElementById('now'), top=document.getElementById('top'),
       cover=document.getElementById('cover');
   var links=[].slice.call(toc.querySelectorAll('a[data-ch]'));
-  var chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var allChapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var hasFork=document.body.classList.contains('has-fork');
   var wide=function(){return window.innerWidth>=1080};
   var calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---- 偏好
-  var st={scale:1,ch:null,ratio:0};
+  function visibleChapters(){
+    var path=document.body.dataset.path||'mei';
+    return allChapters.filter(function(c){
+      var b=c.dataset.branch;
+      return !b || b===path;
+    });
+  }
+
+  // ---- 偏好（含双线 path）
+  var st={scale:1,ch:null,ratio:0,path:'mei'};
   try{ st=Object.assign(st,JSON.parse(localStorage.getItem(PK)||'{}')); }catch(e){}
+  if(st.path!=='mei' && st.path!=='dao') st.path='mei';
   var save=function(){ try{localStorage.setItem(PK,JSON.stringify(st))}catch(e){} };
   var applyScale=function(){ document.documentElement.style.setProperty('--font-scale',st.scale); };
   applyScale();
+
+  function setPath(path, opts){
+    opts=opts||{};
+    if(path!=='mei' && path!=='dao') path='mei';
+    var prev=document.body.dataset.path;
+    document.body.dataset.path=path;
+    st.path=path;
+    var sw=document.getElementById('path-switch');
+    if(sw) sw.textContent='线 · '+(path==='dao'?'刀':'美');
+    [].slice.call(document.querySelectorAll('.path-btn')).forEach(function(btn){
+      btn.setAttribute('aria-pressed', btn.dataset.path===path ? 'true' : 'false');
+    });
+    // 若当前锚在另一条线的分叉章，跳到同章号本线
+    if(opts.jumpSameNum && prev && prev!==path){
+      var curEl=null;
+      for(var i=0;i<allChapters.length;i++){
+        if(allChapters[i].dataset.anchor===st.ch){ curEl=allChapters[i]; break; }
+      }
+      if(curEl && curEl.dataset.branch && curEl.dataset.branch!==path){
+        var num=curEl.dataset.num;
+        var alt=allChapters.filter(function(c){
+          return c.dataset.num===num && c.dataset.branch===path;
+        })[0];
+        if(alt){
+          st.ch=alt.dataset.anchor;
+          if(opts.scroll!==false){
+            var prevB=document.documentElement.style.scrollBehavior;
+            document.documentElement.style.scrollBehavior='auto';
+            alt.scrollIntoView();
+            document.documentElement.style.scrollBehavior=prevB;
+          }
+        }
+      }
+    }
+    if(opts.go){
+      var t=document.getElementById(opts.go);
+      if(t) t.scrollIntoView({behavior:calm?'auto':'smooth'});
+    }
+    save();
+    if(typeof tick==='function') tick();
+  }
+  setPath(st.path||'mei');
+
+  // 选线卡 / 浮动切换
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('.path-btn');
+    if(btn && btn.dataset.path){
+      setPath(btn.dataset.path, {go: btn.dataset.go, jumpSameNum:false});
+      return;
+    }
+    if(e.target.closest('#path-switch')){
+      var next=(document.body.dataset.path==='dao')?'mei':'dao';
+      setPath(next, {jumpSameNum:true, scroll:true});
+    }
+  });
+  // 点目录里某线的章 → 自动切到该线
+  toc.addEventListener('click',function(e){
+    var a=e.target.closest('a[data-ch]');
+    if(!a) return;
+    if(a.dataset.branch) setPath(a.dataset.branch, {jumpSameNum:false});
+  });
 
   document.getElementById('theme').onclick=toggleTheme;
   var STEPS=[.88,1,1.14,1.3], fontBtn=document.getElementById('font');
@@ -838,12 +1054,12 @@ READER_JS = r"""
   var cur=-1, raf=0, vh=innerHeight;
   function tick(){
     raf=0;
+    var chapters=visibleChapters();
     var y=window.scrollY, h=document.body.scrollHeight-vh;
     bar.style.width=(h>0?Math.min(y/h*100,100):0)+'%';
     tools.classList.toggle('lifted',y>vh*.55);
     top.classList.toggle('on',y>vh*1.2);
 
-    // 封面随滚动缓慢上移淡出，只在首屏范围内计算
     if(cover && !calm){
       if(y<vh){
         var k=y/vh;
@@ -859,15 +1075,15 @@ READER_JS = r"""
     if(idx!==cur){
       cur=idx;
       var c=chapters[idx];
-      // 按 anchor 匹配而不是按下标：目录里混有 .sub-toc 二级项，下标对不上章节
       var curAnchor=c?c.dataset.anchor:null;
       links.forEach(function(a){ a.classList.toggle('on',a.dataset.ch===curAnchor); });
       if(c){
         var vol=c.dataset.volume;
-        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章 · '+c.dataset.title;
+        var br=c.dataset.branch;
+        var brTxt=br==='dao'?' · 刀':(br==='mei'?' · 美':'');
+        now.textContent=(vol?vol+' · ':'')+'第 '+c.dataset.num+' 章'+brTxt+' · '+c.dataset.title;
       }else{ now.textContent=''; }
     }
-    // 记录「章号 + 章内比例」而非绝对像素，字号/窗宽变化后仍能精确还原
     if(idx>=0){
       var chTop=chapters[idx].offsetTop;
       var chBottom=(idx+1<chapters.length)?chapters[idx+1].offsetTop:document.body.scrollHeight;
@@ -885,17 +1101,29 @@ READER_JS = r"""
 
   top.onclick=function(){ scrollTo({top:0,behavior:calm?'auto':'smooth'}); };
 
-  // ---- 恢复进度（有 hash 时以 hash 为准）：按「章号 + 章内比例」重新定位，
-  // 字号、窗宽变化甚至换设备后依然对得上。用 html.scroll-behavior 会让这一跳
-  // 变成平滑滚过全书，恢复前临时关掉。
+  // ---- 恢复进度
   if(st.ch!=null && !location.hash){
+    // 若存档在分叉章，先对齐 path
+    var restoreTarget=null;
+    for(var i=0;i<allChapters.length;i++){
+      if(allChapters[i].dataset.anchor===String(st.ch)){ restoreTarget=allChapters[i]; break; }
+    }
+    if(restoreTarget && restoreTarget.dataset.branch){
+      setPath(restoreTarget.dataset.branch);
+    }
     var target=null;
-    for(var i=0;i<chapters.length;i++) if(chapters[i].dataset.anchor===String(st.ch)){ target=chapters[i]; break; }
+    var chapters0=visibleChapters();
+    for(var j=0;j<chapters0.length;j++){
+      if(chapters0[j].dataset.anchor===String(st.ch)){ target=chapters0[j]; break; }
+    }
+    if(!target && restoreTarget) target=restoreTarget;
     if(target){
       var restore=function(){
+        var chapters=visibleChapters();
+        var ix=chapters.indexOf(target);
         var chTop=target.offsetTop;
-        var chBottom=(chapters.indexOf(target)+1<chapters.length)
-          ? chapters[chapters.indexOf(target)+1].offsetTop : document.body.scrollHeight;
+        var chBottom=(ix>=0 && ix+1<chapters.length)
+          ? chapters[ix+1].offsetTop : document.body.scrollHeight;
         var prevBehavior=document.documentElement.style.scrollBehavior;
         document.documentElement.style.scrollBehavior='auto';
         scrollTo(0, chTop+st.ratio*(chBottom-chTop));
@@ -904,6 +1132,12 @@ READER_JS = r"""
       };
       addEventListener('load',restore);
       setTimeout(function(){ if(!window.scrollY) restore(); },60);
+    }
+  } else if(location.hash){
+    var hashId=location.hash.slice(1);
+    var hashEl=document.getElementById(hashId);
+    if(hashEl && hashEl.dataset && hashEl.dataset.branch){
+      setPath(hashEl.dataset.branch);
     }
   }
   tick();
@@ -914,11 +1148,12 @@ READER_JS = r"""
   });
   setInterval(save,4000);
 
-  // ---- 左右方向键翻章
+  // ---- 左右方向键翻章（只在当前线可见章之间）
   document.addEventListener('keydown',function(e){
-    if(e.target.closest('input,textarea')) return;
+    if(e.target.closest('input,textarea,button')) return;
     var d = (e.key==='ArrowRight'||e.key==='j') ? 1 : ((e.key==='ArrowLeft'||e.key==='k') ? -1 : 0);
     if(!d) return;
+    var chapters=visibleChapters();
     var n=Math.max(0,Math.min(chapters.length-1,(cur<0?0:cur)+d));
     chapters[n].scrollIntoView({behavior:calm?'auto':'smooth'});
   });
@@ -967,6 +1202,9 @@ try{
 try{
   var st=JSON.parse(localStorage.getItem('xhw-pos-'+book)||'{}');
   if(st.scale) r.style.setProperty('--font-scale',st.scale);
+  // body 尚未解析时把 path 记到 html，body 标签的 data-path 仍作默认；
+  // 真正生效在 READER_JS 的 setPath。这里只避免主题闪烁。
+  if(st.path==='mei'||st.path==='dao') r.dataset.pathPref=st.path;
 }catch(e){}
 if(matchMedia('(min-width:1080px)').matches) r.dataset.toc='on';
 })();"""
@@ -983,13 +1221,19 @@ def render_chapter(ch, first, prev_ch=None, next_ch=None):
     导航——没有小标题的纯装饰性「一/二/三」不值得占目录条目。
     """
     vol = ch.get("volume") or ""
+    branch = ch.get("branch") or ""
+    br_label = ch.get("branch_label") or ""
     ch_label = (f"{vol} · " if vol else "") + f'第 {ch["num"]} 章'
+    if br_label:
+        ch_label += f'<span class="br">{html.escape(br_label)}</span>'
+    branch_attr = f' data-branch="{html.escape(branch)}"' if branch else ""
     out = [
         f'<section class="chapter" id="{ch["anchor"]}"'
         f' data-num="{ch["num"]}" data-title="{html.escape(ch["title"])}"'
-        f' data-anchor="{ch["anchor"]}" data-volume="{html.escape(vol)}">',
+        f' data-anchor="{ch["anchor"]}" data-volume="{html.escape(vol)}"'
+        f'{branch_attr}>',
         '  <header class="ch-head">',
-        f'    <div class="ch-num">{html.escape(ch_label)}</div>',
+        f'    <div class="ch-num">{ch_label}</div>',
         f'    <h2 class="ch-title">{html.escape(ch["title"])}</h2>',
         '    <div class="ch-line"></div>',
         "  </header>",
@@ -1033,33 +1277,85 @@ def render_chapter(ch, first, prev_ch=None, next_ch=None):
     return "\n".join(out), sections
 
 
+def render_path_pick():
+    """顶峰双线选线卡（插在首个分叉章之前）。"""
+    return """<aside class="path-pick rise" id="path-pick" aria-label="选择阅读线">
+  <p class="kicker">顶峰分叉</p>
+  <p class="desc">第 14–15 章有两条版本，请选一条读完再进入第 16 章。美线与刀线不要交叉混读。</p>
+  <div class="btns">
+    <button type="button" class="path-btn" data-path="mei" data-go="ch-14-mei">
+      <b>美线</b>
+      <span>像相爱 · 痛在安静里</span>
+    </button>
+    <button type="button" class="path-btn" data-path="dao" data-go="ch-14-dao">
+      <b>刀线</b>
+      <span>来电处刑 · 痛在合法日常</span>
+    </button>
+  </div>
+</aside>"""
+
+
 def render_reader(book, has_shelf):
     """渲染单本书的阅读页（单文件，内联全部样式与脚本）。"""
     chapters = book["chapters"]
     accent, lit = book["accent"], lighten(book["accent"])
+    has_fork = book.get("has_fork", False)
+    default_path = DEFAULT_PATH
 
-    rendered = [
-        render_chapter(
-            c, i == 0,
-            prev_ch=chapters[i - 1] if i > 0 else None,
-            next_ch=chapters[i + 1] if i + 1 < len(chapters) else None,
+    # 章末导航按「默认线」预填；阅读页 JS 会在切线时改写
+    def neighbors(ch, path):
+        chain = path_chapters(chapters, path)
+        try:
+            i = next(j for j, c in enumerate(chain) if c["anchor"] == ch["anchor"])
+        except StopIteration:
+            return None, None
+        prev_c = chain[i - 1] if i > 0 else None
+        next_c = chain[i + 1] if i + 1 < len(chain) else None
+        return prev_c, next_c
+
+    rendered = []
+    for i, c in enumerate(chapters):
+        path_for_nav = c.get("branch") or default_path
+        prev_c, next_c = neighbors(c, path_for_nav)
+        # 共用章的 next：若下一段是分叉，指向当前 path 的对应章
+        if not c.get("branch"):
+            prev_c, next_c = neighbors(c, default_path)
+        rendered.append(
+            render_chapter(c, i == 0, prev_ch=prev_c, next_ch=next_c)
         )
-        for i, c in enumerate(chapters)
-    ]
-    body = "\n\n".join(html_ for html_, _ in rendered)
+
+    # 正文：在首个分叉章前插入选线卡
+    body_parts = []
+    pick_inserted = False
+    for i, c in enumerate(chapters):
+        if has_fork and not pick_inserted and c.get("branch"):
+            body_parts.append(render_path_pick())
+            pick_inserted = True
+        body_parts.append(rendered[i][0])
+    body = "\n\n".join(body_parts)
 
     toc_parts = []
     cur_vol = None
+    fork_marked = False
     for i, c in enumerate(chapters):
         vol = c.get("volume") or ""
-        # 分卷的书在目录里插入卷标题；不分卷时 vol 恒为 "" 不会触发
         if vol != cur_vol:
             cur_vol = vol
             if vol:
                 toc_parts.append(f'    <div class="toc-vol">{html.escape(vol)}</div>')
+        if c.get("branch") and not fork_marked:
+            toc_parts.append('    <div class="toc-fork">顶峰双线 · 14–15</div>')
+            fork_marked = True
+        br = c.get("branch") or ""
+        br_attr = f' data-branch="{html.escape(br)}"' if br else ""
+        br_badge = (
+            f'<span class="br">{html.escape(c["branch_label"])}</span>'
+            if c.get("branch_label") else ""
+        )
         toc_parts.append(
-            f'    <a href="#{c["anchor"]}" data-ch="{c["anchor"]}" style="--d:{i * 26}ms">'
-            f'<i>{c["num"]:02d}</i>{html.escape(c["title"])}</a>'
+            f'    <a href="#{c["anchor"]}" data-ch="{c["anchor"]}"{br_attr} '
+            f'style="--d:{i * 26}ms">'
+            f'<i>{c["num"]:02d}</i>{html.escape(c["title"])}{br_badge}</a>'
         )
         for sec_id, sub in rendered[i][1]:
             toc_parts.append(f'    <a href="#{sec_id}" class="sub-toc">{html.escape(sub)}</a>')
@@ -1079,6 +1375,18 @@ def render_reader(book, has_shelf):
     page_title = f"{title}{' · ' + sub if sub else ''}"
     desc = html.escape(book["tagline"]) if book["tagline"] else f"{title}，在线阅读"
     favicon = favicon_data_uri(accent)
+    n_logic = book.get("chapter_count") or len(chapters)
+    meta_line = f"全 {n_logic} 章"
+    if has_fork:
+        meta_line += " · 顶峰双线（美 / 刀）"
+    meta_line += f" · {fmt_wan(book['chars'])}"
+    body_class = "has-fork" if has_fork else ""
+    path_switch = (
+        '<button type="button" class="path-switch" id="path-switch" '
+        'aria-label="切换美线或刀线">线 · 美</button>\n'
+        if has_fork else ""
+    )
+    first_anchor = chapters[0]["anchor"] if chapters else "ch-1"
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN" data-toc="off"
@@ -1097,7 +1405,7 @@ def render_reader(book, has_shelf):
 <script data-book="{title}">{READER_PREPAINT_JS}</script>
 <style>{BASE_CSS}{READER_CSS}</style>
 </head>
-<body data-book="{title}">
+<body class="{body_class}" data-book="{title}" data-path="{default_path}">
 <div id="bar"></div>
 
 <nav id="tools">
@@ -1116,8 +1424,8 @@ def render_reader(book, has_shelf):
 <header id="cover">
   <div class="rule"></div>
   <h1>{title}</h1>
-{sub_el}{epi}  <div class="meta">全 {len(chapters)} 章 · {fmt_wan(book['chars'])}</div>
-  <a class="go" href="#{chapters[0]['anchor']}">开始阅读 <span>→</span></a>
+{sub_el}{epi}  <div class="meta">{meta_line}</div>
+  <a class="go" href="#{first_anchor}">开始阅读 <span>→</span></a>
 </header>
 
 <main>
@@ -1128,9 +1436,11 @@ def render_reader(book, has_shelf):
   {title}{' · ' + sub if sub else ''}<br>{foot_link}
 </footer>
 
-<button id="top" aria-label="回到顶部">↑</button>
+{path_switch}<button id="top" aria-label="回到顶部">↑</button>
 <noscript><style>.rise,.ch-head,.sec-mark{{opacity:1!important;transform:none!important}}
-#toc{{transform:none!important}}#scrim{{display:none!important}}</style></noscript>
+#toc{{transform:none!important}}#scrim{{display:none!important}}
+.chapter[data-branch]{{display:block!important}}
+#toc a[data-branch]{{display:block!important}}</style></noscript>
 <script>{THEME_JS}{READER_JS}</script>
 </body>
 </html>
@@ -1165,7 +1475,7 @@ def render_shelf(books):
         <h2>{title}</h2>
 {sub}{tag}        <div class="foot">
           <span class="pill{done}">{html.escape(b["status"])}</span>
-          <span>{len(b["chapters"])} 章</span>
+          <span>{b.get("chapter_count") or len(b["chapters"])} 章{" · 双线" if b.get("has_fork") else ""}</span>
           <span>{fmt_wan(b["chars"])}</span>
           <span class="arrow">→</span>
         </div>
@@ -1310,7 +1620,9 @@ def build(quiet=False):
         print(f"✓ site/  {len(books)} 部作品 · {fmt_wan(sum(b['chars'] for b in books))}")
         for b in books:
             size = (SITE_DIR / b["file"]).stat().st_size // 1024
-            print(f"  {b['title']:<8} {b['status']:<4} {len(b['chapters']):>2} 章 · "
+            nch = b.get("chapter_count") or len(b["chapters"])
+            fork = " · 双线" if b.get("has_fork") else ""
+            print(f"  {b['title']:<8} {b['status']:<4} {nch:>2} 章{fork} · "
                   f"{fmt_wan(b['chars']):<9} · {size:>3} KB · {b['accent']}")
         print(f"  index.html  {(SITE_DIR / 'index.html').stat().st_size // 1024} KB")
     return True
