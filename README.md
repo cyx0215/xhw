@@ -55,7 +55,8 @@ xhw/
 纯标准库，无需安装任何依赖：
 
 ```bash
-python build.py              # 构建一次 → site/
+python build.py              # 构建一次 → site/（全量，含成人向）
+python build.py --public     # 公开部署版：跳过成人向书（CI 用）
 python build.py --watch      # 写小说时开着：改完自动重建
 python build.py --serve      # 推荐：本地预览 + 自动重建 + 浏览器热刷新
 python build.py --serve 9000 # 指定端口（默认 8765）
@@ -71,6 +72,12 @@ python build.py --serve
 
 浏览器会打开 `http://127.0.0.1:8765/`。之后你只要改 `books/` 里的章节或 `book.toml` 并保存，网页会自动重建，浏览器大约 1 秒内自动刷新。`Ctrl+C` 结束。
 
+### 作者看板
+
+`--serve` 时书架右上角多一个「看板」入口（`http://127.0.0.1:8765/_dash`）。每本书一块：状态与字数、近 30 个快照日的字数走势、未回收伏笔、`笔记/待改.md`（用了 `- [ ]` 清单的只列没勾的）、偏离 `字数目标` 的章、`--lint` 查出的问题。
+
+看板每次请求现场生成，**不写进 `site/`**，所以不会被部署，也不会跟着书架分享出去；只接受本机访问。
+
 只想自动重建、自己双击 `site/` 里的 HTML 看，用 `--watch` 即可。
 
 ### 产物
@@ -84,7 +91,71 @@ python build.py --serve
 
 热刷新脚本只在 `--serve` 时注入到浏览器响应里，**不会写进** `site/*.html`，分享出去的文件依然是干净的单页。
 
-阅读页功能：侧栏目录（宽屏常驻 / 手机抽屉）、滚动高亮当前章、阅读进度条、字号四档、日间 / 夜间（跨页保持，首次访问跟随系统）、记住上次读到的位置、左右方向键翻章、打印时每章另起一页。
+阅读页功能：侧栏目录（宽屏常驻 / 手机抽屉）、滚动高亮当前章、阅读进度条、「Aa」阅读设置（字号四档、行距三档、日间 / 米黄 / 护眼 / 夜间 / 纯黑五种背景、宋体 / 黑体；跨页保持，首次访问跟随系统深浅色）、每章预计阅读时长、记住上次读到的位置、左右方向键翻章、页内全文搜索（`Ctrl K` 或工具条「搜索」）、往下读时浮动按钮自动让开、成人向书首次访问需年龄确认、打印时每章另起一页。
+
+书架功能：按书名生成的纹样封面（每本书不同，EPUB 封面同款）、「继续阅读」进度（读到第几章、全书百分比，读过的书才显示）、EPUB / TXT 下载角标、码字日历。
+
+### 整本导出：EPUB / TXT
+
+每次构建顺带产出 `site/<书名>.epub`（零依赖手写 EPUB 3，带主色生成式封面——book.toml 的 `cover` 字段填了图片就用真图，Apple Books / Calibre / 微信读书可直接导入）和 `site/<书名>.txt`（番茄等网文平台投稿格式）。书架卡片和阅读页页脚有下载入口。某本书不想导出时在 book.toml 里写 `export = "none"`。
+
+### 分章站点变体 + RSS
+
+构建同时产出 `site/chapters/`：每章一个 URL 的轻量静态页（每书目录 + 全站目录 + 上一章/下一章），适合部署后线上阅读、微信里点开、被搜索引擎收录。单文件版不受影响，两套互为补充。
+
+要 RSS 订阅和 sitemap，在工作区根目录建 `site.toml` 写一行部署域名：
+
+```toml
+url = "https://你的用户名.github.io/仓库名"
+
+# 可选：分章页挂 giscus 评论（参数在 giscus.app 用你的仓库生成，
+# 需仓库开启 Discussions）
+giscus_repo = "用户名/仓库名"
+giscus_repo_id = "R_xxxxxxx"
+giscus_category_id = "DIC_xxxxxxx"
+```
+
+有了它，每本书会得到 `chapters/<书名>/feed.xml` 订阅源，站点根得到 `sitemap.xml` 和 `robots.txt`，分章页底部出现评论（配了 giscus 才有）；没有它只出 HTML。
+
+### 平台投稿
+
+```bash
+python build.py --wechat 书名
+```
+
+生成两份投稿稿到 `素材/投稿/`：公众号富文本 HTML（样式全部内联，浏览器打开全选复制进公众号编辑器）和知乎 Markdown（知乎专栏「导入文件」直接用）。
+
+### 人物出场矩阵
+
+```bash
+python build.py --matrix 书名
+```
+
+打印「人物 × 章节」出场表：每个档案角色的出场章、总次数、以及各称呼（别名）分别出现的次数——称呼要不要统一、配角戏份是否失衡，看表就知道。
+
+### 书架上的码字日历
+
+每次构建把字数按书快照进 `进度.json`（内容不变时不写盘，可以放心提交进版本库），书架底部按近 17 周画每日净增热力图。净增只算前后两天都在的书——导入一本写好的书、删掉一本，都不算当天码字。
+
+### 工作区命令
+
+```bash
+python build.py --lint            # 全库体检：骨架完整性、命名、账本新鲜度、素材登记一致性
+python build.py --index           # 从素材卡片的状态行重建 素材/索引.md（不要手改索引表格）
+python build.py --new 书名        # 按 templates/ 新建 books/书名/ 骨架（加 --adult 标记成人向）
+python build.py --context 书名    # 生成下一章的写作上下文（设定+伏笔+速览+时间线草稿+上一章全文）
+python build.py --context 书名 3  # 指定章号
+python build.py --wechat 书名     # 公众号 + 知乎投稿稿
+python build.py --matrix 书名     # 人物 × 章节出场矩阵
+```
+
+### 自动构建与部署（CI）
+
+仓库带 `.github/workflows/ci.yml`：push 到 GitHub 自动跑测试 → lint → 构建，通过后把 `site/` 发到 GitHub Pages（需在仓库 Settings → Pages 把 Source 设为 **GitHub Actions**）。本地不再需要手动构建推送。
+
+CI 用的是**公开构建** `python build.py --public`：跳过 `adult = true` 的书（连同它们的 EPUB/TXT、分章页、sitemap 条目），不读写 `进度.json`，书架上也不显示码字日历。成人向的书只在本地构建里出现，用单文件分享。
+
+`site/` 是构建产物，已加进 `.gitignore`，不进版本库。
 
 ### 发布到线上
 
@@ -124,6 +195,10 @@ cd site && git add . && git commit -m "更新" && git push
 | `accent` | 该书主色，书架卡片与阅读页共用 |
 | `cover` | 封面图路径，留空则用主色生成式封面 |
 | `order` | 书架排序，小的在前 |
+| `export` | 整本导出：`epub+txt`（默认）/ `epub` / `txt` / `none` |
+| `fork_label` | 双线书：分叉名称，默认「双线」 |
+| `fork_desc` | 双线书：选线卡说明文字，默认通用文案 |
+| `line_note_mei` / `line_note_dao` | 双线书：各线一句话简介（见 `templates/book.toml`） |
 
 `templates/book.toml` 是带注释的模板，复制过去改即可。
 
@@ -146,9 +221,20 @@ cd site && git add . && git commit -m "更新" && git push
 
 **创作笔记不会外泄**：`## 本章目标`、`## 章后笔记`、标题下方的 `> 状态 / 字数目标 / 视角人物` 等，只要正文放在 `## 正文` 下，就都不会出现在网页里。`设定/` 与 `笔记/` 整个目录也不会进入产物。
 
+两道构建期保险：
+
+- 章节没写 `## 正文` 时，只发布 `# 章标题` 之后、**第一个 `##` 标题之前**的内容——没写分隔标记时，任何 h2 都视作笔记区开头
+- 既没有 `# 章标题` 也没有 `## 正文` 的文件**会让构建直接失败**（疑似整篇笔记，宁可拒绝发布）；只有章标题时构建会提醒补 `## 正文`
+
 想让某本书不出现在书架上，把目录名加进 `build.py` 顶部的 `EXCLUDE`（`示例作品` 已默认排除）。
 
 ## 新建一部作品
+
+```bash
+python build.py --new 书名      # 自动生成 book.toml + 设定/ + 笔记/ 骨架
+```
+
+或手动：
 
 1. 复制 `books/示例作品`，改名为你的书名  
 2. 或从 `templates/` 复制对应模板，填入 `books/你的书名/`  
@@ -156,6 +242,10 @@ cd site && git add . && git commit -m "更新" && git push
 4. 先写 `设定/`，再按 `章节/ch00N.md` 推进正文  
 5. 灵感、伏笔、待改清单放在 `笔记/`  
 6. 跑 `python build.py`，新书会自动出现在书架上
+
+动笔某章前可跑 `python build.py --context 书名 [章号]`，会把大纲、人物、
+伏笔账本、章节速览和上一章全文聚合成一个上下文文件（在 `素材/上下文/`，
+不进网页），直接投喂给 AI 或自己通读。
 
 ## 命名建议
 
@@ -176,7 +266,27 @@ cd site && git add . && git commit -m "更新" && git push
 - 目录页按卷分组显示卷名，工具条的当前章会带上卷名
 - 卷目录名认 `卷一` / `卷2` / `第三卷` 等写法；认不出数字的（如 `番外`）排在最后
 - 可以混用：`章节/` 下直接放的章节排在所有分卷之前
-- 也支持 `ch1-2.md` 这种「卷1第2章」命名，取最后一段数字作章号
+- 也支持 `ch1-2.md` 这种「卷1第2章」命名，取最后一段数字作章号（`ch1-2-刀版.md` 可叠加版本标签）
+
+### 同章多版本（双线）
+
+`ch014-刀版.md` / `ch014-美版.md` 是同一章的两条阅读线，连字符可省（`ch14美版.md` 也认）。
+阅读页会出现选线卡，各线的说明文字在 `book.toml` 里配（`fork_label` / `fork_desc` / `line_note_mei` / `line_note_dao`，见模板）。
+
+### 开发
+
+纯函数层（TOML/文件名/正文切分/锚点）有回归测试，改 `build.py` 前后跑一遍：
+
+```bash
+python -m unittest discover tests
+```
+
+前端冒烟测试（真浏览器跑成人门、选线、位置恢复、搜索跳转、Aa 设置、书架继续阅读）在 `tests/e2e/`，需要可选依赖 Python `playwright`，没装时自动跳过，不进 CI。浏览器按 Chromium → 系统 Edge → 系统 Chrome 依次找：
+
+```bash
+pip install playwright==1.55.0
+python -m unittest discover tests/e2e -v
+```
 
 ## 写作节奏建议
 

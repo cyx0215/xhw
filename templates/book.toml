@@ -28,3 +28,19 @@ cover = ""
 
 # 书架排序，小的在前（默认 99）
 order = 99
+
+# 整本导出：epub+txt（默认）/ epub / txt / none
+# 产物在 site/<书名>.epub 与 .txt，书架卡片上有下载角标
+export = "epub+txt"
+
+# ---- 双线书专用（单线书全部省略即可）----
+# 有同章多版本（如 ch014-刀版.md / ch014-美版.md）时，阅读页会出现选线卡。
+
+# 分叉名称，显示在选线卡与目录（默认「双线」）
+fork_label = ""
+# 选线卡说明文字（默认通用文案）
+fork_desc = ""
+# 每条线的一句话简介，写法：line_note_<线key>，key 取文件名标签
+# （-刀版 → dao，-美版 → mei；默认空）
+line_note_mei = ""
+line_note_dao = ""

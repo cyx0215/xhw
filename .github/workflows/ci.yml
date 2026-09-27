@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 回归测试
+        run: python -m unittest discover tests
+      - name: 全库体检（错误挡 CI，警告放行）
+        run: python build.py --lint
+      - name: 构建站点（公开版：跳过成人向书，不含码字日历）
+        run: python build.py --public
+      - name: 上传产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    # 测试通过后把 site/ 发到 GitHub Pages（需在仓库 Settings → Pages
+    # 把 Source 设为 GitHub Actions）
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    needs: test
+    runs-on: ubuntu-latest
+    # 串行化只加在部署上：放在 workflow 级会让 PR 测试也进 pages 组，
+    # 同组只留一个排队 run，较早排队的 PR/推送会被静默取消
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

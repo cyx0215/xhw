@@ -6,3 +6,11 @@ __pycache__/
 Thumbs.db
 
 .playwright-mcp/
+
+# 构建产物：本地 python build.py 或 CI（--public）生成，不进版本库
+site/
+# 生成式稿件：--wechat / --context 的输出，随时可重建
+素材/投稿/
+素材/上下文/
+*.json.tmp
+*.json.bak

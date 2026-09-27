@@ -1,0 +1,140 @@
+
+body{padding:0}
+#shelf-tools{position:fixed;top:0;right:0;left:0;height:46px;z-index:50;display:flex;
+  align-items:center;justify-content:flex-end;gap:2px;padding:0 14px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);
+  backdrop-filter:blur(12px) saturate(1.4);
+  border-bottom:1px solid transparent;transition:border-color .4s var(--ease)}
+#shelf-tools.lifted{border-bottom-color:var(--rule)}
+
+.hero{padding:20vh 26px 12vh;text-align:center}
+.hero h1{margin:0;font-size:clamp(34px,7vw,52px);font-weight:400;letter-spacing:.34em;
+  text-indent:.34em;animation:titleIn 1.1s var(--ease) both}
+.hero .line{width:1px;height:44px;margin:26px auto 0;
+  background:linear-gradient(var(--rule),transparent);
+  animation:dropIn .9s var(--ease) .3s both}
+.hero .meta{margin-top:22px;font-family:var(--sans);font-size:11.5px;letter-spacing:.2em;
+  color:var(--ink-faint);animation:fadeUp .9s var(--ease) .42s both}
+@keyframes titleIn{from{opacity:0;transform:translateY(18px);letter-spacing:.54em}
+  to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dropIn{from{opacity:0;transform:scaleY(0);transform-origin:top}
+  to{opacity:1;transform:none}}
+
+.books{max-width:720px;margin:0 auto;padding:0 26px 14vh;
+  display:flex;flex-direction:column;gap:26px}
+
+/* 卡片自带的 transition 会整体覆盖 .rise 的，所以这里必须带上 opacity，
+   否则入场只会有位移没有淡入 */
+.card{display:flex;gap:26px;padding:22px;text-decoration:none;color:inherit;
+  background:var(--bg-elev);border:1px solid var(--rule);border-radius:4px;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+  transition:opacity .55s var(--ease),transform .55s var(--ease),
+             box-shadow .4s var(--ease),border-color .4s var(--ease)}
+/* 悬停时该书主色从左缘渗入 */
+.card::before{content:"";position:absolute;inset:0 auto 0 0;width:2px;
+  background:var(--bk);transform:scaleY(0);transform-origin:center;
+  transition:transform .45s var(--ease)}
+/* 用 .rise.in.card 提高特异性，压过 .rise.in 的 transform:none */
+.rise.in.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift);
+  border-color:color-mix(in srgb,var(--bk) 42%,var(--rule))}
+.rise.in.card:active{transform:translateY(-1px) scale(.995)}
+.card:hover::before{transform:none}
+
+/* 生成式封面：主色纸纹 + 竖排书名 */
+.cv{flex:0 0 116px;height:174px;border-radius:2px;overflow:hidden;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  /* --pat：build.py 按书名生成的纹样 SVG（每本书不同），盖在主色渐变上 */
+  background:var(--pat,none) center/cover no-repeat,linear-gradient(155deg,
+    color-mix(in srgb,var(--bk) 88%,#000 4%),
+    color-mix(in srgb,var(--bk) 58%,#2b2724));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),
+             inset -7px 0 12px -8px rgba(0,0,0,.55);
+  transition:transform .5s var(--ease)}
+.card:hover .cv{transform:scale(1.035)}
+.cv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* 竖排书名：不换列，长书名自动缩字号，避免折成两列挤满封面 */
+.cv em{font-style:normal;writing-mode:vertical-rl;white-space:nowrap;
+  font-size:var(--cvfs,17px);letter-spacing:.14em;line-height:1;
+  color:#fff;opacity:.94;text-shadow:0 1px 10px rgba(0,0,0,.4);
+  border:1px solid rgba(255,255,255,.28);padding:12px 5px;border-radius:1px}
+
+.info{flex:1;min-width:0;display:flex;flex-direction:column}
+/* 右侧留出「成人向」浮标的位置 */
+.info h2{margin:2px 56px 0 0;font-size:22px;font-weight:400;letter-spacing:.1em}
+.info .sub{margin-top:7px;font-family:var(--sans);font-size:11px;letter-spacing:.24em;
+  color:var(--ink-faint)}
+.info .tag{margin:13px 0 0;font-size:13.5px;line-height:1.95;color:var(--ink-soft);
+  text-align:justify;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* 继续阅读：章名 + 全书进度细条（shelf.js 按 localStorage 填充） */
+.resume{margin-top:auto;padding-top:14px;font-family:var(--sans);font-size:11.5px;
+  letter-spacing:.06em;color:var(--bk)}
+html[data-tone=dark] .resume{color:var(--bk-lit)}
+.resume[hidden]{display:none}
+.resume-t{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.resume-bar{display:block;height:2px;margin-top:7px;border-radius:1px;
+  background:color-mix(in srgb,var(--bk) 16%,var(--rule))}
+.resume-bar b{display:block;height:100%;width:0;border-radius:1px;background:currentColor}
+.resume:not([hidden]) + .foot{margin-top:0;padding-top:11px}
+.info .foot{margin-top:auto;padding-top:15px;display:flex;align-items:center;
+  flex-wrap:wrap;gap:8px;font-family:var(--sans);font-size:11px;letter-spacing:.1em;
+  color:var(--ink-faint)}
+/* 箭头始终占一行的末尾，元信息换行时不被挤走 */
+.info .foot .arrow{order:9}
+.pill{padding:3px 9px;border-radius:999px;border:1px solid var(--rule);line-height:1.6}
+.pill.done{color:var(--bk);border-color:color-mix(in srgb,var(--bk) 40%,transparent);
+  background:color-mix(in srgb,var(--bk) 9%,transparent)}
+/* 卡片上的 EPUB / TXT 下载角标（SHELF_JS 接管点击，避免触发整卡跳转） */
+.info .foot .dl{cursor:pointer;font-size:10px;letter-spacing:.08em;
+  color:var(--ink-faint);border-bottom:1px dashed
+  color-mix(in srgb,var(--bk) 45%,transparent)}
+.info .foot .dl:hover{color:var(--bk)}
+.info .foot .dls{display:inline-flex;gap:8px;white-space:nowrap}
+/* 夜间背景变暗后书的原色文字对比度不够，换成提亮版 */
+html[data-tone=dark] .pill.done{color:var(--bk-lit)}
+/* 成人向做成卡片右上角浮标，不占元信息那行的宽度 */
+.badge{position:absolute;top:0;right:0;z-index:1;
+  font-family:var(--sans);font-size:9.5px;letter-spacing:.14em;color:var(--ink-faint);
+  padding:5px 10px 6px;border-bottom-left-radius:4px;
+  background:color-mix(in srgb,var(--ink) 5%,transparent);
+  border-left:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.arrow{margin-left:auto;color:var(--ink-faint);font-size:13px;
+  transition:transform .4s var(--ease),color .4s var(--ease)}
+.card:hover .arrow{transform:translateX(4px);color:var(--bk)}
+html[data-tone=dark] .card:hover .arrow{color:var(--bk-lit)}
+
+/* 码字日历 */
+.cal-wrap{max-width:760px;margin:20px auto 70px;padding:0 26px;font-family:var(--sans)}
+.cal-wrap h2{margin:0 0 16px;text-align:center;font-weight:400;font-size:12px;
+  letter-spacing:.3em;text-indent:.3em;color:var(--ink-faint)}
+.cal{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,11px);gap:3px;
+  justify-content:center}
+.cal i{width:11px;height:11px;border-radius:2px;background:var(--rule);display:block}
+.cal i.l1{background:color-mix(in srgb,var(--accent) 25%,transparent)}
+.cal i.l2{background:color-mix(in srgb,var(--accent) 45%,transparent)}
+.cal i.l3{background:color-mix(in srgb,var(--accent) 70%,transparent)}
+.cal i.l4{background:var(--accent)}
+.cal-note{margin-top:12px;text-align:center;font-size:10.5px;letter-spacing:.14em;
+  color:var(--ink-faint)}
+
+.foot-note{padding:0 26px 14vh;text-align:center;font-family:var(--sans);
+  font-size:11.5px;letter-spacing:.18em;color:var(--ink-faint);line-height:2.2}
+
+@media (max-width:600px){
+  .hero{padding:14vh 22px 9vh}
+  .books{padding:0 18px 12vh;gap:20px}
+  .card{gap:18px;padding:17px}
+  /* 手机上封面按比例缩小，但字号只压一点点，太小会看不清 */
+  .cv{flex-basis:92px;height:140px}
+  .cv em{font-size:calc(var(--cvfs,17px) * .92);padding:9px 4px}
+  .info h2{font-size:19px}
+  .info .tag{font-size:12.5px;-webkit-line-clamp:4}
+  /* 窄屏元信息压缩到一行，箭头省掉（整卡可点，不需要指示） */
+  .info .foot{gap:6px;font-size:10.5px;padding-top:12px}
+  .pill{padding:3px 7px}
+  .info .foot .arrow{display:none}
+  .badge{font-size:9px;padding:4px 8px 5px}
+}
+@media print{#shelf-tools{display:none}.card{box-shadow:none}
+  .rise{opacity:1!important;transform:none!important}}

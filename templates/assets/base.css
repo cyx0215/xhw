@@ -1,0 +1,73 @@
+
+:root{
+  --bg:#f4f1ea; --bg-elev:#fbf9f4; --ink:#2b2724; --ink-soft:#6f665e;
+  --ink-faint:#a89e94; --rule:#ddd5c8;
+  --accent:#8c6f4a; --accent-lit:#8c6f4a;
+  --shadow:0 1px 2px rgba(43,39,36,.04),0 8px 24px -12px rgba(43,39,36,.14);
+  --shadow-lift:0 2px 4px rgba(43,39,36,.05),0 20px 44px -16px rgba(43,39,36,.22);
+  --font-scale:1;
+  --ease:cubic-bezier(.4,0,.2,1);
+  /* 「Noto Serif SC」必须排在「Source Han Serif SC」之前：两者是同一套字形，
+     但 Windows 上思源宋体常只装了 Heavy 单字重，命中它会让正文按 400 声明
+     却渲染成 Heavy（实测墨量与 900 完全相同）。Noto Serif SC 是可变字体，
+     400 才是正常正文字重。Songti SC 仅 macOS/iOS 有，留作首选无副作用。 */
+  --serif:"Songti SC","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC",
+          "Source Han Serif CN","STSong","SimSun",Georgia,"Times New Roman",serif;
+  --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",
+         -apple-system,"Segoe UI",sans-serif;
+}
+/* 背景主题：day / sepia / green 为浅色系，night / black 为深色系。
+   theme.js 同时挂 data-tone=light|dark，深色专属规则一律写 data-tone=dark，
+   新增深色主题自动继承提亮 accent 与 halation 处理 */
+html[data-theme=sepia]{
+  --bg:#efe3cc; --bg-elev:#f6ecd8; --ink:#3b2f22; --ink-soft:#6e5a44;
+  --ink-faint:#a48e72; --rule:#dccaa8;
+}
+html[data-theme=green]{
+  --bg:#dfe8d6; --bg-elev:#e9f0e2; --ink:#27302a; --ink-soft:#56645a;
+  --ink-faint:#8b998e; --rule:#c7d4bd;
+}
+html[data-tone=dark]{
+  --bg:#16181a; --bg-elev:#1e2124; --ink:#cfc9c0; --ink-soft:#948d84;
+  --ink-faint:#645d55; --rule:#2e3236;
+  --accent:var(--accent-lit);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.6);
+  --shadow-lift:0 2px 6px rgba(0,0,0,.36),0 22px 48px -16px rgba(0,0,0,.7);
+}
+/* 纯黑：OLED 省电，正文墨色再压一点避免刺眼 */
+html[data-theme=black]{
+  --bg:#000; --bg-elev:#0c0c0c; --ink:#b9b3aa; --ink-soft:#827b73;
+  --ink-faint:#56504a; --rule:#222;
+}
+html[data-tone=dark]{color-scheme:dark}
+/* 深底浅字会视觉膨胀（halation），中文笔画密更明显。字重已是 400 不宜再降
+   （很多中文字体只有单字重，降了也无效），改用极轻的负字距抵消 */
+html[data-tone=dark] main{letter-spacing:.015em}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--serif); -webkit-font-smoothing:antialiased;
+  /* 中文字体缺字重时别让浏览器合成伪粗体：CJK 笔画密，合成会糊成一团 */
+  font-synthesis:none;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+::selection{background:color-mix(in srgb,var(--accent) 24%,transparent)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* 通用入场：加 .rise 的元素初始下沉透明，进入视口时由 JS 挂 .in */
+.rise{opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rise.in{opacity:1;transform:none}
+
+.tbtn{border:0;background:none;color:var(--ink-soft);font-family:var(--sans);font-size:13px;
+  cursor:pointer;padding:7px 10px;border-radius:6px;line-height:1;
+  transition:color .25s var(--ease),background .25s var(--ease)}
+.tbtn:hover{color:var(--ink);background:color-mix(in srgb,var(--ink) 7%,transparent)}
+.tbtn:active{transform:scale(.94)}
+
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+  .rise{opacity:1!important;transform:none!important}
+}
