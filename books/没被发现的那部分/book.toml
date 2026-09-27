@@ -2,8 +2,13 @@ title = "没被发现的那部分"
 subtitle = "全十九章 · 顶峰双线（美/刀）"
 tagline = "同居情侣、闺蜜、酒后的那一晚——脏的部分只发生在没人看见的地方，而她始终不知道。第十四章起可选美线或刀线。"
 epigraph = "有些事被看见，就会碎。<br>有些事没被发现，就会长。"
-status = "已完结（14–15 双风格并存）"
+status = "已完结"
 adult = true
 accent = "#7a5c4e"
 cover = ""
 order = 5
+# 双线选线卡文案（build.py 读取；line_note_<线key> 为各线一句话简介）
+fork_label = "顶峰双线"
+fork_desc = "第 14–15 章有两条版本，请选一条读完再进入第 16 章。美线与刀线不要交叉混读。"
+line_note_mei = "像相爱 · 痛在安静里"
+line_note_dao = "来电处刑 · 痛在合法日常"
